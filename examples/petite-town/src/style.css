@@ -8,31 +8,23 @@
 }
 body {
   margin: 0;
-  min-height: 100svh;
-  display: grid;
-  place-items: center;
-  background: radial-gradient(
-    ellipse at 50% 32%,
-    #f7f3e7 0,
-    #d8ddcc 52%,
-    #b6c6b6 100%
-  );
 }
 main {
+  --left-inset: max(16px, env(safe-area-inset-left));
+  --right-inset: max(16px, env(safe-area-inset-right));
   position: relative;
   isolation: isolate;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  width: min(100%, 580px, 74svh);
-  height: min(960px, 100svh);
+  height: 100svh;
+  height: 100dvh;
   background: radial-gradient(
     ellipse at 50% 42%,
     #fff8df 12%,
     #f5edd9 53%,
     #eadcc1 100%
   );
-  box-shadow: 0 10px 80px #47615430;
 }
 header,
 footer {
@@ -41,7 +33,8 @@ footer {
   text-align: center;
 }
 header {
-  padding: clamp(14px, 3.1svh, 35px) 10px 0;
+  padding: max(clamp(10px, 3.1svh, 35px), env(safe-area-inset-top))
+    var(--right-inset) 0 var(--left-inset);
   pointer-events: none;
 }
 .ornament {
@@ -51,7 +44,7 @@ header {
 }
 h1 {
   font:
-    500 clamp(42px, 7svh, 72px) / 1.02 Georgia,
+    500 clamp(32px, 7svh, 72px) / 1.02 Georgia,
     'Times New Roman',
     serif;
   letter-spacing: -0.065em;
@@ -82,7 +75,7 @@ canvas:active {
 }
 .tools {
   position: absolute;
-  right: 18px;
+  right: var(--right-inset);
   bottom: 8px;
   display: flex;
   gap: 5px;
@@ -93,8 +86,8 @@ select {
   font: inherit;
 }
 button {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: 1px solid #b7ab91;
   border-radius: 50%;
   background: #fff8e9e8;
@@ -118,11 +111,13 @@ button:focus-visible {
   min-width: max-content;
 }
 footer {
-  margin: 5px 22px max(15px, env(safe-area-inset-bottom));
-  padding-top: 12px;
+  margin: 5px max(var(--right-inset), (100% - 34rem) / 2)
+    max(12px, env(safe-area-inset-bottom))
+    max(var(--left-inset), (100% - 34rem) / 2);
+  padding-top: clamp(5px, 1.4svh, 12px);
   border-top: 1px solid #b7ac913f;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: 5px 14px;
   text-align: left;
@@ -148,26 +143,12 @@ select {
   color: #786e5f;
   margin-top: 3px;
 }
-@media (max-width: 600px) {
-  main {
-    width: 100%;
-    height: 100svh;
-  }
-}
-@media (min-height: 720px) and (min-width: 700px) {
-  main {
-    height: min(94svh, 960px);
-    border-radius: 22px;
-    border: 1px solid #c6bea6;
-  }
-}
-
 #layer-editor {
   position: absolute;
-  left: 12px;
+  left: var(--left-inset);
   top: 8px;
   z-index: 2;
-  width: min(245px, calc(100% - 24px));
+  width: min(245px, calc(100% - var(--left-inset) - var(--right-inset)));
   background: #fff9ed;
   box-shadow: 0 5px 18px #4e403222;
   border: 1px solid #c8baa1;

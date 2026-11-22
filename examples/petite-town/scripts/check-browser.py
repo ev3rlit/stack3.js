@@ -36,6 +36,17 @@ def ready(page):
     assert page.locator("#guide option").count() == 13
 
 
+def check_fullscreen(page):
+    viewport = page.viewport_size
+    frame = page.locator("main").bounding_box()
+    canvas = page.locator("canvas").bounding_box()
+    assert frame == {"x": 0, "y": 0, **viewport}, frame
+    assert canvas["x"] == 0 and canvas["width"] == viewport["width"], canvas
+    assert 0 < canvas["height"] <= viewport["height"], canvas
+    assert page.evaluate("document.documentElement.scrollHeight === innerHeight")
+    return frame
+
+
 def swipemouse(page, box, dx):
     x = box["x"] + box["width"] / 2
     y = box["y"] + box["height"] * 0.49
@@ -123,8 +134,7 @@ with sync_playwright() as pw:
     ready(page)
     data = snapshot(page)
     box = page.locator("canvas").bounding_box()
-    frame = page.locator("main").bounding_box()
-    assert frame["height"] > frame["width"]
+    frame = check_fullscreen(page)
     page.screenshot(path=QA / "desktop.png")
     assert len(data["groups"]) == 12
     assert data["models"] == len(set(p["part"] for p in data["meshes"]))
@@ -180,6 +190,7 @@ with sync_playwright() as pw:
     )
     phone = mobile.new_page()
     ready(phone)
+    check_fullscreen(phone)
     phone.screenshot(path=QA / "mobile.png")
     cdp = mobile.new_cdp_session(phone)
     canvas = phone.locator("canvas").bounding_box()
@@ -205,12 +216,15 @@ with sync_playwright() as pw:
     phone.touchscreen.tap(*part_point(phone, "well/well-roof/1"))
     assert phone.locator("#layer-editor").is_visible() and snapshot(phone)["selected"].startswith("well/")
     phone.locator("#layer-close").tap()
+    phone.set_viewport_size({"width": 844, "height": 390})
+    landscape = check_fullscreen(phone)
     assert not errors, errors
     report = {
         "browser": browser.version,
         "desktopViewport": [1280, 900],
         "desktopFrame": frame,
         "mobileViewport": [390, 844],
+        "landscapeFrame": landscape,
         "mobileInput": "Chrome CDP touch on emulated device",
         "loadedItems": len(data["groups"]),
         "distinctModels": data["models"],
