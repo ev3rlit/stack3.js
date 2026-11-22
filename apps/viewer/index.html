@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>stack3.js · Asset Viewer</title>
+</head>
+<body>
+  <header class="topbar">
+    <h1>stack3<span>.js</span></h1>
+    <div class="toolbar">
+      <a class="button" href="./compare.html">4-view comparison</a>
+      <a class="button" href="./project.html">Scene editor</a>
+      <a class="button" href="./project.html?playground=1">Playground</a>
+      <a class="button" href="./playground/index.html">Demo yard</a>
+      <button id="openGlb" type="button">Open GLB</button><input id="glb" type="file" accept=".glb" hidden>
+      <button id="export" class="primary" type="button" disabled>Export stack</button>
+    </div>
+  </header>
+  <main>
+    <aside aria-label="Asset settings">
+      <section>
+        <h2>Source</h2>
+        <label for="samplePreset">Sample asset</label>
+        <select id="samplePreset">
+          <option value="">Choose a sample</option>
+          <option value="cone">Traffic Cone</option>
+          <option value="rover">Cargo Rover</option>
+          <option value="inspection">Inspection Robot</option>
+          <option value="ant">Ant Mech</option>
+          <option value="tank">Armored Miniature</option>
+          <option value="sign">Wet-Floor Sign</option>
+          <option value="barrier">Plastic Barrier</option>
+          <option value="concrete">Concrete Barrier</option>
+        </select>
+        <div class="segmented" role="group" aria-label="Input mode">
+          <button id="modeAtlas" type="button" aria-pressed="true">Atlas</button>
+          <button id="modeFiles" type="button" aria-pressed="false">Individual views</button>
+        </div>
+        <div id="atlasFields">
+          <label for="atlas">PNG atlas</label>
+          <input id="atlas" type="file" accept="image/png,.png">
+          <label for="layout">Directions in reading order</label>
+          <input id="layout" type="text" value="top,left,front,rear" spellcheck="false">
+          <img id="sourceImage" alt="Source atlas" hidden>
+          <div class="toolbar"><button id="addParts" type="button">Add part atlases</button></div>
+          <input id="partFiles" type="file" accept="image/png,.png" multiple hidden>
+          <details id="assemblyEditor" hidden open>
+            <summary id="assemblySummary">Assembly parts</summary>
+            <div id="partMounts"></div>
+          </details>
+        </div>
+        <div id="separateFields" hidden>
+          <label for="viewCount">View set</label>
+          <select id="viewCount"><option value="4">Four views</option><option value="6">Six views</option></select>
+          <div id="viewFiles"></div>
+        </div>
+        <ul id="mappedViews" aria-label="Mapped view sizes"></ul>
+      </section>
+      <section>
+        <h2>Reconstruction</h2>
+        <div class="segmented" role="group" aria-label="Asset type">
+          <button id="targetStack" type="button" aria-pressed="true">Sprite stack</button>
+          <button id="targetMesh" type="button" aria-pressed="false">3D mesh</button>
+        </div>
+        <label for="qualityPreset">Quality preset</label>
+        <select id="qualityPreset">
+          <option value="">Custom</option>
+          <option value="draft">Draft · 24 layers</option>
+          <option value="balanced" selected>Balanced · 48 layers</option>
+          <option value="detail">Detail · 90 layers</option>
+        </select>
+        <label for="layers">Layers <output id="layerValue">48</output></label>
+        <input id="layers" type="range" min="8" max="128" value="48">
+        <label for="resolution">Texture resolution <output id="resolutionValue">96 px · 1.00×</output></label>
+        <input id="resolution" type="range" min="16" max="192" value="96">
+        <label for="threshold">Background threshold <output id="thresholdValue">238</output></label>
+        <input id="threshold" type="range" min="180" max="255" value="238">
+        <label for="profile">Cross-section</label>
+        <select id="profile">
+          <option value="silhouette">From silhouettes</option>
+          <option value="round">Round</option>
+          <option value="round-base">Round above square base</option>
+        </select>
+        <div class="split">
+          <div><label for="height">Asset height</label><input id="height" type="number" min=".01" step=".1" value="1"></div>
+          <div><label for="pivot">Pivot</label><select id="pivot"><option value="ground">Ground</option><option value="center">Center</option></select></div>
+        </div>
+        <div class="toolbar">
+          <button id="persistentCache" type="button" aria-pressed="true">Disk cache</button>
+          <button id="clearCache" type="button">Clear cache</button>
+          <button id="resetReconstruction" type="button">Defaults</button>
+        </div>
+        <output id="cacheNotice" role="status"></output>
+      </section>
+      <section>
+        <h2>Presentation</h2>
+        <label for="spacing">Spacing <output id="spacingValue">1.00×</output></label>
+        <input id="spacing" type="range" min=".50" max="2.50" step=".05" value="1" disabled>
+        <label for="squash">Squash <output id="squashValue">0.75</output></label>
+        <input id="squash" type="range" min=".45" max="1" step=".01" value=".75">
+        <label for="previewScale">Scale <output id="previewScaleValue">1.00×</output></label>
+        <input id="previewScale" type="range" min=".5" max="2" step=".05" value="1">
+        <label for="rotationSpeed">Auto-rotate speed <output id="rotationSpeedValue">0°/s</output></label>
+        <input id="rotationSpeed" type="range" min="0" max="135" step="1" value="0">
+      </section>
+    </aside>
+    <section class="viewer" aria-label="Model preview">
+      <div class="viewer-toolbar">
+        <span id="previewLabel">Sprite stack preview</span>
+        <div class="toolbar">
+          <div class="toolbar" role="group" aria-label="Preview renderer">
+            <button id="cpuPreview" type="button" aria-pressed="false">CPU</button>
+            <button id="gpuPreview" type="button" aria-pressed="true">GPU</button>
+          </div>
+          <button id="materialLighting" type="button" aria-pressed="false">Material lighting</button>
+          <button id="supersampling" type="button" aria-pressed="false">Supersampling 2×</button>
+          <button id="pixelArt" type="button" aria-pressed="false" disabled>Pixel art</button>
+          <button id="smoothEdges" type="button" aria-pressed="true" disabled>Smooth edges</button>
+          <button id="showGrid" type="button" aria-pressed="true">Grid</button>
+          <button id="resetCamera" type="button">Reset camera</button>
+        </div>
+      </div>
+      <div id="viewport"></div>
+      <div class="viewer-status">
+        <output id="status" aria-live="polite">Load a PNG atlas or individual views.</output>
+        <output id="performance">— FPS</output>
+        <span>Drag to orbit · Scroll to zoom</span>
+      </div>
+      <ul id="warnings" aria-label="Input warnings"></ul>
+    </section>
+  </main>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

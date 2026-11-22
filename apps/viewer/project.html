@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>stack3.js · Scene editor</title>
+</head>
+<body class="scene-editor">
+  <header class="topbar">
+    <div class="project-title"><h1>stack3<span>.js</span></h1><span id="projectName">Scene editor</span></div>
+    <nav class="toolbar" aria-label="View mode">
+      <a id="editorMode" class="button" href="./project.html" hidden>Editor</a>
+      <a id="playMode" class="button" href="./project.html?playground=1" hidden>Playground</a>
+      <a id="compareMode" class="button" href="./compare.html">4-view comparison</a>
+      <a class="button" href="./index.html">Asset viewer</a>
+    </nav>
+  </header>
+  <section id="disconnected" class="connect" hidden aria-labelledby="connectTitle">
+    <h2 id="connectTitle">Open a scene project</h2>
+    <p>Start the scene editor from your terminal. The CLI and editor will work on the same project file.</p>
+    <pre><code>stack3 project init level.stack3.json
+<span id="openInstruction">stack3 project open level.stack3.json</span></code></pre>
+  </section>
+  <main id="workspace" class="workspace" hidden>
+    <aside class="hierarchy" aria-label="Scene hierarchy">
+      <section>
+        <h2>Hierarchy</h2>
+        <div class="toolbar">
+          <button id="importAtlases" type="button">Import PNGs</button>
+          <button id="newGroup" type="button">New group</button>
+        </div>
+        <input id="atlasFiles" type="file" accept=".png,image/png" multiple hidden>
+        <label for="importLayout">Import layout</label>
+        <input id="importLayout" type="text" value="top,left,front,rear" spellcheck="false">
+        <div id="hierarchy"></div>
+      </section>
+      <section>
+        <h2>Embedded atlases</h2>
+        <div id="atlasLibrary"></div>
+      </section>
+    </aside>
+    <section class="scene-stage" aria-label="Scene">
+      <div class="stage-controls toolbar">
+        <strong id="stageTitle">Scene</strong>
+        <div class="toolbar">
+          <button id="frameScene" type="button">Frame scene</button>
+          <button id="stepTime" type="button">Step 1 s</button>
+          <button id="resetTime" type="button">Reset</button>
+          <button id="togglePlay" type="button" aria-pressed="false">Play</button>
+        </div>
+      </div>
+      <div id="viewport"><output id="emptyStage" class="empty-stage">Import PNG atlases to populate the scene.</output></div>
+      <div id="playControls" class="stage-controls toolbar" hidden>
+        <span id="playTarget">Select an object to move it with WASD.</span>
+        <div id="moveButtons" class="toolbar"></div>
+      </div>
+      <div class="stage-status" role="status"><output id="status"></output><output id="buildStatus"></output><output id="playTime">0.0 s</output></div>
+    </section>
+    <aside class="inspector" aria-label="Inspector">
+      <section class="inspector-header">
+        <h2>Inspector</h2>
+        <div class="inspector-tabs" role="tablist" aria-label="Inspector settings">
+          <button id="objectTab" type="button" role="tab" aria-controls="objectPanel" aria-selected="true">Object</button>
+          <button id="renderingTab" type="button" role="tab" aria-controls="renderingPanel" aria-selected="false" tabindex="-1">Rendering</button>
+        </div>
+      </section>
+      <section id="objectPanel" role="tabpanel" aria-labelledby="objectTab"><div id="properties"></div></section>
+      <section id="renderingPanel" role="tabpanel" aria-labelledby="renderingTab" hidden>
+        <h3>Asset rendering</h3>
+        <div id="assetProperties"></div>
+        <h3>Viewport</h3>
+        <div id="viewProperties"></div>
+      </section>
+    </aside>
+  </main>
+  <script type="module" src="/src/project-editor.ts"></script>
+</body>
+</html>

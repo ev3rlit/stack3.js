@@ -1,0 +1,17 @@
+{
+  "name": "@stack3/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@stack3/core": "0.1.0",
+    "pngjs": "^7.0.0",
+    "tsx": "^4.20.0"
+  },
+  "devDependencies": {
+    "@types/pngjs": "^6.0.0"
+  },
+  "bin": {
+    "stack3": "./bin/stack3.mjs"
+  }
+}

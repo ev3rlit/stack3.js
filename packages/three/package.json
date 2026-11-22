@@ -1,0 +1,8 @@
+{
+  "name": "@stack3/three",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": { "@stack3/core": "0.1.0", "three": "^0.181.0" }
+}

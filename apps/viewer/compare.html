@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>stack3.js · 4-view comparison</title>
+</head>
+<body>
+  <header class="topbar">
+    <h1>4-view comparison</h1>
+    <nav class="toolbar" aria-label="Viewer">
+      <a id="back" class="button" href="./index.html">Asset viewer</a>
+    </nav>
+  </header>
+  <main class="comparison">
+    <div class="compare-controls">
+      <div>
+        <label for="part">Atlas source</label>
+        <select id="part"></select>
+      </div>
+      <div>
+        <label for="atlas">4-view PNG</label>
+        <input id="atlas" type="file" accept="image/png,.png">
+      </div>
+      <div><label for="yaw">Orbit <output id="yaw-value">45°</output></label><input id="yaw" type="range" min="-180" max="180" value="45"></div>
+      <div><label for="pitch">Elevation <output id="pitch-value">24°</output></label><input id="pitch" type="range" min="-10" max="90" value="24"></div>
+      <div><label for="zoom">Zoom <output id="zoom-value">1×</output></label><input id="zoom" type="range" min="0.75" max="3" step="0.05" value="1"></div>
+      <div><label for="layers">Layers <output id="layers-value">80</output></label><input id="layers" type="range" min="8" max="128" value="80" disabled></div>
+      <div><label for="spacing">Spacing <output id="spacing-value">1.00×</output></label><input id="spacing" type="range" min="0.50" max="2.50" step="0.05" value="1" disabled></div>
+      <div><label for="explode">Explode <output id="explode-value">0%</output></label><input id="explode" type="range" min="0" max="100" step="1" value="0" disabled></div>
+      <div class="compare-actions">
+        <button id="clay" type="button" aria-pressed="false" title="Show mesh geometry without textures">Clay</button>
+        <button id="reset" type="button">Reset camera</button>
+      </div>
+    </div>
+    <output id="comparison-status" role="status" aria-live="polite">Choose a PNG in TOP, LEFT, FRONT, REAR order.</output>
+    <ul id="comparison-warnings" aria-label="Atlas alignment warnings"></ul>
+    <div class="compare-results" aria-label="Reconstruction thumbnails"></div>
+  </main>
+  <script type="module" src="/src/compare.ts"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "stack3-workspace",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.12" },
+  "workspaces": ["packages/*", "apps/cli", "apps/viewer"],
+  "scripts": {
+    "cli": "node apps/cli/bin/stack3.mjs",
+    "viewer": "vite apps/viewer",
+    "build": "npm run check && vite build apps/viewer",
+    "check": "tsc --noEmit",
+    "test": "tsx --test packages/core/test/*.test.ts apps/viewer/test/*.test.ts apps/cli/test/*.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/three": "^0.181.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.0.0"
+  }
+}

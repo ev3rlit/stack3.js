@@ -1,0 +1,13 @@
+{
+  "name": "@stack3/viewer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@jitl/quickjs-wasmfile-release-sync": "^0.32.0",
+    "@stack3/core": "0.1.0",
+    "@stack3/three": "0.1.0",
+    "quickjs-emscripten-core": "^0.32.0",
+    "three": "^0.181.0"
+  }
+}
