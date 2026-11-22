@@ -8,6 +8,13 @@ We explored that idea in the Sprite Stacking Demo and built stack3.js to make th
 
 [![Seven four-view atlases show the house shell, roof, chimney, door, lantern and two windows from the top, left, front and rear. Beside them the meshes separate, fit back together and rotate as one timber house.](docs/media/petite-town/house-atlases-to-mesh.webp)](examples/petite-town/atlases/)
 
+### Atlas tips
+
+- **First build** — Reference image → four-view atlas → mesh → 360° inspection
+- **Texture distortion** — Camera angle, scale and alignment across TOP, LEFT, FRONT and REAR
+- **Missing shape detail** — Separate atlases for the affected parts → individual meshes → assembly
+- **Stepped edges on flat parts** — Contour Extrusion instead of Marching Cubes for blades, fins and signs
+
 ## Petite Town
 
 A timber house, two shops and a market surround a stone well. Across the stream, a footbridge leads to a windmill. Each of the twelve village assets starts as one or more four-view atlases. The camera stays still as the windmill turns, the well ripples, and the stream flows beneath the bridge. On the right, each asset turns slowly so you can follow its painted details around the mesh.
