@@ -1,7 +1,12 @@
-name: Deploy web viewer
+name: Deploy web viewer and demos
 
 on:
   push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/deploy-web.yml'
+      - 'examples/*/standalone/index.html'
     tags:
       - 'web-v*'
 
@@ -19,21 +24,48 @@ jobs:
       contents: read
       pages: read
     steps:
-      - name: Validate the web version
-        run: '[[ "$GITHUB_REF_NAME" =~ ^web-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]'
       - uses: actions/checkout@v7
         with:
+          ref: ${{ github.ref_type == 'tag' && 'main' || github.sha }}
+          fetch-tags: true
+          persist-credentials: false
+      - name: Select the viewer release
+        id: viewer
+        run: |
+          version_pattern='^web-v(0|[1-9][0-9]*)[.](0|[1-9][0-9]*)[.](0|[1-9][0-9]*)$'
+          if [[ "$GITHUB_REF_TYPE" == tag ]]; then
+            tag="$GITHUB_REF_NAME"
+          else
+            tag="$(git tag --list 'web-v*' --sort=-version:refname | awk -v pattern="$version_pattern" '$0 ~ pattern && !found { print; found = 1 }')"
+          fi
+          [[ "$tag" =~ $version_pattern ]]
+          echo "ref=refs/tags/$tag" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.viewer.outputs.ref }}
+          path: viewer-release
           persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: viewer-release/package-lock.json
       - uses: actions/configure-pages@v6
       - run: npm ci
+        working-directory: viewer-release
       - run: npm run build -- --base=./
+        working-directory: viewer-release
+      - name: Add standalone demos
+        run: |
+          shopt -s nullglob
+          for demo in examples/*/standalone/index.html; do
+            destination="viewer-release/apps/viewer/dist/$demo"
+            mkdir -p "$(dirname "$destination")"
+            cp "$demo" "$destination"
+          done
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: apps/viewer/dist
+          path: viewer-release/apps/viewer/dist
 
   deploy:
     needs: build

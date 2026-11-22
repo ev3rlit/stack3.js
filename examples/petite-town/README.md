@@ -6,7 +6,7 @@
 
 ## 다운로드해서 실행
 
-[단일 HTML 다운로드](https://raw.githubusercontent.com/ev3rlit/stack3.js/main/examples/petite-town/standalone/index.html) · [Windows·macOS 한 줄 실행 명령](../../README.md#download-and-play)
+[브라우저에서 Petite Town 실행](https://ev3rlit.github.io/stack3.js/examples/petite-town/standalone/) · [단일 HTML 다운로드](https://raw.githubusercontent.com/ev3rlit/stack3.js/main/examples/petite-town/standalone/index.html) · [Windows·macOS 한 줄 실행 명령](../../README.md#download-and-play)
 
 파일을 기본 브라우저로 열면 마을이 로드된다. 드래그로 회전하고, 휠 또는 두 손가락으로 확대한다.
 
@@ -107,3 +107,5 @@ npm run preview
 빌드 결과는 `dist/`다. 이 폴더를 정적 HTTP 서버에 그대로 올리거나 `python3 -m http.server 4173 --directory dist`로 열 수 있다. 배포와 실행에 Stack3 Playground나 stack3 CLI 서버는 필요하지 않다.
 
 단일 파일을 다시 만들려면 이 예제 폴더에서 `npm run build:standalone`을 실행한다. 결과물은 `standalone/index.html`이다.
+
+이 파일을 커밋해 `main`에 푸시하면 GitHub Pages에 자동 반영된다. 새 데모도 자체 실행에 필요한 리소스를 단일 HTML에 포함하고 `examples/<demo>/standalone/index.html`을 같은 방식으로 커밋하면 된다. 배포가 끝나면 기본 Pages 주소 뒤에 `examples/<demo>/standalone/`을 붙여 공유한다.
