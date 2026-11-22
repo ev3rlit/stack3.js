@@ -1,72 +1,102 @@
 # stack3.js
 
-stack3.js reconstructs game assets from four or six orthographic images. The same input can produce a **3D mesh** or a **runtime sprite stack**.
+Turn four or six orthographic views into a **3D mesh** or a **runtime sprite stack**. Open a finished example, inspect the reconstruction stages, or convert your own atlas from the CLI.
 
-## Quick Start
+![Future Tank assembled from separate chassis, turret, and barrel atlases in Playground](docs/media/future-tank-playground.png)
+
+## Quick start
+
+### 1. Install the CLI
+
+Install **Node.js 22.12 or later**, then run the command below. [CLI releases](https://github.com/ev3rlit/stack3.js/releases)
 
 ```sh
-npm ci
-npm run viewer
+npm install -g https://github.com/ev3rlit/stack3.js/releases/latest/download/stack3-cli.tgz
+stack3 --version
 ```
 
-Open the local URL printed by Vite and choose **Traffic Cone** under **Sample asset**. Select **Sprite stack** or **3D mesh** independently of the **CPU** or **GPU** preview renderer. Open **Demo yard** to drive the original demo vehicles and test props.
+### 2. Install the Codex skill
 
-For an editable level controlled by an agent, use the [scene project commands](apps/cli/README.md#scene-projects). Import embeds source PNGs in the project and creates scene objects. The CLI and live editor share the same project file.
+Paste this into Codex, then invoke `$stack3` to prepare atlases, convert assets, or work on a scene. [Codex skill installation](skills/stack3/README.md#install-in-codex)
 
-Open the [Future Tank example](samples/future-tank/README.md) to inspect a separately reconstructed chassis, turret, and barrel in Playground and the comparison gallery.
+```text
+$skill-installer Install the stack3 skill from https://github.com/ev3rlit/stack3.js/tree/main/skills/stack3
+```
+
+### 3. Open Future Tank
+
+Run these commands in any working directory. The installed CLI copies the bundled example and opens Playground.
+
+```sh
+stack3 example future-tank
+stack3 project open future-tank.stack3.json --playground
+```
+
+- Press **Play** and use **A/D** to turn the chassis or **Q/E** to turn the turret and barrel.
+- Open **4-view comparison** to see the reconstruction gallery. Try **Layers** for resolution, **Spacing** for the gap between sprite slices, and **Explode** for part separation.
+- Use the public viewer to try **Traffic Cone** or load your own PNG in the browser. [Open the web viewer](https://ev3rlit.github.io/stack3.js/)
+
+[Future Tank images and controls](samples/future-tank/README.md) · [All sample atlases](samples/README.md)
 
 ## Workflow
 
-1. Import an atlas or separate images and assign each image to a direction. Align the silhouettes, scale, and ground line across views.
-2. Reconstruct in a Web Worker for the browser or run the same core from the CLI. Preview the result as settings change.
-3. Select **mesh** or **stack**. Use the reconstructed data directly in a runtime, or save it as a GLB or sprite-stack bundle.
+![Three part atlases become a visual hull, then a textured mesh or a sprite stack](docs/media/workflow.png)
 
-| Input | Directions |
-| --- | --- |
-| Four views | Top, left, front, rear |
-| Six views | Top, left, front, rear, right, bottom |
+1. **Prepare the atlas.** Arrange four orthographic silhouettes as **TOP, LEFT, FRONT, REAR**. Match the scale and ground line, and leave gaps between silhouettes. Point the front down in TOP and left in LEFT. For six views, add **RIGHT** and **BOTTOM**.
+2. **Reconstruct.** The viewer and CLI carve a volume from the silhouettes. Give independently moving objects their own atlas so each part keeps its own shape, texture, and pivot.
+3. **Preview and export.** Use **Sprite stack** for horizontal slices or **3D mesh** for a textured GLB. For an assembled object, embed the source PNGs and position the parts in a scene project.
 
-An atlas uses an explicit view layout. A set of individual images uses a manifest with named directions. The core receives the same normalized view set from either input. Six views provide color for the right and bottom faces. Surfaces hidden from all silhouettes may require shape corrections.
+[Input preparation guide](skills/stack3/references/orthographic-views.md) · [Scene project commands](apps/cli/README.md#scene-projects)
 
-## Repository Layout
-
-| Path | Responsibility |
-| --- | --- |
-| [`packages/core`](packages/core/README.md) | TypeScript reconstruction, settings, and shared asset data |
-| [`packages/three`](packages/three/README.md) | Three.js mesh and sprite-stack adapters |
-| [`apps/cli`](apps/cli/README.md) | File input, reproducible conversion, and export |
-| [`apps/viewer`](apps/viewer/README.md) | Interactive alignment, live preview, and export |
-| [`apps/web`](apps/web/README.md) | Documentation and a browser playground that reuses the viewer |
-| [`skills/stack3`](skills/stack3/README.md) | Agent guidance for preparing views and validating exports |
-| [`samples`](samples/README.md) | Original four-view PNGs from the sprite-stacking demos |
-
-The core owns reconstruction and runs independently of Three.js and the UI. The viewer and CLI use the same project settings. Camera controls belong to the preview, while asset scale, pivot, and slice spacing belong to the reconstructed asset.
-
-## Feature Plan
-
-See the [feature plan](docs/README.md) for requirements, completion checks, and build order.
-
-## CLI Direction
-
-Commands follow **`stack3 <verb> <input> [options]`**. See the [CLI contract](apps/cli/README.md) for inputs and outputs.
+## Convert an atlas
 
 ```sh
-npm run cli -- inspect apps/viewer/public/examples/traffic-cone-4view.png --layout top,left,front,rear
-npm run cli -- build apps/viewer/public/examples/traffic-cone-4view.png --layout top,left,front,rear --format stack --output cone-stack/
-npm run cli -- view cone-stack/
-npm run cli -- build apps/viewer/public/examples/traffic-cone-4view.png --layout top,left,front,rear --output cone.glb
+stack3 example traffic-cone
+stack3 inspect traffic-cone-4view.png --layout top,left,front,rear
+stack3 build traffic-cone-4view.png --layout top,left,front,rear --output cone.glb
+stack3 build traffic-cone-4view.png --layout top,left,front,rear --format stack --output cone-stack/
+stack3 view cone-stack/
 ```
 
-## Verification
+A stack bundle contains `stack.png` and `stack.json`. For separate source images, pass a [view manifest](apps/cli/README.md) instead of an atlas layout.
 
-Run `npm test` for reconstruction and export checks. Run `npm run build` to type-check the workspace and build the static viewer under `apps/viewer/dist/`.
+## Releases
 
-Use the [stack3 skill](skills/stack3/SKILL.md) for agent-assisted asset preparation and export review.
+CLI and web releases are triggered separately. Push a tag on the commit you want to ship.
 
-## First End-to-End Check
+| Tag | Deployment |
+| --- | --- |
+| `cli-vX.Y.Z` | Build and smoke-test the npm tarball, then publish it to GitHub Releases |
+| `web-vX.Y.Z` | Build the static viewer and deploy it to GitHub Pages |
 
-Reconstruct one traffic cone from individual views and from an atlas. The viewer and CLI should agree on its dimensions, pivot, and appearance when given the same settings. The mesh and stack should both load into a Three.js scene, and the exported GLB should open in the viewer.
+```sh
+git tag cli-v0.1.1
+git push origin cli-v0.1.1
+```
 
-## References
+```sh
+git tag web-v0.1.1
+git push origin web-v0.1.1
+```
 
-The four-view sprite-stacking workflow draws on Daniel White's work. Earlier experiments explored runtime reconstruction, multi-view texturing, and GPU instancing. [Sprite Stacking skill](https://github.com/danielwh2/sprite-stacking) · [Sprite Stacking Demo](https://github.com/ev3rlit/sprite-stacking-demo)
+[CLI workflow](.github/workflows/release-cli.yml) · [Web workflow](.github/workflows/deploy-web.yml)
+
+## Development
+
+```sh
+git clone https://github.com/ev3rlit/stack3.js.git
+cd stack3.js
+npm ci
+npm test
+npm run build
+npm run viewer
+```
+
+| Path | Contents |
+| --- | --- |
+| [`apps/viewer`](apps/viewer/README.md) | Asset viewer, scene editor, Playground, and reconstruction comparison |
+| [`apps/cli`](apps/cli/README.md) | Inspect, build, export, and scene project commands |
+| [`packages/core`](packages/core/README.md) · [`packages/three`](packages/three/README.md) | Reconstruction and Three.js rendering |
+| [`samples`](samples/README.md) · [`skills/stack3`](skills/stack3/README.md) | Example images, scenes, and agent workflows |
+
+[Feature plan](docs/README.md) · [Original Sprite Stacking skill](https://github.com/danielwh2/sprite-stacking) · [Sprite Stacking Demo](https://github.com/ev3rlit/sprite-stacking-demo)

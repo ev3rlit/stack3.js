@@ -1,9 +1,23 @@
 # CLI
 
-The command grammar is `stack3 <verb> <input> [options]`. Choose the output with `--format glb` or `--format stack`. A `.glb` output path also selects GLB automatically. From the workspace root, run the commands below with `npm run cli --` in place of `stack3`.
+## Installation
+
+With Node.js 22.12 or later, install the latest CLI package from GitHub Releases.
+
+```sh
+npm install -g https://github.com/ev3rlit/stack3.js/releases/latest/download/stack3-cli.tgz
+stack3 --version
+```
+
+To pin a version, use the same asset name in a tagged release. For example, [CLI v0.1.0](https://github.com/ev3rlit/stack3.js/releases/download/cli-v0.1.0/stack3-cli.tgz).
+
+## Commands
+
+The command grammar is `stack3 <verb> <input> [options]`. Choose the output with `--format glb` or `--format stack`. A `.glb` output path also selects GLB automatically.
 
 | Command | Purpose |
 | --- | --- |
+| `stack3 example <name>` | Copy the bundled `future-tank` project or `traffic-cone` atlas. Use `--output` to choose a destination. |
 | `stack3 inspect <input>` | Report mapped and missing directions, image dimensions, and input warnings. |
 | `stack3 build <input> --output <file.glb>` | Reconstruct a mesh and write a GLB. |
 | `stack3 build <input> --format stack --output <directory>` | Reconstruct a runtime stack and write its slice data and metadata. |
@@ -48,7 +62,7 @@ The stack bundle contains `stack.png` and `stack.json`. Its metadata records the
 
 Repeated builds reuse the local cache for matching input, format, and settings. Use `--no-cache` to bypass it or `STACK3_CACHE_DIR` to choose its location.
 
-`view` uses the browser viewer and Vite from the stack3.js workspace. The preview server listens on loopback. Press Ctrl+C to close it.
+`view` and `project open` use the browser viewer bundled with the installed CLI. The preview server listens on loopback. Press Ctrl+C to close it.
 
 [CLI requirements and completion check](../../docs/cli/README.md)
 

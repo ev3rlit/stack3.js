@@ -1,7 +1,7 @@
-# Web App
+# Web viewer
 
-The web app will host project documentation and a browser playground. The playground will reuse the viewer and its Worker so import, reconstruction, and preview behave the same in both surfaces.
+The public site serves the built browser viewer, demo yard, and comparison gallery. Atlas import and reconstruction run in the browser. Editing a local scene project uses the [CLI](../cli/README.md#installation) and its bundled viewer.
 
-Input and reconstruction can remain in the browser. The public example assets will provide a quick way to compare mesh and stack outputs.
+Push a `web-vX.Y.Z` tag to build and deploy the viewer to GitHub Pages. A `cli-vX.Y.Z` tag publishes the CLI independently.
 
-[Web app requirements](../../docs/web/README.md)
+[Public viewer](https://ev3rlit.github.io/stack3.js/) · [Web deployment workflow](../../.github/workflows/deploy-web.yml)

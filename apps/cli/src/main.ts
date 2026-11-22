@@ -1,4 +1,5 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { constants, existsSync } from 'node:fs';
+import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, extname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { PNG } from 'pngjs';
@@ -8,6 +9,7 @@ import { buildCacheKey, readBuildCache, writeBuildCache, type BuildOutput } from
 
 const HELP = `Usage: stack3 <verb> <input> [options]
 
+  example <name>         Copy future-tank or traffic-cone into the current directory
   inspect <input>        Check mapped directions and fitted image sizes
   build <input>          Build an asset and save it to --output
   view <directory>       Open a stack bundle in the local viewer (--no-open to print the URL only)
@@ -72,6 +74,21 @@ function outputFormat(output: string, format?: string, target?: string): 'glb' |
   return selected;
 }
 
+async function copyExample(name: string, output?: string) {
+  const examples = new Map([
+    ['future-tank', ['future-tank.stack3.json', 'samples/future-tank/future-tank.stack3.json']],
+    ['traffic-cone', ['traffic-cone-4view.png', 'samples/props/traffic-cone-4view.png']],
+  ]);
+  const example = examples.get(name);
+  if (!example) throw new Error('Choose future-tank or traffic-cone.');
+  const [filename, workspacePath] = example;
+  const packaged = new URL('../examples/' + filename, import.meta.url);
+  const source = existsSync(packaged) ? packaged : new URL('../../../' + workspacePath, import.meta.url);
+  const destination = resolve(output ?? filename);
+  await copyFile(source, destination, constants.COPYFILE_EXCL);
+  console.log(destination);
+}
+
 async function main() {
   if (process.argv[2] === 'project') {
     const { projectCommand } = await import('./project-command');
@@ -81,17 +98,26 @@ async function main() {
   const { positionals, values } = parseArgs({
     allowPositionals: true,
     options: {
-      help: { type: 'boolean', short: 'h' }, layout: { type: 'string' },
+      help: { type: 'boolean', short: 'h' }, version: { type: 'boolean', short: 'v' }, layout: { type: 'string' },
       format: { type: 'string' }, target: { type: 'string' },
       output: { type: 'string', short: 'o' }, layers: { type: 'string' }, resolution: { type: 'string' },
       height: { type: 'string' }, pivot: { type: 'string' }, threshold: { type: 'string' },
       spacing: { type: 'string' }, profile: { type: 'string' }, 'no-cache': { type: 'boolean' }, 'no-open': { type: 'boolean' },
     },
   });
+  if (values.version) {
+    const manifest = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
+    console.log(manifest.version);
+    return;
+  }
   if (values.help || positionals.length === 0) { console.log(HELP); return; }
   const [verb, input] = positionals;
+  if (verb === 'example' && positionals.length === 2) {
+    await copyExample(input, values.output);
+    return;
+  }
   if (positionals.length !== 2 || (verb !== 'inspect' && verb !== 'build' && verb !== 'view')) {
-    throw new Error('Use stack3 inspect <input>, stack3 build <input>, or stack3 view <directory>.');
+    throw new Error('See stack3 --help for available commands and arguments.');
   }
   if (verb === 'view') {
     const { viewStack } = await import('./view');
