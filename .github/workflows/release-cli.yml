@@ -27,7 +27,7 @@ jobs:
           mkdir -p dist
           npm run package:cli -- --version "$version" --output "$RUNNER_TEMP/stack3-package"
           npm pack "$RUNNER_TEMP/stack3-package" --pack-destination dist
-          mv "dist/stack3-cli-$version.tgz" dist/stack3-cli.tgz
+          mv "dist/stack3js-$version.tgz" dist/stack3-cli.tgz
           (cd dist && sha256sum stack3-cli.tgz > stack3-cli.tgz.sha256)
       - name: Smoke-test the installed CLI outside the checkout
         run: |

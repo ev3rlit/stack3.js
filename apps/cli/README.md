@@ -2,14 +2,14 @@
 
 ## Installation
 
-With Node.js 22.12 or later, install the latest CLI package from GitHub Releases.
+With Node.js 22.12 or later, install the CLI from npm.
 
 ```sh
-npm install -g https://github.com/ev3rlit/stack3.js/releases/latest/download/stack3-cli.tgz
+npm install -g stack3js
 stack3 --version
 ```
 
-To pin a version, use the same asset name in a tagged release. For example, [CLI v0.1.0](https://github.com/ev3rlit/stack3.js/releases/download/cli-v0.1.0/stack3-cli.tgz).
+The CLI is also available from [GitHub Releases](https://github.com/ev3rlit/stack3.js/releases).
 
 ## Commands
 
@@ -69,7 +69,7 @@ Repeated builds reuse the local cache for matching input, format, and settings. 
 
 `view` and `project open` use the browser viewer bundled with the installed CLI. The preview server listens on loopback. Press Ctrl+C to close it.
 
-[CLI requirements and completion check](../../docs/cli/README.md)
+[CLI requirements and completion check](https://github.com/ev3rlit/stack3.js/blob/main/docs/cli/README.md)
 
 ## Scene projects
 

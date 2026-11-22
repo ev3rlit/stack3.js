@@ -45,10 +45,10 @@ Drag to orbit, scroll or pinch to zoom, and click a part to edit its layer count
 
 ### 1. Install the CLI
 
-Install **Node.js 22.12 or later**, then run the command below. [CLI releases](https://github.com/ev3rlit/stack3.js/releases)
+Install **Node.js 22.12 or later**, then install the CLI from [npm](https://www.npmjs.com/package/stack3js).
 
 ```sh
-npm install -g https://github.com/ev3rlit/stack3.js/releases/latest/download/stack3-cli.tgz
+npm install -g stack3js
 stack3 --version
 ```
 
