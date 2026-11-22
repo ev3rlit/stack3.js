@@ -1,4 +1,5 @@
 import './style.css'
+import { setupLanguage, tr, exhibitName, onLanguageChange } from './language'
 import {
   Box3,
   OrthographicCamera,
@@ -17,6 +18,20 @@ import { createWater } from './water'
 const canvas = document.querySelector('canvas')!,
   status = document.querySelector<HTMLParagraphElement>('#status')!
 const guide = document.querySelector<HTMLSelectElement>('#guide')!
+setupLanguage()
+let progress: [number, number] | undefined
+let failed = false
+function translateTown() {
+  if (failed) status.textContent = tr('Could not load the village. Reload to try again.', '마을을 열 수 없습니다. 새로고침해 다시 시도하세요.')
+  else if (progress) status.textContent = tr('Preparing the village', '마을 준비 중') + ' · ' + progress.join(' / ')
+  else status.textContent = tr('Loading the village…', '마을을 불러오는 중…')
+  for (const item of exhibits) {
+    const option = guide.querySelector<HTMLOptionElement>(`option[value="${item.id}"]`)
+    if (option) option.textContent = exhibitName(item)
+  }
+}
+onLanguageChange(translateTown)
+translateTown()
 async function start() {
   const renderer = new WebGLRenderer({
     canvas,
@@ -42,12 +57,13 @@ async function start() {
   const terrain = makeTerrain(water.creek)
   scene.add(terrain)
   const town = await assemble(water.well, (ready, total) => {
-    status.textContent = '마을 준비 중 · ' + ready + ' / ' + total
+    progress = [ready, total]
+    translateTown()
   })
   const { groups, rotors, modelCount } = town
   scene.add(town.root)
   for (const item of exhibits) {
-    guide.add(new Option(item.name, item.id))
+    guide.add(new Option(exhibitName(item), item.id))
   }
   let dirty = true
   controls.addEventListener('change', () => {
@@ -193,8 +209,7 @@ async function start() {
 }
 start().catch((err) => {
   status.hidden = false
-  status.textContent =
-    '마을을 열 수 없습니다 · ' +
-    (err instanceof Error ? err.message : String(err))
+  failed = true
+  translateTown()
   console.error(err)
 })

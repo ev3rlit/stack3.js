@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -8,59 +8,63 @@
     />
     <meta name="theme-color" content="#f0e7d4" />
     <link rel="icon" href="data:," />
-    <title>Petite Town · 작은 마을 산책</title>
+    <title data-ko="Petite Town · 작은 마을 산책">Petite Town · A village walk</title>
   </head>
   <body>
     <main>
       <header>
+        <select id="language" aria-label="Language" data-ko-aria-label="언어">
+          <option value="en" lang="en">English</option>
+          <option value="ko" lang="ko">한국어</option>
+        </select>
         <div class="ornament" aria-hidden="true">✾</div>
         <h1>Petite Town</h1>
-        <p>작은 중세 마을 산책</p>
+        <p data-ko="작은 중세 마을 산책">A walk through a medieval village</p>
       </header>
-      <section id="landscape" aria-label="회전하고 확대할 수 있는 3D 마을">
+      <section id="landscape" aria-label="Interactive 3D village" data-ko-aria-label="회전하고 확대할 수 있는 3D 마을">
         <canvas
           tabindex="0"
-          aria-label="마을 전경. 방향키로 회전하고 더하기·빼기 키로 확대하거나 축소합니다."
+          aria-label="Village view. Use the arrow keys to rotate and plus or minus to zoom." data-ko-aria-label="마을 전경. 방향키로 회전하고 더하기·빼기 키로 확대하거나 축소합니다."
         ></canvas>
         <aside id="layer-editor" aria-labelledby="layer-title" hidden>
           <div class="editor-head">
             <strong id="layer-title"></strong
-            ><button id="layer-close" aria-label="레이어 편집 닫기">×</button>
+            ><button id="layer-close" aria-label="Close layer editor" data-ko-aria-label="레이어 편집 닫기">×</button>
           </div>
-          <label for="layer-part">부품</label
+          <label for="layer-part" data-ko="부품">Part</label
           ><select id="layer-part"></select>
           <div class="layer-scale">
-            <label for="layer-count">수직 레이어</label
+            <label for="layer-count" data-ko="수직 레이어">Vertical layers</label
             ><output id="layer-value" for="layer-count"></output>
           </div>
           <input id="layer-count" type="range" step="1" />
-          <label for="texture-projection">텍스처 투영</label>
+          <label for="texture-projection" data-ko="텍스처 투영">Texture projection</label>
           <select id="texture-projection">
-            <option value="asset">부품 기본값</option>
-            <option value="auto">자동 · 여러 뷰</option>
-            <option value="top-contour">상단 윤곽 → TOP</option>
+            <option value="asset" data-ko="부품 기본값">Part default</option>
+            <option value="auto" data-ko="자동 · 여러 뷰">Automatic · multiple views</option>
+            <option value="top-contour" data-ko="상단 윤곽 → TOP">Upper contour → TOP</option>
           </select>
           <span id="layer-note" role="status"></span>
           <div class="editor-actions">
-            <button id="layer-reset">기본값 복원</button
-            ><button id="layer-apply">적용</button>
+            <button id="layer-reset" data-ko="기본값 복원">Restore defaults</button
+            ><button id="layer-apply" data-ko="적용">Apply</button>
           </div>
         </aside>
         <div class="tools">
-          <button id="edit-open" hidden>레이어 편집</button>
-          <button id="home" aria-label="마을 전경으로 복귀" title="마을 전경">
+          <button id="edit-open" hidden data-ko="레이어 편집">Edit layers</button>
+          <button id="home" aria-label="Return to the village overview" data-ko-aria-label="마을 전경으로 복귀" title="Village overview" data-ko-title="마을 전경">
             ⌂</button
-          ><button id="out" aria-label="축소">−</button
-          ><button id="in" aria-label="확대">+</button>
+          ><button id="out" aria-label="Zoom out" data-ko-aria-label="축소">−</button
+          ><button id="in" aria-label="Zoom in" data-ko-aria-label="확대">+</button>
         </div>
-        <p id="status" role="status">마을을 불러오는 중…</p>
+        <p id="status" role="status">Loading the village…</p>
       </section>
       <footer>
-        <label for="guide">마을 도감</label
+        <label for="guide" data-ko="마을 도감">Village guide</label
         ><select id="guide" disabled>
-          <option value="">마을 전체 둘러보기</option></select
+          <option value="" data-ko="마을 전체 둘러보기">Explore the whole village</option></select
         ><span class="tip"
-          >오브젝트를 눌러 레이어 편집 · 드래그로 회전 · 핀치로 확대</span
+           data-ko="오브젝트를 눌러 레이어 편집 · 드래그로 회전 · 핀치로 확대">Tap an object to edit layers · Drag to rotate · Pinch to zoom</span
         >
       </footer>
     </main>

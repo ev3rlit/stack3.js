@@ -5,12 +5,7 @@ import { makeTerrain } from '../src/terrain'
 import { assemble } from '../src/town-instances'
 import { createWater } from '../src/water'
 
-const names: Record<string, string> = {
-  house: 'Timber House', bakery: 'Bakery', potionist: 'Potion Shop', well: 'Stone Well',
-  'apple-crate': 'Apple Crate', 'apple-stall': 'Apple Stall', barrel: 'Oak Barrel',
-  'flower-cart': 'Flower Cart', planter: 'Flowerpot', lamp: 'Crystal Street Lamp',
-  bridge: 'Stone Bridge', windmill: 'Windmill',
-}
+import { exhibitNames as names } from '../src/exhibit-names'
 const paper = '#f5f0e4'
 const ink = '#304f45'
 const line = '#dacfb9'

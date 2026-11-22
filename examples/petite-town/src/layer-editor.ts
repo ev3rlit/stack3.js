@@ -1,3 +1,4 @@
+import { tr, exhibitName, onLanguageChange } from './language'
 import {
   InstancedMesh,
   Raycaster,
@@ -9,48 +10,53 @@ import { maxLayers, minLayers, modelSettings, usesTopContour, type ProjectionCho
 import type { assemble, Placement } from './town-instances'
 
 type Town = Awaited<ReturnType<typeof assemble>>
-const names: Record<string, string> = {
-  house: '주택 본체',
-  'house-roof': '빨간 지붕',
-  'house-chimney': '굴뚝',
-  'house-door': '현관문',
-  'house-lantern': '현관등',
-  'house-window': '창문',
-  'house-window-flowers': '꽃창문',
-  'potion-window': '창문',
-  'potion-counter': '포션 매대',
-  'potion-ivy': '담쟁이',
-  'potion-chimney': '굴뚝',
-  'bakery-shell': '빵집 본체',
-  'potion-shell': '포션가게 본체',
-  'stone-ring': '돌 테두리',
-  'well-roof': '우물 지붕',
-  water: '수면',
-  post: '목재 기둥',
-  pail: '두레박',
-  rope: '줄',
-  'bridge-arch': '아치 보행판',
-  'bridge-side-frame': '측면 프레임',
-  apple: '사과',
-  crate: '상자',
-  loaf: '빵',
-  basket: '바구니',
-  counter: '진열판',
-  'bread-sign': '빵집 팻말',
-  'potion-sign': '포션 팻말',
-  bottle: '포션 병',
-  barrel: '오크통',
-  wheel: '바퀴',
-  'cart-body': '수레 본체',
-  'stall-frame': '판매대 본체',
-  awning: '천막',
-  flower: '꽃',
-  pot: '화분 그릇',
-  'lamp-post': '가로등 본체',
-  flag: '깃발',
-  'mill-body': '풍차 본체',
-  rotor: '풍차 날개',
-  fence: '울타리',
+const names: Record<string, [string, string]> = {
+  'house': ['House shell', '주택 본체'],
+  'house-roof': ['Red roof', '빨간 지붕'],
+  'house-chimney': ['Chimney', '굴뚝'],
+  'house-door': ['Front door', '현관문'],
+  'house-lantern': ['Wall lantern', '현관등'],
+  'house-window': ['Window', '창문'],
+  'house-window-flowers': ['Flower window', '꽃창문'],
+  'potion-window': ['Window', '창문'],
+  'potion-counter': ['Potion counter', '포션 매대'],
+  'potion-ivy': ['Ivy', '담쟁이'],
+  'potion-chimney': ['Chimney', '굴뚝'],
+  'bakery-shell': ['Bakery shell', '빵집 본체'],
+  'potion-shell': ['Potion shop shell', '포션가게 본체'],
+  'stone-ring': ['Stone ring', '돌 테두리'],
+  'well-roof': ['Well roof', '우물 지붕'],
+  'water': ['Water surface', '수면'],
+  'post': ['Timber post', '목재 기둥'],
+  'pail': ['Bucket', '두레박'],
+  'rope': ['Rope', '줄'],
+  'bridge-arch': ['Arched deck', '아치 보행판'],
+  'bridge-side-frame': ['Side frame', '측면 프레임'],
+  'apple': ['Apple', '사과'],
+  'crate': ['Crate', '상자'],
+  'loaf': ['Loaf', '빵'],
+  'basket': ['Basket', '바구니'],
+  'counter': ['Counter', '진열판'],
+  'bread-sign': ['Bakery sign', '빵집 팻말'],
+  'potion-sign': ['Potion sign', '포션 팻말'],
+  'bottle': ['Potion bottle', '포션 병'],
+  'barrel': ['Oak barrel', '오크통'],
+  'wheel': ['Wheel', '바퀴'],
+  'cart-body': ['Cart body', '수레 본체'],
+  'stall-frame': ['Stall frame', '판매대 본체'],
+  'awning': ['Awning', '천막'],
+  'flower': ['Flowers', '꽃'],
+  'pot': ['Flowerpot', '화분 그릇'],
+  'lamp-post': ['Lamp post', '가로등 본체'],
+  'flag': ['Flag', '깃발'],
+  'mill-body': ['Mill body', '풍차 본체'],
+  'rotor': ['Rotor', '풍차 날개'],
+  'fence': ['Fence', '울타리'],
+  'bakery-roof': ['Bakery roof', '빵집 지붕'],
+  'bakery-awning': ['Bakery awning', '빵집 차양'],
+  'bakery-window': ['Window', '창문'],
+  'bakery-counter': ['Bakery counter', '빵집 매대'],
+  'bakery-chimney': ['Chimney', '굴뚝'],
 }
 export function layerEditor(
   town: Town,
@@ -72,28 +78,40 @@ export function layerEditor(
   let active: Placement | undefined,
     action = 0
   const label = (p: Placement) =>
-    (names[p.part.id] ?? p.part.id) +
+    (names[p.part.id] ? tr(...names[p.part.id]) : p.part.id) +
     (town.placements.some(
       (q) => q.item === p.item && q.part.id === p.part.id && q.ordinal > 1,
     )
       ? ' ' + p.ordinal
       : '')
-  function show(p: Placement) {
-    action++
-    active = p
-    panel.hidden = false
-    title.textContent = p.item.name
+  let message: 'ready' | 'building' | 'error' = 'ready'
+  function translate(p: Placement) {
+    title.textContent = exhibitName(p.item)
     const peers = town.placements.filter((q) => q.item === p.item)
     parts.replaceChildren(...peers.map((q) => new Option(label(q), q.key)))
     parts.value = p.key
+    projection.options[0].textContent = usesTopContour(p.part.id, 'asset')
+      ? tr('Part default · Upper contour → TOP', '부품 기본값 · 상단 윤곽 → TOP')
+      : tr('Part default', '부품 기본값')
+    const settings = modelSettings(p.part.id)
+    if (message === 'building') note.textContent = tr('Building mesh…', '메시를 만드는 중…')
+    else if (message === 'error') note.textContent = tr('Could not apply changes. Try again.', '변경 사항을 적용하지 못했습니다. 다시 시도하세요.')
+    else if (settings.meshMethod === 'contour') note.textContent = tr('Front contour extrusion · Round hub', '정면 윤곽 돌출 · 원형 허브')
+    else note.textContent = tr(`Current: ${p.layers} layers · Default: ${settings.layers}`, `현재 ${p.layers}층 · 기본 ${settings.layers}층`)
+  }
+  onLanguageChange(() => { if (active && !panel.hidden) translate(active) })
+  function show(p: Placement) {
+    action++
+    active = p
+    message = 'ready'
+    panel.hidden = false
+    translate(p)
     slider.value = String(p.layers)
-    projection.options[0].textContent = usesTopContour(p.part.id, 'asset') ? '부품 기본값 · 상단 윤곽 → TOP' : '부품 기본값'
     projection.value = p.projection
     output.value = slider.value
     const settings = modelSettings(p.part.id)
     const def = settings.layers
     slider.disabled = settings.meshMethod === 'contour'
-    note.textContent = slider.disabled ? '정면 윤곽 돌출 · 원형 허브' : '현재 ' + p.layers + '층 · 기본 ' + def + '층'
     apply.disabled = true
     reset.disabled = p.layers === def && p.projection === 'asset'
   }
@@ -108,7 +126,8 @@ export function layerEditor(
       serial = ++action
     apply.disabled = true
     reset.disabled = true
-    note.textContent = '메시를 만드는 중…'
+    message = 'building'
+    translate(p)
     try {
       await town.edit(p, n, rule)
       redraw()
@@ -116,7 +135,9 @@ export function layerEditor(
     } catch (error) {
       if (action === serial) {
         show(p)
-        note.textContent = '적용 실패 · ' + String(error)
+        message = 'error'
+        translate(p)
+        console.error(error)
       }
     }
   }

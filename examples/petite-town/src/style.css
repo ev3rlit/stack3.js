@@ -228,3 +228,14 @@ select {
     overflow: auto;
   }
 }
+
+#language {
+  position: absolute;
+  top: max(6px, env(safe-area-inset-top));
+  right: var(--right-inset);
+  width: auto;
+  min-height: 32px;
+  padding: 4px 6px;
+  font-size: 12px;
+  pointer-events: auto;
+}

@@ -8,7 +8,7 @@
 
 [브라우저에서 Petite Town 실행](https://ev3rlit.github.io/stack3.js/examples/petite-town/standalone/) · [단일 HTML 다운로드](https://raw.githubusercontent.com/ev3rlit/stack3.js/main/examples/petite-town/standalone/index.html)
 
-파일을 기본 브라우저로 열면 마을이 로드된다. 드래그로 회전하고, 휠 또는 두 손가락으로 확대한다.
+첫 방문에는 영어로 표시된다. 화면 오른쪽 위 언어 메뉴에서 한국어를 선택하면 즉시 전환되며, 같은 브라우저로 다시 열 때도 선택이 유지된다. 드래그로 회전하고, 휠 또는 두 손가락으로 확대한다.
 
 ## 레이어 및 텍스처 투영 편집
 
