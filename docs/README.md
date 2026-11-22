@@ -2,6 +2,8 @@
 
 The first workflow is to turn an aligned multi-view image set into either an interactive 3D mesh or a sprite stack. Both results should be usable in a running application and exportable for later use. These documents describe planned work.
 
+For the implemented pipeline, follow the roof of a Petite Town house from its four-view PNG through reconstruction, export and browser assembly. [Atlas-to-runtime walkthrough](atlas-to-runtime.md)
+
 ## Feature Areas
 
 | Area | Responsibility |

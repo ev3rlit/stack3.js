@@ -1,12 +1,24 @@
 # stack3.js
 
-The inspiration for stack3.js came from Daniel White’s **sprite-stacking** skill. It carves an object’s shape from four pixel-art views and cuts it into horizontal slices. Drawing those slices from the ground up produces a sprite that can rotate on screen. [Daniel White’s original skill and slicing tools](https://github.com/danielwh2/sprite-stacking)
+The inspiration for stack3.js came from Daniel White’s **sprite-stacking** skill. It carves an object’s shape from four pixel-art views and cuts it into horizontal slices. stack3.js builds on that idea to turn orthographic views into a textured 3D object you can rotate and inspect from any angle. [Daniel White’s original skill and slicing tools](https://github.com/danielwh2/sprite-stacking)
 
-We explored that idea in the Sprite Stacking Demo and built stack3.js to make the workflow reusable in other browser games. A PNG atlas with four or six views can become a **runtime sprite stack** or a **textured 3D mesh**. The house below uses a separate four-view atlas for each part. [Sprite Stacking Demo](https://github.com/ev3rlit/sprite-stacking-demo)
+We built stack3.js to bring this workflow to browser games. A PNG atlas with four or six views can become a **runtime sprite stack** or a **textured 3D mesh**. The house below uses a separate four-view atlas for each part.
 
 ## How it works
 
+```mermaid
+flowchart LR
+    A["Reference image"] --> B["Four-view atlas<br/>Top · Left · Front · Rear"]
+    B --> C["Build a textured<br/>3D object"]
+    C --> D["Inspect from all angles"]
+    D -->|Needs refinement| E["Correct the views or<br/>rebuild and assemble parts"]
+    E --> D
+    D -->|Ready| F["Export GLB"]
+```
+
 [![Seven four-view atlases show the house shell, roof, chimney, door, lantern and two windows from the top, left, front and rear. Beside them the meshes separate, fit back together and rotate as one timber house.](docs/media/petite-town/house-atlases-to-mesh.webp)](examples/petite-town/atlases/)
+
+[Technical walkthrough: from atlas to sprite stack and runtime mesh](docs/atlas-to-runtime.md)
 
 ### Atlas tips
 
