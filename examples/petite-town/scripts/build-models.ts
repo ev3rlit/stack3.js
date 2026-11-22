@@ -1,6 +1,12 @@
 import { mkdir, readFile, readdir, rename, writeFile } from 'node:fs/promises'
+import { parseArgs } from 'node:util'
+import { isProjectionChoice } from '../src/model-settings'
 import { buildModel } from '../src/build-model'
-const args = process.argv.slice(2)
+const { values, positionals: args } = parseArgs({
+  options: { 'texture-projection': { type: 'string', default: 'asset' } }, allowPositionals: true,
+})
+const projection = values['texture-projection']
+if (!isProjectionChoice(projection)) throw new Error('Expected --texture-projection asset, auto or top-contour')
 const ids = args.length
   ? args
   : (await readdir('atlases'))
@@ -13,6 +19,7 @@ for (const id of ids) {
   const { glb, report: info } = buildModel(
     id,
     await readFile('atlases/' + id + '.png'),
+    undefined, projection,
   )
   const out = 'models/' + id + '.glb',
     temp = out + '.' + process.pid + '.tmp'

@@ -1,0 +1,192 @@
+{
+  "sourceAtlas": "hull-4view.png",
+  "geometry": "stack3 regularized visual hull from the RGB atlas silhouettes, with the turntable and large hatch relief guided by visible source geometry",
+  "dimensions": [
+    1874,
+    692
+  ],
+  "layout": [
+    "top",
+    "left",
+    "front",
+    "rear"
+  ],
+  "pixelsPerUnit": 200,
+  "groundY": 440,
+  "clay": {
+    "file": "hull-clay-4view.png",
+    "background": "transparent"
+  },
+  "depth": {
+    "file": "hull-depth-4view.png",
+    "encoding": "16-bit unsigned grayscale, linear inverse camera distance",
+    "background": 0,
+    "validRange": [
+      1,
+      65535
+    ],
+    "decode": "distance = near + (far - near) * (65535 - value) / 65534",
+    "units": "stack3 scene units",
+    "pixelCenterOffset": 0.5
+  },
+  "views": {
+    "top": {
+      "rect": [
+        0,
+        0,
+        396,
+        692
+      ],
+      "anchor": [
+        199,
+        346
+      ],
+      "origin": [
+        0,
+        1.04,
+        0
+      ],
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "forward": [
+        0,
+        -1,
+        0
+      ],
+      "near": 0,
+      "far": 1.14
+    },
+    "left": {
+      "rect": [
+        396,
+        0,
+        688,
+        692
+      ],
+      "anchor": [
+        740,
+        440
+      ],
+      "origin": [
+        -0.945,
+        0,
+        0
+      ],
+      "right": [
+        0,
+        0,
+        1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "forward": [
+        1,
+        0,
+        0
+      ],
+      "near": 0,
+      "far": 1.89
+    },
+    "front": {
+      "rect": [
+        1084,
+        0,
+        394,
+        692
+      ],
+      "anchor": [
+        1281,
+        440
+      ],
+      "origin": [
+        0,
+        0,
+        -1.6800000000000002
+      ],
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ],
+      "near": 0,
+      "far": 3.3600000000000003
+    },
+    "rear": {
+      "rect": [
+        1478,
+        0,
+        396,
+        692
+      ],
+      "anchor": [
+        1675,
+        440
+      ],
+      "origin": [
+        0,
+        0,
+        1.6800000000000002
+      ],
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "near": 0,
+      "far": 3.3600000000000003
+    }
+  },
+  "baseColor": {
+    "file": "hull-base-color-4view.png",
+    "encoding": "RGBA8 sRGB",
+    "source": "generated material pass registered per view to the Clay silhouettes"
+  },
+  "normal": {
+    "file": "hull-normal-4view.png",
+    "encoding": "RGBA8 linear data",
+    "space": "view",
+    "axes": {
+      "red": "+X image right",
+      "green": "+Y image up",
+      "blue": "+Z toward the camera"
+    },
+    "decode": "normal = normalize(2 * RGB / 255 - 1)",
+    "background": "alpha 0"
+  },
+  "size": [
+    1.69,
+    3.16,
+    0.94
+  ]
+}

@@ -1,5 +1,7 @@
 const detailed = new Set([
   'bakery-shell',
+  'bakery-roof',
+  'bakery-awning',
   'bakery-window',
   'potion-shell',
   'potion-window',
@@ -31,6 +33,7 @@ const rounded = new Set([
 ])
 export function modelSettings(id: string) {
   return {
+    ...(id === 'rotor' ? { meshMethod: 'contour' as const, contourHub: true } : {}),
     resolution: detailed.has(id) ? 64 : 48,
     layers: detailed.has(id) ? 44 : 32,
     profile: rounded.has(id) ? ('round' as const) : ('silhouette' as const),
@@ -39,3 +42,12 @@ export function modelSettings(id: string) {
 }
 export const minLayers = 8,
   maxLayers = 128
+
+export type ProjectionChoice = 'asset' | import('@stack3/core').TextureProjection
+export function isProjectionChoice(value: unknown): value is ProjectionChoice {
+  return value === 'asset' || value === 'auto' || value === 'top-contour'
+}
+
+export function usesTopContour(id: string, choice: ProjectionChoice) {
+  return choice === 'top-contour' || (choice === 'asset' && id === 'bridge-side-frame')
+}

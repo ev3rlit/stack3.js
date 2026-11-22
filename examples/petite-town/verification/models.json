@@ -164,6 +164,39 @@
     "roofTriangles": 5218,
     "recess": false
   },
+  "bakery-awning": {
+    "views": [
+      {
+        "direction": "top",
+        "width": 266,
+        "height": 83
+      },
+      {
+        "direction": "left",
+        "width": 81,
+        "height": 69
+      },
+      {
+        "direction": "front",
+        "width": 275,
+        "height": 69
+      },
+      {
+        "direction": "rear",
+        "width": 265,
+        "height": 69
+      }
+    ],
+    "warnings": [],
+    "resolution": 64,
+    "layers": 44,
+    "profile": "silhouette",
+    "pivot": "ground",
+    "triangles": 18864,
+    "bytes": 856284,
+    "roofTriangles": 5787,
+    "recess": false
+  },
   "bakery-chimney": {
     "views": [
       {
@@ -230,26 +263,59 @@
     "roofTriangles": 0,
     "recess": false
   },
-  "bakery-shell": {
+  "bakery-roof": {
     "views": [
       {
         "direction": "top",
-        "width": 383,
-        "height": 364
+        "width": 381,
+        "height": 324
       },
       {
         "direction": "left",
-        "width": 372,
-        "height": 448
+        "width": 330,
+        "height": 208
       },
       {
         "direction": "front",
-        "width": 372,
-        "height": 448
+        "width": 370,
+        "height": 208
       },
       {
         "direction": "rear",
         "width": 376,
+        "height": 208
+      }
+    ],
+    "warnings": [],
+    "resolution": 64,
+    "layers": 44,
+    "profile": "silhouette",
+    "pivot": "ground",
+    "triangles": 33452,
+    "bytes": 1842180,
+    "roofTriangles": 14901,
+    "recess": false
+  },
+  "bakery-shell": {
+    "views": [
+      {
+        "direction": "top",
+        "width": 354,
+        "height": 320
+      },
+      {
+        "direction": "left",
+        "width": 318,
+        "height": 448
+      },
+      {
+        "direction": "front",
+        "width": 354,
+        "height": 448
+      },
+      {
+        "direction": "rear",
+        "width": 360,
         "height": 448
       }
     ],
@@ -258,9 +324,9 @@
     "layers": 44,
     "profile": "silhouette",
     "pivot": "ground",
-    "triangles": 34536,
-    "bytes": 2738896,
-    "roofTriangles": 9498,
+    "triangles": 33200,
+    "bytes": 2125696,
+    "roofTriangles": 0,
     "recess": false
   },
   "bakery-window": {
@@ -470,18 +536,18 @@
       },
       {
         "direction": "left",
-        "width": 440,
-        "height": 109
+        "width": 416,
+        "height": 44
       },
       {
         "direction": "front",
         "width": 151,
-        "height": 109
+        "height": 50
       },
       {
         "direction": "rear",
         "width": 151,
-        "height": 109
+        "height": 50
       }
     ],
     "warnings": [],
@@ -489,9 +555,9 @@
     "layers": 44,
     "profile": "silhouette",
     "pivot": "ground",
-    "triangles": 13796,
-    "bytes": 899260,
-    "roofTriangles": 6522,
+    "triangles": 14356,
+    "bytes": 847368,
+    "roofTriangles": 5806,
     "recess": false
   },
   "bridge-side-frame": {
@@ -504,17 +570,17 @@
       {
         "direction": "left",
         "width": 416,
-        "height": 111
+        "height": 93
       },
       {
         "direction": "front",
         "width": 49,
-        "height": 111
+        "height": 122
       },
       {
         "direction": "rear",
         "width": 48,
-        "height": 111
+        "height": 122
       }
     ],
     "warnings": [],
@@ -522,9 +588,10 @@
     "layers": 44,
     "profile": "silhouette",
     "pivot": "ground",
-    "triangles": 8720,
-    "bytes": 432056,
-    "roofTriangles": 0,
+    "triangles": 11668,
+    "bytes": 574372,
+    "roofTriangles": 1189,
+    "textureProjection": "top-contour",
     "recess": false
   },
   "cart-body": {
@@ -1522,11 +1589,11 @@
       {
         "direction": "top",
         "width": 448,
-        "height": 69
+        "height": 138
       },
       {
         "direction": "left",
-        "width": 72,
+        "width": 144,
         "height": 446
       },
       {
@@ -1541,12 +1608,14 @@
       }
     ],
     "warnings": [],
+    "meshMethod": "contour",
+    "contourHub": true,
     "resolution": 64,
     "layers": 44,
     "profile": "silhouette",
     "pivot": "ground",
-    "triangles": 6796,
-    "bytes": 788632,
+    "triangles": 1640,
+    "bytes": 715032,
     "roofTriangles": 0,
     "recess": false
   },

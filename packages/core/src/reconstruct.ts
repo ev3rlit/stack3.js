@@ -1,9 +1,14 @@
+import { projectUpperContour, type TextureProjection } from './texture-projection';
+import { bleedEdges, extrudeContours } from './contour';
 import { frontAccentDecals, inferAccentViews, inferSurfaceDepth } from './atlas-comparison';
 import { extractSurface, extractVoxelSurface } from './surface';
 import { DIRECTIONS, prepareViews, type Direction, type Raster, type ViewSet } from './views';
 
 type Vec3 = [number, number, number];
 export type Settings = {
+  textureProjection?: TextureProjection;
+  meshMethod?: 'marching-cubes' | 'contour';
+  contourHub?: boolean;
   layers?: number;
   resolution?: number;
   height?: number;
@@ -88,7 +93,7 @@ function rankedViews(views: ViewSet, nx: number, ny: number, nz: number): Direct
     weights[DIRECTIONS.indexOf(b)] - weights[DIRECTIONS.indexOf(a)]);
 }
 
-function grid(views: ViewSet, settings: Settings, fallback?: Grid): Grid {
+function dimensions(views: ViewSet, settings: Settings) {
   const top = views.top!, front = views.front!, left = views.left!;
   const layers = settings.layers ?? 48;
   const resolution = settings.resolution ?? 96;
@@ -105,6 +110,11 @@ function grid(views: ViewSet, settings: Settings, fallback?: Grid): Grid {
   const depth = Math.max(2, Math.round(y / Math.max(x, y) * resolution));
   const size: Vec3 = [x, y, z];
   const pivot: Vec3 = [0, 0, settings.pivot === 'center' ? z / 2 : 0];
+  return { width, depth, layers, size, pivot };
+}
+
+function grid(views: ViewSet, settings: Settings, fallback?: Grid): Grid {
+  const { width, depth, layers, size, pivot } = dimensions(views, settings);
   if (width * depth * layers > 3_000_000) throw new Error('The grid is too large. Reduce layers or XY resolution.');
   const aligned: ViewSet = {};
   for (const direction of DIRECTIONS) {
@@ -160,7 +170,7 @@ function grid(views: ViewSet, settings: Settings, fallback?: Grid): Grid {
 
 type Grid = { width: number; depth: number; layers: number; size: Vec3; pivot: Vec3; volume: Uint8Array; aligned: ViewSet };
 
-function textureAtlas(views: ViewSet, accentViews: ViewSet = {}) {
+function textureAtlas(views: ViewSet, accentViews: ViewSet = {}, bleed = false) {
   const tiles = new Map<Direction, { image: Raster; left: number }>();
   const accents = new Map(tiles);
   let width = 0, height = 0;
@@ -169,7 +179,7 @@ function textureAtlas(views: ViewSet, accentViews: ViewSet = {}) {
     if (!view) continue;
     const scale = Math.min(1, 512 / Math.max(view.width, view.height));
     const image = resize(view, Math.max(1, Math.round(view.width * scale)), Math.max(1, Math.round(view.height * scale)));
-    target.set(direction, { image, left: width + 1 });
+    target.set(direction, { image: bleed ? bleedEdges(image) : image, left: width + 1 });
     width += image.width + 2;
     height = Math.max(height, image.height + 2);
   }
@@ -352,8 +362,22 @@ export function reconstruct(input: ViewSet, target: 'mesh' | 'stack', settings: 
 }
 
 export function reconstructPrepared(views: ViewSet, target: 'mesh' | 'stack', settings: Settings): AssetData {
-  const g = grid(views, settings);
-  return target === 'mesh' ? makeMesh(g, views) : makeStack(g, g.aligned);
+  let mesh: MeshData;
+  if (target === 'mesh' && settings.meshMethod === 'contour') {
+    const { size, pivot } = dimensions(views, settings);
+    const { tiles, texture } = textureAtlas(views, {}, true);
+    const front = views.front!;
+    const scale = Math.min(1, 1024 / Math.max(front.width, front.height));
+    const mask = resize(front, Math.max(1, Math.round(front.width * scale)), Math.max(1, Math.round(front.height * scale)));
+    mesh = extrudeContours(views, size, pivot, mask, tiles, texture, settings.contourHub ?? false, settings.resolution ?? 96);
+  } else {
+    const g = grid(views, settings);
+    if (target === 'stack') return makeStack(g, g.aligned);
+    mesh = makeMesh(g, views);
+  }
+  if (settings.textureProjection === 'top-contour')
+    projectUpperContour(mesh, views.top!, settings.resolution ?? 96, settings.layers ?? 48);
+  return mesh;
 }
 
 function comparisonMeshes(views: ViewSet, g: Grid) {

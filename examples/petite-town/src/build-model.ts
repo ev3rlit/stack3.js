@@ -1,20 +1,23 @@
 import { decode } from 'fast-png'
 import {
   encodeGlb,
+  projectUpperContour,
   inspectViews,
   parseLayout,
   prepareViews,
   reconstructPrepared,
   splitAtlas,
   type MeshData,
+  type Raster,
 } from '@stack3/core'
 import { BufferAttribute, BufferGeometry } from 'three'
-import { modelSettings } from './model-settings'
+import { modelSettings, usesTopContour, type ProjectionChoice } from './model-settings'
 
 const roofStart: Record<string, number> = {
   'bridge-arch': 0,
   'house-roof': 0,
-  'bakery-shell': 0.55,
+  'bakery-roof': 0,
+  'bakery-awning': 0.22,
   'potion-shell': 0.53,
   bakery: 0.55,
   potionist: 0.53,
@@ -39,6 +42,16 @@ function finishSurface(id: string, m: MeshData) {
   const { min, max } = g.boundingBox!
   const changed: number[] = []
   for (let i = 0; i < m.positions.length; i += 3) {
+    if (id === 'bridge-arch') {
+      // Ease the slab into each bank over the half-span. Keep a thin lip at
+      // the ends and a horizontal tangent at the crown, with no ramp seam.
+      const z = (m.positions[i + 2] - min.z) / (max.z - min.z)
+      const fromCenter = Math.abs(2 * z - 1)
+      const blend = 1 - 0.975 * fromCenter ** 3
+      m.positions[i + 1] = min.y + (m.positions[i + 1] - min.y) * blend
+      changed.push(i)
+      continue
+    }
     if (depth[id]) {
       const x = Math.abs((m.positions[i] - min.x) / (max.x - min.x) - 0.5) * 2
       const z =
@@ -72,7 +85,27 @@ function finishSurface(id: string, m: MeshData) {
   }
 }
 
-function projectTop(id: string, m: MeshData, w: number, h: number) {
+function extendPlanEdgePaint(mesh: MeshData, plan: Raster) {
+  // Carving is already complete. Give transparent margin texels in the packed
+  // TOP tile the adjacent surface colour so bevels and filtering do not pick up grey.
+  for (let y = -1; y <= plan.height; y++) {
+    const row = Math.min(plan.height - 1, Math.max(0, y)) * plan.width
+    let first = 0, last = plan.width - 1
+    while (first <= last && plan.data[(row + first) * 4 + 3] < 128) first++
+    while (last >= first && plan.data[(row + last) * 4 + 3] < 128) last--
+    if (first > last) continue
+    for (let x = -1; x <= plan.width; x++) {
+      if (x >= first && x <= last) continue
+      const source = (row + (x < first ? first : last)) * 4
+      const target = ((y + 1) * mesh.texture.width + x + 1) * 4
+      mesh.texture.data.set(plan.data.subarray(source, source + 3), target)
+    }
+  }
+}
+
+function projectTop(id: string, m: MeshData, plan: Raster, useTopUV: boolean) {
+  const {width:w, height:h} = plan
+  if (id === 'bakery-roof') extendPlanEdgePaint(m, plan)
   const used = new Map<number, number>(),
     indices = m.indices
   let triangles = 0
@@ -86,9 +119,14 @@ function projectTop(id: string, m: MeshData, w: number, h: number) {
         m.size[2] * roofStart[id]
     )
       continue
+    if (id === 'bakery-awning') {
+      const up = m.normals[a] + m.normals[b] + m.normals[c]
+      const front = Math.abs(m.normals[a + 1] + m.normals[b + 1] + m.normals[c + 1])
+      if (up < 0.85 * front) continue
+    }
     // Keep the gable-end bevels painted from their elevation. Their upward
     // normals otherwise pull a band of roof tiles across the plaster.
-    if (id === 'potion-shell' || id === 'bakery-shell') {
+    if (id === 'potion-shell' || id === 'bakery-roof') {
       const endNormal = Math.abs(
         m.normals[a + 1] + m.normals[b + 1] + m.normals[c + 1],
       )
@@ -124,7 +162,8 @@ function projectTop(id: string, m: MeshData, w: number, h: number) {
     normals.set(m.normals.subarray(old * 3, old * 3 + 3), v * 3)
     const u = clamp(positions[v * 3] / m.size[0] + 0.5),
       t = clamp(0.5 - positions[v * 3 + 2] / m.size[1])
-    uvs.set(
+    if (!useTopUV) uvs.set(m.uvs.subarray(old * 2, old * 2 + 2), v * 2)
+    else uvs.set(
       [
         (1.5 + u * (w - 1)) / m.texture.width,
         (1.5 + t * (h - 1)) / m.texture.height,
@@ -188,6 +227,7 @@ export function buildModel(
   id: string,
   png: Uint8Array,
   layers = modelSettings(id).layers,
+  projection: ProjectionChoice = 'asset',
 ) {
   const image = decode(png)
   if (image.channels !== 4 || image.depth !== 8)
@@ -203,10 +243,11 @@ export function buildModel(
   if (mesh.target !== 'mesh' || !mesh.indices.length)
     throw new Error('빈 메시 · ' + id)
   finishSurface(id, mesh)
-  const roof =
-    id in roofStart
-      ? projectTop(id, mesh, views.top!.width, views.top!.height)
-      : undefined
+  const topContour = usesTopContour(id, projection)
+  const contourTriangles = topContour ? projectUpperContour(mesh, views.top!, settings.resolution, layers) : 0
+  // Keep the deck's painted height shading when only its UV mode is changed.
+  const roof = (projection === 'asset' && id in roofStart) || id === 'bridge-arch'
+    ? projectTop(id, mesh, views.top!, projection === 'asset') : undefined
   const raw = encodeGlb(mesh),
     glb = roof?.colors ? withColors(raw, roof.colors) : raw
   const report = {
@@ -214,7 +255,8 @@ export function buildModel(
     ...settings,
     triangles: mesh.indices.length / 3,
     bytes: glb.length,
-    roofTriangles: roof?.triangles ?? 0,
+    roofTriangles: contourTriangles || (projection === 'asset' ? roof?.triangles : 0) || 0,
+    textureProjection: topContour ? 'top-contour' : projection,
     recess: id in depth,
   }
   return { glb, report }

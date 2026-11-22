@@ -172,6 +172,7 @@ async function start() {
           part: p.part.id,
           key: p.key,
           layers: p.layers,
+          projection: p.projection,
           matrix: p.proxy.matrixWorld.toArray(),
           screen: p.proxy.geometry
             .boundingBox!.getCenter(new Vector3())

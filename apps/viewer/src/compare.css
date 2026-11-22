@@ -26,3 +26,9 @@
 @media (max-width: 570px) {
   .compare-results { grid-template-columns: 1fr; }
 }
+
+
+.depth-fit > strong { display: block; padding: 12px 11px 0; font-size: 26px; font-variant-numeric: tabular-nums; }
+.depth-fit table { width: calc(100% - 22px); margin: 7px 11px; border-collapse: collapse; font-size: 13px; }
+.depth-fit th, .depth-fit td { border-bottom: 1px solid var(--border); padding: 6px 4px; text-align: right; font-variant-numeric: tabular-nums; }
+.depth-fit th:first-child, .depth-fit td:first-child { text-align: left; }

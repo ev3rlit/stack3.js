@@ -23,6 +23,9 @@ Build options
   --format glb|stack     Write a GLB file or a directory with stack.png and stack.json
                         Can be omitted when --output ends in .glb
   --output <path>        Required output path
+  --texture-projection <name>  auto (default) or top-contour for GLB output
+  --mesh-method <name>   marching-cubes (default) or contour for GLB output
+  --contour-hub          Add a centered round axle measured from TOP and LEFT
   --layers <integer>     Vertical samples (default 48)
   --spacing <number>     Sprite stack spacing multiplier (default 1)
   --profile <name>       silhouette, round, or round-base
@@ -102,6 +105,8 @@ async function main() {
       format: { type: 'string' }, target: { type: 'string' },
       output: { type: 'string', short: 'o' }, layers: { type: 'string' }, resolution: { type: 'string' },
       height: { type: 'string' }, pivot: { type: 'string' }, threshold: { type: 'string' },
+      'texture-projection': { type: 'string' },
+      'mesh-method': { type: 'string' }, 'contour-hub': { type: 'boolean' },
       spacing: { type: 'string' }, profile: { type: 'string' }, 'no-cache': { type: 'boolean' }, 'no-open': { type: 'boolean' },
     },
   });
@@ -142,7 +147,18 @@ async function main() {
     throw new Error('Use --profile silhouette, round, or round-base.');
   }
   if (values.pivot !== undefined && values.pivot !== 'ground' && values.pivot !== 'center') throw new Error('Pivot must be ground or center.');
+  const textureProjection = values['texture-projection'];
+  if (textureProjection !== undefined && textureProjection !== 'auto' && textureProjection !== 'top-contour')
+    throw new Error('Use --texture-projection auto or top-contour.');
+  if (textureProjection !== undefined && format !== 'glb') throw new Error('--texture-projection requires GLB output.');
+  const meshMethod = values['mesh-method'];
+  if (meshMethod !== undefined && meshMethod !== 'marching-cubes' && meshMethod !== 'contour')
+    throw new Error('Use --mesh-method marching-cubes or contour.');
+  if ((meshMethod || values['contour-hub']) && format !== 'glb') throw new Error('Mesh methods require GLB output.');
+  if (values['contour-hub'] && meshMethod !== 'contour') throw new Error('--contour-hub requires --mesh-method contour.');
+  if (meshMethod === 'contour' && profile && profile !== 'silhouette') throw new Error('Contour extrusion uses the FRONT silhouette.');
   const settings: Settings = {
+    textureProjection, meshMethod, contourHub: values['contour-hub'],
     layers: values.layers === undefined ? undefined : Number(values.layers),
     resolution: values.resolution === undefined ? undefined : Number(values.resolution),
     height: values.height === undefined ? undefined : Number(values.height),

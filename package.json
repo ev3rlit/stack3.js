@@ -7,7 +7,9 @@
   "scripts": {
     "cli": "node apps/cli/bin/stack3.mjs",
     "viewer": "vite apps/viewer",
-    "build": "npm run check && vite build apps/viewer",
+    "demo": "vite apps/demo",
+    "build:demo": "node scripts/build-demo.mjs",
+    "build": "npm run check && npm run build:demo && vite build apps/viewer",
     "check": "tsc --noEmit",
     "test": "tsx --test packages/core/test/*.test.ts apps/viewer/test/*.test.ts apps/cli/test/*.test.ts",
     "package:cli": "node scripts/package-cli.mjs"

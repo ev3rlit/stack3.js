@@ -1,4 +1,8 @@
 {
+  "windmillShaftSamplesInsideRotor": {
+    "inside": 743,
+    "sampled": 1392
+  },
   "ground": {
     "house": {
       "minimumY": 0.0,
@@ -6,7 +10,7 @@
     },
     "bakery": {
       "minimumY": 0.0,
-      "bankSupportFraction": 0.9993
+      "bankSupportFraction": 0.9963
     },
     "potionist": {
       "minimumY": 0.0,
@@ -49,15 +53,74 @@
       "bankSupportFraction": 1.0
     }
   },
+  "bakeryRoofHeightMetres": {
+    "bakeryRidge": [
+      2.55,
+      2.55,
+      2.55,
+      2.55,
+      2.55,
+      2.55,
+      2.55,
+      2.55,
+      2.55,
+      2.55,
+      2.55
+    ],
+    "bakeryEave": [
+      1.621174,
+      1.621174,
+      1.621174,
+      1.621174,
+      1.621174,
+      1.621174,
+      1.621174,
+      1.621174,
+      1.621174,
+      1.621174,
+      1.621174
+    ]
+  },
   "bridgeSideProjection": {
     "spanPixels": 1500,
-    "deckPixels": 69844,
+    "deckPixels": 38198,
     "exposedDeckPixelsBySide": [
       0,
       0
     ]
   },
-  "bridgeCrownRiseMetres": 0.4967,
+  "bridgeCapTexture": {
+    "sampledTopHits": 2805,
+    "hitsOutsideTopTile": 0
+  },
+  "bridgeApproach": {
+    "sampledWidthMetres": 0.7,
+    "lanes": 5,
+    "spacingMetres": 0.01,
+    "maxThresholdHeightMetres": 0.0035,
+    "maxRisePer10cmMetres": 0.0297
+  },
+  "bridgeCopingHeightRangesMetres": [
+    [
+      0.5591,
+      0.57
+    ],
+    [
+      0.5591,
+      0.57
+    ]
+  ],
+  "bridgeRailGapRangesMetres": [
+    [
+      0.29,
+      0.4372
+    ],
+    [
+      0.29,
+      0.4372
+    ]
+  ],
+  "bridgeCrownRiseMetres": 0.2457,
   "rayHitsNormalized": {
     "wellRingCentreAndRim": [
       null,
@@ -68,18 +131,18 @@
     ],
     "bridgeArchAndAbutments": [
       null,
-      0.9828,
-      0.9828
+      0.98,
+      0.98
     ],
     "bridgeDeckCentre": [
       1.0
     ],
     "bridgeDeckHeightProfile": [
-      0.2641,
-      0.7837,
+      0.1225,
+      0.7282,
       1.0,
-      0.7837,
-      0.2641
+      0.7482,
+      0.1225
     ],
     "wheelHubAndSpokeGaps": [
       1.0,
@@ -116,17 +179,17 @@
       1.0
     ],
     "bakeryEave": [
-      0.6358,
-      0.6358,
-      0.6358,
-      0.6358,
-      0.6358,
-      0.6358,
-      0.6358,
-      0.6358,
-      0.6358,
-      0.6358,
-      0.6358
+      0.2045,
+      0.2045,
+      0.2045,
+      0.2045,
+      0.2045,
+      0.2045,
+      0.2045,
+      0.2045,
+      0.2045,
+      0.2045,
+      0.2045
     ]
   },
   "sampledVertexDistancesMetres": {
@@ -152,8 +215,8 @@
     },
     "bridge": {
       "bridge-side-frame / bridge-arch": [
-        0.0061,
-        0.0056
+        0.0017,
+        0.0017
       ]
     },
     "bakery": {
@@ -169,14 +232,20 @@
         0.0047
       ],
       "bakery-counter / bakery-shell": [
-        0.0063
+        0.0058
       ],
-      "bakery-chimney / bakery-shell": [
-        0.012
+      "bakery-roof / bakery-shell": [
+        0.0051
+      ],
+      "bakery-awning / bakery-shell": [
+        0.0025
+      ],
+      "bakery-chimney / bakery-roof": [
+        0.0014
       ],
       "bakery-window / bakery-shell": [
-        0.002,
-        0.0035
+        0.0015,
+        0.0036
       ]
     },
     "potionist": {
@@ -274,9 +343,6 @@
     "windmill": {
       "post / mill-body": [
         0.0027
-      ],
-      "rotor / post": [
-        0.0014
       ]
     }
   }

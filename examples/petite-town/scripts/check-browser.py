@@ -94,13 +94,16 @@ def verify_editor(page):
         page.locator("#layer-count").fill(str(value))
         page.locator("#layer-apply").click()
         page.wait_for_function("([k,v])=>inspectTown().meshes.find(m=>m.key===k).layers===v",arg=[key,value])
+    page.select_option("#texture-projection", "top-contour")
     change(56)
     edited = snapshot(page)
+    assert next(m["projection"] for m in edited["meshes"] if m["key"]==key)=="top-contour"
     assert edited["triangles"] != before["triangles"]
     assert [m["layers"] for m in edited["meshes"] if m["part"]=="apple" and m["key"]!=key] == [32]*9
-    assert {v["key"]:v["count"] for v in edited["batches"]} == {"crate/32":1,"apple/32":4,"apple/56":1}
+    assert {v["key"]:v["count"] for v in edited["batches"]} == {"crate/32":1,"apple/32":4,"apple/56/top-contour":1}
     page.locator("#layer-reset").click()
     page.wait_for_function("inspectTown().batches.length===2")
+    page.select_option("#texture-projection", "top-contour")
     change(56)
     assert snapshot(page)["cache"]["built"]==edited["cache"]["built"]
     page.locator("main").screenshot(path=QA / "layer-editor.jpg",quality=90)
@@ -112,6 +115,7 @@ def verify_editor(page):
     page.select_option("#guide","apple-crate")
     page.locator("#edit-open").click()
     page.select_option("#layer-part",key)
+    assert page.locator("#texture-projection").input_value()=="top-contour"
     page.locator("#layer-reset").click()
     page.wait_for_function("inspectTown().batches.length===2")
     page.locator("#home").click()

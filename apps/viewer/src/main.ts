@@ -128,7 +128,7 @@ let job: Worker | null = null;
 let pending: ReturnType<typeof setTimeout> | undefined;
 let frameNext = true;
 let inputGeneration = 0;
-const reconstructionControls = ['targetMesh', 'targetStack', 'qualityPreset', 'layers', 'resolution', 'threshold', 'profile', 'height', 'pivot', 'resetReconstruction']
+const reconstructionControls = ['targetMesh', 'targetStack', 'meshMethod', 'textureProjection', 'contourHub', 'qualityPreset', 'layers', 'resolution', 'threshold', 'profile', 'height', 'pivot', 'resetReconstruction']
   .map(id => byId<HTMLInputElement | HTMLButtonElement | HTMLSelectElement>(id));
 const diskCache = byId('persistentCache');
 const spacingSlider = byId<HTMLInputElement>('spacing');
@@ -301,8 +301,22 @@ function queueReconstruction(delay = 125) {
   }
   for (const control of reconstructionControls) control.disabled = false;
   for (const control of ['height', 'pivot', 'layout', 'profile']) byId<HTMLInputElement>(control).disabled = 'parts' in source;
+  const meshMethod = byId<HTMLSelectElement>('meshMethod').value as Settings['meshMethod'];
+  const contour = target === 'mesh' && meshMethod === 'contour';
+  const contourHub = contour && byId<HTMLInputElement>('contourHub').checked;
+  byId('meshOptions').hidden = target !== 'mesh';
+  byId('resolutionName').textContent = contourHub ? 'Hub segments' : 'Texture resolution';
+  const resolution = byId<HTMLInputElement>('resolution').valueAsNumber;
+  byId<HTMLOutputElement>('resolutionValue').value = contourHub ? String(resolution) : resolutionLabel(resolution);
+  byId('hubOption').hidden = !contour;
+  if (contour) {
+    for (const id of ['qualityPreset', 'layers', 'profile']) byId<HTMLInputElement>(id).disabled = true;
+    byId<HTMLInputElement>('resolution').disabled = !contourHub;
+  }
   const value = (id: string) => byId<HTMLInputElement>(id).valueAsNumber;
   const settings: Settings = {
+    textureProjection: target === 'mesh' ? byId<HTMLSelectElement>('textureProjection').value as Settings['textureProjection'] : undefined,
+    meshMethod: contour ? meshMethod : undefined, contourHub: contourHub || undefined,
     layers: value('layers'), resolution: value('resolution'), threshold: value('threshold'),
     height: value('height'), pivot: byId<HTMLSelectElement>('pivot').value as Settings['pivot'],
     profile: 'parts' in source ? 'silhouette' : byId<HTMLSelectElement>('profile').value as Settings['profile'],
@@ -326,7 +340,7 @@ async function startReconstruction(id: number, source: Source, format: Job['targ
   const cached = await findPreview(key, persistent);
   if (id !== inputGeneration) return;
   if (cached) { present(cached.value, cached.origin); return; }
-  let preview = (settings.layers! > 45 || settings.resolution! > 96)
+  let preview = settings.meshMethod !== 'contour' && (settings.layers! > 45 || settings.resolution! > 96)
     ? { ...settings, layers: Math.min(45, settings.layers!), resolution: Math.min(96, settings.resolution!) }
     : undefined;
   const previewKey = JSON.stringify([sourceKey, format, preview]);
@@ -541,7 +555,7 @@ for (const [id, output] of [['layers', 'layerValue'], ['resolution', 'resolution
     queueReconstruction();
   });
 }
-for (const id of ['height', 'pivot', 'layout', 'profile']) byId(id).addEventListener('change', () => queueReconstruction(0));
+for (const id of ['height', 'pivot', 'layout', 'profile', 'meshMethod', 'textureProjection', 'contourHub']) byId(id).addEventListener('change', () => queueReconstruction(0));
 
 function resolutionLabel(resolution: number) {
   return `${resolution} px · ${(resolution / qualities.balanced.resolution).toFixed(2)}×`;
@@ -560,6 +574,9 @@ byId<HTMLSelectElement>('qualityPreset').addEventListener('change', event => {
   queueReconstruction(0);
 });
 byId('resetReconstruction').addEventListener('click', () => {
+  byId<HTMLSelectElement>('meshMethod').value = 'marching-cubes';
+  byId<HTMLSelectElement>('textureProjection').value = 'auto';
+  byId<HTMLInputElement>('contourHub').checked = false;
   byId<HTMLSelectElement>('qualityPreset').value = 'balanced';
   byId<HTMLSelectElement>('profile').value = byId<HTMLSelectElement>('samplePreset').value === 'cone' ? 'round-base' : 'silhouette';
   applyQuality('balanced');

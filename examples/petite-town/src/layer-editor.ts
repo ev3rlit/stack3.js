@@ -5,7 +5,7 @@ import {
   type Camera,
   type Object3D,
 } from 'three'
-import { maxLayers, minLayers, modelSettings } from './model-settings'
+import { maxLayers, minLayers, modelSettings, usesTopContour, type ProjectionChoice } from './model-settings'
 import type { assemble, Placement } from './town-instances'
 
 type Town = Awaited<ReturnType<typeof assemble>>
@@ -63,6 +63,7 @@ export function layerEditor(
     title = document.querySelector('#layer-title')!
   const parts = document.querySelector<HTMLSelectElement>('#layer-part')!,
     slider = document.querySelector<HTMLInputElement>('#layer-count')!
+  const projection = document.querySelector<HTMLSelectElement>('#texture-projection')!
   const output = document.querySelector<HTMLOutputElement>('#layer-value')!,
     note = document.querySelector<HTMLElement>('#layer-note')!
   const apply = document.querySelector<HTMLButtonElement>('#layer-apply')!,
@@ -86,18 +87,22 @@ export function layerEditor(
     parts.replaceChildren(...peers.map((q) => new Option(label(q), q.key)))
     parts.value = p.key
     slider.value = String(p.layers)
+    projection.options[0].textContent = usesTopContour(p.part.id, 'asset') ? '부품 기본값 · 상단 윤곽 → TOP' : '부품 기본값'
+    projection.value = p.projection
     output.value = slider.value
-    const def = modelSettings(p.part.id).layers
-    note.textContent = '현재 ' + p.layers + '층 · 기본 ' + def + '층'
+    const settings = modelSettings(p.part.id)
+    const def = settings.layers
+    slider.disabled = settings.meshMethod === 'contour'
+    note.textContent = slider.disabled ? '정면 윤곽 돌출 · 원형 허브' : '현재 ' + p.layers + '층 · 기본 ' + def + '층'
     apply.disabled = true
-    reset.disabled = p.layers === def
+    reset.disabled = p.layers === def && p.projection === 'asset'
   }
   function hide() {
     action++
     active = undefined
     panel.hidden = true
   }
-  async function change(n: number) {
+  async function change(n: number, rule: ProjectionChoice) {
     if (!active) return
     const p = active,
       serial = ++action
@@ -105,7 +110,7 @@ export function layerEditor(
     reset.disabled = true
     note.textContent = '메시를 만드는 중…'
     try {
-      await town.edit(p, n)
+      await town.edit(p, n, rule)
       redraw()
       if (action === serial) show(p)
     } catch (error) {
@@ -119,15 +124,16 @@ export function layerEditor(
   slider.max = String(maxLayers)
   slider.oninput = () => {
     output.value = slider.value
-    apply.disabled = Number(slider.value) === active?.layers
+    apply.disabled = Number(slider.value) === active?.layers && projection.value === active?.projection
   }
+  projection.onchange = () => {apply.disabled = Number(slider.value) === active?.layers && projection.value === active?.projection}
   parts.onchange = () => {
     const p = town.placements.find((q) => q.key === parts.value)
     if (p) show(p)
   }
-  apply.onclick = () => void change(Number(slider.value))
+  apply.onclick = () => void change(Number(slider.value), projection.value as ProjectionChoice)
   reset.onclick = () => {
-    if (active) void change(modelSettings(active.part.id).layers)
+    if (active) void change(modelSettings(active.part.id).layers, 'asset')
   }
   function close() {
     hide()

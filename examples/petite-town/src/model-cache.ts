@@ -1,3 +1,4 @@
+import type { ProjectionChoice } from './model-settings'
 import {
   Mesh,
   type BufferGeometry,
@@ -37,7 +38,7 @@ export function modelCache(water: ShaderMaterial) {
   const idle = new Map<string, Template>()
   const loader = new GLTFLoader()
   const stats = { built: 0, disk: 0, memory: 0 }
-  function request(id: string, layers: number) {
+  function request(id: string, layers: number, projection: ProjectionChoice) {
     if (!worker) {
       worker = new ModelWorker()
       worker.onmessage = ({ data }: MessageEvent<Reply>) => {
@@ -61,6 +62,7 @@ export function modelCache(water: ShaderMaterial) {
         ticket,
         id,
         layers,
+        projection,
         url: new URL(url, document.baseURI).href,
       })
     })
@@ -69,8 +71,9 @@ export function modelCache(water: ShaderMaterial) {
     id: string,
     layers: number,
     key: string,
+    projection: ProjectionChoice,
   ): Promise<Template> {
-    const reply = await request(id, layers)
+    const reply = await request(id, layers, projection)
     stats[reply.origin]++
     const gltf = await loader.parseAsync(reply.buffer, '')
     const mesh = gltf.scene.children[0] as Mesh
@@ -101,8 +104,8 @@ export function modelCache(water: ShaderMaterial) {
       image.close()
     mat.dispose()
   }
-  function get(id: string, layers: number) {
-    const key = id + '/' + layers
+  function get(id: string, layers: number, projection: ProjectionChoice) {
+    const key = id + '/' + layers + (projection === 'asset' ? '' : '/' + projection)
     references.set(key, (references.get(key) ?? 0) + 1)
     const found = entries.get(key)
     if (found) {
@@ -110,7 +113,7 @@ export function modelCache(water: ShaderMaterial) {
       idle.delete(key)
       return found
     }
-    const pending = load(id, layers, key).catch((e) => {
+    const pending = load(id, layers, key, projection).catch((e) => {
       entries.delete(key)
       references.delete(key)
       throw e

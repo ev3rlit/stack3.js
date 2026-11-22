@@ -275,22 +275,27 @@ function start(token: string) {
     const s = node.settings;
     const settings = (patch: object) => send([{ action: 'node.set', id: node.id, patch: { settings: patch } }]);
     const stack = s.format === 'stack';
+    const contour = !stack && s.meshMethod === 'contour';
     const advanced = document.createElement('details');
     const summary = document.createElement('summary');
     summary.textContent = 'Reconstruction settings';
     advanced.append(summary,
-      numberField('Layers', s.layers, 8, 128, 1, value => settings({ layers: value })),
-      numberField('Texture resolution', s.resolution, 16, 192, 1, value => settings({ resolution: value })),
+      ...(!contour ? [numberField('Layers', s.layers, 8, 128, 1, value => settings({ layers: value }))] : []),
+      ...(!contour || s.contourHub ? [numberField(contour ? 'Hub segments' : 'Texture resolution', s.resolution, 16, 192, 1, value => settings({ resolution: value }))] : []),
       ...(stack ? [numberField('Spacing', s.spacing, .05, 20, .05, value => settings({ spacing: value }))] : []),
       numberField('Height', s.height, .01, 100, .01, value => settings({ height: value })),
       numberField('Background threshold', s.threshold, 0, 255, 1, value => settings({ threshold: value })),
       selectField('Pivot', s.pivot, [['ground', 'Ground'], ['center', 'Center']], value => settings({ pivot: value })),
-      selectField('Cross-section', s.profile, [['silhouette', 'From silhouettes'], ['round', 'Round'], ['round-base', 'Round above square base']],
-        value => settings({ profile: value })),
+      ...(!contour ? [selectField('Cross-section', s.profile, [['silhouette', 'From silhouettes'], ['round', 'Round'], ['round-base', 'Round above square base']],
+        value => settings({ profile: value }))] : []),
     );
     return [
-      selectField('Asset type', s.format, [['stack', 'Sprite stack'], ['glb', 'Marching Cubes (3D mesh)']],
-        value => settings({ format: value })),
+      selectField('Asset type', contour ? 'contour' : s.format, [['stack', 'Sprite stack'], ['glb', 'Marching Cubes (3D mesh)'], ['contour', 'Contour extrusion (3D mesh)']],
+        value => settings({ format: value === 'stack' ? 'stack' : 'glb', meshMethod: value === 'contour' ? 'contour' : 'marching-cubes' })),
+      ...(!stack ? [selectField('Texture projection', s.textureProjection ?? 'auto',
+        [['auto', 'Automatic (multi-view)'], ['top-contour', 'Upper contour from TOP']],
+        value => settings({ textureProjection: value }))] : []),
+      ...(contour ? [check('Centered round hub', s.contourHub ?? false, value => settings({ contourHub: value }))] : []),
       muted(stack ? 'Multi-view texturing blends colors from the atlas views.' : 'Multi-view texturing projects atlas views onto the mesh.'),
       check('Material lighting', s.lighting, value => settings({ lighting: value })),
       ...(stack ? [

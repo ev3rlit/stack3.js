@@ -85,7 +85,9 @@
     "prompt": "Create one wide PNG production atlas of the bare bakery building, ochre front-gabled roof, cream plaster, rounded dark oak beams, an empty flat-topped wide oak sales counter projecting from the lower front facade, no sign no baskets no loaves as four orthographic views of one fixed object. Use the attached references for identity and appearance when supplied. Keep the same pose, parts, proportions, asymmetries, materials, colors, markings, and surface detail in every panel. Preserve the reference's rendering style, gradients, and edge treatment.\n\nArrange exactly four panels in one horizontal row, in this order: TOP, LEFT, FRONT, REAR. Use transparent or uniform light backgrounds and generous blank gutters between silhouettes. Leave the full object and its footprint uncropped in every panel. Keep one common scale in pixels per unit. Omit labels, frames, grids, props, and cast shadows.\n\nTOP — True orthographic plan. Put the camera directly over the object with its optical axis vertical and pointed straight down, perpendicular to the ground plane. Use a 90° depression angle with zero roll. The object's front points toward the bottom of the image. Place the silhouette using the full footprint, including any base or horizontal ledges that extend beyond the top surfaces. Landmarks on the same vertical line project to the same image point, regardless of height. Vertical edges have zero projected length, and vertical wall faces appear edge-on. Show the upper-facing and sloped surfaces visible on this axis. Exclude any tilted overhead, isometric, three-quarter, or perspective framing.\n\nLEFT — Horizontal orthographic left elevation, front pointing screen-left. Show the full length and height. FRONT — Horizontal orthographic elevation looking directly at the front. REAR — Horizontal orthographic elevation looking directly at the rear. Use level cameras and the same ground line across these three panels.\n\nMatch TOP length to LEFT length and TOP width to FRONT and REAR width. Match LEFT, FRONT, and REAR heights. Keep the same identifiable part geometry and placement across all views.\n\nShared art direction: a petite medieval fantasy toy village, softly hand-painted gouache on carved wood and painted clay, warm cream plaster, strawberry, golden ochre, and dusty teal accents, rounded timber and stone, tactile softly beveled edges, no humans or characters. Use a genuinely transparent background. Exactly four separate drawings, spaced apart. A studio model sheet only. TOP must read like an architectural floor plan with zero visible vertical wall height.\nReference image: the finished assembly, for painted material and component identity. Isolate ONLY the requested component in all four panels.",
     "kind": "four-view",
     "sha256": "fe7b01d45a49c0d38ff46bbc532e99c6f33275c20a85af215c0bc84838c86522",
-    "acceptedAtlas": "bakery-shell-bare.png"
+    "acceptedAtlas": "bakery-body-registered.png",
+    "acceptedLeft": false,
+    "acceptedSha256": "c2efde3d56cf19059c9724892bb71b6adb4cdcbcead8948dae675a29ce8a3ab0"
   },
   "loaf": {
     "references": [
@@ -286,7 +288,11 @@
     ],
     "prompt": "Create one wide PNG production atlas of one complete detached four-bladed miniature windmill rotor, four chunky oak spars at diagonal X angles carrying cream linen sails connected to a single central round bronze hub; standing upright, FRONT looks directly at hub; LEFT sees its slim thickness; no tower as four orthographic views of one fixed object. Use the attached references for identity and appearance when supplied. Keep the same pose, parts, proportions, asymmetries, materials, colors, markings, and surface detail in every panel. Preserve the reference's rendering style, gradients, and edge treatment.\n\nArrange exactly four panels in one horizontal row, in this order: TOP, LEFT, FRONT, REAR. Use transparent or uniform light backgrounds and generous blank gutters between silhouettes. Leave the full object and its footprint uncropped in every panel. Keep one common scale in pixels per unit. Omit labels, frames, grids, props, and cast shadows.\n\nTOP — True orthographic plan. Put the camera directly over the object with its optical axis vertical and pointed straight down, perpendicular to the ground plane. Use a 90° depression angle with zero roll. The object's front points toward the bottom of the image. Place the silhouette using the full footprint, including any base or horizontal ledges that extend beyond the top surfaces. Landmarks on the same vertical line project to the same image point, regardless of height. Vertical edges have zero projected length, and vertical wall faces appear edge-on. Show the upper-facing and sloped surfaces visible on this axis. Exclude any tilted overhead, isometric, three-quarter, or perspective framing.\n\nLEFT — Horizontal orthographic left elevation, front pointing screen-left. Show the full length and height. FRONT — Horizontal orthographic elevation looking directly at the front. REAR — Horizontal orthographic elevation looking directly at the rear. Use level cameras and the same ground line across these three panels.\n\nMatch TOP length to LEFT length and TOP width to FRONT and REAR width. Match LEFT, FRONT, and REAR heights. Keep the same identifiable part geometry and placement across all views.\n\nShared art direction: a petite medieval fantasy toy village, softly hand-painted gouache on carved wood and painted clay, warm cream plaster, strawberry, golden ochre, and dusty teal accents, rounded timber and stone, tactile softly beveled edges, no humans or characters. Use a genuinely transparent background. Exactly four separate drawings, spaced apart. A studio model sheet only. TOP must read like an architectural floor plan with zero visible vertical wall height.\nReference image: the finished assembly, for painted material and component identity. Isolate ONLY the requested component in all four panels.",
     "kind": "four-view",
-    "sha256": "0591c955c2c25b5f8ca2fcf4c161024cafbfdc037c701bac7a69683bf2b3bc8c"
+    "sha256": "0591c955c2c25b5f8ca2fcf4c161024cafbfdc037c701bac7a69683bf2b3bc8c",
+    "acceptedLeft": "rotor-left.png",
+    "leftSha256": "ffc3ae9a075394bbb7ac1b8a882a0ee8e967861d1f45abef060b91727b573405",
+    "depthScale": 2,
+    "registration": "Register the edge-on oak and hub profile to the original side camera. Double depth along TOP rows and LEFT columns after normalizing the four views."
   },
   "fence": {
     "references": [
@@ -544,8 +550,9 @@
     "kind": "four-view",
     "acceptedAtlas": "bridge-arch-ends.png",
     "sha256": "99b84e91b050aa2a6c13c74e8ac8824844c55647237e1f63711a9c1d1d97a43d",
-    "acceptedLeft": "bridge-deck-slab-left.png",
-    "preservePanelScale": true
+    "acceptedLeft": false,
+    "preservePanelScale": true,
+    "acceptedElevations": "bridge-deck-shallow-elevations.png"
   },
   "bridge-side-frame": {
     "prompt": "Create one wide PNG production atlas of ONE detached slender side parapet FRAME for the same arched pedestrian bridge: a long, narrow, standalone wall following the upward bow of the deck. It is ONLY ONE thin masonry arch band with two short foot/posts at its ends, no central road, no second railing, no floor. Width across one thin stone, length 3 metres, height 0.8 m. In LEFT the upper and lower contours rise toward the center, with a completely transparent broad arch cutout underneath and two short vertical end piers standing on a common baseline. Thin sage teal painted stripe and tiny strawberry blossom carvings on warm cream ochre masonry. TOP is a VERY narrow straight vertical strip of capstones with two end caps. FRONT and REAR each show just one narrow straight vertical end post, not a pair of posts. Side wall thickness roughly one sixth of height; the long elevation is roughly four times the height. All four views depict this single detached component as four orthographic views of one fixed object. Use the attached references for identity and appearance when supplied. Keep the same pose, parts, proportions, asymmetries, materials, colors, markings, and surface detail in every panel. Preserve the reference's rendering style, gradients, and edge treatment.\n\nArrange exactly four panels in one horizontal row, in this order: TOP, LEFT, FRONT, REAR. Use transparent or uniform light backgrounds and generous blank gutters between silhouettes. Leave the full object and its footprint uncropped in every panel. Keep one common scale in pixels per unit. Omit labels, frames, grids, props, and cast shadows.\n\nTOP — True orthographic plan. Put the camera directly over the object with its optical axis vertical and pointed straight down, perpendicular to the ground plane. Use a 90° depression angle with zero roll. The object's front points toward the bottom of the image. Place the silhouette using the full footprint, including any base or horizontal ledges that extend beyond the top surfaces. Landmarks on the same vertical line project to the same image point, regardless of height. Vertical edges have zero projected length, and vertical wall faces appear edge-on. Show the upper-facing and sloped surfaces visible on this axis. Exclude any tilted overhead, isometric, three-quarter, or perspective framing.\n\nLEFT — Horizontal orthographic left elevation, front pointing screen-left. Show the full length and height. FRONT — Horizontal orthographic elevation looking directly at the front. REAR — Horizontal orthographic elevation looking directly at the rear. Use level cameras and the same ground line across these three panels.\n\nMatch TOP length to LEFT length and TOP width to FRONT and REAR width. Match LEFT, FRONT, and REAR heights. Keep the same identifiable part geometry and placement across all views.\n\nPainted miniature medieval toy village, match the reference atlas for stone, palette and brushwork. Reference is the assembled bridge for identity only. Draw ONLY the named component. Narrow entrance at the bottom of TOP, long span left-to-right in LEFT, genuinely transparent background including openings. Keep depth and height the same across views; no labels or shadows.",
@@ -554,7 +561,13 @@
     ],
     "kind": "four-view",
     "topQuarterTurns": 1,
-    "sha256": "6663a414d958b522328271fb9e2fab55da46b4f102b4dcd3619e3b9dac882777"
+    "sha256": "6663a414d958b522328271fb9e2fab55da46b4f102b4dcd3619e3b9dac882777",
+    "acceptedElevations": "bridge-frame-square-elevations.png",
+    "preservePanelScale": true,
+    "openingHeightFit": {
+      "source": 0.47,
+      "target": 0.2
+    }
   },
   "bridge-arch-ends": {
     "prompt": "Correct the attached hand-painted stone bridge deck atlas. Keep its first two views (TOP rail-free rectangular paving, LEFT thin crowned arch) unchanged. Replace only the third and fourth drawings, FRONT and REAR. Each end elevation must have a geometrically rectangular silhouette with vertical parallel sides from the entrance sill all the way up to the crown; the far rows have the exact same width as the near row. No taper, no perspective: the measured width near the upper edge must equal the width near the lower edge. Square cropped-stone ends, tiny natural corner rounding only. Show a stacked elevation of horizontal cobble bands rising behind the low entrance lip to the high middle stone, PAINTED IN A RECTANGULAR OUTLINE. Camera is level. Flatten any projecting border blocks into the pavement. Identical widths and heights of the two ends. Match a FRONT/REAR width of 215 units to height of 182 units, preserving existing style. No railing, columns, text or shadows. Keep the true transparent background and separated four panels in order TOP LEFT FRONT REAR.",
@@ -758,5 +771,83 @@
     ],
     "prompt": "Generate one replacement LEFT elevation of the petite-town market awning's side-facing strawberry red fabric valance. The attached TOP, FRONT, and REAR describe the exact object. Preserve its parts, proportions, asymmetries, materials, and rendering style.\n\nCorrect this observed error in the previous LEFT: The target LEFT silhouette and camera are correct but the side hem incorrectly has alternating cream and red stripes. From the exact left-side camera, the whole visible side curtain must appear entirely the SAME STRAWBERRY RED as the existing red lobes; recolour every cream region to match. Continuous red canvas from the front tip through the rear. All SIX rounded hanging scallops remain distinct in the outline because The red-and-cream stripes extend from back to front. The outermost longitudinal stripe visible from the side is red for its full length..\n\nLook horizontally across the object's width in orthographic projection. The front points screen-left. Match the full front-to-rear length measured in TOP and the height and ground line of FRONT and REAR at one common scale. Return only LEFT, uncropped with a clear margin, on a transparent or uniform light background without text or cast shadows.\n\nImage 1 is the EDIT TARGET. Only change fabric colour in the cream patches to strawberry red; remove all stripe boundaries. Preserve the exact same 2.28:1 triangular side outline, gently upward-sloping boundary (low left, high right), level line of six scallop tips, brush texture and soft edge treatment. Do not add a hem binding, piping, roof thickness, visible upper plane, outlines, or decorative patterns. Soft natural local shading within one red hue. Images 2–4 are TOP FRONT REAR, their stripes are solely context. Output only the solid-red left side on transparent alpha.",
     "sha256": "9dfd42ba92ffe6d6a252140a65cdd779ffd5ca0cf5b8135e30398fce66581549"
+  },
+  "bridge-deck-shallow-elevations": {
+    "kind": "elevations",
+    "references": [
+      "guides/bridge-capstone-profile.png",
+      "bridge-side-frame.png: LEFT",
+      "bridge-arch-ends.png: TOP, FRONT, REAR"
+    ],
+    "prompt": "Generate the corrected LEFT, FRONT and REAR elevations ONLY of the detached walking deck of the petite stone footbridge. The existing TOP plan is approved. This is the deck between two separate side frames; it is just one thin curved layer of cream paving stones. Its curve must be very shallow, parallel to the gentle upper run of the frame capstones. All views are strictly orthographic.\n\nImage 1 is the dimensionally calibrated LEFT silhouette to reproduce very closely. Its left and right tips are level. Its span is 900 units, crest rise about 79 units, and constant slab thickness about 23 units. This exact arch is a gently bowed slender ribbon, not a humped bridge or a vault. Image 2 shows the side frame for shape comparison ONLY; do not draw the frame, rail, decorative band, piers, flowers, or abutments. Image 3 is the approved TOP for identity and texture. Images 4 and 5 give old end-on paint and stone reference. Preserve the painted warm ochre and limestone palette, rounded individual stones, wide central ochre keystone.\n\nPlace exactly THREE clearly separated drawings in one horizontal row, order LEFT, FRONT, REAR, aligned on the same lower baseline and at the same pixels per unit. LEFT long side-on profile: draw one course of roughly fourteen small slim limestone pavers following the first image outline; under its whole length is transparent including below the tips. FRONT and REAR: the narrow entrances seen level along the length, compact wide rectangular elevations about 320 units wide by 102 high. Parallel vertical side edges; the rising paving beyond the entrance shows as tightly foreshortened horizontal rows, a shallow golden center course at the crest; never show a slanted perspective road. Both end drawings must be the same height as the ENTIRE shallow LEFT arc from tip to crest. All silhouettes fully uncropped and separate with comfortable transparent gutters. True transparent alpha, no text, no cast shadows, no colored background, no guides included, only these three painted panels.",
+    "sha256": "3ee7fc0fabf0910ec093dbb5ba3165ea9302762caba27d66b797f0a6d259b0a2"
+  },
+  "bridge-frame-bank-draft": {
+    "kind": "elevations",
+    "references": [
+      "guides/bridge-frame-bank-profile.png",
+      "bridge-side-frame.png: LEFT, TOP (rotated), FRONT, REAR"
+    ],
+    "prompt": "Generate three corrected true orthographic elevation drawings of ONE slender stone bridge side parapet frame, matching the approved TOP. Image 1 gives the exact new silhouette of LEFT, trace this stencil: longer low masonry frame, gently bowed capstones, thick long bank abutments on the ground on the left quarter and right quarter, with a low narrow open segmental arch only in the middle half. Both piers have FLAT bottom at ground, the two end posts sit on the same baseline. Keep the opening shallow: maximum opening height about 30% of the frame's overall height, maximum width about HALF the span. A few tiny strawberry flowers and a thin teal stripe decorate the warm cream masonry exactly in the style of image 2 (old frame for materials only). Piers need solid stone faces from ground to cap; never repeat openings under them. Overall LEFT width about seven times its height. It is one wall only, no deck.\n\nProduce exactly THREE cutouts in a single wide row, LEFT long elevation, FRONT narrow end, REAR narrow end. Use generous blank gutters and enough outer margin. LEFT camera is perfectly level, looking across the thickness of the frame. TOP has already been accepted and is attached in image 3 for identity (no TOP panel in output). Last two images show end finishes. End elevations have a narrow post in front with cap reaching about two thirds of overall height, the slightly higher capstones behind project in alignment to full height. Keep their outer width about 65% of their height, zero yaw or tilt; no receding side visible. All three views at common scale and ground line. Rounded ochre pavers, hand-painted toy village finish. Transparent PNG including the arch opening. No ground, scenery, lettering, drop shadow, or guides in output.",
+    "sha256": "3551a43e7afbcd2647abf155a02ac8fb5f94e7060e7362fb73a40d22dd75454c"
+  },
+  "bridge-frame-bank-elevations": {
+    "kind": "elevations",
+    "references": [
+      "guides/bridge-frame-bank-elevations.png",
+      "bridge-frame-bank-draft.png"
+    ],
+    "prompt": "Paint the three flat silhouettes in image 1 as miniature carved cream limestone masonry. The layout, silhouettes, proportions and negative space of IMAGE ONE are the exact required art masks, all ON THE SAME BASELINE. Do not change the outer or inner contour of ANY of the three shapes. The leftmost shape is a VERY LOW STRAIGHT-SPANNING BRIDGE PARAPET with gently bowed capstone rail and a low, wide UNDERPASS CUTOUT. Its height is approx 155 px high relative to 1100 px wide. At its middle only the LOWER 45 px is cut out, ALL THE REST IS SOLID WALL all the way across the span. The WALL ABOVE the aperture at the center is over twice as thick as the height of the aperture, with three courses of cream stones, a thin painted teal line and capstones. The aperture is only half the span and shallow. Both abutments thick, bottom absolutely flat at grade; no projecting pointed ornaments beyond the piers. Paint subtle pink and gold flowers ON THE WALL FACE at the haunches. The two glyphs to its right are frontal and rear orthographic views of the same detached wall, narrow rounded rectangles, roughly 110 px wide, same overall height as the leftmost shape. Fill them with stone joints, end cap and tiny floral detail. The second attached picture is MATERIAL and decorative style reference only; use the silhouettes and exact size proportions of image one in ALL cases. Very wide transparent PNG, three aligned separate orthographic elevations LEFT FRONT REAR. No text, no ground, no visible top face, no shadows or glow.",
+    "sha256": "744c8d8cd63efa39a5af71aaeedb1c205049b1c568266cc864aec00c79bb0d26"
+  },
+  "bakery-roofless-study": {
+    "kind": "component-study",
+    "references": [
+      "bakery-shell-bare.png and registered bakery-shell-left.png (previous four-view shell)"
+    ],
+    "prompt": "Edit the attached four-view bakery shell production sheet to isolate the roofless building body. Remove ALL orange roof tiles, ridge and roof edge logs, and the entire striped awning including brackets, from every view. No windows, chimney, counter, shelves or signs. Preserve exact cream plaster gable fronts, all underlying brown structural beams, stone base, recessed dark wooden service bay in front, side wall of blank plaster. Crucially retain the triangular cream plaster end gables remaining under the removed roof; keep their front/rear peaks and wood framing. LEFT is the rectangular wall with simple straight horizontal top edge, no tiles or sloping outline; a thin end-on edge of gable at each end is acceptable. TOP: true 90-degree overhead view of the open roofless rectangular wall enclosure, wide enough rim, warm timber cross beams and interior floor below. No orange shingle roof, no awning, no exterior protrusions. Exactly four orthographic panels in one row TOP LEFT FRONT REAR, FRONT in TOP facing down, LEFT front to screen-left. Native brushwork, exact color/style/proportions. No roof or chimney anywhere, no blue or red objects. Transparent background. Do not include loose components.",
+    "sha256": "6bda73d51afff1587f99c804cf71aa49391557eac99414756636344a21a7231f"
+  },
+  "bakery-awning-study": {
+    "kind": "component-study",
+    "references": [
+      "bakery-shell-bare.png and registered bakery-shell-left.png (previous four-view shell)"
+    ],
+    "prompt": "Create a four-view production atlas of ONLY the small projecting red and cream striped fixed shopfront awning taken from the attached bakery. Exactly SEVEN wide fabric bands along width: red cream red cream red cream red, ending in seven rounded hanging scallops at the low front rail. Flat single lean-to fabric panel, rear long edge mounts high flush to wall, front long edge is lower and projects forward. Shallow wooden horizontal back mounting rail and two short triangular wooden cantilever brackets under the fabric (one at each end), no posts extending to ground, no wall, no roof tiles, no shop, no signage. Preserve the exact warm handpainted gouache sculpted colors and brushwork of the source. Four orthographic panels in one wide row TOP LEFT FRONT REAR. TOP must be a flat long rectangle viewed straight down at 90deg. Red and cream broad stripes run from back to front; no fascia or vertical front scallops visible from above. LEFT: look exactly along the long span, show only the short sloping red end cap and wooden bracket with the low fabric edge at screen LEFT and tall wall-mount rail at screen RIGHT. FRONT: full wide seven-scallop red cream striped fabric face. REAR: horizontal timber mounting rail and underside. Dimensions span:projection:total height approximately 4.2:1.3:1; all views at the same scale. Complete silhouettes with clear blank gutters, transparent background, no labels, shadows or props.",
+    "sha256": "fb11dead59a27b61b5d8304b64066c052e2f681de03611625e965e3efadc2564"
+  },
+  "bakery-body-registered": {
+    "kind": "component-registration",
+    "references": [
+      "bakery-roofless-study.png"
+    ],
+    "registration": "Roofless gables and unclothed service bay. Plan projects the floor and caps. LEFT includes the end-on gables.",
+    "sha256": "c2efde3d56cf19059c9724892bb71b6adb4cdcbcead8948dae675a29ce8a3ab0"
+  },
+  "bakery-roof": {
+    "kind": "four-view",
+    "references": [
+      "bakery-shell-bare.png and registered bakery-shell-left.png (previous four-view shell)"
+    ],
+    "registration": "Original shingle plan with awning excluded, straight side elevation, and two gable edge bands with plaster excluded.",
+    "sha256": "b6048a48edf393512a72b2cf1b7787cfd6dc63db42a40c1028274f01ff397763"
+  },
+  "bakery-awning": {
+    "kind": "four-view",
+    "references": [
+      "bakery-shell-bare.png and registered bakery-shell-left.png (previous four-view shell)",
+      "bakery-awning-study.png"
+    ],
+    "registration": "Seven original scallops and projected stripe tops. Registered wooden mounts and reverse.",
+    "sha256": "529ed125496ae211e85582e1b0aab4160b27112065977bce65e994b0174e0b0b"
+  },
+  "bridge-frame-square-elevations": {
+    "kind": "elevations",
+    "references": [
+      "guides/bridge-square-rail.png",
+      "atlases/bridge.png"
+    ],
+    "prompt": "Create a transparent three-panel production atlas of ONE detached tall rectangular stone bridge side frame. The existing TOP is already approved. Image 1 is a registered silhouette stencil for LEFT, FRONT and REAR at one scale and baseline. Follow its edges exactly. LEFT must have a geometrically level long top row of rectangular capstones with square-capped end pillars a little taller, vertical end faces, and the single shallow open arch below. Keep the aperture only about half the span and one quarter overall height as in the stencil: the piers are wide, solid, flat-bottomed on the banks. Image 2 supplies design identity: match its second panel's straight lintel, honey limestone blocks, horizontal teal-and-ochre trim and tiny carved strawberry and yellow flowers at the two haunches. Render ONLY ONE thin longitudinal side wall; no deck or second frame. The two end views are each ONE upright rectangular post of constant width with a squared cap, no pair of posts. True level orthographic cameras, no visible top faces. Exactly three separated drawings LEFT (long wall), FRONT (narrow post), REAR (narrow post), ordered left to right. Same painted miniature finish and consistent masonry details. True alpha transparency including arch aperture. No ground, text, labels, shadows or guide.",
+    "sha256": "6d6a6c01b6d9701a4ecd476c64f63c140b77217880cb7fe8680f57ed0ba11cbf"
   }
 }

@@ -1,6 +1,12 @@
 # stack3.js
 
-Turn four or six orthographic views into a **3D mesh** or a **runtime sprite stack**. Open a finished example, inspect the reconstruction stages, or convert your own atlas from the CLI.
+The inspiration for stack3.js came from Daniel White’s **sprite-stacking** skill. It carves an object’s shape from four pixel-art views and cuts it into horizontal slices. Drawing those slices from the ground up produces a sprite that can rotate on screen. [Daniel White’s original skill and slicing tools](https://github.com/danielwh2/sprite-stacking)
+
+We explored that idea in the Sprite Stacking Demo and built stack3.js to make the workflow reusable in other browser games. A PNG atlas with four or six views can become a **runtime sprite stack** or a **textured 3D mesh**. The house below uses a separate four-view atlas for each part. [Sprite Stacking Demo](https://github.com/ev3rlit/sprite-stacking-demo)
+
+## How it works
+
+[![Seven four-view atlases show the house shell, roof, chimney, door, lantern and two windows from the top, left, front and rear. Beside them the meshes separate, fit back together and rotate as one timber house.](docs/media/petite-town/house-atlases-to-mesh.webp)](examples/petite-town/atlases/)
 
 ## Petite Town
 
@@ -8,25 +14,13 @@ A timber house, two shops and a market surround a stone well. Across the stream,
 
 ![A stationary camera shows the moving windmill and water in Petite Town, beside twelve labeled assets rotating through 360 degrees](docs/media/petite-town/showcase.webp)
 
-### Download and play
+[Full-size animated village view](docs/media/petite-town/village-view.webp) · [Full-size 12-asset turntable](docs/media/petite-town/assets-360.webp) · [Regenerate the showcase](examples/petite-town/README.md#readme-쇼케이스-재생성) · [Atlas and mesh comparisons](#atlas-and-mesh-comparisons)
 
-Save [Petite Town as a single HTML file](https://raw.githubusercontent.com/ev3rlit/stack3.js/main/examples/petite-town/standalone/index.html), or paste one line below to download it and open it in your default browser. The file includes the app, worker, and atlases and runs offline after download.
+### Play in your browser
 
-**Windows PowerShell**
-
-```powershell
-$html = Join-Path $env:TEMP ("petite-town-" + [guid]::NewGuid() + ".html"); curl.exe -fL "https://raw.githubusercontent.com/ev3rlit/stack3.js/main/examples/petite-town/standalone/index.html" -o $html; if ($LASTEXITCODE -eq 0) { Start-Process -FilePath $html }
-```
-
-**macOS Terminal**
-
-```sh
-town_dir="$(mktemp -d)" && curl -fL 'https://raw.githubusercontent.com/ev3rlit/stack3.js/main/examples/petite-town/standalone/index.html' -o "$town_dir/index.html" && open "$town_dir/index.html"
-```
+[Play Petite Town](https://ev3rlit.github.io/stack3.js/examples/petite-town/standalone/)
 
 Drag to orbit, scroll or pinch to zoom, and click a part to edit its layer count.
-
-[Full-size animated village view](docs/media/petite-town/village-view.webp) · [Full-size 12-asset turntable](docs/media/petite-town/assets-360.webp) · [Atlas and mesh comparisons](#atlas-and-mesh-comparisons)
 
 ## Quick start
 
@@ -77,15 +71,24 @@ $stack3 Export the cart body as cart-body.glb and the wheel as a sprite stack in
 
 ## Atlas and mesh comparisons
 
-In each comparison, the **top row** shows the atlas panels involved in the change. The **bottom row** shows the archived and revised GLBs rendered from the same angle at the same scale. Select an image to rotate both versions together.
+In each comparison, the **top row** shows the atlas panels involved in the change. The **bottom row** shows the archived and revised GLBs rendered from the same angle at the same scale. Select an image to rotate both versions together. To reproduce a repair, open this repository in Codex and paste the prompt below that comparison. Each prompt condenses the steps used for that asset.
 
 ### Timber house
 
 The early LEFT view shows a convincing roof and chimney. From a diagonal angle, a second roofline appears around the chimney and above the door. Giving the roof and chimney their own silhouettes allowed the shingles to run continuously from ridge to eave. The door, lantern and windows mount separately on the shell.
 
-[![Timber house before and after: the LEFT atlas changes from one shell to separate wall, roof and chimney panels; the mesh below loses its doubled roofline](docs/media/petite-town/house-before-after.jpg)](docs/media/petite-town/house-360.webp)
+[![Timber house before and after: the LEFT atlas changes from one shell to separate shell, roof and chimney LEFT panels plus FRONT panels for the door and both windows; the mesh below loses its doubled roofline](docs/media/petite-town/house-before-after.jpg)](docs/media/petite-town/house-360.webp)
 
-[Rotate both houses](docs/media/petite-town/house-360.webp) · [Roof atlas](examples/petite-town/atlases/house-roof.png) · [Chimney atlas](examples/petite-town/atlases/house-chimney.png)
+[Rotate both houses](docs/media/petite-town/house-360.webp) · [Roof atlas](examples/petite-town/atlases/house-roof.png) · [Chimney atlas](examples/petite-town/atlases/house-chimney.png) · [Door atlas](examples/petite-town/atlases/house-door.png) · [Window atlas](examples/petite-town/atlases/house-window.png) · [Flower window atlas](examples/petite-town/atlases/house-window-flowers.png)
+
+```text
+$stack3 Rebuild the timber house from examples/petite-town/originals/house.png.
+Give the shell, roof and chimney separate TOP, LEFT, FRONT and REAR atlases.
+Keep the attic window on the gable. Mount the door and lantern at the entrance,
+the flower window on the left wall and the plain window on the right.
+Keep the red shingles and painted timber. Export the parts as GLBs and orbit
+the assembly to check for one continuous roofline and an open chimney mouth.
+```
 
 ### Potion shop
 
@@ -95,15 +98,37 @@ The window and climbing ivy read clearly in the original wall painting, but neit
 
 [Rotate both shops](docs/media/petite-town/potionist-360.webp) · [Window atlas](examples/petite-town/atlases/potion-window.png) · [Ivy atlas](examples/petite-town/atlases/potion-ivy.png)
 
+```text
+$stack3 Use examples/petite-town/originals/potion-shell.png as the reference.
+Separate the chimney, counter, window and ivy from the plaster shell.
+Use the painted window and a two-leaf sprig from the original LEFT view.
+Give each its own four-view atlas and a shallow relief profile. Repeat the
+sprig four times up the side wall and set the bottles on the counter.
+Rebuild the shop and check from a grazing angle that the window and leaves
+stand proud of the wall and their painted details appear only once.
+```
+
 ### Stone bridge
 
 The bridge needs a crowned walkway with open space beneath it. In the whole-bridge atlas, TOP shows the paving and LEFT shows the arch cut into the outer frame. The frame hides the deck in that side view. A single visual hull can reproduce the visible opening, but those silhouettes do not tell it where the deck rises or how much stone lies beneath the paving. The centerline section below shows the nearly level walking surface that results.
 
-Give the **walking deck** and **side frame** separate atlases. With the frame removed, LEFT shows both edges of the thin, curved deck. Reconstruct that slab once, then place an instance of the frame on either side to form the arch and piers. In the assembled mesh, the deck center sits about 0.50 m above the sampled landings, and the opening runs through both frames.
+Give the **walking deck** and **side frame** separate atlases. With the frame removed, LEFT shows both edges of the thin, curved deck. Reconstruct that slab once, then place an instance of the frame on either side to form the arch and piers. In the assembled mesh, the crowned deck meets the banks at both ends and rises to 0.28 m above grade. The frame has a level rail between square-capped posts 0.66 m high. The longer frames have wider abutments and a narrower opening under the walkway. The capstones sample TOP while the decorated side walls retain their elevation textures.
 
 [![Stone bridge Before and After. One whole-bridge atlas yields a nearly level walkway. Separate deck and frame atlases produce a crowned slab above the opening. The bottom row shows measured sections through the middle of each walkway.](docs/media/petite-town/bridge-before-after.jpg)](docs/media/petite-town/bridge-360.webp)
 
 [Rotate both bridges](docs/media/petite-town/bridge-360.webp) · [Whole-bridge atlas](examples/petite-town/atlases/bridge.png) · [Deck atlas](examples/petite-town/atlases/bridge-arch.png) · [Side frame atlas](examples/petite-town/atlases/bridge-side-frame.png) · [Assembled geometry checks](examples/petite-town/verification/geometry.json)
+
+```text
+$stack3 Use examples/petite-town/atlases/bridge.png as the whole-bridge reference.
+Build two four-view atlases: one for the thin, crowned walking deck and one
+for a side frame with the arch and piers. Use the narrow entrance as FRONT
+and the long span as LEFT. Keep the capstone course level between square end posts. Show both
+edges of the gently crowned deck in LEFT and keep the opening beneath it.
+Seat both deck ends at bank level and mount one frame on each side. Map
+the capstones from TOP and the decorated walls from their elevations. Check a
+lengthwise section for a raised center and sight through the opening from
+both sides to make sure the deck clears the arch.
+```
 
 ### Market awning
 
@@ -113,15 +138,34 @@ TOP showed the hanging scallops, and LEFT showed a strip of the canopy's upper s
 
 [Rotate both awnings](docs/media/petite-town/awning-360.webp) · [Awning atlas](examples/petite-town/atlases/awning.png)
 
+```text
+$stack3 Correct TOP and LEFT in examples/petite-town/originals/awning.png.
+In TOP, end every stripe at the same straight front hem. The hanging scallops
+are hidden below it. In LEFT, put the low front tip on screen-left and draw
+the roof edge as a single rising line. Keep the scalloped side curtain solid
+strawberry red: the stripes run front to back, with red along the outer edge.
+Keep FRONT and REAR intact. Rebuild the canopy and inspect it from above
+and from the side.
+```
+
 ### Bakery
 
-The long side elevation had a sloping ridge. Viewed diagonally, the reconstructed roof folded around the chimney. We corrected LEFT to show a level ridge and eave, then fitted a separate chimney and flower windows. Eleven samples along the exported roof measured a ridge height of 2.55 m and an eave height of about 1.62 m.
+The original side elevation sloped from back to front. Reconstructing it folded the shingles around the chimney. The rebuilt bakery has a roofless shell, a tiled roof with a level ridge, and a red-and-cream striped awning mounted above the counter. Eleven samples along each roof line measured 2.55 m at the ridge and about 1.62 m at the eave. [Roof and contact measurements](examples/petite-town/verification/bakery-assembly.json)
 
-The loaves needed a different check. We gave the counter its own mesh. One loaf sits in the basket and two rest directly on the counter. [Roof and contact measurements](examples/petite-town/verification/bakery-assembly.json)
+[![Bakery before and after at the same angle. The After inventory shows the shell, tiled roof, striped awning, chimney, two flower windows, counter, basket, three loaves and bread sign.](docs/media/petite-town/bakery-before-after.jpg)](docs/media/petite-town/bakery-360.webp)
 
-[![Bakery before and after: the sloping side elevation is replaced by a level ridge and a separate chimney; the revised mesh has an uninterrupted roof plane](docs/media/petite-town/bakery-before-after.jpg)](docs/media/petite-town/bakery-360.webp)
+The two windows share one atlas. One faces the street above the awning, and the other sits on the side wall. The three loaves share another atlas. One sits in the basket and two rest directly on the counter.
 
-[Rotate both bakeries](docs/media/petite-town/bakery-360.webp) · [Bakery shell atlas](examples/petite-town/atlases/bakery-shell.png) · [Counter atlas](examples/petite-town/atlases/bakery-counter.png)
+[Rotate both bakeries](docs/media/petite-town/bakery-360.webp) · [Roofless shell](examples/petite-town/atlases/bakery-shell.png) · [Tiled roof](examples/petite-town/atlases/bakery-roof.png) · [Striped awning](examples/petite-town/atlases/bakery-awning.png) · [Assembly layout](examples/petite-town/src/assemblies.ts)
+
+```text
+$stack3 Rebuild the bakery from examples/petite-town/originals/bakery-shell.png.
+Separate the roof, striped awning, chimney, flower window and counter from
+the shell. Keep the ridge and eave horizontal along the full side elevation.
+Mount the chimney on the roof, the awning over the counter and the windows
+on the front and side walls. Put one loaf in the basket and two on the
+counter, then check the assembly through a full turn.
+```
 
 ### Wall lantern
 
@@ -130,6 +174,15 @@ In LEFT, the mounting plate showed part of its broad face and the rivets looked 
 [![Wall lantern before and after: an enlarged LEFT detail shows the mounting plate turning edge-on, with the old and corrected lantern meshes underneath](docs/media/petite-town/lantern-before-after.jpg)](docs/media/petite-town/lantern-360.webp)
 
 [Rotate both lanterns](docs/media/petite-town/lantern-360.webp) · [Lantern atlas](examples/petite-town/atlases/house-lantern.png)
+
+```text
+$stack3 Replace only LEFT in examples/petite-town/originals/house-lantern.png.
+Use TOP, FRONT and REAR as references. Look straight across the lantern's
+width: the wall plate at screen-right should be a thin vertical edge, with
+two rivet heads just breaking its outline in profile. Preserve the curled
+bracket, amber glass and painted bronze. Rebuild the GLB, inspect the
+plate side-on, and verify the other three panels are pixel-identical.
+```
 
 ### Diagnose a reconstruction
 
@@ -141,6 +194,42 @@ Build the requested object, orbit it at the intended viewing scale, and save the
 | A marking crosses onto the wrong face | Follow a stripe or seam through adjacent views. If the drawings agree, inspect face selection and UVs. | Correct the awning's side color while retaining the stripes on top. |
 | Relief flattens when the camera turns | Identify which part hides the contour needed to recover the depth. | Separate the bridge deck from the frames that hide its profile, or the potion shop's window and ivy from the wall. |
 | Parts look plausible alone but obstruct an opening or float when assembled | Overlay their silhouettes at scene scale and check their contact surfaces. | Check clearance through the assembled bridge and seat the bakery loaves on their support surfaces. |
+
+### Windmill rotor
+
+The two renders use the same atlas, scale and camera. In the Marching Cubes mesh, the long diagonal oak rails follow the sampling grid. Contour extrusion traces the painted FRONT outline, gives the blades their thickness from TOP, and builds a centered round hub using LEFT. The front and rear sails keep their original artwork.
+
+[![Windmill rotor before and after. Identical FRONT and LEFT panels above the two meshes. The enlarged wooden rail has stepped edges before and a continuous diagonal after.](docs/media/petite-town/rotor-before-after.jpg)](docs/media/petite-town/rotor-360.webp)
+
+[Rotate both rotors](docs/media/petite-town/rotor-360.webp) · [Rotor atlas](examples/petite-town/atlases/rotor.png) · [Contour GLB](examples/petite-town/models/rotor.glb)
+
+```sh
+npm run cli -- build examples/petite-town/atlases/rotor.png \
+  --layout top,left,front,rear --mesh-method contour --contour-hub \
+  --resolution 64 --output rotor.glb
+```
+
+## Play the Demo Yard
+
+Paste the line for your system to download and open a single HTML file. The yard runs offline after download.
+
+**macOS Terminal**
+
+```sh
+demo="$(mktemp -d)/demo-yard.html" && curl -fL 'https://ev3rlit.github.io/stack3.js/playground/index.html' -o "$demo" && open "$demo"
+```
+
+**Windows PowerShell**
+
+```powershell
+& { $demo = Join-Path $env:TEMP ("stack3-yard-" + [guid]::NewGuid().ToString("N") + ".html"); curl.exe -fL 'https://ev3rlit.github.io/stack3.js/playground/index.html' -o $demo; if ($LASTEXITCODE -eq 0) { Start-Process -FilePath $demo } }
+```
+
+Choose **Armored Miniature**. Use **W/S** to drive, **A/D** to steer, the mouse to aim the turret, and **click/F** to fire. Cones and signs can tip over, plastic barriers can slide, concrete barriers block the vehicle, and tank impacts can move nearby props.
+
+[Play in the browser](https://ev3rlit.github.io/stack3.js/playground/index.html) · [Build the standalone HTML](examples/README.md)
+
+![Armored Miniature driving among cones and barriers in the Demo Yard](docs/media/demo-yard.png)
 
 ## Workflow
 
@@ -164,56 +253,6 @@ stack3 view cone-stack/
 
 A stack bundle contains `stack.png` and `stack.json`. For separate source images, pass a [view manifest](apps/cli/README.md) instead of an atlas layout.
 
-## Releases
+## License
 
-CLI and web releases are triggered separately. Push a tag on the commit you want to ship.
-
-| Tag | Deployment |
-| --- | --- |
-| `cli-vX.Y.Z` | Build and smoke-test the npm tarball, then publish it to GitHub Releases |
-| `web-vX.Y.Z` | Build the static viewer and deploy it to GitHub Pages |
-
-```sh
-git tag cli-v0.1.1
-git push origin cli-v0.1.1
-```
-
-```sh
-git tag web-v0.1.1
-git push origin web-v0.1.1
-```
-
-[CLI workflow](.github/workflows/release-cli.yml) · [Web workflow](.github/workflows/deploy-web.yml)
-
-## Development
-
-```sh
-git clone https://github.com/ev3rlit/stack3.js.git
-cd stack3.js
-npm ci
-npm test
-npm run build
-npm run viewer
-```
-
-| Path | Contents |
-| --- | --- |
-| [`examples/petite-town`](examples/petite-town/) | Standalone village, atlas sources, exported meshes, and reconstruction checks |
-| [`apps/viewer`](apps/viewer/README.md) | Asset viewer, scene editor, Playground, and reconstruction comparison |
-| [`apps/cli`](apps/cli/README.md) | Inspect, build, export, and scene project commands |
-| [`packages/core`](packages/core/README.md) · [`packages/three`](packages/three/README.md) | Reconstruction and Three.js rendering |
-| [`samples`](samples/README.md) · [`skills/stack3`](skills/stack3/README.md) | Example images, scenes, and agent workflows |
-
-[Feature plan](docs/README.md) · [Original Sprite Stacking skill](https://github.com/danielwh2/sprite-stacking) · [Sprite Stacking Demo](https://github.com/ev3rlit/sprite-stacking-demo)
-
-### Run Petite Town from source
-
-From the repository root, start the development server with Node.js 22.12 or later.
-
-```sh
-cd examples/petite-town
-npm ci
-npm run dev
-```
-
-To rebuild the downloadable file, run `npm run build:standalone` from the same directory. It writes `standalone/index.html`. [Example source](examples/petite-town/) · [Four-view atlases](examples/petite-town/atlases/) · [Exported GLBs](examples/petite-town/models/)
+[MIT License](LICENSE) © 2026 ev3rlit and stack3.js contributors.

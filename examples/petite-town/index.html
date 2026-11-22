@@ -34,6 +34,12 @@
             ><output id="layer-value" for="layer-count"></output>
           </div>
           <input id="layer-count" type="range" step="1" />
+          <label for="texture-projection">텍스처 투영</label>
+          <select id="texture-projection">
+            <option value="asset">부품 기본값</option>
+            <option value="auto">자동 · 여러 뷰</option>
+            <option value="top-contour">상단 윤곽 → TOP</option>
+          </select>
           <span id="layer-note" role="status"></span>
           <div class="editor-actions">
             <button id="layer-reset">기본값 복원</button

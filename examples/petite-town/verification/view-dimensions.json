@@ -625,55 +625,55 @@
   },
   "bakery-shell": {
     "original": [
-      2170,
-      725
+      1928,
+      586
     ],
     "nativeViews": [
       [
-        492,
-        468
+        440,
+        397
       ],
       [
-        775,
-        932
+        392,
+        553
       ],
       [
-        491,
-        591
+        434,
+        550
       ],
       [
-        496,
-        591
+        443,
+        551
       ]
     ],
     "uniformScale": [
-      0.77797,
-      0.48069,
-      0.75804,
-      0.75804
+      0.80545,
+      0.81013,
+      0.81455,
+      0.81307
     ],
     "deliveredViews": [
       [
-        383,
-        364
+        354,
+        320
       ],
       [
-        372,
+        318,
         448
       ],
       [
-        372,
+        354,
         448
       ],
       [
-        376,
+        360,
         448
       ]
     ],
     "baseline": 464,
-    "topSource": "bakery-shell-bare.png",
+    "topSource": "bakery-body-registered.png",
     "topReplaced": false,
-    "leftReplaced": true
+    "leftReplaced": false
   },
   "loaf": {
     "original": [
@@ -1883,8 +1883,8 @@
         300
       ],
       [
-        99,
-        606
+        198,
+        1212
       ],
       [
         550,
@@ -1897,17 +1897,17 @@
     ],
     "uniformScale": [
       0.23022,
-      0.73542,
+      0.36771,
       0.77913,
       0.78049
     ],
     "deliveredViews": [
       [
         448,
-        69
+        138
       ],
       [
-        72,
+        144,
         446
       ],
       [
@@ -1919,10 +1919,11 @@
         446
       ]
     ],
+    "depthScale": 2,
     "baseline": 462,
     "topSource": "rotor-final.png",
     "topReplaced": true,
-    "leftReplaced": false
+    "leftReplaced": true
   },
   "fence": {
     "original": [
@@ -2039,23 +2040,23 @@
         566
       ],
       [
-        1851,
-        460
+        1157,
+        123
       ],
       [
-        243,
-        176
+        418,
+        138
       ],
       [
-        243,
-        176
+        418,
+        138
       ]
     ],
     "uniformScale": [
       0.79187,
-      0.23774,
-      0.62136,
-      0.62136
+      0.3596,
+      0.36122,
+      0.36122
     ],
     "deliveredViews": [
       [
@@ -2063,22 +2064,23 @@
         448
       ],
       [
-        440,
-        109
+        416,
+        44
       ],
       [
         151,
-        109
+        50
       ],
       [
         151,
-        109
+        50
       ]
     ],
     "baseline": 464,
     "topSource": "bridge-arch-ends.png",
     "topReplaced": false,
-    "leftReplaced": true
+    "leftReplaced": true,
+    "elevationSource": "bridge-deck-shallow-elevations.png"
   },
   "bridge-side-frame": {
     "original": [
@@ -2091,23 +2093,23 @@
         533
       ],
       [
-        859,
-        229
+        1479,
+        331
       ],
       [
-        90,
-        204
+        133,
+        331
       ],
       [
-        89,
-        203
+        132,
+        331
       ]
     ],
     "uniformScale": [
       0.84073,
-      0.48492,
-      0.54435,
-      0.54703
+      0.28164,
+      0.36836,
+      0.36883
     ],
     "deliveredViews": [
       [
@@ -2116,21 +2118,22 @@
       ],
       [
         416,
-        111
+        93
       ],
       [
         49,
-        111
+        122
       ],
       [
         48,
-        111
+        122
       ]
     ],
     "baseline": 464,
     "topSource": "bridge-side-frame.png",
     "topReplaced": false,
-    "leftReplaced": false
+    "leftReplaced": true,
+    "elevationSource": "bridge-frame-square-elevations.png"
   },
   "house-door": {
     "original": [
@@ -2805,6 +2808,110 @@
     ],
     "baseline": 437,
     "topSource": "house-roof.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "bakery-roof": {
+    "original": [
+      1660,
+      360
+    ],
+    "nativeViews": [
+      [
+        383,
+        326
+      ],
+      [
+        305,
+        192
+      ],
+      [
+        372,
+        209
+      ],
+      [
+        376,
+        208
+      ]
+    ],
+    "uniformScale": [
+      0.99367,
+      1.08333,
+      0.99522,
+      1
+    ],
+    "deliveredViews": [
+      [
+        381,
+        324
+      ],
+      [
+        330,
+        208
+      ],
+      [
+        370,
+        208
+      ],
+      [
+        376,
+        208
+      ]
+    ],
+    "baseline": 340,
+    "topSource": "bakery-roof.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "bakery-awning": {
+    "original": [
+      1244,
+      118
+    ],
+    "nativeViews": [
+      [
+        276,
+        86
+      ],
+      [
+        85,
+        72
+      ],
+      [
+        275,
+        69
+      ],
+      [
+        265,
+        69
+      ]
+    ],
+    "uniformScale": [
+      0.9626,
+      0.95833,
+      1,
+      1
+    ],
+    "deliveredViews": [
+      [
+        266,
+        83
+      ],
+      [
+        81,
+        69
+      ],
+      [
+        275,
+        69
+      ],
+      [
+        265,
+        69
+      ]
+    ],
+    "baseline": 99,
+    "topSource": "bakery-awning.png",
     "topReplaced": false,
     "leftReplaced": false
   }

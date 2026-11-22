@@ -1,6 +1,6 @@
 import { createAssetObject } from '@stack3/three';
-import type { ComparisonMesh, ProjectSummary, SceneNode, StackData } from '@stack3/core';
-import { AmbientLight, Box3, Color, Group, Matrix4, Vector3, DirectionalLight, MathUtils, Mesh, MeshStandardMaterial,
+import type { AtlasCalibration, ComparisonMesh, ProjectSummary, Raster, SceneNode, StackData } from '@stack3/core';
+import { AmbientLight, Box3, Color, DataTexture, Group, Matrix4, ObjectSpaceNormalMap, Vector3, DirectionalLight, MathUtils, Mesh, MeshStandardMaterial,
   LinearFilter, NearestFilter, OrthographicCamera, Scene, WebGLRenderer, type MeshBasicMaterial } from 'three';
 import { createAssemblyObject, instantiateParts } from './assembly';
 import { multipartPresets } from './presets';
@@ -37,12 +37,22 @@ let frame = 0;
 const defaultLayout = 'top,left,front,rear';
 const defaultSettings = { layers: 80, resolution: 144 };
 const tankParts = multipartPresets.tank!;
+const mapsSample = 'Future Tank · hull material passes';
+const mapsAssets = {
+  source: new URL('../../../samples/future-tank/hull-4view.png', import.meta.url),
+  clay: new URL('../../../samples/future-tank/hull-clay-4view.png', import.meta.url),
+  depth: new URL('../../../samples/future-tank/hull-depth-4view.png', import.meta.url),
+  baseColor: new URL('../../../samples/future-tank/hull-base-color-4view.png', import.meta.url),
+  normal: new URL('../../../samples/future-tank/hull-normal-4view.png', import.meta.url),
+  calibration: new URL('../../../samples/future-tank/hull-depth-4view.json', import.meta.url),
+};
 const samples = [
   'Armored tank · full (assembled)',
   ...tankParts.map(spec => 'Armored tank · ' + spec.name.toLowerCase()),
+  mapsSample,
 ];
-type StagePart = ComparisonLayout & { asset: ComparisonMesh | StackData; grid: number[] };
-type PreviewStage = { title: string; detail: string; parts: StagePart[]; geometryOnly?: boolean; nearest?: boolean };
+type StagePart = ComparisonLayout & { asset: ComparisonMesh | StackData; grid: number[]; normalMap?: Raster };
+type PreviewStage = { title: string; detail: string; parts: StagePart[]; geometryOnly?: boolean; nearest?: boolean; lit?: boolean };
 const stageLabels = ['Voxel surface', 'Marching Cubes', 'Finer grid', 'RGB · nearest',
   'RGB · linear', 'RGB + ID', 'RGB + ID + depth'];
 
@@ -97,14 +107,35 @@ function makeRenderer() {
   };
 }
 
+function mappedMaterial(base: MeshBasicMaterial, normal?: Raster) {
+  const material = new MeshStandardMaterial({ map: base.map, roughness: .82 });
+  base.dispose();
+  if (!normal) return material;
+  const map = new DataTexture(normal.data, normal.width, normal.height);
+  map.minFilter = map.magFilter = LinearFilter;
+  map.needsUpdate = true;
+  material.normalMap = map;
+  material.normalMapType = ObjectSpaceNormalMap;
+  material.onBeforeCompile = shader => {
+    shader.fragmentShader = shader.fragmentShader.replace('#include <normal_fragment_maps>', `
+      vec3 geometricNormal = normal;
+      #include <normal_fragment_maps>
+      float coverage = texture2D(normalMap, vNormalMapUv).a;
+      normal = normalize(mix(geometricNormal, normal, coverage));
+    `);
+  };
+  return material;
+}
+
 function makeThumbnail(stage: PreviewStage, surface: HTMLCanvasElement, renderer: ReturnType<typeof makeRenderer>) {
   const context = surface.getContext('2d', { alpha: false });
   if (!context) throw new Error('Could not create a thumbnail surface.');
   const placed = instantiateParts(stage.parts.map(part => part.asset), stage.parts);
   const mounts = stage.parts.flatMap(part => part.mounts);
+  const detailMaps = stage.parts.flatMap(part => part.mounts.map(() => part.normalMap));
   const assembly = createAssemblyObject(placed);
   const filter = stage.nearest ? NearestFilter : LinearFilter;
-  const meshes: { mesh: Mesh; textured: MeshBasicMaterial; accent?: Mesh }[] = [];
+  const meshes: { mesh: Mesh; textured: MeshBasicMaterial | MeshStandardMaterial; accent?: Mesh }[] = [];
   const stacks: { object: Group; asset: StackData }[] = [];
   for (const [index, { asset }] of placed.entries()) {
     const object = assembly.children[index];
@@ -119,7 +150,8 @@ function makeThumbnail(stage: PreviewStage, surface: HTMLCanvasElement, renderer
       continue;
     }
     const mesh = object as Mesh;
-    const textured = mesh.material as MeshBasicMaterial;
+    const base = mesh.material as MeshBasicMaterial;
+    const textured = stage.lit ? mappedMaterial(base, detailMaps[index]) : base;
     if (textured.map) {
       textured.map.minFilter = textured.map.magFilter = filter;
       textured.map.needsUpdate = true;
@@ -185,6 +217,7 @@ function makeThumbnail(stage: PreviewStage, surface: HTMLCanvasElement, renderer
       for (const { mesh, textured, accent } of meshes) {
         mesh.geometry.dispose();
         textured.map?.dispose();
+        if (textured instanceof MeshStandardMaterial) textured.normalMap?.dispose();
         textured.dispose();
         if (!accent) continue;
         accent.geometry.dispose();
@@ -218,6 +251,20 @@ function describeStages(parts: PartComparison[]) {
     { title: stageLabels[4], detail: 'Blends nearby texels on the same textured mesh.', parts: rgb },
     variants[1], variants[2],
   ];
+  if (parts.some(part => part.mapped)) {
+    const depth = parts.map(part => ({
+      name: part.name, mounts: part.mounts, asset: part.mapped?.mesh ?? part.meshes[0],
+      grid: part.mapped?.grid ?? part.fullGrid,
+    }));
+    const normal = depth.map((part, index) => ({ ...part, normalMap: parts[index].mapped?.normalMap }));
+    const silhouette = depth.map((part, index) => ({ ...part, asset: parts[index].mapped?.silhouetteMesh ?? part.asset }));
+    stages.unshift(
+      { title: 'Clay Silhouette Only', detail: 'Uses the same calibrated Clay views, grid, and lighting.', parts: silhouette, geometryOnly: true },
+      { title: 'Clay + Depth Map', detail: 'Uses the 16-bit depth pass to carve the registered Clay silhouettes.', parts: depth, geometryOnly: true },
+      { title: 'Depth + Base Color', detail: 'Projects the generated color pass onto the depth-carved mesh.', parts: depth, lit: true },
+      { title: 'Depth + Base Color + Normal', detail: 'Uses the view-space normal pass for per-pixel lighting on the same mesh.', parts: normal, lit: true },
+    );
+  }
   return stages;
 }
 
@@ -242,6 +289,47 @@ function addThumbnail(stage: PreviewStage, container: HTMLElement) {
   resize.observe(surface);
 }
 
+type Fit = NonNullable<PartComparison['mapped']>['fit'];
+
+function depthFitCard(fit: Fit) {
+  const card = document.createElement('section');
+  card.className = 'depth-fit';
+  const title = document.createElement('h2');
+  title.textContent = 'Depth Fit';
+  card.append(title);
+  const units = (value: number | null) => value === null ? '—' : value.toFixed(3);
+  const summary = document.createElement('strong');
+  summary.textContent = units(fit.baselineMae) + ' → ' + units(fit.carvedMae) + ' units';
+  card.append(summary);
+  const explanation = document.createElement('p');
+  const delta = fit.baselineMae && fit.carvedMae !== null ? 100 * (fit.carvedMae / fit.baselineMae - 1) : null;
+  explanation.textContent = 'Mean absolute distance error against the supplied depth map' +
+    (delta === null ? '.' : ' · ' + (delta > 0 ? '+' : '−') + Math.abs(delta).toFixed(1) + '%');
+  card.append(explanation);
+  const table = document.createElement('table');
+  table.setAttribute('aria-label', 'Mean absolute depth error by camera');
+  const header = table.createTHead().insertRow();
+  for (const label of ['View', 'Clay only', '+ Depth']) {
+    const cell = document.createElement('th');
+    cell.scope = 'col';
+    cell.textContent = label;
+    header.append(cell);
+  }
+  const tbody = table.createTBody();
+  for (const view of fit.byView) {
+    const row = tbody.insertRow();
+    for (const label of [view.view.toUpperCase(), units(view.baselineMae), units(view.carvedMae)]) {
+      row.insertCell().textContent = label;
+    }
+  }
+  card.append(table);
+  const coverage = document.createElement('p');
+  coverage.textContent = fit.sharedPixels.toLocaleString() + ' shared visible pixels · ' +
+    (100 * fit.sharedPixels / Math.max(1, fit.referencePixels)).toFixed(1) + '% of reference';
+  card.append(coverage);
+  return card;
+}
+
 function renderGallery(result: ComparisonData) {
   for (const preview of previews) {
     resize.unobserve(preview.surface);
@@ -249,6 +337,7 @@ function renderGallery(result: ComparisonData) {
   }
   previews = [];
   const stages = describeStages(result.parts);
+  const fit = result.parts.find(part => part.mapped)?.mapped?.fit;
   const cards = document.createDocumentFragment();
   for (const stage of stages) {
     const card = document.createElement('section');
@@ -260,6 +349,7 @@ function renderGallery(result: ComparisonData) {
     addThumbnail(stage, card);
     card.append(detail);
     cards.append(card);
+    if (fit && stage.title === 'Clay + Depth Map') cards.append(depthFitCard(fit));
   }
   gridView.replaceChildren(cards);
   redraw();
@@ -429,11 +519,33 @@ async function projectAtlas(atlas: ProjectSummary['atlases'][number]) {
   return { file: await response.blob(), layout: atlas.layout };
 }
 
+async function loadMappedHull(): Promise<ComparisonJob> {
+  async function read(url: URL) {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Could not load the hull material passes.');
+    return response;
+  }
+  const [file, clay, depth, baseColor, normal, calibration] = await Promise.all([
+    read(mapsAssets.source).then(response => response.blob()),
+    read(mapsAssets.clay).then(response => response.blob()),
+    read(mapsAssets.depth).then(response => response.blob()),
+    read(mapsAssets.baseColor).then(response => response.blob()),
+    read(mapsAssets.normal).then(response => response.blob()),
+    read(mapsAssets.calibration).then(response => response.json() as Promise<AtlasCalibration>),
+  ]);
+  return { file, layout: defaultLayout, settings: { ...defaultSettings, size: calibration.size },
+    maps: { clay, depth, baseColor, normal, calibration } };
+}
+
 function loadPart() {
   if (part.value.startsWith('sample:')) {
     const index = Number(part.value.slice(7));
     const name = samples[index];
     if (!name) return;
+    if (name === mapsSample) {
+      start(loadMappedHull, name);
+      return;
+    }
     start(async () => {
       async function loadAtlas(url: URL) {
         const response = await fetch(url);

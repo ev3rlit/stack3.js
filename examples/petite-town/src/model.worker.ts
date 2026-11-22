@@ -1,5 +1,5 @@
 import { buildModel } from './build-model'
-import { modelSettings } from './model-settings'
+import { modelSettings, type ProjectionChoice } from './model-settings'
 
 declare const __BUILDER_HASH__: string
 const storeName = 'petite-town-meshes'
@@ -7,9 +7,10 @@ interface Request {
   ticket: number
   id: string
   layers: number
+  projection: ProjectionChoice
   url: string
 }
-async function build({ ticket, id, layers, url }: Request) {
+async function build({ ticket, id, layers, projection, url }: Request) {
   const res = await fetch(url)
   if (!res.ok)
     throw new Error(id + ' 아틀라스를 읽지 못했습니다 (' + res.status + ')')
@@ -32,6 +33,7 @@ async function build({ ticket, id, layers, url }: Request) {
             id,
             settings.profile,
             settings.resolution,
+            projection,
             layers,
           ].join('/'),
         self.location.origin,
@@ -47,7 +49,7 @@ async function build({ ticket, id, layers, url }: Request) {
   } catch {
     cache = undefined
   }
-  const { glb } = buildModel(id, bytes, layers)
+  const { glb } = buildModel(id, bytes, layers, projection)
   const buffer = glb.buffer as ArrayBuffer
   if (cache)
     try {

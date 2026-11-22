@@ -33,6 +33,14 @@
         "IMAGE_NPOT_DIMENSIONS"
       ]
     },
+    "bakery-awning.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
     "bakery-chimney.glb": {
       "errors": 0,
       "warnings": 0,
@@ -42,6 +50,14 @@
       ]
     },
     "bakery-counter.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "bakery-roof.glb": {
       "errors": 0,
       "warnings": 0,
       "infos": 1,

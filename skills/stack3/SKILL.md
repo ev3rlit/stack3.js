@@ -1,6 +1,6 @@
 ---
 name: stack3
-description: Generate four-view atlases, build sprite stacks or Marching Cubes meshes, compare lighting and anti-aliasing, and assemble and verify drivable vehicles with the stack3 CLI, Editor, and Playground. Use for stack3 atlas preparation, TOP or LEFT repair, reconstruction, and scene or component workflows.
+description: Generate four-view atlases, build sprite stacks, Marching Cubes meshes or contour extrusions, compare lighting and anti-aliasing, and assemble and verify drivable vehicles with the stack3 CLI, Editor, and Playground. Use for stack3 atlas preparation, TOP or LEFT repair, reconstruction, and scene or component workflows.
 ---
 
 # stack3 Sprite Stacks
@@ -66,6 +66,18 @@ Inspect the replacement at native resolution against the stated landmark and dim
 - Inspect LEFT at native resolution for a visible front face, a visible flat top, or separation between landmarks that should coincide across the width. Compare their longitudinal positions with TOP and their heights with FRONT and REAR. For a symmetric silhouette, record which orientation cues can actually be confirmed.
 - Use separate aligned inputs and pivots for independently moving parts. A cavity hidden in every silhouette is ambiguous even when the views pass the camera checks.
 
+## Optional detail passes
+
+Read only the prompt needed for the user's request.
+
+| Request | Prompt |
+| --- | --- |
+| Clay, depth, or more definition in physical features such as bevels, recesses, or gaps | [Clay and Depth](prompts/clay-depth.md) |
+| Base Color, normals, or more definition in paint, material response, or shallow surface relief | [Base Color and Normal](prompts/base-color-normal.md) |
+| Both geometry and surface detail | [Clay and Depth](prompts/clay-depth.md), then [Base Color and Normal](prompts/base-color-normal.md) using the accepted geometry and cameras |
+
+For a standard 4-view request, use [Generate the four views](#generate-the-four-views). For any additional passes, keep a common canvas, camera calibration, and foreground alignment.
+
 ## Build and open the sprite stack
 
 For a level, hierarchy, interactive preview, or multi-object workflow, create or reuse a scene project. Use the CLI from the agent workflow instead of asking the user to operate browser controls. Invoke the image tool with the prompts above when images are missing, inspect TOP, then embed the PNGs as project objects. Read `stack3 project schema` and `stack3 project get <file>`, apply a JSON action batch with `stack3 project apply <file> -`, and open the live view with `stack3 project open <file> --playground`. Use concrete node IDs in each batch, keep object settings per node, and verify the resulting scene.
@@ -81,6 +93,12 @@ stack3 view asset-stack/
 A separate-view manifest uses `{"views":{"top":"top.png","left":"left.png","front":"front.png","rear":"rear.png"}}`. Paths are relative to the manifest. Pass it to `inspect` and `build` without `--layout`.
 
 If `view` is unavailable, launch the checkout viewer with `npm run viewer -- --open`, import the same source, and select **Sprite stack**. Use the same layer count, XY resolution, threshold, height, and pivot. If the viewer or checkout is unavailable, report which verification could be completed.
+
+## Extrude a flat outline
+
+For a flat sign, fin or rotor, use `stack3 build atlas.png --layout top,left,front,rear --mesh-method contour --output part.glb`. FRONT defines the outline, including disconnected islands and holes; LEFT determines overall depth. Select **Contour extrusion** in the viewer's mesh settings or the project inspector. Project nodes use `format: "glb"` and `meshMethod: "contour"`.
+
+For a rotor with a solid center and a visibly projecting axle, add `--contour-hub` or set `contourHub: true`. TOP gives the blade thickness and LEFT gives the collar diameter. `--resolution` controls the number of segments around the hub. Inspect both end faces, the side wall and the axle after assembly.
 
 ## Prepare a drivable four-wheel vehicle
 

@@ -1,6 +1,8 @@
 {
   "instances": {
     "bakery-shell": 1,
+    "bakery-roof": 1,
+    "bakery-awning": 1,
     "bakery-chimney": 1,
     "bakery-window": 2,
     "bakery-counter": 1,
@@ -16,31 +18,43 @@
     },
     "eave": {
       "samples": 11,
-      "minimumMetres": 1.621177,
-      "maximumMetres": 1.621177
+      "minimumMetres": 1.621153,
+      "maximumMetres": 1.621153
     }
   },
   "contacts": {
     "bakery-chimney": [
       {
+        "support": "bakery-roof",
+        "nearestVertexDistanceMetres": 0.00139
+      }
+    ],
+    "bakery-roof": [
+      {
         "support": "bakery-shell",
-        "nearestVertexDistanceMetres": 0.00791
+        "nearestVertexDistanceMetres": 0.00507
+      }
+    ],
+    "bakery-awning": [
+      {
+        "support": "bakery-shell",
+        "nearestVertexDistanceMetres": 0.00246
       }
     ],
     "bakery-window": [
       {
         "support": "bakery-shell",
-        "nearestVertexDistanceMetres": 0.00115
+        "nearestVertexDistanceMetres": 0.00153
       },
       {
         "support": "bakery-shell",
-        "nearestVertexDistanceMetres": 0.00329
+        "nearestVertexDistanceMetres": 0.00162
       }
     ],
     "bakery-counter": [
       {
         "support": "bakery-shell",
-        "nearestVertexDistanceMetres": 0.00634
+        "nearestVertexDistanceMetres": 0.00253
       }
     ],
     "basket": [

@@ -223,7 +223,8 @@ export function makeProjectStage(host: HTMLElement, updateCamera: (patch: Partia
       const atlas = project.atlases.find(item => item.id === node.atlasId);
       if (!atlas) continue;
       const { format, layers, resolution, threshold, height, pivot, profile } = node.settings;
-      const settings = { layers, resolution, threshold, height, pivot, profile };
+      const settings = { layers, resolution, threshold, height, pivot, profile,
+        textureProjection: node.settings.textureProjection, meshMethod: node.settings.meshMethod, contourHub: node.settings.contourHub };
       const key = JSON.stringify(['project-v2', atlas.fingerprint ?? atlas.id, atlas.layout, format, settings]);
       applyDisplay(entry, node);
       if (entry.key === key) continue;

@@ -3,6 +3,8 @@ import { scriptFields, validateScript, type SceneScript } from './scripts';
 
 export type Vec3 = [number, number, number];
 export type NodeSettings = {
+  textureProjection?: 'auto' | 'top-contour';
+  meshMethod?: 'marching-cubes' | 'contour'; contourHub?: boolean;
   format: 'stack' | 'glb'; layers: number; resolution: number; spacing: number; height: number;
   threshold: number; pivot: 'ground' | 'center'; profile: 'silhouette' | 'round' | 'round-base';
   pixelArt: boolean; smoothEdges: boolean; lighting: boolean;
@@ -41,6 +43,8 @@ const boolean: Field = { type: 'boolean' };
 const idOrNull: Field = { type: 'string', nullable: true };
 const vector = (...limits: [number, number]): Field => ({ ...number(...limits), type: 'array' });
 const settingsFields = {
+  textureProjection: choice('auto', 'top-contour'),
+  meshMethod: choice('marching-cubes', 'contour'), contourHub: boolean,
   format: choice('stack', 'glb'), layers: number(8, 128, 'integer'), resolution: number(16, 192, 'integer'),
   spacing: number(.05, 20), height: number(.01, 100), threshold: number(0, 255, 'integer'),
   pivot: choice('ground', 'center'), profile: choice('silhouette', 'round', 'round-base'),

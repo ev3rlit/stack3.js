@@ -50,13 +50,18 @@ stack3 view crate-stack/
 
 | Build option | Default | Effect |
 | --- | --- | --- |
+| `--texture-projection` | auto | For GLB output, use `top-contour` to project the TOP panel onto the upper surface while retaining elevation UVs on the walls |
+| `--mesh-method` | marching-cubes | Choose `contour` for a plate extruded from the FRONT alpha outline |
+| `--contour-hub` | off | Add a centered, turned hub to a contour mesh using TOP and LEFT |
 | `--layers` | 48 | Vertical samples |
 | `--spacing` | 1 | Multiply the gap between stack slices and the exported vertical bounds |
 | `--profile` | silhouette | Choose `round` or `round-base` to fit elliptical cross-sections |
-| `--resolution` | 96 | Samples on the longer horizontal axis |
+| `--resolution` | 96 | Samples on the longer horizontal axis, or radial segments for a contour hub |
 | `--height` | 1 | Asset height in scene units |
 | `--pivot` | ground | Use the bottom or center as the origin |
 | `--threshold` | 238 | Background removal threshold for opaque PNGs |
+
+Contour extrusion preserves islands and through-holes. FRONT and REAR paint the caps and the other views paint the side walls. The plate uses the full depth unless a round hub is requested. For a hub, provide a solid center in FRONT, a thin blade edge with a projecting axle in TOP and a centered collar in LEFT. Vertical layer count applies to grid reconstruction.
 
 The stack bundle contains `stack.png` and `stack.json`. Its metadata records the atlas layout, slice order, dimensions, spacing, scale, and pivot.
 

@@ -23,7 +23,6 @@ export async function serveViewer(page: string, open: boolean, middleware: Middl
 
   const dev = await createServer({
     root: fileURLToPath(new URL('../../viewer/', import.meta.url)),
-    configFile: false,
     server,
     plugins: [{
       name: 'stack3-cli-preview',

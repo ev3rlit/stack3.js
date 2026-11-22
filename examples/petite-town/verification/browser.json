@@ -5,22 +5,28 @@
     900
   ],
   "desktopFrame": {
-    "x": 350,
-    "y": 27,
-    "width": 580,
-    "height": 846
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 900
   },
   "mobileViewport": [
     390,
     844
   ],
+  "landscapeFrame": {
+    "x": 0,
+    "y": 0,
+    "width": 844,
+    "height": 390
+  },
   "mobileInput": "Chrome CDP touch on emulated device",
   "loadedItems": 12,
-  "distinctModels": 43,
-  "instances": 72,
-  "instanceBatches": 43,
+  "distinctModels": 45,
+  "instances": 74,
+  "instanceBatches": 45,
   "coldCache": {
-    "built": 43,
+    "built": 45,
     "disk": 0,
     "memory": 29
   },
@@ -38,13 +44,13 @@
         "count": 4
       },
       {
-        "key": "apple/56",
+        "key": "apple/56/top-contour",
         "count": 1
       }
     ],
     "reloadCache": {
       "built": 0,
-      "disk": 44,
+      "disk": 46,
       "memory": 28
     }
   },
@@ -66,13 +72,13 @@
     "bridge": 359.92,
     "windmill": 359.92
   },
-  "touchOrbitRadians": 0.809428058895921,
+  "touchOrbitRadians": 0.8055365778435369,
   "pinchZoom": [
     1,
     2.343750000000001
   ],
-  "rotorMotionRadians": 0.12451499999999871,
-  "triangles": 1239948,
-  "drawCalls": 57,
+  "rotorMotionRadians": 0.14103000000000068,
+  "triangles": 1296844,
+  "drawCalls": 59,
   "errors": []
 }

@@ -8,7 +8,7 @@ import {
 } from 'three'
 import { exhibits, type Exhibit, type Part } from './assemblies'
 import { modelCache, type Template } from './model-cache'
-import { maxLayers, minLayers, modelSettings } from './model-settings'
+import { maxLayers, minLayers, modelSettings, isProjectionChoice, type ProjectionChoice } from './model-settings'
 
 export interface Placement {
   item: Exhibit
@@ -16,6 +16,7 @@ export interface Placement {
   key: string
   ordinal: number
   layers: number
+  projection: ProjectionChoice
   version: number
   template: Template
   proxy: Mesh
@@ -23,7 +24,7 @@ export interface Placement {
 }
 type Batch = { object: InstancedMesh; members: Placement[] }
 const savedKey = 'petite-town.layers.v1'
-function savedLayers(): Record<string, number> {
+function savedLayers(): Record<string, number | { layers: number; projection: ProjectionChoice }> {
   try {
     const value = JSON.parse(localStorage.getItem(savedKey) ?? '{}')
     return value && typeof value === 'object' ? value : {}
@@ -80,18 +81,21 @@ export async function assemble(
       const ordinal = (ordinals.get(part.id) ?? 0) + 1
       ordinals.set(part.id, ordinal)
       const key = item.id + '/' + part.id + '/' + ordinal
-      const layers = valid(saved[key])
-        ? saved[key]
-        : modelSettings(part.id).layers
+      const entry = saved[key]
+      const count = typeof entry === 'number' ? entry : entry?.layers
+      const layers = modelSettings(part.id).meshMethod !== 'contour' && valid(count)
+        ? count : modelSettings(part.id).layers
+      const projection = typeof entry === 'object' && isProjectionChoice(entry?.projection)
+        ? entry.projection : 'asset'
       const mount = new Group()
       mount.name = part.id
       mount.position.set(...part.at)
       mount.rotation.set(part.pitch ?? 0, part.yaw ?? 0, 0)
       group.add(mount)
       if (part.axle) rotors.push(mount)
-      requested.add(part.id + '/' + layers)
+      requested.add(part.id + '/' + layers + (projection === 'asset' ? '' : '/' + projection))
       initial.push(
-        cache.get(part.id, layers).then((template) => {
+        cache.get(part.id, layers, projection).then((template) => {
           if (!ready.has(template.key)) {
             ready.add(template.key)
             onProgress(ready.size, requested.size)
@@ -104,6 +108,7 @@ export async function assemble(
             key,
             ordinal,
             layers,
+            projection,
             version: 0,
             template,
             proxy,
@@ -174,11 +179,11 @@ export async function assemble(
         batch.object.computeBoundingSphere()
       }
   }
-  async function edit(p: Placement, layers: number) {
+  async function edit(p: Placement, layers: number, projection: ProjectionChoice = p.projection) {
     if (!valid(layers)) throw new Error('레이어는 8~128 정수로 입력하세요.')
     const version = ++p.version
-    if (layers === p.layers) return
-    const template = await cache.get(p.part.id, layers)
+    if (layers === p.layers && projection === p.projection) return
+    const template = await cache.get(p.part.id, layers, projection)
     if (p.version !== version) {
       cache.release(template)
       return
@@ -186,12 +191,13 @@ export async function assemble(
     const old = p.template
     p.template = template
     p.layers = layers
+    p.projection = projection
     fit(p)
     sync()
     cache.release(old)
     const next = savedLayers()
-    if (layers === modelSettings(p.part.id).layers) delete next[p.key]
-    else next[p.key] = layers
+    if (layers === modelSettings(p.part.id).layers && projection === 'asset') delete next[p.key]
+    else next[p.key] = projection === 'asset' ? layers : { layers, projection }
     try {
       localStorage.setItem(savedKey, JSON.stringify(next))
     } catch {

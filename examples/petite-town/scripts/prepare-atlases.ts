@@ -10,10 +10,12 @@ const records: Record<
   string,
   {
     kind: string
+    openingHeightFit?: { source: number; target: number }
     acceptedElevations?: string
     acceptedAtlas?: string
     acceptedLeft?: string | false
     acceptedTop?: string
+    depthScale?: number
     preservePanelScale?: boolean
     topQuarterTurns?: number
   }
@@ -77,11 +79,11 @@ function round(n: number) {
   const base = Math.floor(n)
   return n - base === 0.5 ? base + (base % 2) : Math.round(n)
 }
-async function resize(v: Raster, scale: number) {
+async function resize(v: Raster, scale: number, widthFactor = 1, heightFactor = 1) {
   return raster(
     pixels(v).resize(
-      Math.max(1, round(v.width * scale)),
-      Math.max(1, round(v.height * scale)),
+      Math.max(1, round(round(v.width * scale) * widthFactor)),
+      Math.max(1, round(round(v.height * scale) * heightFactor)),
       { fit: 'fill', kernel: 'lanczos3' },
     ),
   )
@@ -114,6 +116,18 @@ for (const [id, rec] of Object.entries(records)) {
   if (rec.acceptedElevations) {
     const elevations = await raster(sharp('originals/' + rec.acceptedElevations))
     panels.splice(1, 3, ...split(elevations, 3))
+  }
+  if (rec.openingHeightFit) {
+    // Register the painted arch crown to the walkway clearance, keeping the
+    // base and horizontal coping fixed. Use the same height map on all elevations.
+    for (const i of [1, 2, 3]) {
+      const v = panels[i], {source, target} = rec.openingHeightFit
+      const cut = round(v.height * (1 - source)), joint = round(v.height * (1 - target))
+      const bands = await Promise.all([[0, cut, joint], [cut, v.height-cut, v.height-joint]].map(
+        ([top, height, fitted]) => raster(pixels(crop(v,{left:0,top,width:v.width,height}))
+          .resize(v.width, fitted, {fit:'fill', kernel:'lanczos3'}))))
+      panels[i] = await raster(sheet(v.width, v.height, [{v:bands[0],x:0,y:0},{v:bands[1],x:0,y:joint}]))
+    }
   }
   if (preview) {
     const dirs = ['top', 'left', 'front', 'rear']
@@ -171,7 +185,10 @@ for (const [id, rec] of Object.entries(records)) {
     }
   }
   const fitted = await Promise.all(panels.map((v, i) => resize(v, scales[i])))
-  const views = await Promise.all(fitted.map((v) => resize(v, shrink)))
+  const depthScale = rec.depthScale ?? 1
+  const views = await Promise.all(fitted.map((v, i) =>
+    resize(v, shrink, i === 1 ? depthScale : 1, i === 0 ? depthScale : 1),
+  ))
   const cell = Math.max(...views.map((v) => v.width)) + 32,
     height = Math.max(...views.map((v) => v.height)) + 32
   const path = 'atlases/' + id + '.png',
@@ -191,6 +208,7 @@ for (const [id, rec] of Object.entries(records)) {
     nativeViews: panels.map((v) => [v.width, v.height]),
     uniformScale: scales.map((s) => Number((s * shrink).toFixed(5))),
     deliveredViews: views.map((v) => [v.width, v.height]),
+    ...(rec.depthScale ? { depthScale } : {}),
     baseline: height - 16,
     topSource: topReplaced ? top : src,
     topReplaced,

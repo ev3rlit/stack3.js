@@ -18,6 +18,8 @@ Interactive crop and alignment editing and project save/load are on the feature 
 
 Open **4-view comparison** from the Asset viewer or a local project. Choose a project part, a built-in Armored tank atlas, or one PNG in TOP, LEFT, FRONT, REAR order. The gallery shows the seven mesh stages and a Sprite Stack thumbnail in a three-column layout on desktop. Orbit, elevation, and zoom are shared by all thumbnails. Clay hides the textures of the mesh stages.
 
+**Future Tank · hull material passes** compares the silhouette-only and depth-carved meshes on the same grid. Depth Fit reports mean absolute depth error against the supplied atlas on shared visible pixels. The color and normal cards use the same depth-carved mesh and lights. [Sample inputs](../../samples/future-tank/README.md#hull-material-passes)
+
 **Armored tank · full (assembled)** reconstructs the hull, turret, and track atlases independently at every stage and uses the Armored Miniature preset mounts to assemble them. Source proportion warnings are shown per part.
 
 For a scene with multiple visible atlas nodes, **Project · full (assembled)** uses the authored hierarchy and transforms.
@@ -28,10 +30,14 @@ The ID preview uses RGB heuristics for amber and cyan accents and first-hit dept
 
 ## Playground
 
-Open **Demo yard** for Cargo Rover, Inspection Robot, Ant Mech, and Armored Miniature. Drive vehicles, add or remove prop PNGs, and change heading, sun direction, time of day, shadows, and CPU outlines. The yard preserves the original drive controls, prop layouts, rendering technique toggles, and performance readout. It uses the standalone runtime from the [Sprite Stacking Demo snapshot](https://github.com/ev3rlit/sprite-stacking-demo/tree/8b8bb05554404537fc59cb030aeb6851b5c00ba0) with separate stack/mesh selection and a GPU slice renderer.
+Open **Demo yard** for Cargo Rover, Inspection Robot, Ant Mech, and Armored Miniature. Drive vehicles, add or remove prop PNGs, and change heading, sun direction, time of day, shadows, and CPU outlines. The yard preserves the original drive controls, prop layouts, rendering technique toggles, and performance readout. The [standalone demo app](../demo/README.md) uses the runtime from the [Sprite Stacking Demo snapshot](https://github.com/ev3rlit/sprite-stacking-demo/tree/8b8bb05554404537fc59cb030aeb6851b5c00ba0) with separate stack/mesh selection and a GPU slice renderer.
 
 ## Scene editor and project Playground
 
 Open a saved project with `stack3 project open <file>`. This editor operates on the same project as `stack3 project apply`. Use the hierarchy to select or reparent objects, and the inspector to set transforms, motion, and reconstruction settings per object. **Import PNGs** embeds one or more atlases and adds nodes beneath the selection. **Instance** reuses an embedded atlas. The project Playground is a play view of that same level, with play, pause, step, and reset. [Project CLI](../cli/README.md#scene-projects)
 
 [Viewer requirements](../../docs/viewer/README.md)
+
+Select **3D mesh → Mesh method → Contour extrusion** for a flat part. FRONT defines its outline and holes, and LEFT sets the overall depth. Enable **Centered round hub** for a rotor with a projecting axle. The project inspector exposes the same options under **Asset type**.
+
+For a mesh, choose **Texture projection → Upper contour from TOP** to paint the upper surface from the plan view. **Automatic (multi-view)** uses the usual per-face selection. This setting works with either mesh method and is saved on project nodes.

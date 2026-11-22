@@ -71,7 +71,9 @@ export const exhibits: Exhibit[] = [
     at: [0.02, -2.96],
     yaw: -0.04,
     parts: [
-      part('bakery-shell', [1.95, 2.55, 1.88]),
+      part('bakery-shell', [1.75, 2.34, 1.49], [0, 0, -0.15]),
+      part('bakery-roof', [1.95, 1.1676, 1.58], [0, 1.3824, -0.16]),
+      part('bakery-awning', [1.43, 0.36, 0.43], [0, 0.997, 0.771]),
       part('bakery-chimney', [0.36, 0.90, 0.36], [0.60, 1.66, -0.51]),
       part('bakery-window', [0.61, 0.51, 0.165], [0, 1.49, 0.614]),
       part('bakery-window', [0.68, 0.58, 0.18], [0.873, 0.48, -0.16], Math.PI / 2),
@@ -185,9 +187,9 @@ export const exhibits: Exhibit[] = [
     at: [1.91, 1.17],
     yaw: Math.PI / 2,
     parts: [
-      part('bridge-arch', [0.94, 0.675, 2.94], [0, 0.06, 0]),
-      part('bridge-side-frame', [0.16, 0.81, 3.0], [-0.50, 0, 0]),
-      part('bridge-side-frame', [0.16, 0.81, 3.0], [0.50, 0, 0], Math.PI),
+      part('bridge-arch', [0.94, 0.28, 3.24]),
+      part('bridge-side-frame', [0.16, 0.66, 3.42], [-0.50, 0, 0]),
+      part('bridge-side-frame', [0.16, 0.66, 3.42], [0.50, 0, 0], Math.PI),
     ],
   },
   {
@@ -201,7 +203,7 @@ export const exhibits: Exhibit[] = [
         ...part('post', [0.14, 0.5, 0.14], [0, 2.09, 0.37]),
         pitch: Math.PI / 2,
       },
-      { ...part('rotor', [2.12, 2.12, 0.2], [0, 2.09, 0.8]), axle: true },
+      { ...part('rotor', [2.12, 2.12, 0.4], [0, 2.09, 0.8]), axle: true },
       part('fence', [0.91, 0.49, 0.14], [-0.86, 0, 0.49], -0.68),
       part('fence', [0.91, 0.49, 0.14], [0.87, 0, 0.46], 0.68),
     ],
