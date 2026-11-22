@@ -2,15 +2,15 @@
 
 ## Install in Codex
 
-First install the [stack3 CLI](../../apps/cli/README.md#installation). In Codex, paste the following request.
+Install the [stack3 CLI](../../apps/cli/README.md#installation), then run the skills.sh CLI from your project directory with Node.js 22.20 or later.
 
-```text
-$skill-installer Install the stack3 skill from https://github.com/ev3rlit/stack3.js/tree/main/skills/stack3
+```sh
+npx skills add ev3rlit/stack3.js --skill stack3 --agent codex
 ```
 
 Invoke `$stack3` to prepare an atlas, build an asset, or open a scene. Try asking it to open the bundled Future Tank example and show the reconstruction gallery. Restart Codex if the skill does not appear. [Codex skill installation and discovery](https://learn.chatgpt.com/docs/build-skills#install-curated-skills-for-local-use)
 
-Read [SKILL.md](SKILL.md) for the implemented agent workflow.
+See the [Usage prompts](../../README.md#usage) for atlas generation, Playground testing, and export. Read [SKILL.md](SKILL.md) for the full agent workflow.
 
 The original [Sprite Stacking skill](https://github.com/danielwh2/sprite-stacking) is the starting reference for the four-view carving workflow.
 

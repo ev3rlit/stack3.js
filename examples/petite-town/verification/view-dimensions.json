@@ -1,0 +1,2811 @@
+{
+  "house": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        915,
+        1111
+      ],
+      [
+        492,
+        457
+      ],
+      [
+        426,
+        459
+      ],
+      [
+        424,
+        459
+      ]
+    ],
+    "uniformScale": [
+      0.40322,
+      0.89101,
+      0.88713,
+      0.88713
+    ],
+    "deliveredViews": [
+      [
+        369,
+        448
+      ],
+      [
+        438,
+        407
+      ],
+      [
+        378,
+        407
+      ],
+      [
+        376,
+        407
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "house-roofless-plan.png",
+    "topReplaced": true,
+    "leftReplaced": false
+  },
+  "bakery": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        1192,
+        1115
+      ],
+      [
+        471,
+        541
+      ],
+      [
+        523,
+        550
+      ],
+      [
+        469,
+        541
+      ]
+    ],
+    "uniformScale": [
+      0.34568,
+      0.8281,
+      0.81455,
+      0.8281
+    ],
+    "deliveredViews": [
+      [
+        412,
+        385
+      ],
+      [
+        390,
+        448
+      ],
+      [
+        426,
+        448
+      ],
+      [
+        388,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "bakery-plan.png",
+    "topReplaced": true,
+    "leftReplaced": false
+  },
+  "potionist": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        1149,
+        1150
+      ],
+      [
+        476,
+        542
+      ],
+      [
+        483,
+        546
+      ],
+      [
+        475,
+        544
+      ]
+    ],
+    "uniformScale": [
+      0.3424,
+      0.82657,
+      0.82051,
+      0.82353
+    ],
+    "deliveredViews": [
+      [
+        394,
+        394
+      ],
+      [
+        394,
+        448
+      ],
+      [
+        396,
+        448
+      ],
+      [
+        391,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "potionist-plan.png",
+    "topReplaced": true,
+    "leftReplaced": false
+  },
+  "well": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        507,
+        433
+      ],
+      [
+        389,
+        646
+      ],
+      [
+        506,
+        645
+      ],
+      [
+        505,
+        645
+      ]
+    ],
+    "uniformScale": [
+      0.65685,
+      0.6935,
+      0.69457,
+      0.69457
+    ],
+    "deliveredViews": [
+      [
+        333,
+        284
+      ],
+      [
+        269,
+        448
+      ],
+      [
+        351,
+        448
+      ],
+      [
+        351,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "well.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "apple-crate": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        467,
+        452
+      ],
+      [
+        455,
+        275
+      ],
+      [
+        460,
+        279
+      ],
+      [
+        460,
+        279
+      ]
+    ],
+    "uniformScale": [
+      0.96012,
+      0.97119,
+      0.95726,
+      0.95726
+    ],
+    "deliveredViews": [
+      [
+        448,
+        434
+      ],
+      [
+        442,
+        267
+      ],
+      [
+        440,
+        267
+      ],
+      [
+        440,
+        267
+      ]
+    ],
+    "baseline": 450,
+    "topSource": "apple-crate.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "apple-stall": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        1407,
+        933
+      ],
+      [
+        319,
+        447
+      ],
+      [
+        490,
+        450
+      ],
+      [
+        502,
+        447
+      ]
+    ],
+    "uniformScale": [
+      0.30932,
+      0.89243,
+      0.88648,
+      0.89243
+    ],
+    "deliveredViews": [
+      [
+        436,
+        288
+      ],
+      [
+        285,
+        399
+      ],
+      [
+        435,
+        399
+      ],
+      [
+        448,
+        399
+      ]
+    ],
+    "baseline": 415,
+    "topSource": "apple-stall-plan.png",
+    "topReplaced": true,
+    "leftReplaced": false
+  },
+  "barrel": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        473,
+        489
+      ],
+      [
+        481,
+        536
+      ],
+      [
+        474,
+        536
+      ],
+      [
+        479,
+        534
+      ]
+    ],
+    "uniformScale": [
+      0.8328,
+      0.83582,
+      0.83582,
+      0.83895
+    ],
+    "deliveredViews": [
+      [
+        394,
+        407
+      ],
+      [
+        402,
+        448
+      ],
+      [
+        396,
+        448
+      ],
+      [
+        402,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "barrel.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "flower-cart": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        354,
+        589
+      ],
+      [
+        664,
+        425
+      ],
+      [
+        411,
+        425
+      ],
+      [
+        421,
+        424
+      ]
+    ],
+    "uniformScale": [
+      0.76099,
+      0.66077,
+      0.66077,
+      0.66233
+    ],
+    "deliveredViews": [
+      [
+        270,
+        448
+      ],
+      [
+        439,
+        281
+      ],
+      [
+        272,
+        281
+      ],
+      [
+        279,
+        281
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "flower-cart.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "planter": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        445,
+        464
+      ],
+      [
+        415,
+        473
+      ],
+      [
+        440,
+        464
+      ],
+      [
+        431,
+        473
+      ]
+    ],
+    "uniformScale": [
+      0.89046,
+      0.94715,
+      0.96552,
+      0.94715
+    ],
+    "deliveredViews": [
+      [
+        396,
+        413
+      ],
+      [
+        393,
+        448
+      ],
+      [
+        425,
+        448
+      ],
+      [
+        408,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "planter.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "lamp": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        334,
+        201
+      ],
+      [
+        324,
+        1576
+      ],
+      [
+        263,
+        682
+      ],
+      [
+        257,
+        682
+      ]
+    ],
+    "uniformScale": [
+      0.48406,
+      0.28426,
+      0.65689,
+      0.65689
+    ],
+    "deliveredViews": [
+      [
+        162,
+        97
+      ],
+      [
+        92,
+        448
+      ],
+      [
+        173,
+        448
+      ],
+      [
+        169,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "lamp.png",
+    "topReplaced": false,
+    "leftReplaced": true
+  },
+  "bridge": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        266,
+        606
+      ],
+      [
+        681,
+        238
+      ],
+      [
+        336,
+        238
+      ],
+      [
+        339,
+        238
+      ]
+    ],
+    "uniformScale": [
+      0.73888,
+      0.61878,
+      0.61878,
+      0.61878
+    ],
+    "deliveredViews": [
+      [
+        197,
+        448
+      ],
+      [
+        421,
+        147
+      ],
+      [
+        208,
+        147
+      ],
+      [
+        210,
+        147
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "bridge-straight.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "windmill": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        441,
+        400
+      ],
+      [
+        385,
+        622
+      ],
+      [
+        460,
+        608
+      ],
+      [
+        433,
+        604
+      ]
+    ],
+    "uniformScale": [
+      0.72031,
+      0.72026,
+      0.73684,
+      0.74172
+    ],
+    "deliveredViews": [
+      [
+        318,
+        288
+      ],
+      [
+        277,
+        448
+      ],
+      [
+        339,
+        448
+      ],
+      [
+        321,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "windmill.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "bakery-shell": {
+    "original": [
+      2170,
+      725
+    ],
+    "nativeViews": [
+      [
+        492,
+        468
+      ],
+      [
+        775,
+        932
+      ],
+      [
+        491,
+        591
+      ],
+      [
+        496,
+        591
+      ]
+    ],
+    "uniformScale": [
+      0.77797,
+      0.48069,
+      0.75804,
+      0.75804
+    ],
+    "deliveredViews": [
+      [
+        383,
+        364
+      ],
+      [
+        372,
+        448
+      ],
+      [
+        372,
+        448
+      ],
+      [
+        376,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "bakery-shell-bare.png",
+    "topReplaced": false,
+    "leftReplaced": true
+  },
+  "loaf": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        451,
+        348
+      ],
+      [
+        390,
+        229
+      ],
+      [
+        502,
+        230
+      ],
+      [
+        489,
+        226
+      ]
+    ],
+    "uniformScale": [
+      0.99241,
+      0.89243,
+      0.88855,
+      0.90428
+    ],
+    "deliveredViews": [
+      [
+        448,
+        345
+      ],
+      [
+        348,
+        204
+      ],
+      [
+        446,
+        204
+      ],
+      [
+        442,
+        204
+      ]
+    ],
+    "baseline": 361,
+    "topSource": "loaf.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "basket": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        485,
+        409
+      ],
+      [
+        468,
+        180
+      ],
+      [
+        471,
+        177
+      ],
+      [
+        474,
+        176
+      ]
+    ],
+    "uniformScale": [
+      0.92283,
+      0.86549,
+      0.88016,
+      0.88516
+    ],
+    "deliveredViews": [
+      [
+        448,
+        378
+      ],
+      [
+        405,
+        156
+      ],
+      [
+        415,
+        156
+      ],
+      [
+        420,
+        156
+      ]
+    ],
+    "baseline": 394,
+    "topSource": "basket.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "bread-sign": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        523,
+        136
+      ],
+      [
+        148,
+        485
+      ],
+      [
+        578,
+        486
+      ],
+      [
+        584,
+        489
+      ]
+    ],
+    "uniformScale": [
+      0.84884,
+      0.77401,
+      0.77241,
+      0.76768
+    ],
+    "deliveredViews": [
+      [
+        444,
+        115
+      ],
+      [
+        114,
+        375
+      ],
+      [
+        446,
+        375
+      ],
+      [
+        448,
+        375
+      ]
+    ],
+    "baseline": 391,
+    "topSource": "bread-sign.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "potion-shell": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        1014,
+        1024
+      ],
+      [
+        450,
+        504
+      ],
+      [
+        500,
+        558
+      ],
+      [
+        498,
+        558
+      ]
+    ],
+    "uniformScale": [
+      0.39286,
+      0.88889,
+      0.80287,
+      0.80287
+    ],
+    "deliveredViews": [
+      [
+        398,
+        402
+      ],
+      [
+        400,
+        448
+      ],
+      [
+        401,
+        448
+      ],
+      [
+        400,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "potion-shell-bare-plan.png",
+    "topReplaced": true,
+    "leftReplaced": false
+  },
+  "bottle": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        391,
+        398
+      ],
+      [
+        384,
+        504
+      ],
+      [
+        384,
+        504
+      ],
+      [
+        384,
+        504
+      ]
+    ],
+    "uniformScale": [
+      0.86526,
+      0.88889,
+      0.88889,
+      0.88889
+    ],
+    "deliveredViews": [
+      [
+        339,
+        344
+      ],
+      [
+        341,
+        448
+      ],
+      [
+        341,
+        448
+      ],
+      [
+        341,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "bottle.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "potion-sign": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        550,
+        171
+      ],
+      [
+        151,
+        465
+      ],
+      [
+        576,
+        466
+      ],
+      [
+        578,
+        467
+      ]
+    ],
+    "uniformScale": [
+      0.74771,
+      0.7781,
+      0.77643,
+      0.77477
+    ],
+    "deliveredViews": [
+      [
+        412,
+        128
+      ],
+      [
+        117,
+        362
+      ],
+      [
+        447,
+        362
+      ],
+      [
+        448,
+        362
+      ]
+    ],
+    "baseline": 378,
+    "topSource": "potion-sign.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "stone-ring": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        390,
+        399
+      ],
+      [
+        638,
+        263
+      ],
+      [
+        637,
+        263
+      ],
+      [
+        638,
+        263
+      ]
+    ],
+    "uniformScale": [
+      1.0571,
+      0.65361,
+      0.65306,
+      0.65517
+    ],
+    "deliveredViews": [
+      [
+        412,
+        422
+      ],
+      [
+        417,
+        172
+      ],
+      [
+        416,
+        172
+      ],
+      [
+        418,
+        172
+      ]
+    ],
+    "baseline": 438,
+    "topSource": "stone-ring.png",
+    "topReplaced": false,
+    "leftReplaced": true,
+    "elevationSource": "stone-ring-elevations.png"
+  },
+  "pail": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        414,
+        393
+      ],
+      [
+        322,
+        541
+      ],
+      [
+        385,
+        544
+      ],
+      [
+        384,
+        543
+      ]
+    ],
+    "uniformScale": [
+      0.72071,
+      0.8281,
+      0.82353,
+      0.82505
+    ],
+    "deliveredViews": [
+      [
+        299,
+        283
+      ],
+      [
+        266,
+        448
+      ],
+      [
+        317,
+        448
+      ],
+      [
+        317,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "pail.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "well-roof": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        1250,
+        948
+      ],
+      [
+        425,
+        297
+      ],
+      [
+        526,
+        298
+      ],
+      [
+        533,
+        297
+      ]
+    ],
+    "uniformScale": [
+      0.35858,
+      0.82353,
+      0.82077,
+      0.82353
+    ],
+    "deliveredViews": [
+      [
+        448,
+        340
+      ],
+      [
+        350,
+        245
+      ],
+      [
+        432,
+        245
+      ],
+      [
+        439,
+        245
+      ]
+    ],
+    "baseline": 356,
+    "topSource": "well-roof-final.png",
+    "topReplaced": true,
+    "leftReplaced": false
+  },
+  "post": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        193,
+        198
+      ],
+      [
+        126,
+        672
+      ],
+      [
+        126,
+        672
+      ],
+      [
+        125,
+        672
+      ]
+    ],
+    "uniformScale": [
+      0.42885,
+      0.66667,
+      0.66667,
+      0.66667
+    ],
+    "deliveredViews": [
+      [
+        83,
+        85
+      ],
+      [
+        84,
+        448
+      ],
+      [
+        84,
+        448
+      ],
+      [
+        83,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "post.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "rope": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        214,
+        216
+      ],
+      [
+        197,
+        613
+      ],
+      [
+        202,
+        613
+      ],
+      [
+        201,
+        612
+      ]
+    ],
+    "uniformScale": [
+      0.67753,
+      0.73083,
+      0.73083,
+      0.73203
+    ],
+    "deliveredViews": [
+      [
+        145,
+        146
+      ],
+      [
+        144,
+        448
+      ],
+      [
+        148,
+        448
+      ],
+      [
+        147,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "rope.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "water": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        417,
+        425
+      ],
+      [
+        412,
+        38
+      ],
+      [
+        412,
+        38
+      ],
+      [
+        412,
+        38
+      ]
+    ],
+    "uniformScale": [
+      0.97867,
+      1,
+      1,
+      1
+    ],
+    "deliveredViews": [
+      [
+        408,
+        416
+      ],
+      [
+        412,
+        38
+      ],
+      [
+        412,
+        38
+      ],
+      [
+        412,
+        38
+      ]
+    ],
+    "baseline": 432,
+    "topSource": "water.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "crate": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        473,
+        457
+      ],
+      [
+        451,
+        204
+      ],
+      [
+        458,
+        204
+      ],
+      [
+        457,
+        204
+      ]
+    ],
+    "uniformScale": [
+      0.9474,
+      0.9697,
+      0.9697,
+      0.9697
+    ],
+    "deliveredViews": [
+      [
+        448,
+        432
+      ],
+      [
+        437,
+        198
+      ],
+      [
+        444,
+        198
+      ],
+      [
+        443,
+        198
+      ]
+    ],
+    "baseline": 448,
+    "topSource": "crate.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "apple": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        386,
+        404
+      ],
+      [
+        376,
+        428
+      ],
+      [
+        385,
+        428
+      ],
+      [
+        389,
+        428
+      ]
+    ],
+    "uniformScale": [
+      0.96597,
+      1,
+      1,
+      1
+    ],
+    "deliveredViews": [
+      [
+        373,
+        390
+      ],
+      [
+        376,
+        428
+      ],
+      [
+        385,
+        428
+      ],
+      [
+        389,
+        428
+      ]
+    ],
+    "baseline": 444,
+    "topSource": "apple.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "stall-frame": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        465,
+        338
+      ],
+      [
+        311,
+        456
+      ],
+      [
+        493,
+        458
+      ],
+      [
+        508,
+        456
+      ]
+    ],
+    "uniformScale": [
+      0.87669,
+      0.88189,
+      0.87804,
+      0.88189
+    ],
+    "deliveredViews": [
+      [
+        407,
+        296
+      ],
+      [
+        274,
+        402
+      ],
+      [
+        433,
+        402
+      ],
+      [
+        448,
+        402
+      ]
+    ],
+    "baseline": 418,
+    "topSource": "stall-frame.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "awning": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        1431,
+        935
+      ],
+      [
+        1886,
+        826
+      ],
+      [
+        552,
+        179
+      ],
+      [
+        542,
+        179
+      ]
+    ],
+    "uniformScale": [
+      0.30235,
+      0.17588,
+      0.81159,
+      0.81159
+    ],
+    "deliveredViews": [
+      [
+        433,
+        282
+      ],
+      [
+        332,
+        145
+      ],
+      [
+        448,
+        145
+      ],
+      [
+        440,
+        145
+      ]
+    ],
+    "baseline": 298,
+    "topSource": "awning-plan.png",
+    "topReplaced": true,
+    "leftReplaced": true
+  },
+  "cart-body": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        285,
+        589
+      ],
+      [
+        641,
+        283
+      ],
+      [
+        332,
+        280
+      ],
+      [
+        334,
+        279
+      ]
+    ],
+    "uniformScale": [
+      0.76089,
+      0.67058,
+      0.67776,
+      0.68019
+    ],
+    "deliveredViews": [
+      [
+        217,
+        448
+      ],
+      [
+        430,
+        190
+      ],
+      [
+        225,
+        190
+      ],
+      [
+        227,
+        190
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "cart-body.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "wheel": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        445,
+        164
+      ],
+      [
+        182,
+        559
+      ],
+      [
+        554,
+        564
+      ],
+      [
+        550,
+        562
+      ]
+    ],
+    "uniformScale": [
+      0.93696,
+      0.80143,
+      0.79433,
+      0.79715
+    ],
+    "deliveredViews": [
+      [
+        417,
+        154
+      ],
+      [
+        146,
+        448
+      ],
+      [
+        440,
+        448
+      ],
+      [
+        438,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "wheel.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "flower": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        402,
+        383
+      ],
+      [
+        368,
+        418
+      ],
+      [
+        443,
+        417
+      ],
+      [
+        437,
+        417
+      ]
+    ],
+    "uniformScale": [
+      1.02428,
+      0.99761,
+      1,
+      1
+    ],
+    "deliveredViews": [
+      [
+        412,
+        392
+      ],
+      [
+        367,
+        417
+      ],
+      [
+        443,
+        417
+      ],
+      [
+        437,
+        417
+      ]
+    ],
+    "baseline": 433,
+    "topSource": "flower.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "pot": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        442,
+        457
+      ],
+      [
+        448,
+        323
+      ],
+      [
+        452,
+        322
+      ],
+      [
+        458,
+        323
+      ]
+    ],
+    "uniformScale": [
+      0.98124,
+      0.97603,
+      0.97907,
+      0.97603
+    ],
+    "deliveredViews": [
+      [
+        433,
+        448
+      ],
+      [
+        437,
+        315
+      ],
+      [
+        442,
+        315
+      ],
+      [
+        447,
+        315
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "pot.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "lamp-post": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        331,
+        203
+      ],
+      [
+        400,
+        1829
+      ],
+      [
+        260,
+        683
+      ],
+      [
+        266,
+        683
+      ]
+    ],
+    "uniformScale": [
+      0.50154,
+      0.24494,
+      0.65593,
+      0.65593
+    ],
+    "deliveredViews": [
+      [
+        166,
+        102
+      ],
+      [
+        98,
+        448
+      ],
+      [
+        171,
+        448
+      ],
+      [
+        174,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "lamp-post.png",
+    "topReplaced": false,
+    "leftReplaced": true
+  },
+  "flag": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        310,
+        88
+      ],
+      [
+        74,
+        644
+      ],
+      [
+        293,
+        639
+      ],
+      [
+        293,
+        640
+      ]
+    ],
+    "uniformScale": [
+      0.62236,
+      0.69565,
+      0.7011,
+      0.7
+    ],
+    "deliveredViews": [
+      [
+        193,
+        55
+      ],
+      [
+        52,
+        448
+      ],
+      [
+        205,
+        448
+      ],
+      [
+        205,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "flag.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "mill-body": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        369,
+        396
+      ],
+      [
+        387,
+        613
+      ],
+      [
+        399,
+        617
+      ],
+      [
+        397,
+        613
+      ]
+    ],
+    "uniformScale": [
+      0.74911,
+      0.73083,
+      0.72609,
+      0.73083
+    ],
+    "deliveredViews": [
+      [
+        276,
+        297
+      ],
+      [
+        283,
+        448
+      ],
+      [
+        289,
+        448
+      ],
+      [
+        290,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "mill-body.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "rotor": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        1946,
+        300
+      ],
+      [
+        99,
+        606
+      ],
+      [
+        550,
+        572
+      ],
+      [
+        540,
+        571
+      ]
+    ],
+    "uniformScale": [
+      0.23022,
+      0.73542,
+      0.77913,
+      0.78049
+    ],
+    "deliveredViews": [
+      [
+        448,
+        69
+      ],
+      [
+        72,
+        446
+      ],
+      [
+        429,
+        446
+      ],
+      [
+        422,
+        446
+      ]
+    ],
+    "baseline": 462,
+    "topSource": "rotor-final.png",
+    "topReplaced": true,
+    "leftReplaced": false
+  },
+  "fence": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        1955,
+        290
+      ],
+      [
+        82,
+        279
+      ],
+      [
+        491,
+        280
+      ],
+      [
+        527,
+        279
+      ]
+    ],
+    "uniformScale": [
+      0.22915,
+      0.84528,
+      0.84226,
+      0.84528
+    ],
+    "deliveredViews": [
+      [
+        448,
+        67
+      ],
+      [
+        69,
+        236
+      ],
+      [
+        413,
+        236
+      ],
+      [
+        445,
+        236
+      ]
+    ],
+    "baseline": 252,
+    "topSource": "fence-strict.png",
+    "topReplaced": true,
+    "leftReplaced": false
+  },
+  "counter": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        559,
+        157
+      ],
+      [
+        161,
+        83
+      ],
+      [
+        573,
+        83
+      ],
+      [
+        573,
+        83
+      ]
+    ],
+    "uniformScale": [
+      0.8016,
+      0.78185,
+      0.78185,
+      0.78185
+    ],
+    "deliveredViews": [
+      [
+        448,
+        126
+      ],
+      [
+        126,
+        65
+      ],
+      [
+        448,
+        65
+      ],
+      [
+        448,
+        65
+      ]
+    ],
+    "baseline": 142,
+    "topSource": "counter.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "bridge-arch": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        177,
+        566
+      ],
+      [
+        1851,
+        460
+      ],
+      [
+        243,
+        176
+      ],
+      [
+        243,
+        176
+      ]
+    ],
+    "uniformScale": [
+      0.79187,
+      0.23774,
+      0.62136,
+      0.62136
+    ],
+    "deliveredViews": [
+      [
+        140,
+        448
+      ],
+      [
+        440,
+        109
+      ],
+      [
+        151,
+        109
+      ],
+      [
+        151,
+        109
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "bridge-arch-ends.png",
+    "topReplaced": false,
+    "leftReplaced": true
+  },
+  "bridge-side-frame": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        54,
+        533
+      ],
+      [
+        859,
+        229
+      ],
+      [
+        90,
+        204
+      ],
+      [
+        89,
+        203
+      ]
+    ],
+    "uniformScale": [
+      0.84073,
+      0.48492,
+      0.54435,
+      0.54703
+    ],
+    "deliveredViews": [
+      [
+        45,
+        448
+      ],
+      [
+        416,
+        111
+      ],
+      [
+        49,
+        111
+      ],
+      [
+        48,
+        111
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "bridge-side-frame.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "house-door": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        1889,
+        609
+      ],
+      [
+        454,
+        1916
+      ],
+      [
+        511,
+        632
+      ],
+      [
+        512,
+        632
+      ]
+    ],
+    "uniformScale": [
+      0.18291,
+      0.23382,
+      0.70886,
+      0.70886
+    ],
+    "deliveredViews": [
+      [
+        345,
+        111
+      ],
+      [
+        106,
+        448
+      ],
+      [
+        362,
+        448
+      ],
+      [
+        363,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "house-door-plan.png",
+    "topReplaced": true,
+    "leftReplaced": true
+  },
+  "house-window": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        1948,
+        387
+      ],
+      [
+        118,
+        445
+      ],
+      [
+        558,
+        444
+      ],
+      [
+        545,
+        445
+      ]
+    ],
+    "uniformScale": [
+      0.22984,
+      0.78185,
+      0.78361,
+      0.78185
+    ],
+    "deliveredViews": [
+      [
+        448,
+        89
+      ],
+      [
+        92,
+        348
+      ],
+      [
+        437,
+        348
+      ],
+      [
+        426,
+        348
+      ]
+    ],
+    "baseline": 364,
+    "topSource": "house-window-plan.png",
+    "topReplaced": true,
+    "leftReplaced": false
+  },
+  "house-window-flowers": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        512,
+        116
+      ],
+      [
+        126,
+        390
+      ],
+      [
+        497,
+        401
+      ],
+      [
+        519,
+        394
+      ]
+    ],
+    "uniformScale": [
+      0.87493,
+      0.85074,
+      0.82741,
+      0.84211
+    ],
+    "deliveredViews": [
+      [
+        448,
+        102
+      ],
+      [
+        107,
+        332
+      ],
+      [
+        411,
+        332
+      ],
+      [
+        437,
+        332
+      ]
+    ],
+    "baseline": 348,
+    "topSource": "house-window-flowers.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "house-lantern": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        240,
+        397
+      ],
+      [
+        923,
+        1377
+      ],
+      [
+        271,
+        584
+      ],
+      [
+        268,
+        583
+      ]
+    ],
+    "uniformScale": [
+      0.86555,
+      0.32534,
+      0.76712,
+      0.76844
+    ],
+    "deliveredViews": [
+      [
+        207,
+        343
+      ],
+      [
+        300,
+        448
+      ],
+      [
+        208,
+        448
+      ],
+      [
+        206,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "house-lantern.png",
+    "topReplaced": false,
+    "leftReplaced": true
+  },
+  "house-chimney": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        382,
+        388
+      ],
+      [
+        351,
+        485
+      ],
+      [
+        376,
+        484
+      ],
+      [
+        378,
+        485
+      ]
+    ],
+    "uniformScale": [
+      0.87325,
+      0.92371,
+      0.92562,
+      0.92371
+    ],
+    "deliveredViews": [
+      [
+        333,
+        339
+      ],
+      [
+        324,
+        448
+      ],
+      [
+        348,
+        448
+      ],
+      [
+        349,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "house-chimney.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "potion-chimney": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        340,
+        361
+      ],
+      [
+        297,
+        434
+      ],
+      [
+        347,
+        433
+      ],
+      [
+        348,
+        432
+      ]
+    ],
+    "uniformScale": [
+      0.91646,
+      0.9977,
+      1,
+      1.00231
+    ],
+    "deliveredViews": [
+      [
+        312,
+        331
+      ],
+      [
+        296,
+        433
+      ],
+      [
+        347,
+        433
+      ],
+      [
+        349,
+        433
+      ]
+    ],
+    "baseline": 449,
+    "topSource": "potion-chimney.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "potion-counter": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        485,
+        188
+      ],
+      [
+        215,
+        184
+      ],
+      [
+        588,
+        183
+      ],
+      [
+        588,
+        184
+      ]
+    ],
+    "uniformScale": [
+      0.8938,
+      0.75804,
+      0.76218,
+      0.75804
+    ],
+    "deliveredViews": [
+      [
+        434,
+        168
+      ],
+      [
+        163,
+        139
+      ],
+      [
+        448,
+        139
+      ],
+      [
+        446,
+        139
+      ]
+    ],
+    "baseline": 184,
+    "topSource": "potion-counter.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "potion-window": {
+    "original": [
+      1640,
+      525
+    ],
+    "nativeViews": [
+      [
+        104,
+        27
+      ],
+      [
+        105,
+        491
+      ],
+      [
+        104,
+        127
+      ],
+      [
+        378,
+        493
+      ]
+    ],
+    "uniformScale": [
+      3.48112,
+      0.91242,
+      3.52756,
+      0.90872
+    ],
+    "deliveredViews": [
+      [
+        362,
+        94
+      ],
+      [
+        96,
+        448
+      ],
+      [
+        367,
+        448
+      ],
+      [
+        343,
+        448
+      ]
+    ],
+    "baseline": 464,
+    "topSource": "potion-window-registered.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "potion-ivy": {
+    "original": [
+      892,
+      259
+    ],
+    "nativeViews": [
+      [
+        191,
+        41
+      ],
+      [
+        41,
+        227
+      ],
+      [
+        191,
+        227
+      ],
+      [
+        191,
+        227
+      ]
+    ],
+    "uniformScale": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "deliveredViews": [
+      [
+        191,
+        41
+      ],
+      [
+        41,
+        227
+      ],
+      [
+        191,
+        227
+      ],
+      [
+        191,
+        227
+      ]
+    ],
+    "baseline": 243,
+    "topSource": "potion-ivy.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "bakery-window": {
+    "original": [
+      2352,
+      509
+    ],
+    "nativeViews": [
+      [
+        547,
+        166
+      ],
+      [
+        179,
+        454
+      ],
+      [
+        174,
+        152
+      ],
+      [
+        519,
+        467
+      ]
+    ],
+    "uniformScale": [
+      0.81844,
+      0.81455,
+      2.43292,
+      0.79187
+    ],
+    "deliveredViews": [
+      [
+        448,
+        136
+      ],
+      [
+        146,
+        370
+      ],
+      [
+        424,
+        370
+      ],
+      [
+        411,
+        370
+      ]
+    ],
+    "baseline": 386,
+    "topSource": "bakery-window-registered.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "bakery-counter": {
+    "original": [
+      2180,
+      214
+    ],
+    "nativeViews": [
+      [
+        505,
+        170
+      ],
+      [
+        158,
+        174
+      ],
+      [
+        313,
+        117
+      ],
+      [
+        313,
+        117
+      ]
+    ],
+    "uniformScale": [
+      0.62237,
+      0.67241,
+      1,
+      1
+    ],
+    "deliveredViews": [
+      [
+        314,
+        106
+      ],
+      [
+        106,
+        117
+      ],
+      [
+        313,
+        117
+      ],
+      [
+        313,
+        117
+      ]
+    ],
+    "baseline": 133,
+    "topSource": "bakery-counter-registered.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "bakery-chimney": {
+    "original": [
+      768,
+      209
+    ],
+    "nativeViews": [
+      [
+        156,
+        173
+      ],
+      [
+        89,
+        157
+      ],
+      [
+        89,
+        157
+      ],
+      [
+        89,
+        157
+      ]
+    ],
+    "uniformScale": [
+      0.54176,
+      1,
+      1,
+      1
+    ],
+    "deliveredViews": [
+      [
+        85,
+        94
+      ],
+      [
+        89,
+        157
+      ],
+      [
+        89,
+        157
+      ],
+      [
+        89,
+        157
+      ]
+    ],
+    "baseline": 173,
+    "topSource": "bakery-chimney.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  },
+  "house-roof": {
+    "original": [
+      2172,
+      724
+    ],
+    "nativeViews": [
+      [
+        497,
+        473
+      ],
+      [
+        501,
+        266
+      ],
+      [
+        495,
+        283
+      ],
+      [
+        494,
+        283
+      ]
+    ],
+    "uniformScale": [
+      0.89001,
+      0.89424,
+      0.84053,
+      0.84053
+    ],
+    "deliveredViews": [
+      [
+        442,
+        421
+      ],
+      [
+        448,
+        238
+      ],
+      [
+        416,
+        238
+      ],
+      [
+        415,
+        238
+      ]
+    ],
+    "baseline": 437,
+    "topSource": "house-roof.png",
+    "topReplaced": false,
+    "leftReplaced": false
+  }
+}

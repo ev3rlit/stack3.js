@@ -6,7 +6,7 @@ For an existing model, render from exact orthographic cameras. Set TOP directly 
 
 For generated images, use a supplied reference or one accepted view as the identity reference. Request either separate frames or a clean atlas. Prefer separate frames when replacing a single panel. Keep the user's existing materials, linework, color, and lighting style throughout. Specify an art style only when requested or already established by the source.
 
-Use the [copy-ready prompts in SKILL.md](../SKILL.md#generate-the-four-views) for an atlas or a replacement TOP.
+Use the [four-view atlas prompt](../SKILL.md#generate-the-four-views) for the first pass. For a single-panel correction, use the [TOP repair prompt](../SKILL.md#replace-a-tilted-top) or the [LEFT repair prompt](../SKILL.md#replace-an-incorrect-left) with the accepted views as references.
 
 ## Replace a tilted TOP
 

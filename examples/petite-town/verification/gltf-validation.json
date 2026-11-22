@@ -1,0 +1,437 @@
+{
+  "validator": "2.0.0-dev.3.10",
+  "models": {
+    "apple-crate.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "apple-stall.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "apple.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "awning.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "bakery-chimney.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "bakery-counter.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "bakery-shell.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "bakery-window.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "bakery.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "barrel.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "basket.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "bottle.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "bread-sign.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "bridge-arch.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "bridge-side-frame.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "bridge.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "cart-body.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "counter.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "crate.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "fence.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "flag.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "flower-cart.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "flower.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "house-chimney.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "house-door.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "house-lantern.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "house-roof.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "house-window-flowers.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "house-window.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "house.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "lamp-post.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "lamp.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "loaf.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "mill-body.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "pail.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "planter.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "post.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "pot.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "potion-chimney.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "potion-counter.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "potion-ivy.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "potion-shell.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "potion-sign.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "potion-window.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "potionist.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "rope.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "rotor.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "stall-frame.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "stone-ring.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "water.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "well-roof.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "well.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "wheel.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    },
+    "windmill.glb": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 1,
+      "details": [
+        "IMAGE_NPOT_DIMENSIONS"
+      ]
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "instances": {
+    "bakery-shell": 1,
+    "bakery-chimney": 1,
+    "bakery-window": 2,
+    "bakery-counter": 1,
+    "basket": 1,
+    "loaf": 3,
+    "bread-sign": 1
+  },
+  "roofHeightAlongLength": {
+    "ridge": {
+      "samples": 11,
+      "minimumMetres": 2.55,
+      "maximumMetres": 2.55
+    },
+    "eave": {
+      "samples": 11,
+      "minimumMetres": 1.621177,
+      "maximumMetres": 1.621177
+    }
+  },
+  "contacts": {
+    "bakery-chimney": [
+      {
+        "support": "bakery-shell",
+        "nearestVertexDistanceMetres": 0.00791
+      }
+    ],
+    "bakery-window": [
+      {
+        "support": "bakery-shell",
+        "nearestVertexDistanceMetres": 0.00115
+      },
+      {
+        "support": "bakery-shell",
+        "nearestVertexDistanceMetres": 0.00329
+      }
+    ],
+    "bakery-counter": [
+      {
+        "support": "bakery-shell",
+        "nearestVertexDistanceMetres": 0.00634
+      }
+    ],
+    "basket": [
+      {
+        "support": "bakery-counter",
+        "nearestVertexDistanceMetres": 0.0019
+      }
+    ],
+    "loaf": [
+      {
+        "support": "basket",
+        "nearestVertexDistanceMetres": 0.0003
+      },
+      {
+        "support": "bakery-counter",
+        "nearestVertexDistanceMetres": 0.00134
+      },
+      {
+        "support": "bakery-counter",
+        "nearestVertexDistanceMetres": 0.00074
+      }
+    ],
+    "bread-sign": [
+      {
+        "support": "bakery-counter",
+        "nearestVertexDistanceMetres": 0.00363
+      }
+    ]
+  }
+}

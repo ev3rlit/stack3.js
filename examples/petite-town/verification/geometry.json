@@ -1,0 +1,283 @@
+{
+  "ground": {
+    "house": {
+      "minimumY": 0.0,
+      "bankSupportFraction": 1.0
+    },
+    "bakery": {
+      "minimumY": 0.0,
+      "bankSupportFraction": 0.9993
+    },
+    "potionist": {
+      "minimumY": 0.0,
+      "bankSupportFraction": 1.0
+    },
+    "well": {
+      "minimumY": 0.0,
+      "bankSupportFraction": 1.0
+    },
+    "apple-crate": {
+      "minimumY": 0.0,
+      "bankSupportFraction": 1.0
+    },
+    "apple-stall": {
+      "minimumY": 0.0,
+      "bankSupportFraction": 1.0
+    },
+    "barrel": {
+      "minimumY": 0.0,
+      "bankSupportFraction": 1.0
+    },
+    "flower-cart": {
+      "minimumY": 0.0,
+      "bankSupportFraction": 1.0
+    },
+    "planter": {
+      "minimumY": 0.0,
+      "bankSupportFraction": 1.0
+    },
+    "lamp": {
+      "minimumY": 0.0,
+      "bankSupportFraction": 1.0
+    },
+    "bridge": {
+      "minimumY": 0.0,
+      "bankSupportFraction": 1.0
+    },
+    "windmill": {
+      "minimumY": 0.0,
+      "bankSupportFraction": 1.0
+    }
+  },
+  "bridgeSideProjection": {
+    "spanPixels": 1500,
+    "deckPixels": 69844,
+    "exposedDeckPixelsBySide": [
+      0,
+      0
+    ]
+  },
+  "bridgeCrownRiseMetres": 0.4967,
+  "rayHitsNormalized": {
+    "wellRingCentreAndRim": [
+      null,
+      1.0
+    ],
+    "waterCentre": [
+      1.0
+    ],
+    "bridgeArchAndAbutments": [
+      null,
+      0.9828,
+      0.9828
+    ],
+    "bridgeDeckCentre": [
+      1.0
+    ],
+    "bridgeDeckHeightProfile": [
+      0.2641,
+      0.7837,
+      1.0,
+      0.7837,
+      0.2641
+    ],
+    "wheelHubAndSpokeGaps": [
+      1.0,
+      null,
+      0.7265,
+      0.7268,
+      null
+    ],
+    "interiorAndLip": {
+      "basket": [
+        0.4687,
+        0.9207
+      ],
+      "pot": [
+        0.6073,
+        0.9523
+      ],
+      "crate": [
+        0.5088,
+        0.9687
+      ]
+    },
+    "bakeryRidge": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "bakeryEave": [
+      0.6358,
+      0.6358,
+      0.6358,
+      0.6358,
+      0.6358,
+      0.6358,
+      0.6358,
+      0.6358,
+      0.6358,
+      0.6358,
+      0.6358
+    ]
+  },
+  "sampledVertexDistancesMetres": {
+    "house": {
+      "house-roof / house": [
+        0.0067
+      ],
+      "house-door / house": [
+        0.0086
+      ],
+      "house-lantern / house": [
+        0.0013
+      ],
+      "house-window-flowers / house": [
+        0.0016
+      ],
+      "house-window / house": [
+        0.0063
+      ],
+      "house-chimney / house-roof": [
+        0.0022
+      ]
+    },
+    "bridge": {
+      "bridge-side-frame / bridge-arch": [
+        0.0061,
+        0.0056
+      ]
+    },
+    "bakery": {
+      "basket / bakery-counter": [
+        0.0031
+      ],
+      "loaf / basket (first), bakery-counter (others)": [
+        0.0003,
+        0.0013,
+        0.0021
+      ],
+      "bread-sign / bakery-counter": [
+        0.0047
+      ],
+      "bakery-counter / bakery-shell": [
+        0.0063
+      ],
+      "bakery-chimney / bakery-shell": [
+        0.012
+      ],
+      "bakery-window / bakery-shell": [
+        0.002,
+        0.0035
+      ]
+    },
+    "potionist": {
+      "bottle / potion-counter": [
+        0.001,
+        0.0006,
+        0.0013
+      ],
+      "potion-counter / potion-shell": [
+        0.0049
+      ],
+      "potion-sign / potion-counter": [
+        0.0025
+      ],
+      "potion-window / potion-shell": [
+        0.0033,
+        0.0047,
+        0.002
+      ],
+      "potion-ivy / potion-shell": [
+        0.0018,
+        0.0012,
+        0.0021,
+        0.0013
+      ],
+      "potion-chimney / potion-shell": [
+        0.0027
+      ],
+      "consecutive ivy branches": [
+        0.0018,
+        0.0004,
+        0.0004
+      ]
+    },
+    "well": {
+      "post / stone-ring": [
+        0.0029,
+        0.0029
+      ],
+      "post / well-roof": [
+        0.0125,
+        0.0125
+      ],
+      "rope / well-roof": [
+        0.0035
+      ],
+      "pail / rope": [
+        0.0008
+      ],
+      "water / stone-ring": [
+        0.0027
+      ]
+    },
+    "apple-crate": {
+      "apple / crate (outer), apples (centre)": [
+        0.0008,
+        0.0014,
+        0.0017,
+        0.0022,
+        0.0008
+      ]
+    },
+    "apple-stall": {
+      "awning / stall-frame": [
+        0.0052
+      ],
+      "crate / stall-frame": [
+        0.002
+      ]
+    },
+    "flower-cart": {
+      "wheel / cart-body": [
+        0.0042,
+        0.0018
+      ],
+      "post / cart-body": [
+        0.003
+      ],
+      "flower / cart-body": [
+        0.0031,
+        0.0025,
+        0.0014
+      ]
+    },
+    "planter": {
+      "flower / pot": [
+        0.0013
+      ]
+    },
+    "lamp": {
+      "flag / lamp-post": [
+        0.001
+      ]
+    },
+    "windmill": {
+      "post / mill-body": [
+        0.0027
+      ],
+      "rotor / post": [
+        0.0014
+      ]
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "parts": [
+    "house",
+    "house-roof",
+    "house-chimney",
+    "house-door",
+    "house-lantern",
+    "house-window-flowers",
+    "house-window"
+  ],
+  "orbitDegrees": 360.0,
+  "minimumSampledMountDistanceMetres": {
+    "house-roof": 0.00671,
+    "house-chimney": 0.00218,
+    "house-door": 0.00862,
+    "house-lantern": 0.00125,
+    "house-window-flowers": 0.00159,
+    "house-window": 0.00629
+  },
+  "flueRecessMetres": 0.252,
+  "doorstepMinimumY": 0.0,
+  "roofHeightAtChimneyCentreMetres": 1.8173,
+  "chimneyBaseAndTopMetres": [
+    1.47,
+    2.52
+  ],
+  "chimneyWorldMatrixBefore": [
+    0.47246252413176515,
+    0,
+    -0.10565179633560264,
+    0,
+    0,
+    1.0500000000694525,
+    0,
+    0,
+    -0.1086298593804403,
+    0,
+    -0.48578007510570337,
+    0,
+    -2.901147548958492,
+    1.4699999999305478,
+    -3.506353561839995,
+    1
+  ],
+  "chimneyWorldMatrixAfter": [
+    0.47246252413176515,
+    0,
+    -0.10565179633560264,
+    0,
+    0,
+    1.0500000000694525,
+    0,
+    0,
+    -0.1086298593804403,
+    0,
+    -0.48578007510570337,
+    0,
+    -2.901147548958492,
+    1.4699999999305478,
+    -3.506353561839995,
+    1
+  ]
+}

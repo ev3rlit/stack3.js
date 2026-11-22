@@ -1,0 +1,249 @@
+* {
+  box-sizing: border-box;
+}
+:root {
+  font-family: 'Apple SD Gothic Neo', system-ui, sans-serif;
+  color: #403b2e;
+  background: #d7d7c4;
+}
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(
+    ellipse at 50% 32%,
+    #f7f3e7 0,
+    #d8ddcc 52%,
+    #b6c6b6 100%
+  );
+}
+main {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: min(100%, 580px, 74svh);
+  height: min(960px, 100svh);
+  background: radial-gradient(
+    ellipse at 50% 42%,
+    #fff8df 12%,
+    #f5edd9 53%,
+    #eadcc1 100%
+  );
+  box-shadow: 0 10px 80px #47615430;
+}
+header,
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+header {
+  padding: clamp(14px, 3.1svh, 35px) 10px 0;
+  pointer-events: none;
+}
+.ornament {
+  color: #9b513a;
+  font-size: 20px;
+  line-height: 1;
+}
+h1 {
+  font:
+    500 clamp(42px, 7svh, 72px) / 1.02 Georgia,
+    'Times New Roman',
+    serif;
+  letter-spacing: -0.065em;
+  margin: 4px 0 7px;
+  color: #304f45;
+}
+header p {
+  font-size: 12px;
+  letter-spacing: 0.21em;
+  color: #77684f;
+  margin: 0;
+}
+#landscape {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  cursor: grab;
+  outline-offset: -3px;
+}
+canvas:active {
+  cursor: grabbing;
+}
+.tools {
+  position: absolute;
+  right: 18px;
+  bottom: 8px;
+  display: flex;
+  gap: 5px;
+}
+button,
+select {
+  color: inherit;
+  font: inherit;
+}
+button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #b7ab91;
+  border-radius: 50%;
+  background: #fff8e9e8;
+  cursor: pointer;
+  font-size: 21px;
+}
+button:hover,
+button:focus-visible {
+  background: #fffdf4;
+  border-color: #627f6b;
+}
+#status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 8px 14px;
+  background: #fffaea;
+  border-radius: 4px;
+  font-size: 13px;
+  min-width: max-content;
+}
+footer {
+  margin: 5px 22px max(15px, env(safe-area-inset-bottom));
+  padding-top: 12px;
+  border-top: 1px solid #b7ac913f;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 5px 14px;
+  text-align: left;
+}
+label {
+  font-size: 12px;
+  color: #77684f;
+}
+select {
+  width: 100%;
+  font-weight: 650;
+  font-size: 14px;
+  padding: 8px 24px 8px 10px;
+  background: #fff9eb;
+  border: 1px solid #c3b79e;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.tip {
+  grid-column: 1/-1;
+  text-align: center;
+  font-size: 11px;
+  color: #786e5f;
+  margin-top: 3px;
+}
+@media (max-width: 600px) {
+  main {
+    width: 100%;
+    height: 100svh;
+  }
+}
+@media (min-height: 720px) and (min-width: 700px) {
+  main {
+    height: min(94svh, 960px);
+    border-radius: 22px;
+    border: 1px solid #c6bea6;
+  }
+}
+
+#layer-editor {
+  position: absolute;
+  left: 12px;
+  top: 8px;
+  z-index: 2;
+  width: min(245px, calc(100% - 24px));
+  background: #fff9ed;
+  box-shadow: 0 5px 18px #4e403222;
+  border: 1px solid #c8baa1;
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: left;
+}
+#layer-editor[hidden],
+#edit-open[hidden] {
+  display: none;
+}
+.editor-head,
+.editor-actions,
+.layer-scale {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.editor-head {
+  margin-bottom: 5px;
+  color: #394e42;
+}
+#layer-close {
+  border: 0;
+  background: transparent;
+  width: 32px;
+  height: 32px;
+  font-size: 21px;
+  line-height: 1;
+}
+#layer-part {
+  margin: 3px 0 12px;
+}
+#layer-count {
+  display: block;
+  margin: 6px 0 8px;
+  width: 100%;
+  accent-color: #526f59;
+}
+#layer-value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  color: #405c4e;
+}
+#layer-note {
+  display: block;
+  min-height: 18px;
+  font-size: 11px;
+  color: #685e4d;
+  overflow-wrap: anywhere;
+}
+.editor-actions {
+  margin-top: 8px;
+  gap: 6px;
+}
+.editor-actions button,
+#edit-open {
+  width: auto;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 12px;
+}
+#layer-apply {
+  background: #48624e;
+  color: #fff9ed;
+  border-color: #48624e;
+}
+.editor-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+@media (max-height: 600px) {
+  #layer-editor {
+    max-height: 90%;
+    overflow: auto;
+  }
+}

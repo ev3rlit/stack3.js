@@ -1,6 +1,6 @@
 ---
 name: stack3
-description: Generate four-view atlases, build sprite stacks or Marching Cubes meshes, compare lighting and anti-aliasing, and assemble and verify drivable vehicles with the stack3 CLI, Editor, and Playground. Use for stack3 atlas preparation, TOP repair, reconstruction, and scene or component workflows.
+description: Generate four-view atlases, build sprite stacks or Marching Cubes meshes, compare lighting and anti-aliasing, and assemble and verify drivable vehicles with the stack3 CLI, Editor, and Playground. Use for stack3 atlas preparation, TOP or LEFT repair, reconstruction, and scene or component workflows.
 ---
 
 # stack3 Sprite Stacks
@@ -11,6 +11,8 @@ Use visual-hull carving from Daniel White’s [Sprite Stacking workflow](https:/
 
 Use this prompt for a new atlas. Substitute `[ASSET]` with the subject and its identifying features. Attach any source art as an identity and style reference. If the user specifies a style, add it explicitly. With source art, match its existing style. With neither, let the subject drive the look. Request pixel art only when the user wants it.
 
+Fill in the LEFT landmark lines with observable parts from this asset. For a handcart, the handles project toward screen-left and the two hubs on one axle coincide. For a lamp with an arm extending right in FRONT, look along the arm in LEFT; a post in front of it occludes it wherever they overlap. Omit an inapplicable cue for a symmetric object such as a plain barrel.
+
 ```text
 Create one wide PNG production atlas of [ASSET] as four orthographic views of one fixed object. Use the attached references for identity and appearance when supplied. Keep the same pose, parts, proportions, asymmetries, materials, colors, markings, and surface detail in every panel. Preserve the reference's rendering style, gradients, and edge treatment.
 
@@ -18,7 +20,13 @@ Arrange exactly four panels in one horizontal row, in this order: TOP, LEFT, FRO
 
 TOP — True orthographic plan. Put the camera directly over the object with its optical axis vertical and pointed straight down, perpendicular to the ground plane. Use a 90° depression angle with zero roll. The object's front points toward the bottom of the image. Place the silhouette using the full footprint, including any base or horizontal ledges that extend beyond the top surfaces. Landmarks on the same vertical line project to the same image point, regardless of height. Vertical edges have zero projected length, and vertical wall faces appear edge-on. Show the upper-facing and sloped surfaces visible on this axis. Exclude any tilted overhead, isometric, three-quarter, or perspective framing.
 
-LEFT — Horizontal orthographic left elevation, front pointing screen-left. Show the full length and height. FRONT — Horizontal orthographic elevation looking directly at the front. REAR — Horizontal orthographic elevation looking directly at the rear. Use level cameras and the same ground line across these three panels.
+LEFT — True orthographic left elevation. Place the camera directly to the object's left, looking horizontally across its width, with zero yaw offset, pitch, and roll relative to that side view. The front points screen-left, the rear screen-right, and vertical edges remain vertical. Show the full length and height.
+
+Project the entire width onto this plane. Two landmarks at the same front-to-rear position and height project to the same point even if they are on opposite sides. The nearer surface hides the farther one wherever they overlap. Flat front and rear faces perpendicular to the length appear edge-on. A horizontal top face has zero projected area. Show sloped and curved surfaces visible from this axis.
+
+Place [FRONT LANDMARK] toward screen-left and [REAR LANDMARK] toward screen-right. Seen along the width axis, [WIDTH-ALIGNED FEATURE] appears [EXPECTED END PROFILE OR OCCLUSION].
+
+FRONT — Horizontal orthographic elevation looking directly at the front. REAR — Horizontal orthographic elevation looking directly at the rear. Use level cameras and the same ground line across these three panels.
 
 Match TOP length to LEFT length and TOP width to FRONT and REAR width. Match LEFT, FRONT, and REAR heights. Keep the same identifiable part geometry and placement across all views.
 ```
@@ -35,12 +43,27 @@ Render a strict orthographic plan with the camera directly above the object's ce
 Match the full footprint length implied by LEFT and width implied by FRONT and REAR. Include the entire footprint with a clear margin. Return one centered view on a transparent or uniform light background, without text, cast shadows, or additional panels.
 ```
 
+## Replace an incorrect LEFT
+
+When LEFT fails a side-view landmark check, attach the accepted TOP plan and FRONT and REAR elevations as references and generate one panel. Fill in the error and its geometric correction from the rejected attempt. For example, if both cart wheels are visible side by side, specify that their hubs share one axle and must coincide in LEFT.
+
+```text
+Generate one replacement LEFT elevation of [ASSET]. The attached TOP, FRONT, and REAR describe the exact object. Preserve its parts, proportions, asymmetries, materials, and rendering style.
+
+Correct this observed error in the previous LEFT: [OBSERVED ERROR]. From the exact left-side camera, [LANDMARK] must appear [EXPECTED POSITION, OVERLAP, OR EDGE PROFILE] because [GEOMETRIC REASON].
+
+Look horizontally across the object's width in orthographic projection. The front points screen-left. Match the full front-to-rear length measured in TOP and the height and ground line of FRONT and REAR at one common scale. Return only LEFT, uncropped with a clear margin, on a transparent or uniform light background without text or cast shadows.
+```
+
+Inspect the replacement at native resolution against the stated landmark and dimensions. Fit it with a uniform resize and translation if needed. If the overlap or proportions still fail, use that specific discrepancy in the next attempt. Keep the accepted panels and original files intact.
+
 ## Prepare and verify the views
 
 - Preserve the source style, colors, gradients, shading, and antialiased detail. Keep the input PNGs untouched. Use pixel-art generation, palette reduction, dithering, or nearest-neighbor preview only when requested. Preview sampling and a baked pixel-art style are separate choices.
 - Accept an explicitly mapped atlas or separate PNGs. Use `top,left,front,rear`, optionally with both `right,bottom`. Set the front down in TOP and left in LEFT. Keep the same object, pose, scale, ground line in elevation views, and clear silhouette separation. Transparent backgrounds are preferable for light subjects.
 - Open and inspect TOP at native resolution before building. Require a vertical orthographic view along the height axis. Compare roof and base landmarks and footprint proportions with the other views. A visible vertical fascia, strip of front or side wall attributable to object height, or a roof-to-base shift indicates tilt. Horizontal ledges or sloped surfaces can legitimately appear in TOP.
 - Use the replacement prompt for a missing or tilted TOP. For ambiguous cases or when an existing model is available, use [Orthographic source preparation](references/orthographic-views.md). CLI dimension warnings can identify scale inconsistencies. They cannot establish camera orientation.
+- Inspect LEFT at native resolution for a visible front face, a visible flat top, or separation between landmarks that should coincide across the width. Compare their longitudinal positions with TOP and their heights with FRONT and REAR. For a symmetric silhouette, record which orientation cues can actually be confirmed.
 - Use separate aligned inputs and pivots for independently moving parts. A cavity hidden in every silhouette is ambiguous even when the views pass the camera checks.
 
 ## Build and open the sprite stack
@@ -89,7 +112,11 @@ For agent-driven comparison, use `node.set` with `patch.settings.format` or `pat
 
 ## Validate the live result
 
-- Orbit through a full turn, including diagonals, and check landmark placement, thin parts, seams, footprint, scale, and ground contact. Compare the highest-detail view against the PNG. For CLI output, reopen the actual bundle when supported.
+- Start with the requested asset or part list. Review an existing reconstruction when available. For CLI output, reopen the exported bundle when supported. Orbit a full turn at the intended viewing scale. Check landmarks, thin parts, seams, footprint, scale and ground contact, then compare a revealing diagonal and side view with the source PNGs.
+- When geometry leans or a marking appears on the wrong face, keep the revealing camera angle and trace the same landmark through the mapped TOP, LEFT, FRONT and REAR. Fix a swapped panel assignment directly. If a source drawing contradicts the other views, regenerate just that drawing, rebuild, and compare from the saved angle. If the views agree and only the paint is misplaced, inspect face-to-view texture projection and UVs.
+- Consider an additional split when the assembled views hide the contour needed to recover an intended gap, separate overlapping forms, or give painted relief its depth. Fine texture on an otherwise convincing shape can stay painted.
+- Recommend the smallest split that would expose the missing contour. Cite the observed symptom, the angle where it appears, and which view of the isolated part would describe it. For example, if a bridge frame masks the walking deck's rise, a separate LEFT elevation of the deck reveals its crown. If the current result reads clearly, keep the assembly. Honor requests for a single atlas, specified parts or independent motion. When asked for a review, stop at recommendations.
+- After rebuilding, repeat the same camera comparison and test the feature that prompted it. For a bridge, measure the deck at the landings and center and check clearance through both frames.
 - **Pixel art** enables nearest sampling. Leave it off unless requested. **Smooth edges** and **Grid** are independent preview controls. Switching these controls leaves the reconstructed layers and exported PNG unchanged.
 - Layer count, XY resolution, threshold, height, and pivot rebuild from the source. Revisit a previous combination with the same source to verify a session cache hit. Orbit, zoom, and preview filters reuse the current result.
 - Report the bundle path, layer count, dimensions, pivot, and preview checks you actually completed.

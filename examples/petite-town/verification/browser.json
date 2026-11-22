@@ -1,0 +1,78 @@
+{
+  "browser": "157.0.8103.80",
+  "desktopViewport": [
+    1280,
+    900
+  ],
+  "desktopFrame": {
+    "x": 350,
+    "y": 27,
+    "width": 580,
+    "height": 846
+  },
+  "mobileViewport": [
+    390,
+    844
+  ],
+  "mobileInput": "Chrome CDP touch on emulated device",
+  "loadedItems": 12,
+  "distinctModels": 43,
+  "instances": 72,
+  "instanceBatches": 43,
+  "coldCache": {
+    "built": 43,
+    "disk": 0,
+    "memory": 29
+  },
+  "layerEditor": {
+    "changedInstance": "apple-crate/apple/1",
+    "originalLayers": 32,
+    "editedLayers": 56,
+    "separateBatches": [
+      {
+        "key": "crate/32",
+        "count": 1
+      },
+      {
+        "key": "apple/32",
+        "count": 4
+      },
+      {
+        "key": "apple/56",
+        "count": 1
+      }
+    ],
+    "reloadCache": {
+      "built": 0,
+      "disk": 44,
+      "memory": 28
+    }
+  },
+  "mouseWheelZoom": [
+    1,
+    1.0967244118415387
+  ],
+  "orbitDegrees": {
+    "house": 359.92,
+    "bakery": 359.92,
+    "potionist": 359.92,
+    "well": 359.92,
+    "apple-crate": 359.92,
+    "apple-stall": 359.92,
+    "barrel": 359.92,
+    "flower-cart": 359.92,
+    "planter": 359.92,
+    "lamp": 359.92,
+    "bridge": 359.92,
+    "windmill": 359.92
+  },
+  "touchOrbitRadians": 0.809428058895921,
+  "pinchZoom": [
+    1,
+    2.343750000000001
+  ],
+  "rotorMotionRadians": 0.12451499999999871,
+  "triangles": 1239948,
+  "drawCalls": 57,
+  "errors": []
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#f0e7d4" />
+    <link rel="icon" href="data:," />
+    <title>Petite Town · 작은 마을 산책</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="ornament" aria-hidden="true">✾</div>
+        <h1>Petite Town</h1>
+        <p>작은 중세 마을 산책</p>
+      </header>
+      <section id="landscape" aria-label="회전하고 확대할 수 있는 3D 마을">
+        <canvas
+          tabindex="0"
+          aria-label="마을 전경. 방향키로 회전하고 더하기·빼기 키로 확대하거나 축소합니다."
+        ></canvas>
+        <aside id="layer-editor" aria-labelledby="layer-title" hidden>
+          <div class="editor-head">
+            <strong id="layer-title"></strong
+            ><button id="layer-close" aria-label="레이어 편집 닫기">×</button>
+          </div>
+          <label for="layer-part">부품</label
+          ><select id="layer-part"></select>
+          <div class="layer-scale">
+            <label for="layer-count">수직 레이어</label
+            ><output id="layer-value" for="layer-count"></output>
+          </div>
+          <input id="layer-count" type="range" step="1" />
+          <span id="layer-note" role="status"></span>
+          <div class="editor-actions">
+            <button id="layer-reset">기본값 복원</button
+            ><button id="layer-apply">적용</button>
+          </div>
+        </aside>
+        <div class="tools">
+          <button id="edit-open" hidden>레이어 편집</button>
+          <button id="home" aria-label="마을 전경으로 복귀" title="마을 전경">
+            ⌂</button
+          ><button id="out" aria-label="축소">−</button
+          ><button id="in" aria-label="확대">+</button>
+        </div>
+        <p id="status" role="status">마을을 불러오는 중…</p>
+      </section>
+      <footer>
+        <label for="guide">마을 도감</label
+        ><select id="guide" disabled>
+          <option value="">마을 전체 둘러보기</option></select
+        ><span class="tip"
+          >오브젝트를 눌러 레이어 편집 · 드래그로 회전 · 핀치로 확대</span
+        >
+      </footer>
+    </main>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>
