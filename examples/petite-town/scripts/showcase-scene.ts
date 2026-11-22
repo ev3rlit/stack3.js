@@ -9,15 +9,17 @@ import { exhibitNames as names } from '../src/exhibit-names'
 const paper = '#f5f0e4'
 const ink = '#304f45'
 const line = '#dacfb9'
+const pixelRatio = new URLSearchParams(location.search).has('video') ? 2 : 1
 const turnFrames = 72
 const townFrames = turnFrames * 2
 const periodMs = 17142
 
 function surface(width: number, height: number) {
   const canvas = document.createElement('canvas')
-  canvas.width = width
-  canvas.height = height
+  canvas.width = width * pixelRatio
+  canvas.height = height * pixelRatio
   const ctx = canvas.getContext('2d', { alpha: false })!
+  ctx.scale(pixelRatio, pixelRatio)
   ctx.imageSmoothingQuality = 'high'
   return ctx
 }
@@ -26,6 +28,7 @@ const png = (ctx: CanvasRenderingContext2D) => ctx.canvas.toDataURL('image/png')
 async function prepare() {
   const renderer = new WebGLRenderer({ antialias: true })
   renderer.setClearColor(paper)
+  renderer.setPixelRatio(pixelRatio)
   renderer.setSize(896, 600, false)
   renderer.setScissorTest(true)
   const water = createWater()
@@ -75,7 +78,7 @@ async function prepare() {
       renderer.setViewport(0, 0, 224, 200)
       renderer.render(scene, camera)
       const x = col * 224, y = row * 230
-      gallery.drawImage(renderer.domElement, 0, 400, 224, 200, x, y, 224, 200)
+      gallery.drawImage(renderer.domElement, 0, 400 * pixelRatio, 224 * pixelRatio, 200 * pixelRatio, x, y, 224, 200)
       gallery.fillStyle = ink
       gallery.font = 'bold 16px Arial, sans-serif'
       gallery.textAlign = 'center'
@@ -95,7 +98,7 @@ async function prepare() {
     function paint(seconds: number) {
       water.time.value = seconds + 2
       renderer.render(village, fixed)
-      city.drawImage(renderer.domElement, 0, 60, 540, 540, 0, 0, 540, 540)
+      city.drawImage(renderer.domElement, 0, 60 * pixelRatio, 540 * pixelRatio, 540 * pixelRatio, 0, 0, 540, 540)
     }
     paint(time)
     // The water shader has several periods. Crossfade its phase over the final 1.5 seconds.
@@ -109,7 +112,7 @@ async function prepare() {
   function compose() {
     hero.fillStyle = paper
     hero.fillRect(0, 0, 1100, 508)
-    hero.drawImage(city.canvas, 15, 16, 510, 510, 3, 47, 453, 453)
+    hero.drawImage(city.canvas, 15 * pixelRatio, 16 * pixelRatio, 510 * pixelRatio, 510 * pixelRatio, 3, 47, 453, 453)
     const scale = Math.min(628 / gallery.canvas.width, 449 / gallery.canvas.height)
     const width = Math.round(scale * gallery.canvas.width)
     hero.drawImage(gallery.canvas, 469 + Math.floor((628 - width) / 2), 52, width, Math.round(scale * gallery.canvas.height))
@@ -123,6 +126,12 @@ async function prepare() {
   }
   return {
     turnFrames, periodMs, assetCount: assets.length,
+    videoFrame(phase: number) {
+      drawGallery(phase * townFrames)
+      drawVillage(phase * townFrames)
+      compose()
+      return hero.canvas.toDataURL('image/jpeg', .97).split(',')[1]
+    },
     frames(index: number) {
       drawGallery(index)
       // The right panel turns twice per village loop; render each gallery angle once.

@@ -10,7 +10,8 @@
     "build:models": "tsx scripts/build-models.ts",
     "build:atlases": "tsx scripts/prepare-atlases.ts",
     "build:standalone": "tsc --noEmit && tsx scripts/build-standalone.ts",
-    "build:showcase": "tsx scripts/build-showcase.ts"
+    "build:showcase": "tsx scripts/build-showcase.ts",
+    "build:showcase-video": "tsx scripts/build-showcase.ts --video"
   },
   "dependencies": {
     "@stack3/core": "file:vendor/stack3-core-0.1.0.tgz",

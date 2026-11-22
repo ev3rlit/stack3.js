@@ -2,6 +2,7 @@ import { mkdtemp, mkdir, rename, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { execFileSync } from 'node:child_process'
 import { chromium, type Browser } from 'playwright-core'
 import sharp from 'sharp'
 import { build, preview, type PreviewServer } from 'vite'
@@ -9,6 +10,8 @@ import type {} from './showcase-scene'
 import type {} from './house-guide'
 
 const houseGuide = process.argv.includes('--house-guide')
+const video = process.argv.includes('--video')
+if (video) execFileSync('ffmpeg', ['-version'], { stdio: 'ignore' })
 const root = fileURLToPath(new URL('../', import.meta.url))
 const media = fileURLToPath(new URL('../../../docs/media/petite-town/', import.meta.url))
 await mkdir(media, { recursive: true })
@@ -30,16 +33,30 @@ try {
   if (!address || typeof address === 'string') throw new Error('Missing preview port')
   browser = await chromium.launch({
     ...(process.env.CHROME_BIN ? { executablePath: process.env.CHROME_BIN } : { channel: 'chrome' }),
-    args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader'],
+    args: video ? ['--enable-unsafe-swiftshader'] : ['--enable-unsafe-swiftshader', '--use-angle=swiftshader'],
   })
   const page = await browser.newPage()
   const errors: string[] = []
   page.on('pageerror', error => errors.push(error.message))
   page.on('response', res => { if (res.status() >= 400) errors.push(res.status() + ' ' + res.url()) })
-  await page.goto('http://127.0.0.1:' + address.port)
+  await page.goto('http://127.0.0.1:' + address.port + (video ? '/?video' : '/'))
   const outputs: [string, Buffer[], number, number][] = []
-  let frameMs: number
-  if (houseGuide) {
+  let frameMs = 0
+  if (video) {
+    await page.waitForFunction(() => !!window.showcase)
+    const fps = 30
+    const duration = await page.evaluate(async () => (await window.showcase).periodMs)
+    const count = Math.round(duration * fps / 1000)
+    for (let i = 0; i < count; i++) {
+      const frame = await page.evaluate(async phase => (await window.showcase).videoFrame(phase), i / count)
+      await writeFile(join(work, `frame-${String(i).padStart(4, '0')}.jpg`), Buffer.from(frame, 'base64'))
+      if ((i + 1) % 60 === 0) console.log(`Rendered ${i + 1}/${count} video frames`)
+    }
+    execFileSync('ffmpeg', ['-v', 'error', '-framerate', String(fps), '-i', join(work, 'frame-%04d.jpg'),
+      '-vf', 'scale=1920:-2:flags=lanczos,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=0xf5f0e4,setsar=1',
+      '-c:v', 'libx264', '-crf', '17', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-movflags', '+faststart',
+      join(staged, 'showcase.mp4')], { stdio: 'inherit' })
+  } else if (houseGuide) {
     await page.waitForFunction(() => !!window.houseGuide)
     const { width, height, frameCount } = await page.evaluate(async () => {
       const { width, height, frameCount } = await window.houseGuide
@@ -86,7 +103,10 @@ try {
         !info.delay || info.delay.some((ms, i) => ms !== delay[i])) throw new Error('Invalid animation: ' + name)
   }
   for (const [name] of outputs) await rename(join(staged, name), join(media, name))
-  console.log('Updated', outputs.map(([name]) => name).join(', '))
+  if (video) {
+    await rename(join(staged, 'showcase.mp4'), join(media, 'showcase.mp4'))
+    console.log('Updated showcase.mp4')
+  } else console.log('Updated', outputs.map(([name]) => name).join(', '))
 } finally {
   await browser?.close()
   await server?.close()

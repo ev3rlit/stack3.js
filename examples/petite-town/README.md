@@ -102,6 +102,12 @@ npm --prefix examples/petite-town run build:showcase
 
 루트 README의 목조 주택 조립 그림은 같은 명령 뒤에 `-- --house-guide`를 붙여 생성한다. 각 행은 해당 부품의 원본 4뷰 PNG이고, 오른쪽 집은 마을과 같은 배치와 메시를 사용한다.
 
+Threads 등에서 공유할 Full HD MP4는 FFmpeg와 Chrome을 설치한 뒤 저장소 루트에서 다음 명령으로 생성한다. 현재 3D 장면을 30fps로 렌더링하고 H.264 영상으로 인코딩한다. 결과 파일은 `docs/media/petite-town/showcase.mp4`이다.
+
+```sh
+npm --prefix examples/petite-town run build:showcase-video
+```
+
 ## 소스에서 실행
 
 Node.js 22.12 이상에서 이 폴더만으로 실행할 수 있다. 브라우저는 로컬 4뷰 PNG로 stack3 메시를 만들고 Three.js로 그린다. 필요한 stack3 코어 패키지도 이 예제에 동봉했다.
