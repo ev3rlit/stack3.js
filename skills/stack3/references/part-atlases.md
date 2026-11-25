@@ -4,7 +4,7 @@
 
 Keep the whole-object TOP, LEFT, FRONT, and REAR as an assembly reference when available. Mark a few shared landmarks such as the axle center, door sill, or roof ridge. For each unique part, record its atlas, physical or relative dimensions, local pivot, and mount transform in that frame. A tight image crop loses the original position, and separately generated atlases often have different drawing scales.
 
-Acquire or generate four isolated views of each part before reconstruction. For a cart, the body atlas shows the body with the wheels removed; the wheel atlas shows both end profiles and the tread. One wheel stack can supply multiple mounts. If an asymmetric side or a marking changes across a pair, provide the corresponding view or a distinct atlas. The project editor accepts positive scale; use mirrored input views if a reflected instance is needed there. Verify front/rear orientation after mirroring.
+For descriptions and photos, use the [four-view image prompt](../SKILL.md#generate-the-four-views) to generate four isolated views of each part before reconstruction. Use a supplied valid part atlas directly. For a cart, the body atlas shows the body with the wheels removed; the wheel atlas shows both end profiles and the tread. One wheel stack can supply multiple mounts. If an asymmetric side or a marking changes across a pair, provide the corresponding view or a distinct atlas. The project editor accepts positive scale; use mirrored input views if a reflected instance is needed there. Verify front/rear orientation after mirroring.
 
 ## Build the part and guide its sections
 
@@ -17,7 +17,7 @@ stack3 build wheel.png --layout top,left,front,rear --format stack --height 0.6 
 
 Compare a slice through a recognizable landmark with the reference. When the hull is too boxy, take widths from TOP and heights from an elevation at matching stations. Use a rounded section for a curved housing, a dome with a flat base for a cover, or measured upper and lower edges for a thin plate. Keep the simple hull wherever its sections already fit. For a visible recess, trace the rim and guide only the cells to remove. Treat an unseen floor depth as an estimate.
 
-For a mesh derived from a **custom guided stack**, save the adjusted RGBA layers with their spacing, size, and pivot. Reopen `stack.json` and `stack.png`, unpack the bottom-to-top tiles using the recorded column count, and extract the surface from their alpha occupancy. Apply the part dimensions and pivot when converting grid coordinates to mesh coordinates. The stock CLI builds GLBs directly from view images; use a stack-reading mesher for edited slices. The built-in `--profile` choices cover simple profiles. Asset-specific station curves and subtractive masks belong in the reconstruction code.
+For a mesh derived from a sprite stack, save the adjusted RGBA layers with their spacing, size, and pivot. Reopen `stack.json` and `stack.png`, unpack the bottom-to-top tiles using the recorded column count, and extract the surface from their alpha occupancy. Apply the part dimensions and pivot when converting grid coordinates to mesh coordinates. Choose a [surface method per part](../SKILL.md#choose-the-surface-method-per-part). After any section edits are saved, run `stack3 mesh wheel-stack/ --output wheel.glb` on the final bundle. Direct atlas-to-GLB builds are a separate CLI path and bypass saved slice edits. The built-in `--profile` choices cover simple profiles. Asset-specific station curves and subtractive masks belong in the reconstruction code.
 
 ## Assemble and verify
 

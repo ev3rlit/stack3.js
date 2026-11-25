@@ -2,7 +2,7 @@
 
 ## Input
 
-Use the approved model or the approved 4-view atlas of `[ASSET]`. Keep any independent parts isolated and use the same pose in every pass. Record one set of orthographic cameras and a common scale. If the input is 2D, use the Clay image as a geometry reference for a reconstructed proxy. Render the final Clay and Depth pair from that same proxy and label its depth as estimated.
+Use the approved model or the approved 4-view atlas of `[ASSET]`. Keep any independent parts isolated and use the same pose in every pass. Record one set of orthographic cameras and a common scale. For a 2D source, first complete the four-view image atlas and sprite-stack reconstruction. Use the reconstructed surface for the paired Clay and Depth renders and label its depth as estimated.
 
 ## Prompt
 

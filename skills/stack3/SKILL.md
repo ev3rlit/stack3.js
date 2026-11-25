@@ -1,11 +1,28 @@
 ---
 name: stack3
-description: Reconstruct assets from orthographic images with stack3. Use for single or per-part four-view atlases, sprite stacks, guided mesh reconstruction, assembly and silhouette checks, TOP or LEFT repair, rendering comparisons, and drivable vehicle scenes.
+description: Turn a subject description or reference image into a four-view image atlas, a saved sprite stack, and a 3D surface mesh. Use for part atlases, stack3 reconstruction, Blender review and finishing, and Editor or Playground workflows.
 ---
 
 # stack3 Sprite Stacks
 
-Use visual-hull carving from Daniel White’s [Sprite Stacking workflow](https://github.com/danielwh2/sprite-stacking) to reconstruct horizontal RGBA slices. The output is a 2D sprite stack with bottom-to-top layers and pivot metadata.
+## Start from the input
+
+**Subject or reference image → image-generated atlas PNG → saved RGBA sprite stack → 3D surface mesh → Blender review and finishing.** Use this order for single objects and assemblies. Choose the part boundaries in 2D before creating any geometry.
+
+| Input for this task | First action |
+| --- | --- |
+| Description, photo, sketch, or uncalibrated render | Invoke the host's image generation tool with the [four-view prompt](#generate-the-four-views). Attach the supplied images as identity references. Generate and save one PNG per chosen part, then inspect it. A reference photo still requires this step. |
+| Existing orthographic atlas or individually mapped views | Inspect the supplied TOP, LEFT, FRONT, and REAR. Retain accepted views and generate any missing or rejected panels using the repair prompts below. |
+| Saved sprite stack | Validate and reuse its PNG and manifest. For a mesh request, proceed directly to surface extraction. |
+| Existing 3D asset designated by the user as the source | When orthographic images are needed, use Blender early to isolate parts and render calibrated views of that asset. Save those PNGs and continue at atlas inspection. |
+
+Use early Blender work for a concrete upstream dependency, such as checking scale and camera axes on a supplied scene, or checking registration of existing views. Identify the input and the check or image it supplies, then resume the sequence. A request for a Blender deliverable specifies the destination. Do not build a proxy, model the subject, or select an incidental workspace mesh to manufacture the first atlas from a description or photo. If image generation is unavailable, use an available authorized image provider or request the missing four-view inputs. Keep any completed inputs.
+
+## Reconstruction and handoff
+
+Use visual-hull carving from Daniel White’s [Sprite Stacking workflow](https://github.com/danielwh2/sprite-stacking) to write `stack.png` and `stack.json`. For a mesh, reopen the saved bundle (including any edited slices) and extract its surface. Keep the atlas, bundle and mesh paths together per part so the result can be traced back to its images. Stop at the requested stage for atlas-only or sprite-only work.
+
+Use **Blender** by default to view and verify the stack or mesh, assemble named parts at their mounts, and do retopology, materials, lighting and other post-processing. For an editable Blender delivery, pack textures, save a new `.blend`, and reopen it for review. Use Editor/Playground for web-specific controls, physics or CPU/WebGL comparisons.
 
 ## Choose the atlas boundaries first
 
@@ -70,7 +87,7 @@ Inspect the replacement at native resolution against the stated landmark and dim
 - Preserve the source style, colors, gradients, shading, and antialiased detail. Keep the input PNGs untouched. Use pixel-art generation, palette reduction, dithering, or nearest-neighbor preview only when requested. Preview sampling and a baked pixel-art style are separate choices.
 - Accept an explicitly mapped atlas or separate PNGs. Use `top,left,front,rear`, optionally with both `right,bottom`. Set the front down in TOP and left in LEFT. Keep the same object, pose, scale, ground line in elevation views, and clear silhouette separation. Transparent backgrounds are preferable for light subjects.
 - Open and inspect TOP at native resolution before building. Require a vertical orthographic view along the height axis. Compare roof and base landmarks and footprint proportions with the other views. A visible vertical fascia, strip of front or side wall attributable to object height, or a roof-to-base shift indicates tilt. Horizontal ledges or sloped surfaces can legitimately appear in TOP.
-- Use the replacement prompt for a missing or tilted TOP. For ambiguous cases or when an existing model is available, use [Orthographic source preparation](references/orthographic-views.md). CLI dimension warnings can identify scale inconsistencies. They cannot establish camera orientation.
+- Use the replacement prompt for a missing or tilted TOP. For ambiguous views or a user-designated source model, use [Orthographic source preparation](references/orthographic-views.md). CLI dimension warnings can identify scale inconsistencies. They cannot establish camera orientation.
 - Inspect LEFT at native resolution for a visible front face, a visible flat top, or separation between landmarks that should coincide across the width. Compare their longitudinal positions with TOP and their heights with FRONT and REAR. For a symmetric silhouette, record which orientation cues can actually be confirmed.
 - A cavity hidden in every silhouette is ambiguous even when the views pass the camera checks. Record any inferred depth or hidden profile used to reconstruct it.
 
@@ -96,23 +113,35 @@ Choose slice orientation by output and camera:
 - **Sprite stack, multiple camera angles:** add a vertical set facing the missing view. A longitudinal sheet presents a face to a side camera; a transverse sheet presents a face to a front camera. For free rotation, try horizontal plus both vertical sets and check exact top, front, and side views. Two vertical sets are both edge-on from directly above, even at high density.
 - **Final mesh:** choose section guides per part from the view that reveals its shape or thickness. Reslicing the same occupancy along more axes adds no independent shape evidence. The stock CLI writes horizontal stacks; crossed sheets require custom axis-specific bundles and oriented instances sharing the same world scale and pivot. When comparing layouts, report sheets per axis and compare at the intended screen size with a stated total sheet or texel budget.
 
-For a level, hierarchy, interactive preview, or multi-object workflow, create or reuse a scene project. Use the CLI from the agent workflow instead of asking the user to operate browser controls. Invoke the image tool with the prompts above when images are missing, inspect TOP, then embed the PNGs as project objects. Read `stack3 project schema` and `stack3 project get <file>`, apply a JSON action batch with `stack3 project apply <file> -`, and open the live view with `stack3 project open <file> --playground`. Use concrete node IDs in each batch, keep object settings per node, and verify the resulting scene.
+For a stack3 Editor or Playground request, create or reuse a scene project. Use the CLI from the agent workflow instead of asking the user to operate browser controls. Embed the accepted atlas PNGs from the input stage as project objects. Read `stack3 project schema` and `stack3 project get <file>`, apply a JSON action batch with `stack3 project apply <file> -`, and open the live view with `stack3 project open <file> --playground`. Use concrete node IDs in each batch, keep object settings per node, and verify the resulting scene.
 
 Prefer an installed `stack3` CLI that supports these verbs. Verify capabilities with `stack3 --help`. In a stack3.js checkout with dependencies installed, use `npm run cli --` in place of `stack3`. Pass absolute paths when invoking from the checkout for assets elsewhere.
 
 ```sh
 stack3 inspect asset-4view.png --layout top,left,front,rear
 stack3 build asset-4view.png --layout top,left,front,rear --format stack --output asset-stack/
-stack3 view asset-stack/
+stack3 mesh asset-stack/ --output asset.glb
 ```
 
 A separate-view manifest uses `{"views":{"top":"top.png","left":"left.png","front":"front.png","rear":"rear.png"}}`. Paths are relative to the manifest. Pass it to `inspect` and `build` without `--layout`.
 
-If `view` is unavailable, launch the checkout viewer with `npm run viewer -- --open`, import the same source, and select **Sprite stack**. Use the same layer count, XY resolution, threshold, height, and pivot. If the viewer or checkout is unavailable, report which verification could be completed.
+For a surface delivery, import `asset.glb` into Blender, verify its geometry and bounds, then finish the scene. For a slice preview, run `stack3 view asset-stack/ --output asset-slices.blend`. The default view opens a fresh Blender process with a packed scene of horizontal, alpha-masked quads. Use `--output asset.blend --no-open` for headless delivery. Use `--web` for the browser viewer or `--no-open` alone for its URL. If an older CLI lacks Blender support, import the stack or part meshes with Blender Python.
 
-## Extrude a flat outline
+## Choose the surface method per part
 
-For a flat sign, fin or rotor, use `stack3 build atlas.png --layout top,left,front,rear --mesh-method contour --output part.glb`. FRONT defines the outline, including disconnected islands and holes; LEFT determines overall depth. Select **Contour extrusion** in the viewer's mesh settings or the project inspector. Project nodes use `format: "glb"` and `meshMethod: "contour"`.
+Keep the saved stack as the common geometry input. Choose a method based on what the part must preserve, even when different parts belong to the same assembly.
+
+| Part or goal | Stack surface method | Check |
+| --- | --- | --- |
+| Thin fins, lips, mixed hard and rounded features, or an unspecified target | Start with `marching-cubes` (CLI default) | Check thickness at the thinnest station and continuity around openings. |
+| Rounded housings, domes, organic shells | Try `surface-nets` against Marching Cubes on the same stack | Averaging edge crossings can soften corners and taper narrow tips. Check the outline and section before adopting. |
+| Explicit block style or an exact reference to the occupied cells | Use `voxel` | Exposes the outer cell faces and cavity walls. Inspect stair steps at the target screen size. |
+
+Example: `stack3 mesh housing-stack/ --mesh-method surface-nets --output housing.glb`. Make a separate choice for each part and record it. For a tight triangle budget, apply QEM simplification **after** extraction and recheck silhouettes, holes, and triangle count. QEM is a post-process, not a `stack3 mesh` method. If another stack-reading mesher better fits the subject, keep the same bundle, scale and pivot and verify its output at matched viewpoints.
+
+## Explicit contour extrusion
+
+Use this alternate atlas-to-mesh route when contour extrusion is requested. The default surface workflow for thin parts still uses the saved stack. For a flat sign, fin or rotor, use `stack3 build atlas.png --layout top,left,front,rear --mesh-method contour --output part.glb`. FRONT defines the outline, including disconnected islands and holes; LEFT determines overall depth. Select **Contour extrusion** in the viewer's mesh settings or the project inspector. Project nodes use `format: "glb"` and `meshMethod: "contour"`.
 
 For a rotor with a solid center and a visibly projecting axle, add `--contour-hub` or set `contourHub: true`. TOP gives the blade thickness and LEFT gives the collar diameter. `--resolution` controls the number of segments around the hub. Inspect both end faces, the side wall and the axle after assembly.
 

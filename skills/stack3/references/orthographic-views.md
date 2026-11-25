@@ -2,7 +2,9 @@
 
 ## Choose a source
 
-For an existing model, render from exact orthographic cameras. Set TOP directly above the asset, aligned with its vertical axis, and point the image’s up direction toward the rear. Reuse the same world units per pixel for every panel. Use this render as a geometry reference when generating a matching illustration.
+For a description, photograph, or sketch, start with the [four-view image prompt](../SKILL.md#generate-the-four-views) and pass the reference to the image tool.
+
+For an existing 3D model designated as input to this task, render from exact orthographic cameras. Set TOP directly above the asset, aligned with its vertical axis, and point the image’s up direction toward the rear. Reuse the same world units per pixel for every panel. Use this render as a geometry reference when generating a matching illustration.
 
 For generated images, use a supplied reference or one accepted view as the identity reference. Request either separate frames or a clean atlas. Prefer separate frames when replacing a single panel. Keep the user's existing materials, linework, color, and lighting style throughout. Specify an art style only when requested or already established by the source.
 
