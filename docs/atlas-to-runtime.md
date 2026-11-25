@@ -50,7 +50,7 @@ For every cell center, the builder looks up a pixel in each aligned silhouette. 
 occupied = TOP covers cell AND LEFT covers cell AND (FRONT OR REAR covers cell)
 ```
 
-The rear lookup mirrors the horizontal coordinate. With six views, all six projections must cover the cell. The default silhouette profile keeps those survivors. The round profile additionally clips each occupied horizontal cross-section to an ellipse. Grid builds support 16–192 horizontal samples and 8–128 layers, with a maximum of three million cells. [Grid dimensions and occupancy](../packages/core/src/reconstruct.ts)
+The rear lookup mirrors the horizontal coordinate. With six views, all six projections must cover the cell. The default silhouette profile keeps those survivors. The round profile additionally clips each occupied horizontal cross-section to an ellipse. Grid builds default to 128 vertical samples and 96 samples on the longer horizontal axis. The fitted view pixels determine the available detail along each axis. Higher sample counts reuse those pixels and require additional memory. [Grid dimensions and occupancy](../packages/core/src/reconstruct.ts)
 
 For the roof above, the CLI measures TOP at 442 × 421 px, LEFT at 448 × 238 px and FRONT at 416 × 238 px. A horizontal resolution of **48** and **32 layers** gives a **47 × 48 × 32** grid. Near the base, the two eaves occupy narrow strips far apart. Higher up, the strips approach one another until they form the ridge. An enclosed feature hidden in every silhouette cannot be recovered from those views alone. Giving the roof its own atlas exposes the opening that the assembled house would conceal.
 

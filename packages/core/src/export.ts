@@ -1,6 +1,6 @@
 import { zipSync, zlibSync } from 'fflate';
 import type { MeshData, StackData } from './reconstruct';
-import type { Raster } from './views';
+import { readPngDimensions, type Raster } from './views';
 
 const encoder = new TextEncoder();
 
@@ -108,7 +108,7 @@ export function encodeStack(stack: StackData) {
   };
 }
 
-export function readStackBundle(manifest: unknown, texture: Raster): StackData {
+function stackMetadata(manifest: unknown, texture: Pick<Raster, 'width' | 'height'>) {
   if (!manifest || typeof manifest !== 'object') throw new Error('Expected a stack3 stack manifest.');
   const { version, atlas, layout, layerOrder, axes, width, depth, layers, columns, spacing, size, pivot } =
     manifest as Record<string, unknown>;
@@ -119,14 +119,25 @@ export function readStackBundle(manifest: unknown, texture: Raster): StackData {
   if (version !== 1 || atlas !== 'stack.png' || layout !== 'row-major' ||
     layerOrder !== 'bottom-to-top' || axes !== 'xy-ground-z-up-y-forward' ||
     !dimension(width) || !dimension(depth) || !dimension(layers) || !dimension(columns) ||
-    columns > layers || layers > 128 ||
+    columns > layers || !Number.isSafeInteger(texture.width * texture.height * 4) ||
     !vector(size) || size.some(value => value <= 0) || !vector(pivot) ||
     typeof spacing !== 'number' || !Number.isFinite(spacing) || spacing <= 0 ||
-    texture.width !== width * columns || texture.height !== depth * Math.ceil(layers / columns) ||
-    texture.data.length !== texture.width * texture.height * 4) {
+    texture.width !== width * columns || texture.height !== depth * Math.ceil(layers / columns)) {
     throw new Error('The stack manifest does not match the PNG or uses an unsupported layout.');
   }
-  return { target: 'stack', texture, width, depth, layers, columns, spacing, size, pivot };
+  return { width, depth, layers, columns, spacing, size, pivot };
+}
+
+export function readStackPngSize(bytes: Uint8Array, manifest: unknown) {
+  const dimensions = readPngDimensions(bytes);
+  stackMetadata(manifest, dimensions);
+  return dimensions;
+}
+
+export function readStackBundle(manifest: unknown, texture: Raster): StackData {
+  const meta = stackMetadata(manifest, texture);
+  if (texture.data.length !== texture.width * texture.height * 4) throw new Error('Invalid stack texture data length.');
+  return { target: 'stack', texture, ...meta };
 }
 
 export function encodeStackZip(stack: StackData) {

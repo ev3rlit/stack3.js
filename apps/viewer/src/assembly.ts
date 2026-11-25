@@ -37,13 +37,13 @@ export function bakeStack(parts: PlacedAsset[]): StackData {
   const low = [0, 1, 2].map(axis => Math.min(...bounds.map(({ min }) => min[axis])));
   const high = [0, 1, 2].map(axis => Math.max(...bounds.map(({ max }) => max[axis])));
   const size = high.map((value, axis) => value - low[axis]) as XYZ;
-  const density = Math.min(192 / Math.max(size[0], size[1]), Math.max(...placed.map(({ asset, scale = 1 }) =>
-    Math.max(asset.width / asset.size[0], asset.depth / asset.size[1]) / scale)));
+  const density = Math.max(...placed.map(({ asset, scale = 1 }) =>
+    Math.max(asset.width / asset.size[0], asset.depth / asset.size[1]) / scale));
   const width = Math.max(1, Math.round(size[0] * density)), depth = Math.max(1, Math.round(size[1] * density));
   const spacing = Math.min(...placed.map(({ asset, scale = 1 }) => asset.spacing * scale));
-  const layers = Math.max(1, Math.min(128, Math.floor(3_000_000 / (width * depth)), Math.ceil(size[2] / spacing)));
+  const layers = Math.max(1, Math.ceil(size[2] / spacing));
   const step = [size[0] / width, size[1] / depth, size[2] / layers];
-  const columns = Math.min(layers, Math.floor(4096 / width));
+  const columns = Math.min(layers, Math.max(1, Math.floor(4096 / width)));
   const imageWidth = width * columns, imageHeight = depth * Math.ceil(layers / columns);
   const data = new Uint8Array(4 * imageWidth * imageHeight);
 

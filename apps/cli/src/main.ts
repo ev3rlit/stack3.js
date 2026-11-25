@@ -3,7 +3,8 @@ import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, extname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { PNG } from 'pngjs';
-import { DIRECTIONS, encodeGlb, encodeStack, inspectViews, parseLayout, prepareViews, readPngSize, reconstruct, respaceStack,
+import { buildFromPreparedViews } from './grid-build';
+import { DEFAULT_LAYERS, DIRECTIONS, encodeGlb, encodeStack, inspectViews, parseLayout, prepareViews, reconstructionDimensions, readPngSize, respaceStack,
   splitAtlas, type Direction, type Raster, type Settings, type ViewSet } from '@stack3/core';
 import { buildCacheKey, readBuildCache, writeBuildCache, type BuildOutput } from './build-cache';
 
@@ -26,11 +27,11 @@ Build options
   --texture-projection <name>  auto (default) or top-contour for GLB output
   --mesh-method <name>   marching-cubes (default) or contour for GLB output
   --contour-hub          Add a centered round axle measured from TOP and LEFT
-  --layers <integer>     Vertical samples (default 48)
+  --layers <integer|native>  Vertical samples (default ${DEFAULT_LAYERS})
   --spacing <number>     Sprite stack spacing multiplier (default 1)
   --profile <name>       silhouette, round, or round-base
   --no-cache             Bypass the local build cache
-  --resolution <integer> Maximum horizontal axis samples (default 96)
+  --resolution <integer|native>  Longer horizontal axis samples (default 96)
   --height <number>      Asset height in scene units (default 1)
   --pivot ground|center  Origin position (default ground)
   --threshold <0–255>    Background threshold for opaque PNGs (default 238)
@@ -157,14 +158,21 @@ async function main() {
   if ((meshMethod || values['contour-hub']) && format !== 'glb') throw new Error('Mesh methods require GLB output.');
   if (values['contour-hub'] && meshMethod !== 'contour') throw new Error('--contour-hub requires --mesh-method contour.');
   if (meshMethod === 'contour' && profile && profile !== 'silhouette') throw new Error('Contour extrusion uses the FRONT silhouette.');
+  const views = prepareViews(await readInput(input, values.layout, threshold), threshold);
+  const { nativeSamples } = inspectViews(views);
   const settings: Settings = {
     textureProjection, meshMethod, contourHub: values['contour-hub'],
-    layers: values.layers === undefined ? undefined : Number(values.layers),
-    resolution: values.resolution === undefined ? undefined : Number(values.resolution),
+    layers: values.layers === 'native' ? Math.max(8, nativeSamples.z) : Number(values.layers ?? DEFAULT_LAYERS),
+    resolution: values.resolution === 'native' || values.resolution === undefined ? undefined : Number(values.resolution),
     height: values.height === undefined ? undefined : Number(values.height),
     pivot: values.pivot, threshold, profile,
   };
-  const views = await readInput(input, values.layout, threshold);
+  if (values.resolution === 'native') {
+    const { size: [width, depth] } = reconstructionDimensions(views, settings);
+    const samples = width === depth ? Math.max(nativeSamples.x, nativeSamples.y)
+      : width > depth ? nativeSamples.x : nativeSamples.y;
+    settings.resolution = Math.max(16, samples);
+  }
   const key = values['no-cache'] ? undefined : buildCacheKey(views, format, settings, spacing);
   const cached = key ? await readBuildCache(key, format) : undefined;
   const artifact = cached ?? buildOutput(views, format, settings, spacing);
@@ -181,7 +189,7 @@ async function main() {
 }
 
 function buildOutput(views: ViewSet, format: BuildOutput['format'], settings: Settings, spacing: number): BuildOutput {
-  const asset = reconstruct(views, format === 'glb' ? 'mesh' : 'stack', settings);
+  const asset = buildFromPreparedViews(views, format === 'glb' ? 'mesh' : 'stack', settings);
   if (asset.target === 'mesh') return { format: 'glb', bytes: encodeGlb(asset) };
   const bundle = encodeStack(respaceStack(asset, spacing));
   return { format: 'stack', png: bundle.png, manifest: JSON.stringify(bundle.manifest, null, 2) + '\n' };

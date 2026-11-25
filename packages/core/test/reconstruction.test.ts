@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { PNG } from 'pngjs';
 import { compareAtlasMeshes, compareAtlasPipeline, DIRECTIONS, encodeGlb, encodePng, encodeStack, inspectViews, parseLayout, prepareViews, respaceStack,
-  readPngSize, readStackBundle, reconstruct, splitAtlas, type Raster, type ViewSet } from '../src/index';
+  readPngSize, readStackPngSize, readStackBundle, reconstruct, splitAtlas, type Raster, type ViewSet } from '../src/index';
 
 const example = readFileSync(new URL('../../../apps/viewer/public/examples/traffic-cone-4view.png', import.meta.url));
 const atlas = PNG.sync.read(example);
@@ -174,4 +174,31 @@ test('pipeline shows voxel and interpolated surfaces at the same coarse grid bef
       Math.abs(result.voxel.normals[i + 2]), 1);
   }
   assert.deepEqual(result.meshes[0], reconstruct(views, 'mesh', settings));
+});
+
+test('default stacks have 128 layers even when a fitted elevation has fewer rows', () => {
+  const raster = { width: 20, height: 20, data: new Uint8Array(20 * 20 * 4).fill(127) };
+  for (let i = 3; i < raster.data.length; i += 4) raster.data[i] = 255;
+  const views = { top: raster, left: raster, front: raster, rear: raster };
+  assert.deepEqual(inspectViews(views).nativeSamples, { x: 20, y: 20, z: 20 });
+  const stack = reconstruct(views, 'stack', { resolution: 20 });
+  assert.equal(stack.target, 'stack');
+  assert.equal(stack.layers, 128);
+});
+
+test('stacks beyond the old layer, XY and cell ceilings round-trip through PNG and manifest', () => {
+  const views = splitAtlas(atlas, layout);
+  const stack = reconstruct(views, 'stack', { resolution: 200, layers: 144, size: [1, 1, 1] });
+  assert.equal(stack.target, 'stack');
+  assert.deepEqual([stack.width, stack.depth, stack.layers], [200, 200, 144]);
+  const bundle = encodeStack(stack);
+  assert.deepEqual(readStackBundle(bundle.manifest, PNG.sync.read(Buffer.from(bundle.png))).texture.data,
+    Buffer.from(stack.texture.data));
+  // Output tile sheets can be much larger than the source PNGs accepted for carving.
+  const header = bundle.png.slice(0, 33);
+  const height = stack.depth * Math.ceil(500 / stack.columns);
+  new DataView(header.buffer).setUint32(20, height);
+  assert.throws(() => readPngSize(header), /input limit/);
+  assert.throws(() => readStackPngSize(header, bundle.manifest), /manifest/);
+  assert.deepEqual(readStackPngSize(header, { ...bundle.manifest, layers: 500 }), { width: stack.texture.width, height });
 });

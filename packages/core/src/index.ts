@@ -1,4 +1,5 @@
 export * from './views';
+export * from './sampling';
 export * from './reconstruct';
 export * from './export';
 

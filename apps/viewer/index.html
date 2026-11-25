@@ -75,13 +75,14 @@
         <select id="qualityPreset">
           <option value="">Custom</option>
           <option value="draft">Draft · 24 layers</option>
-          <option value="balanced" selected>Balanced · 48 layers</option>
+          <option value="standard" selected>Standard · 128 layers</option>
+          <option value="balanced">Balanced · 48 layers</option>
           <option value="detail">Detail · 90 layers</option>
         </select>
-        <label for="layers">Layers <output id="layerValue">48</output></label>
-        <input id="layers" type="range" min="8" max="128" value="48">
+        <label for="layers">Layers <output id="layerValue">128</output></label>
+        <input id="layers" type="number" min="8" step="1" value="128">
         <label for="resolution"><span id="resolutionName">Texture resolution</span> <output id="resolutionValue">96 px · 1.00×</output></label>
-        <input id="resolution" type="range" min="16" max="192" value="96">
+        <input id="resolution" type="number" min="16" step="1" value="96">
         <label for="threshold">Background threshold <output id="thresholdValue">238</output></label>
         <input id="threshold" type="range" min="180" max="255" value="238">
         <label for="profile">Cross-section</label>

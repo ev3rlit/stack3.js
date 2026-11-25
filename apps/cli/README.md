@@ -53,15 +53,17 @@ stack3 view crate-stack/
 | `--texture-projection` | auto | For GLB output, use `top-contour` to project the TOP panel onto the upper surface while retaining elevation UVs on the walls |
 | `--mesh-method` | marching-cubes | Choose `contour` for a plate extruded from the FRONT alpha outline |
 | `--contour-hub` | off | Add a centered, turned hub to a contour mesh using TOP and LEFT |
-| `--layers` | 48 | Vertical samples |
+| `--layers` | 128 | Vertical samples (integer ≥ 8 or `native`) |
 | `--spacing` | 1 | Multiply the gap between stack slices and the exported vertical bounds |
 | `--profile` | silhouette | Choose `round` or `round-base` to fit elliptical cross-sections |
-| `--resolution` | 96 | Samples on the longer horizontal axis, or radial segments for a contour hub |
+| `--resolution` | 96 | Samples on the longer horizontal axis (integer ≥ 16 or `native`), or radial segments for a contour hub |
 | `--height` | 1 | Asset height in scene units |
 | `--pivot` | ground | Use the bottom or center as the origin |
 | `--threshold` | 238 | Background removal threshold for opaque PNGs |
 
 Contour extrusion preserves islands and through-holes. FRONT and REAR paint the caps and the other views paint the side walls. The plate uses the full depth unless a round hub is requested. For a hub, provide a solid center in FRONT, a thin blade edge with a projecting axle in TOP and a centered collar in LEFT. Vertical layer count applies to grid reconstruction.
+
+`inspect` reports `nativeSamples` for X, Y, and Z from the fitted view images. For example, a taller elevation can supply detail above 128 layers. Use `--layers native` for the tallest fitted elevation and `--resolution native` for the pixel span on the longer horizontal axis (minimum 8 and 16 samples respectively). Numeric counts above the source detail are allowed and resample the images. Dense grids require memory proportional to width × depth × layers. Source PNG decoding separately checks 8,192 px per side and 16 MP per file. A generated stack sheet is checked against its manifest dimensions when reopened.
 
 The stack bundle contains `stack.png` and `stack.json`. Its metadata records the atlas layout, slice order, dimensions, spacing, scale, and pivot.
 

@@ -3,7 +3,8 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { basename, dirname, extname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { PNG } from 'pngjs';
-import { builtinComponents, encodeGlb, encodeStack, fourWheelPreset, parseLayout, projectActions, reconstruct, respaceStack, splitAtlas, summarizeProject, trackedTankPreset,
+import { buildFromPreparedViews } from './grid-build';
+import { builtinComponents, encodeGlb, encodeStack, fourWheelPreset, prepareViews, parseLayout, projectActions, respaceStack, splitAtlas, summarizeProject, trackedTankPreset,
   type ProjectAction } from '@stack3/core';
 import { editProject, initProject, readProject } from './project-store';
 
@@ -124,7 +125,8 @@ export async function projectCommand(args: string[]) {
       if (format === 'glb' && extname(output).toLowerCase() !== '.glb') throw new Error('GLB output must end in .glb.');
       const image = PNG.sync.read(Buffer.from(atlas.png, 'base64'));
       const settings = node.settings;
-      const asset = reconstruct(splitAtlas(image, parseLayout(atlas.layout), settings.threshold), format === 'glb' ? 'mesh' : 'stack', settings);
+      const views = prepareViews(splitAtlas(image, parseLayout(atlas.layout), settings.threshold), settings.threshold);
+      const asset = buildFromPreparedViews(views, format === 'glb' ? 'mesh' : 'stack', settings);
       if (asset.target === 'mesh') {
         await mkdir(dirname(output), { recursive: true });
         await writeFile(output, encodeGlb(asset));

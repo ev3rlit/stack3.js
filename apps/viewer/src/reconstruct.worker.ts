@@ -1,4 +1,4 @@
-import { inspectViews, parseLayout, prepareViews, reconstructPrepared, splitAtlas,
+import { DEFAULT_LAYERS, inspectViews, parseLayout, prepareViews, reconstructPrepared, splitAtlas,
   type AssetData, type Direction, type Raster, type Settings, type ViewSet } from '@stack3/core';
 import { decodePng } from './png';
 
@@ -44,7 +44,7 @@ self.onmessage = async ({ data }: MessageEvent<Job>) => {
     const allViews = await decoded.views;
     if (id !== newest) return;
     const reports = allViews.map(inspectViews);
-    const inspection = { views: reports[0].views, warnings: [...new Set(reports.flatMap(report => report.warnings))] };
+    const inspection = { ...reports[0], warnings: [...new Set(reports.flatMap(report => report.warnings))] };
 
     function send(buildSettings: Settings, isPreview: boolean) {
       const parts = 'parts' in source ? source.parts : undefined;
@@ -55,7 +55,7 @@ self.onmessage = async ({ data }: MessageEvent<Job>) => {
         const size = sizes?.[index];
         return reconstructPrepared(views, target, size ? {
           ...buildSettings, size, pivot: 'ground',
-          layers: Math.max(8, Math.round((buildSettings.layers ?? 48) * size[2] / maxHeight)),
+          layers: Math.max(8, Math.round((buildSettings.layers ?? DEFAULT_LAYERS) * size[2] / maxHeight)),
           resolution: Math.max(16, Math.round((buildSettings.resolution ?? 96) * Math.max(size[0], size[1]) / maxLength)),
         } : buildSettings);
       });

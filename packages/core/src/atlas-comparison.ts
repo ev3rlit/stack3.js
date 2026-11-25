@@ -3,7 +3,7 @@ import type { Direction, Raster, ViewSet } from './views';
 
 type Point = [number, number, number];
 type Axis = 0 | 1 | 2;
-type DepthMap = { axis: Axis; axes: [Axis, Axis]; width: number; height: number; values: Int16Array };
+type DepthMap = { axis: Axis; axes: [Axis, Axis]; width: number; height: number; values: Int32Array };
 const depthAxes: Record<Direction, [Axis, boolean]> = {
   top: [2, true], bottom: [2, false], left: [0, false], right: [0, true], front: [1, true], rear: [1, false],
 };
@@ -84,7 +84,7 @@ export function inferSurfaceDepth(volume: Uint8Array, size: Point, directions: r
     const [axis, high] = depthAxes[direction];
     const plane = axes.filter(item => item !== axis) as [Axis, Axis];
     const width = size[plane[0]], height = size[plane[1]];
-    const values = new Int16Array(width * height).fill(-1);
+    const values = new Int32Array(width * height).fill(-1);
     const p: Point = [0, 0, 0];
     for (let v = 0; v < height; v++) for (let u = 0; u < width; u++) {
       p[plane[0]] = u;

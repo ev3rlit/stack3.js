@@ -280,8 +280,8 @@ function start(token: string) {
     const summary = document.createElement('summary');
     summary.textContent = 'Reconstruction settings';
     advanced.append(summary,
-      ...(!contour ? [numberField('Layers', s.layers, 8, 128, 1, value => settings({ layers: value }))] : []),
-      ...(!contour || s.contourHub ? [numberField(contour ? 'Hub segments' : 'Texture resolution', s.resolution, 16, 192, 1, value => settings({ resolution: value }))] : []),
+      ...(!contour ? [numberField('Layers', s.layers, 8, Number.MAX_SAFE_INTEGER, 1, value => settings({ layers: value }))] : []),
+      ...(!contour || s.contourHub ? [numberField(contour ? 'Hub segments' : 'Texture resolution', s.resolution, 16, Number.MAX_SAFE_INTEGER, 1, value => settings({ resolution: value }))] : []),
       ...(stack ? [numberField('Spacing', s.spacing, .05, 20, .05, value => settings({ spacing: value }))] : []),
       numberField('Height', s.height, .01, 100, .01, value => settings({ height: value })),
       numberField('Background threshold', s.threshold, 0, 255, 1, value => settings({ threshold: value })),

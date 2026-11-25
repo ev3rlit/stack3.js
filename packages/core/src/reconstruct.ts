@@ -1,3 +1,4 @@
+import { DEFAULT_LAYERS, samplingGrid } from './sampling';
 import { projectUpperContour, type TextureProjection } from './texture-projection';
 import { bleedEdges, extrudeContours } from './contour';
 import { frontAccentDecals, inferAccentViews, inferSurfaceDepth } from './atlas-comparison';
@@ -93,29 +94,25 @@ function rankedViews(views: ViewSet, nx: number, ny: number, nz: number): Direct
     weights[DIRECTIONS.indexOf(b)] - weights[DIRECTIONS.indexOf(a)]);
 }
 
-function dimensions(views: ViewSet, settings: Settings) {
+export function reconstructionDimensions(views: ViewSet, settings: Settings) {
   const top = views.top!, front = views.front!, left = views.left!;
-  const layers = settings.layers ?? 48;
+  const layers = settings.layers ?? DEFAULT_LAYERS;
   const resolution = settings.resolution ?? 96;
   const height = settings.height ?? 1;
-  if (!Number.isInteger(layers) || layers < 8 || layers > 128) throw new Error('Layers must be an integer from 8 to 128.');
-  if (!Number.isInteger(resolution) || resolution < 16 || resolution > 192) throw new Error('Resolution must be an integer from 16 to 192.');
   if (!Number.isFinite(height) || height <= 0) throw new Error('Height must be positive.');
   if (settings.pivot && settings.pivot !== 'center' && settings.pivot !== 'ground') throw new Error('Pivot must be ground or center.');
   const depthFromView = left.width / left.height * height;
   const [x, y, z] = settings.size ??
     [(front.width / front.height * height + depthFromView * top.width / top.height) / 2, depthFromView, height];
   if (![x, y, z].every(value => Number.isFinite(value) && value > 0)) throw new Error('Part dimensions must be positive.');
-  const width = Math.max(2, Math.round(x / Math.max(x, y) * resolution));
-  const depth = Math.max(2, Math.round(y / Math.max(x, y) * resolution));
+  const { width, depth } = samplingGrid(x, y, resolution, layers);
   const size: Vec3 = [x, y, z];
   const pivot: Vec3 = [0, 0, settings.pivot === 'center' ? z / 2 : 0];
   return { width, depth, layers, size, pivot };
 }
 
 function grid(views: ViewSet, settings: Settings, fallback?: Grid): Grid {
-  const { width, depth, layers, size, pivot } = dimensions(views, settings);
-  if (width * depth * layers > 3_000_000) throw new Error('The grid is too large. Reduce layers or XY resolution.');
+  const { width, depth, layers, size, pivot } = reconstructionDimensions(views, settings);
   const aligned: ViewSet = {};
   for (const direction of DIRECTIONS) {
     const view = views[direction];
@@ -202,8 +199,8 @@ function makeMesh(g: Grid, views: ViewSet, mode: ComparisonMode = 'rgb'): Compar
   // The depth stage creates a new surface and normals from a continuous field.
   const surface = extractSurface(volume, width, depth, layers, mode === 'depth' ? size : undefined);
   if (!surface.indices.length && mode === 'depth') return makeMesh(g, views, 'id');
-  const roof = new Int16Array(width * depth).fill(-1);
-  const floor = new Int16Array(width * depth).fill(layers);
+  const roof = new Int32Array(width * depth).fill(-1);
+  const floor = new Int32Array(width * depth).fill(layers);
   const area = width * depth;
   for (let z = 0; z < layers; z++) for (let i = 0; i < area; i++) {
     if (!volume[z * area + i]) continue;
@@ -211,7 +208,7 @@ function makeMesh(g: Grid, views: ViewSet, mode: ComparisonMode = 'rgb'): Compar
     floor[i] = Math.min(floor[i], z);
   }
 
-  function nearFlatSurface(columns: Int16Array, x: number, y: number, z: number) {
+  function nearFlatSurface(columns: Int32Array, x: number, y: number, z: number) {
     const px = clamp(Math.floor(x * width), 0, width - 1);
     const py = clamp(Math.floor(y * depth), 0, depth - 1);
     const point = columns[py * width + px];
@@ -314,7 +311,7 @@ function makeStack(g: Grid, views: ViewSet): StackData {
   const data = new Uint8Array(imageWidth * imageHeight * 4);
   const filled = (x: number, y: number, z: number) =>
     Number(x >= 0 && x < width && y >= 0 && y < depth && z >= 0 && z < layers && volume[(z * depth + y) * width + x] > 0);
-  const roof = new Int16Array(width * depth).fill(-1);
+  const roof = new Int32Array(width * depth).fill(-1);
   for (let z = 0; z < layers; z++) for (let i = 0; i < roof.length; i++) {
     if (volume[z * roof.length + i]) roof[i] = z;
   }
@@ -364,7 +361,7 @@ export function reconstruct(input: ViewSet, target: 'mesh' | 'stack', settings: 
 export function reconstructPrepared(views: ViewSet, target: 'mesh' | 'stack', settings: Settings): AssetData {
   let mesh: MeshData;
   if (target === 'mesh' && settings.meshMethod === 'contour') {
-    const { size, pivot } = dimensions(views, settings);
+    const { size, pivot } = reconstructionDimensions(views, settings);
     const { tiles, texture } = textureAtlas(views, {}, true);
     const front = views.front!;
     const scale = Math.min(1, 1024 / Math.max(front.width, front.height));
@@ -376,7 +373,7 @@ export function reconstructPrepared(views: ViewSet, target: 'mesh' | 'stack', se
     mesh = makeMesh(g, views);
   }
   if (settings.textureProjection === 'top-contour')
-    projectUpperContour(mesh, views.top!, settings.resolution ?? 96, settings.layers ?? 48);
+    projectUpperContour(mesh, views.top!, settings.resolution ?? 96, settings.layers ?? DEFAULT_LAYERS);
   return mesh;
 }
 

@@ -550,6 +550,7 @@ for (const [id, next] of [['targetMesh', 'mesh'], ['targetStack', 'stack']] as c
 for (const [id, output] of [['layers', 'layerValue'], ['resolution', 'resolutionValue'], ['threshold', 'thresholdValue']] as const) {
   const input = byId<HTMLInputElement>(id);
   input.addEventListener('input', () => {
+    if (!input.validity.valid || !Number.isFinite(input.valueAsNumber)) return;
     byId<HTMLOutputElement>(output).value = id === 'resolution' ? resolutionLabel(input.valueAsNumber) : input.value;
     if (id !== 'threshold') byId<HTMLSelectElement>('qualityPreset').value = '';
     queueReconstruction();
@@ -577,9 +578,9 @@ byId('resetReconstruction').addEventListener('click', () => {
   byId<HTMLSelectElement>('meshMethod').value = 'marching-cubes';
   byId<HTMLSelectElement>('textureProjection').value = 'auto';
   byId<HTMLInputElement>('contourHub').checked = false;
-  byId<HTMLSelectElement>('qualityPreset').value = 'balanced';
+  byId<HTMLSelectElement>('qualityPreset').value = 'standard';
   byId<HTMLSelectElement>('profile').value = byId<HTMLSelectElement>('samplePreset').value === 'cone' ? 'round-base' : 'silhouette';
-  applyQuality('balanced');
+  applyQuality('standard');
   for (const [id, value] of [['height', '1'], ['pivot', 'ground'], ['threshold', '238'],
     ['thresholdValue', '238'], ['spacing', '1'], ['squash', '.75'], ['previewScale', '1'], ['rotationSpeed', '0']]) {
     byId<HTMLInputElement>(id).value = value;
@@ -668,7 +669,8 @@ async function openCliStack(token: string) {
       fetch(new URL('stack.png', root)),
     ]);
     if (!manifest.ok || !png.ok) throw new Error('Could not open this CLI stack bundle.');
-    const [metadata, texture] = await Promise.all([manifest.json(), png.blob().then(decodePng)]);
+    const metadata = await manifest.json();
+    const texture = await decodePng(await png.blob(), false, metadata);
     if (generation !== inputGeneration) return;
     presentAsset(readStackBundle(metadata, texture), 'Opened stack bundle');
     for (const control of reconstructionControls) control.disabled = true;

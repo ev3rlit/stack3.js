@@ -46,7 +46,7 @@ function visibleFromAbove(mesh: MeshData, bins: number) {
  * original vertex ordering and elevation UVs are retained for all other faces. */
 export function projectUpperContour(mesh: MeshData, plan: Raster, resolution: number, layers: number) {
   const { positions: p, normals, uvs, indices, texture, size } = mesh
-  resolution = Math.max(1, Math.min(192, Math.round(resolution) || 96))
+  resolution = Math.max(1, Math.min(Math.max(plan.width, plan.height), Math.round(resolution) || 96))
   const visible=visibleFromAbove(mesh,resolution)
   const axis = size[1] >= size[0] ? 2 : 0
   const span = axis === 2 ? size[1] : size[0]

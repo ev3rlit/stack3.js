@@ -2,7 +2,7 @@ import type { Reply, Source } from './reconstruct.worker';
 import { DIRECTIONS, parseLayout } from '@stack3/core';
 
 export type PreviewResult = Extract<Reply, { result: unknown }>;
-export const CACHE_VERSION = 'stack3-preview-4';
+export const CACHE_VERSION = 'stack3-preview-5';
 
 const fileHashes = new WeakMap<Blob, Promise<string>>();
 let nextId = 0;

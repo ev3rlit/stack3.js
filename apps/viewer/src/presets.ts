@@ -1,3 +1,5 @@
+import { DEFAULT_LAYERS } from '@stack3/core';
+
 export const sources = {
   cone: new URL('../../../samples/props/traffic-cone-4view.png', import.meta.url),
   rover: new URL('../../../samples/rover/fillet-rover-body-4-view.png', import.meta.url),
@@ -10,6 +12,7 @@ export const sources = {
 };
 
 export const qualities = {
+  standard: { layers: DEFAULT_LAYERS, resolution: 96 },
   draft: { layers: 24, resolution: 72 },
   balanced: { layers: 48, resolution: 96 },
   detail: { layers: 90, resolution: 144 },

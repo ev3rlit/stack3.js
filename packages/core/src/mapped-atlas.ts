@@ -1,3 +1,4 @@
+import { DEFAULT_LAYERS, samplingGrid } from './sampling';
 import { depthDistance, type DepthRaster } from './depth-png';
 import { measureDepthFit } from './depth-fit';
 import type { MeshData, Settings } from './reconstruct';
@@ -40,13 +41,7 @@ export function reconstructMappedAtlas({ calibration, depth, clay, baseColor, no
     throw new Error('Material passes must match the calibrated atlas dimensions.');
   }
   const [w, d, h] = size;
-  const res = settings.resolution ?? 144, layers = settings.layers ?? 80;
-  if (!Number.isInteger(res) || res < 16 || res > 192 || !Number.isInteger(layers) || layers < 8 || layers > 128) {
-    throw new Error('Invalid resolution or layer count for registered depth.');
-  }
-  const columns = Math.max(2, Math.round(w / Math.max(w, d) * res));
-  const rows = Math.max(2, Math.round(d / Math.max(w, d) * res));
-  if (columns * rows * layers > 3_000_000) throw new Error('The calibrated grid is too large. Reduce layers or resolution.');
+  const { width: columns, depth: rows, layers } = samplingGrid(w, d, settings.resolution ?? 144, settings.layers ?? DEFAULT_LAYERS);
   const tolerance = Math.max(w / columns, d / rows, h / layers) * .75 + 1 / ppu;
   const pivot: Vec3 = [0, 0, settings.pivot === 'center' ? h / 2 : 0];
   const cameras = layout.map(direction => views[direction]);

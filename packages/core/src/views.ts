@@ -4,7 +4,7 @@ export type Raster = { width: number; height: number; data: Uint8Array };
 export type ViewSet = Partial<Record<Direction, Raster>>;
 export type Box = { left: number; top: number; width: number; height: number };
 
-export function readPngSize(bytes: Uint8Array) {
+export function readPngDimensions(bytes: Uint8Array) {
   const signature = [137, 80, 78, 71, 13, 10, 26, 10];
   if (bytes.length < 33 || signature.some((value, index) => bytes[index] !== value) ||
       String.fromCharCode(...bytes.subarray(12, 16)) !== 'IHDR') {
@@ -12,7 +12,13 @@ export function readPngSize(bytes: Uint8Array) {
   }
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
   const width = view.getUint32(16), height = view.getUint32(20);
-  if (!width || !height || width > 8192 || height > 8192 || width * height > 16_000_000) {
+  if (!width || !height || !Number.isSafeInteger(width * height * 4)) throw new Error('Invalid PNG dimensions.');
+  return { width, height };
+}
+
+export function readPngSize(bytes: Uint8Array) {
+  const { width, height } = readPngDimensions(bytes);
+  if (width > 8192 || height > 8192 || width * height > 16_000_000) {
     throw new Error('PNG dimensions exceed the 8192 px or 16 MP input limit.');
   }
   return { width, height };
@@ -167,5 +173,11 @@ export function inspectViews(views: ViewSet) {
   if (Math.abs(expected / observed - 1) > 0.2) warnings.push('Top, left, and front proportions differ by more than 20%. Check alignment.');
   if (Math.abs((rear.width / rear.height) / observed - 1) > 0.2) warnings.push('Front and rear proportions differ by more than 20%.');
   const mapped = Object.entries(views).map(([direction, raster]) => ({ direction, width: raster.width, height: raster.height }));
-  return { views: mapped, warnings };
+  // Each axis can use evidence from any view that actually observes it.
+  const nativeSamples = {
+    x: Math.max(top.width, front.width, rear.width, views.bottom?.width ?? 0),
+    y: Math.max(top.height, left.width, views.right?.width ?? 0, views.bottom?.height ?? 0),
+    z: Math.max(left.height, front.height, rear.height, views.right?.height ?? 0),
+  };
+  return { views: mapped, nativeSamples, warnings };
 }

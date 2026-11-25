@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { serveViewer } from './preview-server';
-import { readPngSize, readStackBundle } from '@stack3/core';
+import { readStackPngSize, readStackBundle } from '@stack3/core';
 import { PNG } from 'pngjs';
 
 export async function viewStack(directory: string, open: boolean) {
@@ -10,8 +10,9 @@ export async function viewStack(directory: string, open: boolean) {
     readFile(join(directory, 'stack.json'), 'utf8'),
     readFile(join(directory, 'stack.png')),
   ]);
-  readPngSize(png);
-  readStackBundle(JSON.parse(metadata), PNG.sync.read(png));
+  const manifest: unknown = JSON.parse(metadata);
+  readStackPngSize(png, manifest);
+  readStackBundle(manifest, PNG.sync.read(png));
 
   const token = randomUUID();
   const prefix = '/__stack3/' + token + '/';

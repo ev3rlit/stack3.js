@@ -1,5 +1,5 @@
 import { createAssetObject } from '@stack3/three';
-import type { AtlasCalibration, ComparisonMesh, ProjectSummary, Raster, SceneNode, StackData } from '@stack3/core';
+import { DEFAULT_LAYERS, type AtlasCalibration, type ComparisonMesh, type ProjectSummary, type Raster, type SceneNode, type StackData } from '@stack3/core';
 import { AmbientLight, Box3, Color, DataTexture, Group, Matrix4, ObjectSpaceNormalMap, Vector3, DirectionalLight, MathUtils, Mesh, MeshStandardMaterial,
   LinearFilter, NearestFilter, OrthographicCamera, Scene, WebGLRenderer, type MeshBasicMaterial } from 'three';
 import { createAssemblyObject, instantiateParts } from './assembly';
@@ -35,7 +35,7 @@ const target = new Vector3();
 let partOffsets: Vector3[] = [];
 let frame = 0;
 const defaultLayout = 'top,left,front,rear';
-const defaultSettings = { layers: 80, resolution: 144 };
+const defaultSettings = { layers: DEFAULT_LAYERS, resolution: 144 };
 const tankParts = multipartPresets.tank!;
 const mapsSample = 'Future Tank · hull material passes';
 const mapsAssets = {
@@ -597,6 +597,7 @@ layers.addEventListener('input', () => {
   if (!source) return;
   const { job, name } = source;
   const value = layers.valueAsNumber;
+  if (!layers.validity.valid || !Number.isFinite(value)) return;
   const request = cancelBuild();
   element('layers-value').textContent = String(value);
   showStatus('Rebuilding ' + name + ' at ' + value + ' layers…');

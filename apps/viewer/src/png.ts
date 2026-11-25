@@ -1,7 +1,9 @@
-import { readPngSize, type Raster } from '@stack3/core';
+import { readPngSize, readStackPngSize, type Raster } from '@stack3/core';
 
-export async function decodePng(file: Blob, dataTexture = false): Promise<Raster> {
-  readPngSize(new Uint8Array(await file.slice(0, 33).arrayBuffer()));
+export async function decodePng(file: Blob, dataTexture = false, stackManifest?: unknown): Promise<Raster> {
+  const header = new Uint8Array(await file.slice(0, 33).arrayBuffer());
+  if (stackManifest === undefined) readPngSize(header);
+  else readStackPngSize(header, stackManifest);
   const bitmap = await createImageBitmap(file, { colorSpaceConversion: dataTexture ? 'none' : 'default' });
   try {
     const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);

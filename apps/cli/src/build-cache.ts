@@ -5,7 +5,7 @@ import { join, resolve } from 'node:path';
 import { deserialize, serialize } from 'node:v8';
 import { DIRECTIONS, type Settings, type ViewSet } from '@stack3/core';
 
-const version = 'render-data-3';
+const version = 'render-data-4';
 const directory = process.env.STACK3_CACHE_DIR
   ? resolve(process.env.STACK3_CACHE_DIR)
   : join(process.env.XDG_CACHE_HOME || join(homedir(), '.cache'), 'stack3', version);

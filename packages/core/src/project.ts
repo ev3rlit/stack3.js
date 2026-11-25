@@ -1,3 +1,4 @@
+import { DEFAULT_LAYERS } from './sampling';
 import { parseLayout, readPngSize } from './views';
 import { scriptFields, validateScript, type SceneScript } from './scripts';
 
@@ -29,7 +30,7 @@ type PlayOffset = { id: string; translation: Vec3; rotation: Vec3 };
 export type ProjectSummary = Omit<SceneProject, 'atlases'> & { atlases: (Omit<EmbeddedAtlas, 'png'> & { fingerprint?: string })[] };
 
 export const nodeDefaults: NodeSettings = {
-  format: 'stack', layers: 48, resolution: 96, spacing: 1, height: 1, threshold: 238,
+  format: 'stack', layers: DEFAULT_LAYERS, resolution: 96, spacing: 1, height: 1, threshold: 238,
   pivot: 'ground', profile: 'silhouette', pixelArt: false, smoothEdges: true, lighting: false,
 };
 
@@ -45,7 +46,7 @@ const vector = (...limits: [number, number]): Field => ({ ...number(...limits), 
 const settingsFields = {
   textureProjection: choice('auto', 'top-contour'),
   meshMethod: choice('marching-cubes', 'contour'), contourHub: boolean,
-  format: choice('stack', 'glb'), layers: number(8, 128, 'integer'), resolution: number(16, 192, 'integer'),
+  format: choice('stack', 'glb'), layers: number(8, Number.MAX_SAFE_INTEGER, 'integer'), resolution: number(16, Number.MAX_SAFE_INTEGER, 'integer'),
   spacing: number(.05, 20), height: number(.01, 100), threshold: number(0, 255, 'integer'),
   pivot: choice('ground', 'center'), profile: choice('silhouette', 'round', 'round-base'),
   pixelArt: boolean, smoothEdges: boolean, lighting: boolean,

@@ -83,3 +83,15 @@ test('script components persist on their owner, validate fields, and survive pla
   assert.deepEqual(removed.nodes[0].scripts, []);
   assert.equal(applyProjectActions(after, [{ action: 'node.remove', id: 'props' }]).view.follow, null);
 });
+
+test('atlas-backed nodes default to 128 layers and preserve explicit sampling values', () => {
+  const before = scene();
+  assert.equal(before.nodes.find(n => n.id === 'close')?.settings.layers, 128);
+  const after = applyProjectActions(before, [
+    { action: 'node.set', id: 'close', patch: { settings: { layers: 256, resolution: 320 } } },
+    { action: 'node.set', id: 'far', patch: { settings: { layers: 48 } } },
+  ]);
+  assert.equal(after.nodes.find(n => n.id === 'close')?.settings.layers, 256);
+  assert.equal(after.nodes.find(n => n.id === 'close')?.settings.resolution, 320);
+  assert.equal(after.nodes.find(n => n.id === 'far')?.settings.layers, 48);
+});
