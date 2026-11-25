@@ -1,15 +1,23 @@
 ---
 name: stack3
-description: Generate four-view atlases, build sprite stacks, Marching Cubes meshes or contour extrusions, compare lighting and anti-aliasing, and assemble and verify drivable vehicles with the stack3 CLI, Editor, and Playground. Use for stack3 atlas preparation, TOP or LEFT repair, reconstruction, and scene or component workflows.
+description: Reconstruct assets from orthographic images with stack3. Use for single or per-part four-view atlases, sprite stacks, guided mesh reconstruction, assembly and silhouette checks, TOP or LEFT repair, rendering comparisons, and drivable vehicle scenes.
 ---
 
 # stack3 Sprite Stacks
 
 Use visual-hull carving from Daniel White’s [Sprite Stacking workflow](https://github.com/danielwh2/sprite-stacking) to reconstruct horizontal RGBA slices. The output is a 2D sprite stack with bottom-to-top layers and pivot metadata.
 
+## Choose the atlas boundaries first
+
+For assemblies, use **one four-view atlas per distinct part → one sprite stack per atlas → part-specific cross-sections where needed → meshes with local pivots → assembly**. Keep a whole-object reference for scale, mounts, and final silhouette comparison.
+
+- Split where a part moves independently or another part hides an outline needed to reconstruct it. A wheel needs its axle pivot; an arch that hides the deck profile calls for an isolated deck atlas. Keep paint, panel lines, and shallow relief on the material. Let the intended screen size guide how much detail to model.
+- Make the split in the **input images**. Depict each detached part in TOP, LEFT, FRONT, and REAR, including its inferred mounting face. Cutting up a finished whole-object mesh does not supply those missing views. Reuse one source for identical instances; check handed shapes and markings before mirroring.
+- For a simple continuous object, or an explicit single-atlas request, use one atlas and follow the build steps below. For a multipart build, follow the [part atlas and assembly workflow](references/part-atlases.md).
+
 ## Generate the four views
 
-Use this prompt for a new atlas. Substitute `[ASSET]` with the subject and its identifying features. Attach any source art as an identity and style reference. If the user specifies a style, add it explicitly. With source art, match its existing style. With neither, let the subject drive the look. Request pixel art only when the user wants it.
+Use this prompt once per chosen atlas. Substitute `[ASSET]` with the whole subject or the detached part and its identifying features. For a part, state which neighboring pieces to omit and which side meets the assembly. Attach any source art as an identity and style reference. If the user specifies a style, add it explicitly. With source art, match its existing style. With neither, let the subject drive the look. Request pixel art only when the user wants it.
 
 Fill in the LEFT landmark lines with observable parts from this asset. For a handcart, the handles project toward screen-left and the two hubs on one axle coincide. For a lamp with an arm extending right in FRONT, look along the arm in LEFT; a post in front of it occludes it wherever they overlap. Omit an inapplicable cue for a symmetric object such as a plain barrel.
 
@@ -64,7 +72,7 @@ Inspect the replacement at native resolution against the stated landmark and dim
 - Open and inspect TOP at native resolution before building. Require a vertical orthographic view along the height axis. Compare roof and base landmarks and footprint proportions with the other views. A visible vertical fascia, strip of front or side wall attributable to object height, or a roof-to-base shift indicates tilt. Horizontal ledges or sloped surfaces can legitimately appear in TOP.
 - Use the replacement prompt for a missing or tilted TOP. For ambiguous cases or when an existing model is available, use [Orthographic source preparation](references/orthographic-views.md). CLI dimension warnings can identify scale inconsistencies. They cannot establish camera orientation.
 - Inspect LEFT at native resolution for a visible front face, a visible flat top, or separation between landmarks that should coincide across the width. Compare their longitudinal positions with TOP and their heights with FRONT and REAR. For a symmetric silhouette, record which orientation cues can actually be confirmed.
-- Use separate aligned inputs and pivots for independently moving parts. A cavity hidden in every silhouette is ambiguous even when the views pass the camera checks.
+- A cavity hidden in every silhouette is ambiguous even when the views pass the camera checks. Record any inferred depth or hidden profile used to reconstruct it.
 
 ## Optional detail passes
 
@@ -79,6 +87,14 @@ Read only the prompt needed for the user's request.
 For a standard 4-view request, use [Generate the four views](#generate-the-four-views). For any additional passes, keep a common canvas, camera calibration, and foreground alignment.
 
 ## Build and open the sprite stack
+
+New grid builds default to **128 layers**. Use `stack3 inspect` to read `nativeSamples` along X, Y, and Z from the fitted images. Use `--layers native` to sample the tallest fitted elevation when its rows matter. Choose higher layer counts for taller sources and higher XY resolution for finer footprints when useful. Sampling above the observed pixel counts reuses image data. Size each part for the intended view and available memory. Use pixel-art or voxel styling when explicitly requested and honor any specified sample counts.
+
+Choose slice orientation by output and camera:
+
+- **Sprite stack, fixed or overhead camera:** start with horizontal sheets stacked by height. Check the lowest intended camera angle, where gaps between sheets become visible.
+- **Sprite stack, multiple camera angles:** add a vertical set facing the missing view. A longitudinal sheet presents a face to a side camera; a transverse sheet presents a face to a front camera. For free rotation, try horizontal plus both vertical sets and check exact top, front, and side views. Two vertical sets are both edge-on from directly above, even at high density.
+- **Final mesh:** choose section guides per part from the view that reveals its shape or thickness. Reslicing the same occupancy along more axes adds no independent shape evidence. The stock CLI writes horizontal stacks; crossed sheets require custom axis-specific bundles and oriented instances sharing the same world scale and pivot. When comparing layouts, report sheets per axis and compare at the intended screen size with a stated total sheet or texel budget.
 
 For a level, hierarchy, interactive preview, or multi-object workflow, create or reuse a scene project. Use the CLI from the agent workflow instead of asking the user to operate browser controls. Invoke the image tool with the prompts above when images are missing, inspect TOP, then embed the PNGs as project objects. Read `stack3 project schema` and `stack3 project get <file>`, apply a JSON action batch with `stack3 project apply <file> -`, and open the live view with `stack3 project open <file> --playground`. Use concrete node IDs in each batch, keep object settings per node, and verify the resulting scene.
 
@@ -132,7 +148,6 @@ For agent-driven comparison, use `node.set` with `patch.settings.format` or `pat
 
 - Start with the requested asset or part list. Review an existing reconstruction when available. For CLI output, reopen the exported bundle when supported. Orbit a full turn at the intended viewing scale. Check landmarks, thin parts, seams, footprint, scale and ground contact, then compare a revealing diagonal and side view with the source PNGs.
 - When geometry leans or a marking appears on the wrong face, keep the revealing camera angle and trace the same landmark through the mapped TOP, LEFT, FRONT and REAR. Fix a swapped panel assignment directly. If a source drawing contradicts the other views, regenerate just that drawing, rebuild, and compare from the saved angle. If the views agree and only the paint is misplaced, inspect face-to-view texture projection and UVs.
-- Consider an additional split when the assembled views hide the contour needed to recover an intended gap, separate overlapping forms, or give painted relief its depth. Fine texture on an otherwise convincing shape can stay painted.
 - Recommend the smallest split that would expose the missing contour. Cite the observed symptom, the angle where it appears, and which view of the isolated part would describe it. For example, if a bridge frame masks the walking deck's rise, a separate LEFT elevation of the deck reveals its crown. If the current result reads clearly, keep the assembly. Honor requests for a single atlas, specified parts or independent motion. When asked for a review, stop at recommendations.
 - After rebuilding, repeat the same camera comparison and test the feature that prompted it. For a bridge, measure the deck at the landings and center and check clearance through both frames.
 - **Pixel art** enables nearest sampling. Leave it off unless requested. **Smooth edges** and **Grid** are independent preview controls. Switching these controls leaves the reconstructed layers and exported PNG unchanged.
