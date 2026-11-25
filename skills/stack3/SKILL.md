@@ -131,13 +131,49 @@ For a surface delivery, import `asset.glb` into Blender, verify its geometry and
 
 Keep the saved stack as the common geometry input. Choose a method based on what the part must preserve, even when different parts belong to the same assembly.
 
-| Part or goal | Stack surface method | Check |
-| --- | --- | --- |
-| Thin fins, lips, mixed hard and rounded features, or an unspecified target | Start with `marching-cubes` (CLI default) | Check thickness at the thinnest station and continuity around openings. |
-| Rounded housings, domes, organic shells | Try `surface-nets` against Marching Cubes on the same stack | Averaging edge crossings can soften corners and taper narrow tips. Check the outline and section before adopting. |
-| Explicit block style or an exact reference to the occupied cells | Use `voxel` | Exposes the outer cell faces and cavity walls. Inspect stair steps at the target screen size. |
+Run `stack3 mesh PART_STACK --mesh-method METHOD --output PART.glb`. Add `--guide PART.json` for the fields below. If a saved bundle exists, reuse it directly. The three original methods run in Node. The twelve additional methods use [uv](https://docs.astral.sh/uv/) to cache a Python 3.11–3.13 environment on first use. For an already provisioned or offline environment, set `STACK3_PYTHON` to its interpreter and install `numpy==2.2.6 scipy==1.15.3 scikit-image==0.25.2 shapely==2.1.2`.
 
-Example: `stack3 mesh housing-stack/ --mesh-method surface-nets --output housing.glb`. Make a separate choice for each part and record it. For a tight triangle budget, apply QEM simplification **after** extraction and recheck silhouettes, holes, and triangle count. QEM is a post-process, not a `stack3 mesh` method. If another stack-reading mesher better fits the subject, keep the same bundle, scale and pivot and verify its output at matched viewpoints.
+| Part or goal | CLI method | Guide and inspection |
+| --- | --- | --- |
+| General baseline | `marching-cubes` (default), `surface-nets`, `voxel` | No guide. Check thin tips, smooth shells and exact cell bounds respectively. |
+| Thin plate with matching sections | `section-loft` | Optional `{"axis":"x"}`. Linearly join aligned loops. Check root, middle and end. |
+| One continuous thickness interval per column | `heightfield` | Optional `{"axis":"z"}` selects thickness direction. Read the reported count of filled multi-interval columns. |
+| Rounded shell | `smooth-loft` | Optional `{"axis":"y"}`. Shape-preserving cubic interpolation between matched rings. Check input and intermediate sections. |
+| Axisymmetric body | `revolve` | Requires `axis` and `origin`. Optional integer `segments` (8–512, default 64). Check symmetry, poles and the inner meridian. |
+| Housing with creases | `extended-mc`, `hermite-dc` | No guide. Inspect estimated features on smooth stair steps. DC can reject a cell with conflicting sheets. |
+| Through-hole or ambiguous saddle | `mc33` | No guide. Lewiner MC33 at 0.5 on the padded binary samples. Recheck the entire passage. |
+| Creating, splitting or merging loops | `branch-loft` | Optional `{"axis":"z"}`. Read overlap events. Regions must overlap in adjacent sections to belong to the same branch. |
+| Swept handle or pipe | `path-sweep` | Requires `path`. The first stack section supplies the outer and hole loops. Optional `up` and `profile` (`outer`, optional `holes`) override the initial frame and profile. Use an open path, check curvature and the lumen. |
+| Independent intersecting cuts | `section-network` | Requires `sections` with measured curves and registered planes. Optional positive `tolerance` in scene units. Inspect the reported re-cut errors. |
+| Textured block surfaces | `greedy`, `monotone` | No guide. Compare against `voxel`. Check texture boundaries, holes, sealed seams and final GLB vertex/triangle counts. |
+
+**Guide coordinates.** Use local stack XYZ in scene units relative to the saved pivot, with Z up and +Y forward. The cell grid starts at `[-sizeX/2-pivotX, -sizeY/2-pivotY, -pivotZ]`. Z spacing comes from `stack.json`. An omitted section/thickness axis is Z. In a rotation guide, the axis is parallel to X, Y or Z through the supplied point. The sampled positive meridian is +Y, +Z or +X respectively. Example for a bottle around Z:
+
+```json
+{"axis":"z","origin":[0,0,0],"segments":64}
+```
+
+For either section loft, all occupied slices are controls by default. Optional `stations` selects sparse controls by zero-based slice index. The first and last occupied slices are always included. A station can also supply a replacement `outer` and optional `holes` for a single component. Coordinates are local scene units in YZ for axis X, ZX for Y, and XY for Z. For example, `{"axis":"z","stations":[{"slice":2},{"slice":6,"outer":[[-0.2,-0.1],[0.2,-0.1],[0.2,0.1],[-0.2,0.1]]}]}` uses a saved contour at slice 2 and a supplied contour at slice 6. Inspect the output at these stations and halfway between them.
+
+A sweep profile uses 2D scene units. Its first basis vector is `up` projected perpendicular to the first tangent (defaults to the least-aligned Cartesian axis). The second is tangent × first. The frame is parallel-transported along the path. Supply outer and hole loops without repeating the endpoint. Adapt dimensions and path to the saved part:
+
+```json
+{"path":[[0,0,0.1],[0,0,0.5],[0.2,0,0.8]],"up":[0,1,0],
+ "profile":{"outer":[[-0.05,-0.05],[0.05,-0.05],[0.05,0.05],[-0.05,0.05]],
+            "holes":[[[-0.02,-0.02],[-0.02,0.02],[0.02,0.02],[0.02,-0.02]]]}}
+```
+
+For a section network, `origin + u*s + v*t` registers each 2D point `[s,t]` in local XYZ. Supply orthonormal `u,v` and closed polygons (`outer`, optional `holes`). Set `source` to `independent` only for actual independent cuts. Projection silhouettes and cuts resampled from the same stack cannot supply this evidence. The following horizontal and vertical cuts agree on their common line:
+
+```json
+{"sections":[
+  {"source":"independent","origin":[0,0,0.5],"u":[1,0,0],"v":[0,1,0],
+   "outer":[[-0.4,-0.3],[0.4,-0.3],[0.4,0.3],[-0.4,0.3]]},
+  {"source":"independent","origin":[0,0,0],"u":[1,0,0],"v":[0,0,1],
+   "outer":[[-0.4,0.1],[0.4,0.1],[0.4,0.9],[-0.4,0.9]]}]}
+```
+
+Record the stack, method, guide, stderr diagnostics and target camera per part. Reopen the GLBs in Blender to inspect size, orientation, pivots, textures and seams, assemble at mounts and make local edits. Apply QEM after extraction when a triangle budget calls for it, then measure the simplified result again.
 
 ## Explicit contour extrusion
 

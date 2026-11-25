@@ -20,6 +20,7 @@ export type Settings = {
 };
 export type MeshData = {
   target: 'mesh';
+  nearestTexture?: boolean;
   positions: Float32Array;
   normals: Float32Array;
   indices: Uint32Array;

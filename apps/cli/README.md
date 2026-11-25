@@ -21,7 +21,7 @@ The command grammar is `stack3 <verb> <input> [options]`. Choose the output with
 | `stack3 inspect <input>` | Report mapped and missing directions, image dimensions, and input warnings. |
 | `stack3 build <input> --output <file.glb>` | Reconstruct a mesh and write a GLB. |
 | `stack3 build <input> --format stack --output <directory>` | Reconstruct a runtime stack and write its slice data and metadata. |
-| `stack3 mesh <stack-directory> --output <file.glb>` | Reopen a saved stack and extract a surface from slice alpha (≥128). Choose `--mesh-method marching-cubes` (default), `surface-nets` (averaged crossing positions), or `voxel` (exposed cell faces). Surface color comes from projections of the stored RGB. |
+| `stack3 mesh <stack-directory> --output <file.glb>` | Reopen a saved stack and extract a surface from slice alpha (≥128). Use the default `marching-cubes`, another baseline (`surface-nets` or `voxel`), or a part-specific extractor. Run `stack3 mesh --help` for method names and `--guide <part.json>` inputs. The 12 additional extractors use uv or a configured `STACK3_PYTHON`. See the [stack3 method and guide reference](https://github.com/ev3rlit/stack3.js/blob/main/skills/stack3/SKILL.md#choose-the-surface-method-per-part). Surface color comes from projections of the stored RGB. |
 | `stack3 view <directory>` | Open an exported stack in Blender. Use `--output scene.blend` to keep a named scene, or add `--no-open` to that output for headless export. `--web` opens the web viewer; `--no-open` alone still prints its URL. |
 
 For an atlas, supply its reading order with `--layout`.

@@ -3,6 +3,7 @@ import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, extname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { PNG } from 'pngjs';
+import { partMesh, partMethods } from './part-mesh';
 import { loadStack } from './stack-input';
 import { buildFromPreparedViews, checkGridMemory } from './grid-build';
 import { DEFAULT_LAYERS, DIRECTIONS, encodeGlb, encodeStack, meshFromStack, inspectViews, parseLayout, prepareViews, reconstructionDimensions, readPngSize, respaceStack,
@@ -15,7 +16,16 @@ const HELP = `Usage: stack3 <verb> <input> [options]
   inspect <input>        Check mapped directions and fitted image sizes
   build <input>          Build an asset and save it to --output
   mesh <stack-directory> Extract a surface from saved stack.png + stack.json (--output mesh.glb)
-                        --mesh-method marching-cubes (default), surface-nets or voxel
+                        --mesh-method marching-cubes (default), surface-nets, voxel
+                        or ${partMethods.join(', ')}
+                        --guide <part.json> uses pivot-relative stack XYZ scene units.
+                        section-loft, smooth-loft, branch-loft, heightfield: optional axis (x/y/z, default z)
+                        section-loft, smooth-loft: optional stations [{slice,outer?,holes?}]
+                        revolve: axis + origin, optional segments (8-512, default 64)
+                        path-sweep: path; optional up and profile {outer,holes?} (defaults to first stack section)
+                        section-network: sections [{source:"independent",origin,u,v,outer,holes?}], optional tolerance
+                        extended-mc, hermite-dc, mc33, greedy, monotone: no guide
+                        New methods use uv or STACK3_PYTHON. See the stack3 skill for guide examples.
   view <directory>       Open a stack bundle in Blender (use --web for the browser viewer)
                         --output scene.blend saves a named scene; add --no-open for headless export
                         --no-open alone prints the web preview URL
@@ -112,7 +122,7 @@ async function main() {
       output: { type: 'string', short: 'o' }, layers: { type: 'string' }, resolution: { type: 'string' },
       height: { type: 'string' }, pivot: { type: 'string' }, threshold: { type: 'string' },
       'texture-projection': { type: 'string' },
-      'mesh-method': { type: 'string' }, 'contour-hub': { type: 'boolean' },
+      'mesh-method': { type: 'string' }, guide: { type: 'string' }, 'contour-hub': { type: 'boolean' },
       spacing: { type: 'string' }, profile: { type: 'string' }, 'no-cache': { type: 'boolean' }, 'no-open': { type: 'boolean' }, web: { type: 'boolean' },
     },
   });
@@ -123,6 +133,7 @@ async function main() {
   }
   if (values.help || positionals.length === 0) { console.log(HELP); return; }
   const [verb, input] = positionals;
+  if (values.guide !== undefined && verb !== 'mesh') throw new Error('--guide requires stack3 mesh.');
   if (verb === 'example' && positionals.length === 2) {
     await copyExample(input, values.output);
     return;
@@ -131,16 +142,23 @@ async function main() {
     throw new Error('See stack3 --help for available commands and arguments.');
   }
   if (verb === 'mesh') {
-    if (!values.output || extname(values.output).toLowerCase() !== '.glb' || Object.keys(values).some(k => k !== 'output' && k !== 'mesh-method')) {
+    if (!values.output || extname(values.output).toLowerCase() !== '.glb' || Object.keys(values).some(k => k !== 'output' && k !== 'mesh-method' && k !== 'guide')) {
       throw new Error('Use stack3 mesh <stack-directory> --output <file.glb>. Geometry settings come from the saved stack.');
     }
     const method = values['mesh-method'] ?? 'marching-cubes';
-    if (method !== 'marching-cubes' && method !== 'surface-nets' && method !== 'voxel') {
-      throw new Error('Stack mesh methods: marching-cubes, surface-nets, voxel.');
+    const legacy = method === 'marching-cubes' || method === 'surface-nets' || method === 'voxel';
+    if (!legacy && !partMethods.some(name => name === method)) {
+      throw new Error(`Stack mesh methods: marching-cubes, surface-nets, voxel, ${partMethods.join(', ')}.`);
     }
+    if (legacy && values.guide !== undefined) throw new Error(`${input}: ${method} does not accept --guide.`);
     const { stack } = await loadStack(resolve(input));
     checkGridMemory(stack.width, stack.depth, stack.layers, 'mesh');
-    const bytes = encodeGlb(meshFromStack(stack, method));
+    let bytes: Uint8Array;
+    try {
+      bytes = encodeGlb(legacy ? meshFromStack(stack, method) : await partMesh(stack, method, values.guide));
+    } catch (error) {
+      throw new Error(`${input} (${method}): ${(error as Error).message}`);
+    }
     const output = resolve(values.output);
     await mkdir(dirname(output), { recursive: true });
     await writeFile(output, bytes);

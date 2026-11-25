@@ -74,7 +74,7 @@ export function encodeGlb(mesh: MeshData) {
     scene: 0, scenes: [{ nodes: [0] }], nodes: [{ mesh: 0, extras: { size: mesh.size, pivot: mesh.pivot } }],
     meshes: [{ primitives: [{ attributes: { POSITION: 0, NORMAL: 1, TEXCOORD_0: 2 }, indices: 3, material: 0 }] }],
     materials: [{ extensions: { KHR_materials_unlit: {} }, pbrMetallicRoughness: { baseColorTexture: { index: 0 } } }],
-    textures: [{ source: 0, sampler: 0 }], samplers: [{ magFilter: 9729, minFilter: 9729, wrapS: 33071, wrapT: 33071 }],
+    textures: [{ source: 0, sampler: 0 }], samplers: [{ magFilter: mesh.nearestTexture ? 9728 : 9729, minFilter: mesh.nearestTexture ? 9728 : 9729, wrapS: 33071, wrapT: 33071 }],
     images: [{ mimeType: 'image/png', bufferView: 4 }],
     accessors: [
       { bufferView: 0, componentType: 5126, count, type: 'VEC3', min, max },

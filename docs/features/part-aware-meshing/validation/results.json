@@ -1,0 +1,1570 @@
+{
+  "blenderVersion": "5.2.4 LTS",
+  "validatorVersion": "2.0.0-dev.3.10",
+  "cases": {
+    "box-extended-mc": {
+      "measurements": {
+        "triangles": 2004,
+        "vertices": 1152,
+        "watertight": true,
+        "winding": true,
+        "volume": 373.2480166854859,
+        "stack_iou": 1.0,
+        "max_corner_distance": 4.046097460814049e-07,
+        "max_dihedral_deg": 90.0
+      },
+      "blender": {
+        "triangles": 2004,
+        "dimensions": [
+          4.800000190734863,
+          7.199999809265137,
+          10.800000190734863
+        ],
+        "pivot": [
+          1,
+          -2,
+          3
+        ],
+        "texture": [
+          35,
+          42
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 373.24801668548395
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "box-hermite-dc": {
+      "measurements": {
+        "triangles": 1728,
+        "vertices": 1014,
+        "watertight": true,
+        "winding": true,
+        "volume": 373.24801668548594,
+        "stack_iou": 1.0,
+        "max_corner_distance": 4.046097460814049e-07,
+        "max_dihedral_deg": 90.0
+      },
+      "blender": {
+        "triangles": 1728,
+        "dimensions": [
+          4.800000190734863,
+          7.199999809265137,
+          10.800000190734863
+        ],
+        "pivot": [
+          1,
+          -2,
+          3
+        ],
+        "texture": [
+          35,
+          42
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 373.24801668548474
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "box-marching-cubes": {
+      "measurements": {
+        "triangles": 1724,
+        "vertices": 1107,
+        "watertight": true,
+        "winding": true,
+        "volume": 367.8870873642374,
+        "stack_iou": 1.0,
+        "max_corner_distance": 0.36748943487236646,
+        "max_dihedral_deg": 61.331692513026205
+      },
+      "blender": {
+        "triangles": 1724,
+        "dimensions": [
+          4.800000190734863,
+          7.199999809265137,
+          10.800000190734863
+        ],
+        "pivot": [
+          1,
+          -2,
+          3
+        ],
+        "texture": [
+          108,
+          18
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 367.88708736423695
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "face-saddle-mc33": {
+      "measurements": {
+        "triangles": 20,
+        "vertices": 18,
+        "watertight": true,
+        "winding": true,
+        "volume": 0.6666666666666666,
+        "stack_iou": 1.0,
+        "components": 1
+      },
+      "blender": {
+        "triangles": 20,
+        "dimensions": [
+          2.0,
+          2.0,
+          1.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          5,
+          6
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 0.6666666666666666
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "interior-saddle-mc33": {
+      "measurements": {
+        "triangles": 16,
+        "vertices": 20,
+        "watertight": true,
+        "winding": true,
+        "volume": 0.3333333333333333,
+        "stack_iou": 1.0,
+        "components": 2
+      },
+      "blender": {
+        "triangles": 16,
+        "dimensions": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          6,
+          8
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 0.3333333333333333
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "waist-smooth-loft": {
+      "measurements": {
+        "triangles": 1076,
+        "vertices": 688,
+        "watertight": true,
+        "winding": true,
+        "volume": 1082.431396536547,
+        "stack_iou": 0.6325231481481481,
+        "control_and_mid_widths": [
+          12.0,
+          9.000000000000004,
+          6.0
+        ]
+      },
+      "blender": {
+        "triangles": 1076,
+        "dimensions": [
+          12.0,
+          12.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          35,
+          42
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 1082.431396536547
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "waist-section-loft": {
+      "measurements": {
+        "triangles": 196,
+        "vertices": 160,
+        "watertight": true,
+        "winding": true,
+        "volume": 1068.0,
+        "stack_iou": 0.6174768518518519,
+        "control_and_mid_widths": [
+          12.0,
+          9.0,
+          6.0
+        ]
+      },
+      "blender": {
+        "triangles": 196,
+        "dimensions": [
+          12.0,
+          12.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          35,
+          42
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 1068.0
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "bore-mc33": {
+      "measurements": {
+        "triangles": 2048,
+        "vertices": 1256,
+        "watertight": true,
+        "winding": true,
+        "volume": 1521.0,
+        "stack_iou": 1.0,
+        "open_bore": true
+      },
+      "blender": {
+        "triangles": 2048,
+        "dimensions": [
+          12.0,
+          12.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          35,
+          42
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 1521.0
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "bore-branch-loft": {
+      "measurements": {
+        "triangles": 3456,
+        "vertices": 2048,
+        "watertight": true,
+        "winding": true,
+        "volume": 1521.0,
+        "stack_iou": 1.0,
+        "open_bore": true
+      },
+      "blender": {
+        "triangles": 3456,
+        "dimensions": [
+          12.0,
+          12.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          35,
+          42
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 1521.0
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "bore-heightfield": {
+      "measurements": {
+        "triangles": 672,
+        "vertices": 442,
+        "watertight": true,
+        "winding": true,
+        "volume": 1728.0,
+        "stack_iou": 0.8888888888888888
+      },
+      "blender": {
+        "triangles": 672,
+        "dimensions": [
+          12.0,
+          12.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          35,
+          42
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 1728.0
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "fork-branch-loft": {
+      "measurements": {
+        "triangles": 1356,
+        "vertices": 1060,
+        "watertight": true,
+        "winding": true,
+        "volume": 297.66455985405145,
+        "stack_iou": 1.0,
+        "components_at_z3_11": [
+          1,
+          2
+        ]
+      },
+      "blender": {
+        "triangles": 1356,
+        "dimensions": [
+          12.0,
+          4.0,
+          14.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          29,
+          36
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 297.6645598540514
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "fork-mc33": {
+      "measurements": {
+        "triangles": 804,
+        "vertices": 540,
+        "watertight": true,
+        "winding": true,
+        "volume": 298.6666666666667,
+        "stack_iou": 1.0,
+        "components_at_z3_11": [
+          1,
+          2
+        ]
+      },
+      "blender": {
+        "triangles": 804,
+        "dimensions": [
+          12.0,
+          4.0,
+          14.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          29,
+          36
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 298.6666666666667
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "sphere-extended-mc": {
+      "measurements": {
+        "triangles": 1340,
+        "vertices": 896,
+        "watertight": true,
+        "winding": true,
+        "volume": 900.3333333333334,
+        "stack_iou": 1.0,
+        "dihedral_p95_deg": 45.00000000000001,
+        "dihedral_max_deg": 54.735610317245346
+      },
+      "blender": {
+        "triangles": 1340,
+        "dimensions": [
+          12.0,
+          12.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          35,
+          42
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 900.3333333333334
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "sphere-hermite-dc": {
+      "measurements": {
+        "triangles": 1344,
+        "vertices": 1026,
+        "watertight": true,
+        "winding": true,
+        "volume": 903.2571599803165,
+        "stack_iou": 1.0,
+        "dihedral_p95_deg": 36.19751091103544,
+        "dihedral_max_deg": 45.730317774662716
+      },
+      "blender": {
+        "triangles": 1344,
+        "dimensions": [
+          12.0,
+          12.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          35,
+          42
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 903.2571599803167
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "sphere-mc33": {
+      "measurements": {
+        "triangles": 1340,
+        "vertices": 896,
+        "watertight": true,
+        "winding": true,
+        "volume": 900.3333333333334,
+        "stack_iou": 1.0,
+        "dihedral_p95_deg": 45.00000000000001,
+        "dihedral_max_deg": 54.735610317245346
+      },
+      "blender": {
+        "triangles": 1340,
+        "dimensions": [
+          12.0,
+          12.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          35,
+          42
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 900.3333333333334
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "merge-branch-loft": {
+      "measurements": {
+        "triangles": 3120,
+        "vertices": 2386,
+        "watertight": true,
+        "winding": true,
+        "volume": 614.6624503412628,
+        "stack_iou": 1.0,
+        "components_at_z3_12_26": [
+          2,
+          3,
+          2
+        ]
+      },
+      "blender": {
+        "triangles": 3120,
+        "dimensions": [
+          14.0,
+          4.0,
+          28.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          39,
+          68
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 614.6624503412628
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "slabs-hermite-dc": {
+      "measurements": {
+        "triangles": 1344,
+        "vertices": 884,
+        "watertight": true,
+        "winding": true,
+        "volume": 280.65361609727216,
+        "stack_iou": 1.0
+      },
+      "blender": {
+        "triangles": 1344,
+        "dimensions": [
+          12.372901916503906,
+          12.372901916503906,
+          3.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          26,
+          47
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 280.653616097272
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "tube-path-sweep": {
+      "measurements": {
+        "triangles": 192,
+        "vertices": 256,
+        "watertight": true,
+        "winding": true,
+        "volume": 816.0,
+        "stack_iou": 1.0,
+        "open_bore": true
+      },
+      "blender": {
+        "triangles": 192,
+        "dimensions": [
+          10.0,
+          10.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          31,
+          38
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 816.0
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "tube-revolve": {
+      "measurements": {
+        "triangles": 512,
+        "vertices": 528,
+        "watertight": true,
+        "winding": true,
+        "volume": 790.410225246521,
+        "stack_iou": 1.0,
+        "open_bore": true
+      },
+      "blender": {
+        "triangles": 512,
+        "dimensions": [
+          10.0,
+          10.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          31,
+          38
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 790.4102252465204
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "tube-section-loft": {
+      "measurements": {
+        "triangles": 3808,
+        "vertices": 2624,
+        "watertight": true,
+        "winding": true,
+        "volume": 815.4371052019043,
+        "stack_iou": 1.0,
+        "open_bore": true
+      },
+      "blender": {
+        "triangles": 3808,
+        "dimensions": [
+          10.0,
+          10.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          31,
+          38
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 815.4371052019034
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "tube-smooth-loft": {
+      "measurements": {
+        "triangles": 7344,
+        "vertices": 4808,
+        "watertight": true,
+        "winding": true,
+        "volume": 815.4371052019043,
+        "stack_iou": 1.0,
+        "open_bore": true
+      },
+      "blender": {
+        "triangles": 7344,
+        "dimensions": [
+          10.0,
+          10.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          31,
+          38
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 815.4371052018902
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "cup-revolve": {
+      "measurements": {
+        "triangles": 512,
+        "vertices": 530,
+        "watertight": true,
+        "winding": true,
+        "volume": 828.0488065443279,
+        "stack_iou": 1.0
+      },
+      "blender": {
+        "triangles": 512,
+        "dimensions": [
+          10.0,
+          10.0,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          31,
+          38
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 828.0488065443268
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "oblique-section-network": {
+      "measurements": {
+        "triangles": 6552,
+        "vertices": 3677,
+        "watertight": true,
+        "winding": true,
+        "volume": 1281.4720636769823,
+        "stack_iou": 0.7065462753950339,
+        "independent_recut_hausdorff": [
+          0.3535533905932738,
+          0.2904185825045795
+        ]
+      },
+      "blender": {
+        "triangles": 6552,
+        "dimensions": [
+          12.995619773864746,
+          12.995619773864746,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          35,
+          42
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 1281.4720636769812
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "notch-section-network": {
+      "measurements": {
+        "triangles": 6128,
+        "vertices": 3470,
+        "watertight": true,
+        "winding": true,
+        "volume": 1289.5505515697125,
+        "stack_iou": 0.7476851851851852,
+        "independent_recut_hausdorff": [
+          0.3535533905932738,
+          0.3535533905932738
+        ]
+      },
+      "blender": {
+        "triangles": 6128,
+        "dimensions": [
+          12.0,
+          12.354606628417969,
+          12.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          35,
+          42
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 1289.5505515697123
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "blocks-voxel": {
+      "measurements": {
+        "triangles": 1984,
+        "vertices": 3986,
+        "watertight": true,
+        "winding": true,
+        "volume": 1217.0,
+        "stack_iou": 1.0,
+        "exposed": 992,
+        "color_mismatches": 97
+      },
+      "blender": {
+        "triangles": 1984,
+        "dimensions": [
+          14.0,
+          14.0,
+          14.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          108,
+          18
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 1217.0
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "blocks-greedy": {
+      "measurements": {
+        "triangles": 76,
+        "vertices": 112,
+        "watertight": true,
+        "winding": true,
+        "volume": 1217.0,
+        "stack_iou": 1.0,
+        "exposed": 992,
+        "color_mismatches": 0
+      },
+      "blender": {
+        "triangles": 76,
+        "dimensions": [
+          14.0,
+          14.0,
+          14.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          54,
+          74
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 1217.0
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "blocks-monotone": {
+      "measurements": {
+        "triangles": 72,
+        "vertices": 108,
+        "watertight": true,
+        "winding": true,
+        "volume": 1217.0,
+        "stack_iou": 1.0,
+        "exposed": 992,
+        "color_mismatches": 0
+      },
+      "blender": {
+        "triangles": 72,
+        "dimensions": [
+          14.0,
+          14.0,
+          14.0
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          54,
+          74
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 1217.0
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "canard-section-loft": {
+      "measurements": {
+        "triangles": 29636,
+        "vertices": 16807,
+        "watertight": true,
+        "winding": true,
+        "volume": 0.00937543144353393,
+        "stack_iou": 1.0,
+        "volume_iou_27": 0.9887014672847542,
+        "intermediate": {
+          "count": 92,
+          "max_excess": 0.0011146341137865529,
+          "max_abs": 0.0011152132064937495
+        },
+        "thickness_error": [
+          1.1875560881891012e-09,
+          1.7078507080769967e-09,
+          -1.935489591514683e-09
+        ],
+        "atlas_iou": {
+          "top": 0.9922862652667667,
+          "left": 0.9816549570647931,
+          "front": 0.9068585944115156,
+          "rear": 0.95
+        }
+      },
+      "blender": {
+        "triangles": 29636,
+        "dimensions": [
+          0.6689537167549133,
+          0.7924528121948242,
+          0.06689536571502686
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          186,
+          351
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 0.0093754314435341
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "canard-heightfield": {
+      "measurements": {
+        "triangles": 19816,
+        "vertices": 11218,
+        "watertight": true,
+        "winding": true,
+        "volume": 0.009380741575026426,
+        "stack_iou": 0.9999753652107506,
+        "volume_iou_27": 0.9929736767454885,
+        "intermediate": {
+          "count": 92,
+          "max_excess": 0.0008366055870874488,
+          "max_abs": 0.0008366055870874488
+        },
+        "thickness_error": [
+          1.1875560881891012e-09,
+          0.0005577852047525533,
+          -1.935489591514683e-09
+        ],
+        "atlas_iou": {
+          "top": 0.9880236319405459,
+          "left": 0.9843229472859103,
+          "front": 0.9064216307562315,
+          "rear": 0.948182016111474
+        }
+      },
+      "blender": {
+        "triangles": 19816,
+        "dimensions": [
+          0.6689537167549133,
+          0.7924528121948242,
+          0.06689536571502686
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          186,
+          351
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 0.009380741575025817
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "canard-marching-cubes": {
+      "measurements": {
+        "triangles": 34904,
+        "vertices": 19295,
+        "watertight": true,
+        "winding": true,
+        "volume": 0.009365769175998448,
+        "stack_iou": 1.0,
+        "volume_iou_27": 0.99050245070205,
+        "intermediate": {
+          "count": 92,
+          "max_excess": 0.00017020124691103158,
+          "max_abs": 0.00017020124691103158
+        },
+        "thickness_error": [
+          1.1875560881891012e-09,
+          8.217797173426522e-05,
+          1.1294663197769506e-08
+        ],
+        "atlas_iou": {
+          "top": 0.9917791345329906,
+          "left": 0.9866457187745483,
+          "front": 0.9063955950868277,
+          "rear": 0.9512461740271098
+        }
+      },
+      "blender": {
+        "triangles": 34904,
+        "dimensions": [
+          0.6689537167549133,
+          0.7924528121948242,
+          0.06689536571502686
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          604,
+          112
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 0.009365769175998745
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "wing-section-loft": {
+      "measurements": {
+        "triangles": 114844,
+        "vertices": 66653,
+        "watertight": true,
+        "winding": true,
+        "volume": 0.27009271914437866,
+        "stack_iou": 1.0,
+        "volume_iou_27": 0.9918818223716567,
+        "intermediate": {
+          "count": 145,
+          "max_excess": 0.003056114075027011,
+          "max_abs": 0.006108287206124094
+        },
+        "thickness_error": [
+          3.885036875539427e-09,
+          3.872257153814118e-09,
+          3.853087571226155e-09
+        ],
+        "atlas_iou": {
+          "top": 0.9899345213107319,
+          "left": 0.9180633147113594,
+          "front": 0.8370579748549892,
+          "rear": 0.9281365998515219
+        }
+      },
+      "blender": {
+        "triangles": 114844,
+        "dimensions": [
+          1.9862778186798096,
+          2.3979415893554688,
+          0.3910806179046631
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          310,
+          392
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 0.2700927191443705
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "wing-heightfield": {
+      "measurements": {
+        "triangles": 43368,
+        "vertices": 23560,
+        "watertight": true,
+        "winding": true,
+        "volume": 0.270177233326794,
+        "stack_iou": 0.9996730587865451,
+        "volume_iou_27": 0.996057273743408,
+        "intermediate": {
+          "count": 145,
+          "max_excess": 0.0015285521598537577,
+          "max_abs": 0.0015293407510523493
+        },
+        "thickness_error": [
+          3.885036875539427e-09,
+          3.872257153814118e-09,
+          3.853087571226155e-09
+        ],
+        "atlas_iou": {
+          "top": 0.9877897171493278,
+          "left": 0.9151931211427778,
+          "front": 0.8341596503065685,
+          "rear": 0.9246516581368518
+        }
+      },
+      "blender": {
+        "triangles": 43368,
+        "dimensions": [
+          1.9862778186798096,
+          2.3979415893554688,
+          0.3910806179046631
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          310,
+          392
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 0.2701772333268233
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "wing-marching-cubes": {
+      "measurements": {
+        "triangles": 75448,
+        "vertices": 40662,
+        "watertight": true,
+        "winding": true,
+        "volume": 0.2699157507763774,
+        "stack_iou": 1.0,
+        "volume_iou_27": 0.9949293398056508,
+        "intermediate": {
+          "count": 145,
+          "max_excess": 0.0011129579637116915,
+          "max_abs": 0.006395311767562251
+        },
+        "thickness_error": [
+          3.885036875539427e-09,
+          3.872257153814118e-09,
+          3.853087571226155e-09
+        ],
+        "atlas_iou": {
+          "top": 0.9898894398672506,
+          "left": 0.9122035858877964,
+          "front": 0.8373305833824396,
+          "rear": 0.9285310986300556
+        }
+      },
+      "blender": {
+        "triangles": 75448,
+        "dimensions": [
+          1.9862778186798096,
+          2.3957903385162354,
+          0.390857070684433
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          948,
+          178
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 0.2699157507764614
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "canopy-smooth-loft": {
+      "measurements": {
+        "triangles": 157556,
+        "vertices": 102233,
+        "watertight": true,
+        "winding": true,
+        "volume": 0.10654335722699683,
+        "stack_iou": 1.0,
+        "volume_iou_27": 0.9951901528777859,
+        "intermediate": {
+          "count": 149,
+          "max_excess": 0.0011128687059508563,
+          "max_abs": 0.001669308205721625
+        },
+        "thickness_error": [
+          -2.6001951147769375e-09,
+          -1.93416166127669e-06,
+          2.877195690031975e-09
+        ],
+        "atlas_iou": {
+          "top": 0.9858550219454393,
+          "left": 0.9858948490501389,
+          "front": 0.9830667243118605,
+          "rear": 0.9823194053546944
+        }
+      },
+      "blender": {
+        "triangles": 157556,
+        "dimensions": [
+          0.4528301954269409,
+          1.770154356956482,
+          0.2675814628601074
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          169,
+          236
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 0.10654335722698831
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "canopy-surface-nets": {
+      "measurements": {
+        "triangles": 39828,
+        "vertices": 21710,
+        "watertight": true,
+        "winding": true,
+        "volume": 0.10638264514667385,
+        "stack_iou": 1.0,
+        "volume_iou_27": 0.987287417772383,
+        "intermediate": {
+          "count": 149,
+          "max_excess": 0.006692154114172205,
+          "max_abs": 0.006692154114172205
+        },
+        "thickness_error": [
+          -0.0011142820597291603,
+          -0.0011155655229128092,
+          0.0011142793120960115
+        ],
+        "atlas_iou": {
+          "top": 0.9872681245745405,
+          "left": 0.9867636696059573,
+          "front": 0.9854516502605675,
+          "rear": 0.9858562413868137
+        }
+      },
+      "blender": {
+        "triangles": 39828,
+        "dimensions": [
+          0.4528301954269409,
+          1.770154356956482,
+          0.2675814628601074
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          464,
+          152
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 0.10638264514666823
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    },
+    "canopy-revolve": {
+      "measurements": {
+        "triangles": 10752,
+        "vertices": 11090,
+        "watertight": true,
+        "winding": true,
+        "volume": 0.04766739306354806,
+        "stack_iou": 0.44446013948971486,
+        "volume_iou_27": 0.44584664536741214,
+        "intermediate": {
+          "count": 149,
+          "max_excess": 0.010340474858320126,
+          "max_abs": 0.13044596912521442
+        },
+        "thickness_error": [
+          -0.0666570111128611,
+          0.00030636361983066296,
+          -0.09365351629502573
+        ],
+        "atlas_iou": {
+          "top": 0.4389706039779904,
+          "left": 0.7738403041825095,
+          "front": 0.6452361947609027,
+          "rear": 0.6478001165501166
+        }
+      },
+      "blender": {
+        "triangles": 10752,
+        "dimensions": [
+          0.2751629650592804,
+          1.4279245138168335,
+          0.275162935256958
+        ],
+        "pivot": [
+          0,
+          0,
+          0
+        ],
+        "texture": [
+          169,
+          236
+        ],
+        "boundary": 0,
+        "nonmanifold": 0,
+        "reversed_edges": 0,
+        "zero_area": 0,
+        "signed_volume": 0.04766739306354765
+      },
+      "gltf": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 1
+      }
+    }
+  },
+  "rejections": [
+    {
+      "part": "fork",
+      "method": "section-loft",
+      "reason": "branch-loft"
+    },
+    {
+      "part": "interior-saddle",
+      "method": "hermite-dc",
+      "reason": "multiple sheets"
+    },
+    {
+      "part": "bore",
+      "method": "path-sweep",
+      "reason": "intersects itself"
+    },
+    {
+      "part": "bore",
+      "method": "path-sweep",
+      "reason": "reverses"
+    }
+  ]
+}
