@@ -1,0 +1,17 @@
+{
+  "origin_pixels": [
+    174.0,
+    -12.0,
+    37.0
+  ],
+  "pixel_step": 1.2,
+  "source_pixels_per_length": 97.16666666666667,
+  "samples_xyz": [
+    86,
+    175,
+    71
+  ],
+  "nonempty_layers": 40,
+  "cutter_triangles": 1450,
+  "components": 4
+}

@@ -1,0 +1,38 @@
+{
+  "old": {
+    "mesh_objects": 1,
+    "triangles": 4998,
+    "wing_thickness": 0.1313307285308838,
+    "photo_iou": 0.7264651397777029,
+    "ortho_iou": {
+      "top": 0.9765610738581738,
+      "left": 0.7912289915966386,
+      "front": 0.6608095952023988,
+      "rear": 0.6721926427879962
+    },
+    "mean_ortho_iou": 0.7751980758613018,
+    "top_region_iou": {
+      "outer_main_wing": 0.9607091252639769,
+      "outboard_canard": 0.9556818181818182
+    },
+    "outboard_leading_edge_median_forward_px": 1.0
+  },
+  "new": {
+    "mesh_objects": 10,
+    "triangles": 13740,
+    "wing_thickness": 0.12712883949279785,
+    "photo_iou": 0.7082729601595011,
+    "ortho_iou": {
+      "top": 0.9113502586360663,
+      "left": 0.7338518769022658,
+      "front": 0.608798914272789,
+      "rear": 0.6753790784117057
+    },
+    "mean_ortho_iou": 0.7323450320557068,
+    "top_region_iou": {
+      "outer_main_wing": 0.8650703769616567,
+      "outboard_canard": 0.791594703511802
+    },
+    "outboard_leading_edge_median_forward_px": 5.0
+  }
+}

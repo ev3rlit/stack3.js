@@ -1,0 +1,20 @@
+{
+  "triangles": 3600,
+  "section_in_scene_units": {
+    "base": 0.1313307285308838,
+    "roughness": 0.1313307285308838,
+    "bump": 0.1313307285308838,
+    "thickness": 0.22079229354858398,
+    "combined": 0.1313307285308838
+  },
+  "measured_thickness_ratio": 1.0,
+  "thickness_demo_ratio": 1.6811929395233833,
+  "silhouette_iou_vs_baseline_same_view": {
+    "roughness-canopy": 1.0,
+    "bump-panel": 1.0,
+    "thickness-edge": 0.8349609103302451,
+    "bump-edge": 1.0,
+    "combined-edge": 1.0,
+    "combined-hero": 1.0
+  }
+}

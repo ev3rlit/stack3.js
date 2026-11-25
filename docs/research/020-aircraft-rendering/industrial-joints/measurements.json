@@ -1,0 +1,16 @@
+{
+  "before": {
+    "triangles": 9812,
+    "parts": 10,
+    "wing_probe": 0.12712860107421875,
+    "connected": 10
+  },
+  "after": {
+    "triangles": 12276,
+    "parts": 10,
+    "wing_probe": 0.12712860107421875,
+    "connected": 10
+  },
+  "wing_coordinates_identical": true,
+  "assembled_projection_iou": 1.0
+}

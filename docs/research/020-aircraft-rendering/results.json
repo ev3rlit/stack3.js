@@ -1,0 +1,231 @@
+{
+  "sampling_per_stack_cell": [
+    3,
+    3,
+    3
+  ],
+  "models": {
+    "voxel": {
+      "triangles": 76252,
+      "bytes": 3053680,
+      "watertight": false,
+      "bounds": [
+        [
+          -2.3516294956207275,
+          -3.0,
+          0.3251858353614807
+        ],
+        [
+          2.3516294956207275,
+          3.0,
+          1.650943398475647
+        ]
+      ],
+      "input_iou": {
+        "top": 0.9790827658587782,
+        "left": 0.9331280897545958,
+        "front": 0.8149984695439241,
+        "rear": 0.8424329203760195
+      },
+      "mean_input_iou": 0.8924105613833293,
+      "stack_volume_iou": 1.0,
+      "base_hull_volume_iou": 1.0,
+      "mesh_volume": 3.498320198118916,
+      "source_stack_cells": 143681,
+      "photo_iou": 0.7008529284969796,
+      "photo_boundary_p95_px": 58.309518948453004,
+      "photo_recall": 0.8903308099714389,
+      "photo_precision": 0.7670741977292138
+    },
+    "marching-cubes": {
+      "triangles": 76248,
+      "bytes": 2568808,
+      "watertight": true,
+      "bounds": [
+        [
+          -2.3516294956207275,
+          -2.997532844543457,
+          0.3261009752750397
+        ],
+        [
+          2.3516294956207275,
+          2.994140625,
+          1.6489685773849487
+        ]
+      ],
+      "input_iou": {
+        "top": 0.9837369478896024,
+        "left": 0.9348335955823412,
+        "front": 0.8210253562835462,
+        "rear": 0.8499843014128728
+      },
+      "mean_input_iou": 0.8973950502920908,
+      "stack_volume_iou": 0.9870138191048143,
+      "base_hull_volume_iou": 0.9870138191048143,
+      "mesh_volume": 3.48969341760038,
+      "source_stack_cells": 143681,
+      "photo_iou": 0.7051197881313497,
+      "photo_boundary_p95_px": 57.189154569169624,
+      "photo_recall": 0.8785597426725452,
+      "photo_precision": 0.7812669527050352
+    },
+    "surface-nets": {
+      "triangles": 76252,
+      "bytes": 2569744,
+      "watertight": false,
+      "bounds": [
+        [
+          -2.343827962875366,
+          -2.976487874984741,
+          0.3372100293636322
+        ],
+        [
+          2.3416748046875,
+          2.9473671913146973,
+          1.6190413236618042
+        ]
+      ],
+      "input_iou": {
+        "top": 0.9801181102362204,
+        "left": 0.9129498339764874,
+        "front": 0.8090892158688768,
+        "rear": 0.8330917113142137
+      },
+      "mean_input_iou": 0.8838122178489496,
+      "stack_volume_iou": 0.9329466360243199,
+      "base_hull_volume_iou": 0.9329466360243199,
+      "mesh_volume": 3.3913758002160077,
+      "source_stack_cells": 143681,
+      "photo_iou": 0.7062554234830263,
+      "photo_boundary_p95_px": 64.36919275565126,
+      "photo_recall": 0.8406746526911238,
+      "photo_precision": 0.8153963045641591
+    },
+    "surface-nets-qem": {
+      "triangles": 3506,
+      "bytes": 434388,
+      "watertight": true,
+      "bounds": [
+        [
+          -2.343968391418457,
+          -2.9700543880462646,
+          0.33873921632766724
+        ],
+        [
+          2.342637777328491,
+          2.648773670196533,
+          1.6169167757034302
+        ]
+      ],
+      "input_iou": {
+        "top": 0.9803149606299213,
+        "left": 0.9101274914706411,
+        "front": 0.8089203627779848,
+        "rear": 0.8339117814097305
+      },
+      "mean_input_iou": 0.8833186490720695,
+      "stack_volume_iou": 0.9314583828805352,
+      "base_hull_volume_iou": 0.9314583828805352,
+      "mesh_volume": 3.3851454830601306,
+      "source_stack_cells": 143681,
+      "photo_iou": 0.7063278171330116,
+      "photo_boundary_p95_px": 67.42027823699833,
+      "photo_recall": 0.8412015084712864,
+      "photo_precision": 0.814997649271274
+    },
+    "section-loft": {
+      "triangles": 3600,
+      "bytes": 1258464,
+      "watertight": true,
+      "bounds": [
+        [
+          -2.3518898487091064,
+          -2.973863124847412,
+          0.2973588705062866
+        ],
+        [
+          2.332646608352661,
+          2.996168851852417,
+          1.5662801265716553
+        ]
+      ],
+      "input_iou": {
+        "top": 0.9809296343927981,
+        "left": 0.7941485726302507,
+        "front": 0.6590442862314468,
+        "rear": 0.6659584800291368
+      },
+      "mean_input_iou": 0.7750202433209081,
+      "stack_volume_iou": 0.9405867313239726,
+      "base_hull_volume_iou": 0.6575586914087028,
+      "mesh_volume": 2.8115160026982102,
+      "source_stack_cells": 114740,
+      "photo_iou": 0.7300407765808533,
+      "photo_boundary_p95_px": 52.73705582537922,
+      "photo_recall": 0.8315517289188364,
+      "photo_precision": 0.8567398275849755
+    }
+  },
+  "renderer_difference": {
+    "cpu": {
+      "native_resolution": [
+        1024,
+        571
+      ],
+      "rgb_mae_8bit": 25.259400856973997,
+      "rgb_rmse_8bit": 31.691193617340442,
+      "silhouette_iou_vs_cycles": 0.9976034407743168,
+      "comparison_pixels": 126336
+    },
+    "webgl": {
+      "native_resolution": [
+        1280,
+        714
+      ],
+      "rgb_mae_8bit": 39.51338758020939,
+      "rgb_rmse_8bit": 48.462740166434855,
+      "silhouette_iou_vs_cycles": 0.9967753875941402,
+      "comparison_pixels": 126336
+    },
+    "unlit": {
+      "native_resolution": [
+        1280,
+        714
+      ],
+      "rgb_mae_8bit": 34.309510617190135,
+      "rgb_rmse_8bit": 42.36540731711888,
+      "silhouette_iou_vs_cycles": 0.9995715846370251,
+      "comparison_pixels": 126336
+    },
+    "clay": {
+      "native_resolution": [
+        1280,
+        714
+      ],
+      "rgb_mae_8bit": 38.15993066109422,
+      "rgb_rmse_8bit": 44.398473707520765,
+      "silhouette_iou_vs_cycles": 0.9996715294588091,
+      "comparison_pixels": 126336
+    },
+    "eevee": {
+      "native_resolution": [
+        1280,
+        714
+      ],
+      "rgb_mae_8bit": 5.38714750084431,
+      "rgb_rmse_8bit": 7.999450850263103,
+      "silhouette_iou_vs_cycles": 0.9995715846370251,
+      "comparison_pixels": 126336
+    },
+    "cycles": {
+      "native_resolution": [
+        1280,
+        714
+      ],
+      "rgb_mae_8bit": 0.0,
+      "rgb_rmse_8bit": 0.0,
+      "silhouette_iou_vs_cycles": 1.0,
+      "comparison_pixels": 126336
+    }
+  }
+}

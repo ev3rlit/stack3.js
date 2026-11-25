@@ -1,0 +1,80 @@
+{
+  "fuselage": {
+    "raw_cells": 151843,
+    "occupied": 139118,
+    "grid": [
+      33,
+      192,
+      64
+    ],
+    "triangles": 2200,
+    "components_before_cleanup": 1,
+    "watertight": true,
+    "volume": 1.208250157980966
+  },
+  "canopy": {
+    "raw_cells": 121582,
+    "occupied": 113270,
+    "grid": [
+      38,
+      150,
+      40
+    ],
+    "triangles": 960,
+    "components_before_cleanup": 2,
+    "watertight": true,
+    "volume": 0.10844957417504576
+  },
+  "nacelle": {
+    "raw_cells": 175232,
+    "occupied": 149866,
+    "grid": [
+      29,
+      178,
+      64
+    ],
+    "triangles": 1560,
+    "components_before_cleanup": 1,
+    "watertight": true,
+    "volume": 0.39744355952708577
+  },
+  "wing": {
+    "raw_cells": 236802,
+    "occupied": 238534,
+    "grid": [
+      146,
+      176,
+      64
+    ],
+    "triangles": 1120,
+    "components_before_cleanup": 1,
+    "watertight": true,
+    "volume": 0.27610641363185046
+  },
+  "fin": {
+    "raw_cells": 60387,
+    "occupied": 60454,
+    "grid": [
+      47,
+      138,
+      72
+    ],
+    "triangles": 2120,
+    "components_before_cleanup": 1,
+    "watertight": true,
+    "volume": 0.10593085476220797
+  },
+  "canard": {
+    "raw_cells": 81125,
+    "occupied": 81184,
+    "grid": [
+      93,
+      110,
+      30
+    ],
+    "triangles": 490,
+    "components_before_cleanup": 1,
+    "watertight": true,
+    "volume": 0.009645520779412109
+  }
+}

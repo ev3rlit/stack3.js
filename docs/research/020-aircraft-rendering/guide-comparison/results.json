@@ -1,0 +1,230 @@
+{
+  "guides": {
+    "off": {
+      "source_views_iou": {
+        "top": 0.9791125251985524,
+        "left": 0.9290807307012374,
+        "front": 0.8048751055870641,
+        "rear": 0.833978256863829
+      },
+      "mean_source_iou": 0.8867616545876708,
+      "engines": {
+        "cpu": {
+          "native_resolution": [
+            1024,
+            571
+          ],
+          "photo_iou": 0.7095365372185245,
+          "unlit_photo_iou": 0.7095365372185245,
+          "lighting_change": {
+            "rgb_mae": 28.480854320633327,
+            "mask_iou": 1.0,
+            "common_pixels": 97559
+          }
+        },
+        "webgl": {
+          "native_resolution": [
+            1280,
+            714
+          ],
+          "photo_iou": 0.7090987475294921,
+          "unlit_photo_iou": 0.7090987475294921,
+          "lighting_change": {
+            "rgb_mae": 48.929548486581076,
+            "mask_iou": 1.0,
+            "common_pixels": 153912
+          }
+        },
+        "eevee": {
+          "native_resolution": [
+            1280,
+            714
+          ],
+          "photo_iou": 0.7092751363990647,
+          "unlit_photo_iou": 0.7092751363990647,
+          "lighting_change": {
+            "rgb_mae": 39.94452410079671,
+            "mask_iou": 1.0,
+            "common_pixels": 152042
+          }
+        },
+        "cycles": {
+          "native_resolution": [
+            1280,
+            714
+          ],
+          "photo_iou": 0.7092266977662152,
+          "unlit_photo_iou": 0.7092266977662152,
+          "lighting_change": {
+            "rgb_mae": 41.034193655888515,
+            "mask_iou": 1.0,
+            "common_pixels": 152036
+          }
+        },
+        "clay": {
+          "native_resolution": [
+            1280,
+            714
+          ],
+          "photo_iou": 0.7092742229424728
+        }
+      }
+    },
+    "on": {
+      "source_views_iou": {
+        "top": 0.9742249918164955,
+        "left": 0.789072493277991,
+        "front": 0.6646559961777353,
+        "rear": 0.6778454671572471
+      },
+      "mean_source_iou": 0.7764497371073672,
+      "engines": {
+        "cpu": {
+          "native_resolution": [
+            1024,
+            571
+          ],
+          "photo_iou": 0.7264910029318921,
+          "unlit_photo_iou": 0.7264910029318921,
+          "lighting_change": {
+            "rgb_mae": 23.470960270799928,
+            "mask_iou": 1.0,
+            "common_pixels": 86066
+          }
+        },
+        "webgl": {
+          "native_resolution": [
+            1280,
+            714
+          ],
+          "photo_iou": 0.7266235872058806,
+          "unlit_photo_iou": 0.7266235872058806,
+          "lighting_change": {
+            "rgb_mae": 43.403220825060664,
+            "mask_iou": 1.0,
+            "common_pixels": 135990
+          }
+        },
+        "eevee": {
+          "native_resolution": [
+            1280,
+            714
+          ],
+          "photo_iou": 0.7264645200873389,
+          "unlit_photo_iou": 0.7264645200873389,
+          "lighting_change": {
+            "rgb_mae": 33.21954908164687,
+            "mask_iou": 1.0,
+            "common_pixels": 134008
+          }
+        },
+        "cycles": {
+          "native_resolution": [
+            1280,
+            714
+          ],
+          "photo_iou": 0.7264651397777029,
+          "unlit_photo_iou": 0.7264651397777029,
+          "lighting_change": {
+            "rgb_mae": 34.02829221945311,
+            "mask_iou": 1.0,
+            "common_pixels": 134018
+          }
+        },
+        "clay": {
+          "native_resolution": [
+            1280,
+            714
+          ],
+          "photo_iou": 0.7264825653086635
+        }
+      }
+    }
+  },
+  "axes": {
+    "z72-photo-cpu": {
+      "rgb_mae": 17.078701825557808,
+      "mask_iou": 1.0,
+      "common_pixels": 7395,
+      "unlit_pixels": 88719,
+      "lit_pixels": 88719
+    },
+    "z72-photo-webgl": {
+      "rgb_mae": 24.526319200088132,
+      "mask_iou": 1.0,
+      "common_pixels": 51439,
+      "unlit_pixels": 136282,
+      "lit_pixels": 136282
+    },
+    "z72-top-cpu": {
+      "rgb_mae": 9.170612774113534,
+      "mask_iou": 1.0,
+      "common_pixels": 23652,
+      "unlit_pixels": 147077,
+      "lit_pixels": 147077
+    },
+    "z72-top-webgl": {
+      "rgb_mae": 25.644394669371426,
+      "mask_iou": 1.0,
+      "common_pixels": 23662,
+      "unlit_pixels": 53751,
+      "lit_pixels": 53751
+    },
+    "xy72-photo-cpu": {
+      "rgb_mae": 33.667419020313545,
+      "mask_iou": 1.0,
+      "common_pixels": 16393,
+      "unlit_pixels": 82748,
+      "lit_pixels": 82748
+    },
+    "xy72-photo-webgl": {
+      "rgb_mae": 53.500500441275804,
+      "mask_iou": 1.0,
+      "common_pixels": 67607,
+      "unlit_pixels": 127376,
+      "lit_pixels": 127376
+    },
+    "xy72-top-cpu": {
+      "rgb_mae": null,
+      "mask_iou": null,
+      "common_pixels": 0,
+      "unlit_pixels": 0,
+      "lit_pixels": 0
+    },
+    "xy72-top-webgl": {
+      "rgb_mae": null,
+      "mask_iou": null,
+      "common_pixels": 0,
+      "unlit_pixels": 0,
+      "lit_pixels": 0
+    },
+    "xyz72-photo-cpu": {
+      "rgb_mae": 21.170794556189332,
+      "mask_iou": 1.0,
+      "common_pixels": 13324,
+      "unlit_pixels": 83884,
+      "lit_pixels": 83884
+    },
+    "xyz72-photo-webgl": {
+      "rgb_mae": 36.49484902497507,
+      "mask_iou": 1.0,
+      "common_pixels": 62836,
+      "unlit_pixels": 128958,
+      "lit_pixels": 128958
+    },
+    "xyz72-top-cpu": {
+      "rgb_mae": 9.55678532074346,
+      "mask_iou": 1.0,
+      "common_pixels": 54753,
+      "unlit_pixels": 142753,
+      "lit_pixels": 142753
+    },
+    "xyz72-top-webgl": {
+      "rgb_mae": 24.35016086575022,
+      "mask_iou": 1.0,
+      "common_pixels": 34190,
+      "unlit_pixels": 52215,
+      "lit_pixels": 52215
+    }
+  }
+}

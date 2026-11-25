@@ -1,0 +1,129 @@
+{
+  "sampling_per_stack_cell": [
+    3,
+    3,
+    3
+  ],
+  "models": {
+    "voxel": {
+      "triangles": 168720,
+      "bytes": 6336928,
+      "watertight": true,
+      "bounds": [
+        [
+          -2.3516294956207275,
+          -3.0,
+          0.0
+        ],
+        [
+          2.3516294956207275,
+          3.0,
+          1.8010292053222656
+        ]
+      ],
+      "input_iou": {
+        "top": 0.9945065668899267,
+        "left": 0.9910241628544154,
+        "front": 0.9899429149733551,
+        "rear": 0.9899429149733551
+      },
+      "mean_input_iou": 0.991354139922763,
+      "stack_volume_iou": 1.0,
+      "base_hull_volume_iou": 1.0,
+      "mesh_volume": 29.761420923748016,
+      "source_stack_cells": 1222344,
+      "known_model_iou": 0.8918967929781398,
+      "signed_volume_error_percent": 11.836649994714076
+    },
+    "marching-cubes": {
+      "triangles": 168716,
+      "bytes": 4815056,
+      "watertight": true,
+      "bounds": [
+        [
+          -2.3516294956207275,
+          -3.0,
+          5.294631053032184e-11
+        ],
+        [
+          2.3516294956207275,
+          3.0,
+          1.8010292053222656
+        ]
+      ],
+      "input_iou": {
+        "top": 0.9960824683309027,
+        "left": 0.993417702654032,
+        "front": 0.9923948348253189,
+        "rear": 0.9923948348253189
+      },
+      "mean_input_iou": 0.9935724601588931,
+      "stack_volume_iou": 0.9955635966516844,
+      "base_hull_volume_iou": 0.9955635966516844,
+      "mesh_volume": 29.755387813160677,
+      "source_stack_cells": 1222344,
+      "known_model_iou": 0.892735286469483,
+      "signed_volume_error_percent": 11.813978937479819
+    },
+    "surface-nets": {
+      "triangles": 168720,
+      "bytes": 4818804,
+      "watertight": true,
+      "bounds": [
+        [
+          -2.3495991230010986,
+          -2.9952173233032227,
+          9.430645847574581e-11
+        ],
+        [
+          2.3495991230010986,
+          2.9952173233032227,
+          1.8010292053222656
+        ]
+      ],
+      "input_iou": {
+        "top": 0.9980579096045198,
+        "left": 0.9961180027621903,
+        "front": 0.9959352820691955,
+        "rear": 0.9959352820691955
+      },
+      "mean_input_iou": 0.9965116191262752,
+      "stack_volume_iou": 0.9877617510206583,
+      "base_hull_volume_iou": 0.9877617510206583,
+      "mesh_volume": 29.669751566772547,
+      "source_stack_cells": 1222344,
+      "known_model_iou": 0.8959689944519956,
+      "signed_volume_error_percent": 11.492177403248348
+    },
+    "surface-nets-qem": {
+      "triangles": 3600,
+      "bytes": 122532,
+      "watertight": true,
+      "bounds": [
+        [
+          -2.348975658416748,
+          -2.994321584701538,
+          0.00014975185331422836
+        ],
+        [
+          2.34902024269104,
+          2.9949307441711426,
+          1.8008677959442139
+        ]
+      ],
+      "input_iou": {
+        "top": 0.9981055183340014,
+        "left": 0.9959446683584615,
+        "front": 0.9960624920614759,
+        "rear": 0.9961101232058935
+      },
+      "mean_input_iou": 0.9965557004899581,
+      "stack_volume_iou": 0.9876875407992435,
+      "base_hull_volume_iou": 0.9876875407992435,
+      "mesh_volume": 29.65897544622038,
+      "source_stack_cells": 1222344,
+      "known_model_iou": 0.8961114751412892,
+      "signed_volume_error_percent": 11.451683193459727
+    }
+  }
+}

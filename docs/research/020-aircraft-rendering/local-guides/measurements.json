@@ -1,0 +1,49 @@
+{
+  "models": {
+    "before": {
+      "triangles": 3600,
+      "first_hit_distance": {
+        "intake_194": 0.8986322465670902,
+        "intake_258": 0.9010728766937929,
+        "outlet_199": 0.5414920529008618,
+        "outlet_256": 0.5422091881280173
+      },
+      "photo_iou": 0.7264651397777029,
+      "ortho_iou": {
+        "top": 0.9742249918164955,
+        "left": 0.789072493277991,
+        "front": 0.6646559961777353,
+        "rear": 0.6778454671572471
+      },
+      "watertight": true,
+      "components": 1
+    },
+    "after": {
+      "triangles": 4998,
+      "first_hit_distance": {
+        "intake_194": 1.0484582301513865,
+        "intake_258": 1.0504830341997242,
+        "outlet_199": 0.8075389629282888,
+        "outlet_256": 0.8077102033161023
+      },
+      "photo_iou": 0.7264651397777029,
+      "ortho_iou": {
+        "top": 0.9742131807380825,
+        "left": 0.789072493277991,
+        "front": 0.6645165143642119,
+        "rear": 0.6776645153507449
+      },
+      "watertight": true,
+      "components": 1
+    }
+  },
+  "added_depth_scene_units": {
+    "intake_194": 0.14982598358429633,
+    "intake_258": 0.14941015750593134,
+    "outlet_199": 0.266046910027427,
+    "outlet_256": 0.265501015188085
+  },
+  "matching_wing_triangles": 874,
+  "wing_probes": 58,
+  "max_wing_thickness_delta": 0.0
+}

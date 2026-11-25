@@ -1,0 +1,58 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>stack3 렌더러 비교 캡처</title>
+<body><script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { readStackBundle } from '@stack3/core';
+import { createAssetObject, setPreviewLighting } from '@stack3/three';
+import { CpuPreview } from '../../../../apps/viewer/src/cpu-preview';
+import { decodePng } from '../../../../apps/viewer/src/png';
+
+window.capture = async () => {
+  const cal = await (await fetch('../inputs/camera.json')).json();
+  const [width,height] = cal.resolution;
+  const [, , , scale, cx, cy] = cal.parameters;
+  const [right,up,back] = cal.basis.map(([x,y,z]) => new THREE.Vector3(x,z,-y));
+  const camera = new THREE.OrthographicCamera(-width/2/scale,width/2/scale,height/2/scale,-height/2/scale,.01,100);
+  camera.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(right,up,back));
+  camera.position.copy(back).multiplyScalar(12).addScaledVector(right,(width/2-cx)/scale).addScaledVector(up,(cy-height/2)/scale);
+  const model=(await new GLTFLoader().loadAsync('../models/section-loft.glb')).scene;
+  model.traverse(obj => {
+    if (obj.isMesh) obj.material=new THREE.MeshBasicMaterial({map:obj.material.map,side:THREE.FrontSide});
+  });
+  setPreviewLighting(model,true);
+  const scene=new THREE.Scene();
+  const light=new THREE.DirectionalLight(0xffffff,1.5);
+  light.position.set(2,3,2);
+  scene.add(model,light,new THREE.AmbientLight(0xffffff,.85));
+  const gl=new THREE.WebGLRenderer({alpha:true,antialias:true,preserveDrawingBuffer:true});
+  gl.setSize(width,height);
+  gl.render(scene,camera);
+  const shots={webgl:gl.domElement.toDataURL()};
+  const cpu=new CpuPreview();
+  Object.assign(cpu.canvas.style,{width:width+'px',height:height+'px'});
+  document.body.append(cpu.canvas);
+  // Save the exact RGBA frame passed to Canvas before the diagnostic viewer backdrop.
+  const ctx=cpu.canvas.getContext('2d');
+  const put=ctx.putImageData.bind(ctx);
+  const transparent=document.createElement('canvas');
+  ctx.putImageData=(data,x,y) => {
+    transparent.width=data.width;
+    transparent.height=data.height;
+    transparent.getContext('2d').putImageData(data,x,y);
+    return put(data,x,y);
+  };
+  cpu.render(model,camera,true,false,0,true,{detailNormals:true,specularAA:true,subpixelAA:true});
+  shots.cpu=transparent.toDataURL();
+  scene.remove(model);
+  for (const folder of ['stack','section-stack']) {
+    const manifest=await (await fetch('../'+folder+'/stack.json')).json();
+    const rgba=await decodePng(await (await fetch('../'+folder+'/stack.png')).blob());
+    const slices=createAssetObject(readStackBundle(manifest,rgba));
+    scene.add(slices);
+    gl.render(scene,camera);
+    shots[folder]=gl.domElement.toDataURL();
+    scene.remove(slices);
+  }
+  return shots;
+};
+</script></body></html>

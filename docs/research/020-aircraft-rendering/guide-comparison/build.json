@@ -1,0 +1,24 @@
+{
+  "off": {
+    "triangles": 3600,
+    "occupied_cells": 143681,
+    "size": [
+      4.703259005145798,
+      6.0,
+      1.8010291595197256
+    ],
+    "components_before_cleanup": 1,
+    "mesh_volume": 3.5821942169015615
+  },
+  "on": {
+    "triangles": 3600,
+    "occupied_cells": 114740,
+    "size": [
+      4.703259005145798,
+      6.0,
+      1.8010291595197256
+    ],
+    "components_before_cleanup": 1,
+    "mesh_volume": 2.864947271783348
+  }
+}

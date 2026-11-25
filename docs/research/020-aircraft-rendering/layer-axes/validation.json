@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0-dev.3.10",
+  "models": {
+    "voxel.glb": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "x72.glb": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "xy144.glb": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "xy72.glb": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "xyz216.glb": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "xyz72.glb": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "y72.glb": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "z72.glb": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "zx72.glb": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "zy72.glb": {
+      "errors": 0,
+      "warnings": 0
+    }
+  }
+}

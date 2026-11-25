@@ -1,0 +1,30 @@
+{
+  "aircraft.glb": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "models/canard.glb": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "models/canopy.glb": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "models/fin.glb": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "models/fuselage.glb": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "models/nacelle.glb": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "models/wing.glb": {
+    "errors": 0,
+    "warnings": 0
+  }
+}

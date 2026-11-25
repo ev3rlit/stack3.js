@@ -1,0 +1,9 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>항공기 단면 방향 비교</title>
+<style>
+:root{color-scheme:dark;font:15px system-ui,sans-serif;background:#22272c;color:#eee}body{margin:0}header{padding:16px 20px;display:flex;align-items:center;flex-wrap:wrap;gap:12px;background:#14191d}h1{font-size:17px;margin:0 12px 0 0}select{font:inherit;padding:5px;max-width:100%}canvas{display:block;width:100%;height:calc(100dvh - 74px);object-fit:contain;touch-action:none}label{display:flex;align-items:center;gap:6px}
+</style><header><h1>항공기 단면 방향 비교</h1>
+<label>단면 <select id="method"></select></label>
+<label>표현 <select id="stage"><option value="stack">스프라이트</option><option value="mesh">Marching Cubes 메시</option><option value="voxel">기준 복셀 외피</option></select></label>
+<label>카메라 <select id="view"><option value="photo">사진 시점</option><option value="front">정면</option><option value="side">측면</option><option value="top">위</option></select></label>
+</header><canvas id="canvas"></canvas><script type="module" src="./viewer.js"></script></html>

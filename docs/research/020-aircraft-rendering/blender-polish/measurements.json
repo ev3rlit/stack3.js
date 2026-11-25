@@ -1,0 +1,52 @@
+{
+  "source": {
+    "triangles": 13740,
+    "wing_thickness": 0.12712812423706055,
+    "connected": [
+      "Canard_L",
+      "Canard_R",
+      "Canopy",
+      "Fin_L",
+      "Fin_R",
+      "Fuselage",
+      "Nacelle_L",
+      "Nacelle_R",
+      "Wing_L",
+      "Wing_R"
+    ],
+    "photo_iou": 0.7082729601595011,
+    "outboard_leading_edge_median_forward_px": 5.0,
+    "ortho_iou": {
+      "top": 0.9113502586360663,
+      "left": 0.7338518769022658,
+      "front": 0.608798914272789,
+      "rear": 0.6753790784117057
+    },
+    "mean_ortho_iou": 0.7323450320557068
+  },
+  "studio": {
+    "triangles": 9812,
+    "wing_thickness": 0.12712860107421875,
+    "connected": [
+      "Canard_L",
+      "Canard_R",
+      "Canopy",
+      "Fin_L",
+      "Fin_R",
+      "Fuselage",
+      "Nacelle_L",
+      "Nacelle_R",
+      "Wing_L",
+      "Wing_R"
+    ],
+    "photo_iou": 0.7114355584610542,
+    "outboard_leading_edge_median_forward_px": -1.0,
+    "ortho_iou": {
+      "top": 0.9429167319678357,
+      "left": 0.7155111541177394,
+      "front": 0.6633282942806752,
+      "rear": 0.6512123300545078
+    },
+    "mean_ortho_iou": 0.7432421276051895
+  }
+}

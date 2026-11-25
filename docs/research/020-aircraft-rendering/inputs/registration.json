@@ -1,0 +1,55 @@
+{
+  "size_pixels": [
+    457,
+    583,
+    175
+  ],
+  "views": {
+    "top": "top.png",
+    "left": "left.png",
+    "front": "front.png",
+    "rear": "rear.png"
+  },
+  "registration": {
+    "top": {
+      "source_bbox": [
+        33,
+        82,
+        457,
+        583
+      ],
+      "scale": 1.0,
+      "y_offset": 0
+    },
+    "left": {
+      "source_bbox": [
+        456,
+        256,
+        635,
+        149
+      ],
+      "scale": 0.9181102362204724,
+      "y_offset": 6
+    },
+    "front": {
+      "source_bbox": [
+        1146,
+        255,
+        474,
+        164
+      ],
+      "scale": 0.9641350210970464,
+      "y_offset": 17
+    },
+    "rear": {
+      "source_bbox": [
+        1675,
+        257,
+        470,
+        150
+      ],
+      "scale": 0.9723404255319149,
+      "y_offset": 15
+    }
+  }
+}

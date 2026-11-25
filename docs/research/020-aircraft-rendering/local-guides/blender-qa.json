@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "pass": true,
+  "errors": [],
+  "warnings": [
+    "Section-guided airframe: 2 zero-area UV faces",
+    "Section-guided airframe: duplicate verts=287 loose verts=0",
+    "asset lowest point z=0.2963 (not resting on ground plane z=0)"
+  ],
+  "ground_z": 0.2963,
+  "zfighting": [],
+  "floating": [],
+  "back_to_back": [],
+  "enclosed": [],
+  "objects": {
+    "Section-guided airframe": {
+      "verts": 2788,
+      "faces": 4998,
+      "tris": 4998,
+      "ngons": 0,
+      "boundary_edges": 574,
+      "nonmanifold_edges": 0,
+      "wire_edges": 0,
+      "loose_verts": 0,
+      "degenerate_faces": 0,
+      "zero_length_edges": 0,
+      "inconsistent_normals_edges": 0,
+      "duplicate_verts": 287,
+      "islands": 5,
+      "inside_out_islands": 0,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "materials": 4,
+      "uv_maps": 1,
+      "uv_oob_pct": 0.0,
+      "uv_zero_area_faces": 2,
+      "uv_overlap_pct": 2.98,
+      "uv_coverage_pct": 51.5
+    }
+  }
+}
