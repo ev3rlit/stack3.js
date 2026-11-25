@@ -3,8 +3,9 @@ import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, extname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { PNG } from 'pngjs';
-import { buildFromPreparedViews } from './grid-build';
-import { DEFAULT_LAYERS, DIRECTIONS, encodeGlb, encodeStack, inspectViews, parseLayout, prepareViews, reconstructionDimensions, readPngSize, respaceStack,
+import { loadStack } from './stack-input';
+import { buildFromPreparedViews, checkGridMemory } from './grid-build';
+import { DEFAULT_LAYERS, DIRECTIONS, encodeGlb, encodeStack, meshFromStack, inspectViews, parseLayout, prepareViews, reconstructionDimensions, readPngSize, respaceStack,
   splitAtlas, type Direction, type Raster, type Settings, type ViewSet } from '@stack3/core';
 import { buildCacheKey, readBuildCache, writeBuildCache, type BuildOutput } from './build-cache';
 
@@ -13,7 +14,11 @@ const HELP = `Usage: stack3 <verb> <input> [options]
   example <name>         Copy future-tank or traffic-cone into the current directory
   inspect <input>        Check mapped directions and fitted image sizes
   build <input>          Build an asset and save it to --output
-  view <directory>       Open a stack bundle in the local viewer (--no-open to print the URL only)
+  mesh <stack-directory> Extract a surface from saved stack.png + stack.json (--output mesh.glb)
+                        --mesh-method marching-cubes (default), surface-nets or voxel
+  view <directory>       Open a stack bundle in Blender (use --web for the browser viewer)
+                        --output scene.blend saves a named scene; add --no-open for headless export
+                        --no-open alone prints the web preview URL
   project --help        Edit a level and control its live viewer and playground
 
 Inputs
@@ -108,7 +113,7 @@ async function main() {
       height: { type: 'string' }, pivot: { type: 'string' }, threshold: { type: 'string' },
       'texture-projection': { type: 'string' },
       'mesh-method': { type: 'string' }, 'contour-hub': { type: 'boolean' },
-      spacing: { type: 'string' }, profile: { type: 'string' }, 'no-cache': { type: 'boolean' }, 'no-open': { type: 'boolean' },
+      spacing: { type: 'string' }, profile: { type: 'string' }, 'no-cache': { type: 'boolean' }, 'no-open': { type: 'boolean' }, web: { type: 'boolean' },
     },
   });
   if (values.version) {
@@ -122,12 +127,29 @@ async function main() {
     await copyExample(input, values.output);
     return;
   }
-  if (positionals.length !== 2 || (verb !== 'inspect' && verb !== 'build' && verb !== 'view')) {
+  if (positionals.length !== 2 || (verb !== 'inspect' && verb !== 'build' && verb !== 'mesh' && verb !== 'view')) {
     throw new Error('See stack3 --help for available commands and arguments.');
+  }
+  if (verb === 'mesh') {
+    if (!values.output || extname(values.output).toLowerCase() !== '.glb' || Object.keys(values).some(k => k !== 'output' && k !== 'mesh-method')) {
+      throw new Error('Use stack3 mesh <stack-directory> --output <file.glb>. Geometry settings come from the saved stack.');
+    }
+    const method = values['mesh-method'] ?? 'marching-cubes';
+    if (method !== 'marching-cubes' && method !== 'surface-nets' && method !== 'voxel') {
+      throw new Error('Stack mesh methods: marching-cubes, surface-nets, voxel.');
+    }
+    const { stack } = await loadStack(resolve(input));
+    checkGridMemory(stack.width, stack.depth, stack.layers, 'mesh');
+    const bytes = encodeGlb(meshFromStack(stack, method));
+    const output = resolve(values.output);
+    await mkdir(dirname(output), { recursive: true });
+    await writeFile(output, bytes);
+    console.log(`Meshed ${stack.layers} saved layers with ${method} into ${output}`);
+    return;
   }
   if (verb === 'view') {
     const { viewStack } = await import('./view');
-    await viewStack(resolve(input), !values['no-open']);
+    await viewStack(resolve(input), !values['no-open'], values.web ?? false, values.output);
     return;
   }
   const threshold = values.threshold === undefined ? 238 : Number(values.threshold);

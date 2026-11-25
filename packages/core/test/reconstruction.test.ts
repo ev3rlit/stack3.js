@@ -202,3 +202,15 @@ test('stacks beyond the old layer, XY and cell ceilings round-trip through PNG a
   assert.throws(() => readStackPngSize(header, bundle.manifest), /manifest/);
   assert.deepEqual(readStackPngSize(header, { ...bundle.manifest, layers: 500 }), { width: stack.texture.width, height });
 });
+
+test('Surface Nets has finite normals for every binary corner configuration', async () => {
+  const { extractSurfaceNets } = await import('../src/surface');
+  for (let mask = 1; mask < 256; mask++) {
+    const volume = Uint8Array.from({ length: 8 }, (_, i) => (mask >> i) & 1);
+    const { gradients } = extractSurfaceNets(volume, 2, 2, 2);
+    for (let i = 0; i < gradients.length; i += 3) {
+      const length = Math.hypot(gradients[i], gradients[i + 1], gradients[i + 2]);
+      assert.ok(Number.isFinite(length) && length > 1e-10, String(mask));
+    }
+  }
+});

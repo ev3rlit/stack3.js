@@ -30,8 +30,7 @@ function regularizeDepth(occupancy: Uint8Array, shape: [number, number, number],
   return current;
 }
 
-export function extractSurface(volume: Uint8Array, width: number, depth: number, layers: number,
-  worldSize?: [number, number, number]) {
+function paddedOccupancy(volume: Uint8Array, width: number, depth: number, layers: number) {
   const nx = width + 2, ny = depth + 2, nz = layers + 2;
   const plane = nx * ny, count = plane * nz;
   const occupancy = new Uint8Array(count);
@@ -39,6 +38,12 @@ export function extractSurface(volume: Uint8Array, width: number, depth: number,
     const start = (z * depth + y) * width;
     occupancy.set(volume.subarray(start, start + width), (z + 1) * plane + (y + 1) * nx + 1);
   }
+  return { nx, ny, nz, plane, count, occupancy };
+}
+
+export function extractSurface(volume: Uint8Array, width: number, depth: number, layers: number,
+  worldSize?: [number, number, number]) {
+  const { nx, ny, nz, plane, count, occupancy } = paddedOccupancy(volume, width, depth, layers);
   const field = worldSize
     ? regularizeDepth(occupancy, [nx, ny, nz], [worldSize[0] / width, worldSize[1] / depth, worldSize[2] / layers])
     : new Float32Array(count);
@@ -115,6 +120,70 @@ export function extractVoxelSurface(volume: Uint8Array, width: number, depth: nu
         else indices.push(a, c, b, a, d, c);
       }
     }
+  }
+  return { positions, gradients, indices };
+}
+
+
+/** One dual vertex per mixed cell, placed at its mean edge crossing. The empty border closes outer faces. */
+export function extractSurfaceNets(volume: Uint8Array, width: number, depth: number, layers: number) {
+  const { nx, ny, nz, plane, count, occupancy } = paddedOccupancy(volume, width, depth, layers);
+  const strides = [1, nx, plane];
+  const corners = CORNERS.map(([x, y, z]) => x + nx * y + plane * z);
+  const vertexAt = new Int32Array(count);
+  const positions: number[] = [], gradients: number[] = [], indices: number[] = [];
+
+  function faceNormal(a: number, b: number, c: number) {
+    const ax = positions[b * 3] - positions[a * 3];
+    const ay = positions[b * 3 + 1] - positions[a * 3 + 1];
+    const az = positions[b * 3 + 2] - positions[a * 3 + 2];
+    const bx = positions[c * 3] - positions[a * 3];
+    const by = positions[c * 3 + 1] - positions[a * 3 + 1];
+    const bz = positions[c * 3 + 2] - positions[a * 3 + 2];
+    return [ay * bz - az * by, az * bx - ax * bz, ax * by - ay * bx];
+  }
+  function triangle(a: number, b: number, c: number) {
+    indices.push(a, b, c);
+    const [nx, ny, nz] = faceNormal(a, b, c);
+    for (const i of [a, b, c]) {
+      gradients[i * 3] += nx;
+      gradients[i * 3 + 1] += ny;
+      gradients[i * 3 + 2] += nz;
+    }
+  }
+  for (let z = 0; z < nz - 1; z++) for (let y = 0; y < ny - 1; y++) for (let x = 0; x < nx - 1; x++) {
+    const cell = z * plane + y * nx + x;
+    let mask = 0;
+    for (let i = 0; i < 8; i++) mask |= occupancy[cell + corners[i]] << i;
+    if (mask === 0 || mask === 255) continue;
+    let sx = 0, sy = 0, sz = 0, crossings = 0;
+    for (const [a, b] of EDGES) {
+      if (((mask >> a) & 1) === ((mask >> b) & 1)) continue;
+      sx += (CORNERS[a][0] + CORNERS[b][0]) / 2;
+      sy += (CORNERS[a][1] + CORNERS[b][1]) / 2;
+      sz += (CORNERS[a][2] + CORNERS[b][2]) / 2;
+      crossings++;
+    }
+    const a = positions.length / 3;
+    vertexAt[cell] = a;
+    positions.push(x - .5 + sx / crossings, y - .5 + sy / crossings, z - .5 + sz / crossings);
+    gradients.push(0, 0, 0);
+    // The four cells around each crossing edge have already been visited in scan order.
+    for (let axis = 0; axis < 3; axis++) {
+      if (occupancy[cell] === occupancy[cell + strides[axis]]) continue;
+      const u = strides[(axis + 1) % 3], v = strides[(axis + 2) % 3];
+      const b = vertexAt[cell - u], c = vertexAt[cell - u - v], d = vertexAt[cell - v];
+      if (occupancy[cell]) { triangle(a, b, c); triangle(a, c, d); }
+      else { triangle(a, d, c); triangle(a, c, b); }
+    }
+  }
+  // Alternating inside/outside corners can cancel the weighted normal at a saddle.
+  // Use a real incident face normal for these vertices so exported normals stay valid.
+  for (let i = 0; i < indices.length; i++) {
+    const p = indices[i] * 3;
+    if (Math.abs(gradients[p]) + Math.abs(gradients[p + 1]) + Math.abs(gradients[p + 2]) > 1e-10) continue;
+    const start = i - i % 3;
+    [gradients[p], gradients[p + 1], gradients[p + 2]] = faceNormal(indices[start], indices[start + 1], indices[start + 2]);
   }
   return { positions, gradients, indices };
 }

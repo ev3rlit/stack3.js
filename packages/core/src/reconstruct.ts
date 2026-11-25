@@ -2,7 +2,7 @@ import { DEFAULT_LAYERS, samplingGrid } from './sampling';
 import { projectUpperContour, type TextureProjection } from './texture-projection';
 import { bleedEdges, extrudeContours } from './contour';
 import { frontAccentDecals, inferAccentViews, inferSurfaceDepth } from './atlas-comparison';
-import { extractSurface, extractVoxelSurface } from './surface';
+import { extractSurface, extractSurfaceNets, extractVoxelSurface } from './surface';
 import { DIRECTIONS, prepareViews, type Direction, type Raster, type ViewSet } from './views';
 
 type Vec3 = [number, number, number];
@@ -194,10 +194,13 @@ function textureAtlas(views: ViewSet, accentViews: ViewSet = {}, bleed = false) 
 type ComparisonMode = 'rgb' | 'id' | 'depth';
 export type ComparisonMesh = MeshData & { frontAccents?: MeshData };
 
-function makeMesh(g: Grid, views: ViewSet, mode: ComparisonMode = 'rgb'): ComparisonMesh {
+export type StackMeshMethod = 'marching-cubes' | 'surface-nets' | 'voxel';
+
+function makeMesh(g: Grid, views: ViewSet, mode: ComparisonMode = 'rgb', method: StackMeshMethod = 'marching-cubes'): ComparisonMesh {
   const { width, depth, layers, size, pivot, volume } = g;
   // The depth stage creates a new surface and normals from a continuous field.
-  const surface = extractSurface(volume, width, depth, layers, mode === 'depth' ? size : undefined);
+  const extract = { 'marching-cubes': extractSurface, 'surface-nets': extractSurfaceNets, voxel: extractVoxelSurface }[method];
+  const surface = extract(volume, width, depth, layers, mode === 'depth' ? size : undefined);
   if (!surface.indices.length && mode === 'depth') return makeMesh(g, views, 'id');
   const roof = new Int32Array(width * depth).fill(-1);
   const floor = new Int32Array(width * depth).fill(layers);
@@ -287,7 +290,7 @@ function makeMesh(g: Grid, views: ViewSet, mode: ComparisonMode = 'rgb'): Compar
         const p = original * 3;
         const x = surface.positions[p] / width, y = surface.positions[p + 1] / depth, z = surface.positions[p + 2] / layers;
         // Internal Z-up is mapped to the Y-up coordinate system shared by Three.js and GLB.
-        positions.push((x - .5) * size[0], z * size[2] - pivot[2], (.5 - y) * size[1]);
+        positions.push((x - .5) * size[0] - pivot[0], z * size[2] - pivot[2], (.5 - y) * size[1] + pivot[1]);
         const nx = surface.gradients[p] * width / size[0], ny = surface.gradients[p + 1] * depth / size[1];
         const nz = surface.gradients[p + 2] * layers / size[2];
         const magnitude = Math.hypot(nx, ny, nz) || 1;
@@ -302,6 +305,43 @@ function makeMesh(g: Grid, views: ViewSet, mode: ComparisonMode = 'rgb'): Compar
   return { target: 'mesh', size, pivot, texture, positions: Float32Array.from(positions),
     normals: Float32Array.from(normals), indices: Uint32Array.from(indices), uvs: Float32Array.from(uvs),
     ...(frontDecal?.mesh && { frontAccents: frontDecal.mesh }) };
+}
+
+/** Extract the surface of the persisted slices, including cavities hidden in all projections. */
+export function meshFromStack(stack: StackData, method: StackMeshMethod = 'marching-cubes'): MeshData {
+  const { width, depth, layers, columns, spacing, pivot, texture } = stack;
+  const size: Vec3 = [stack.size[0], stack.size[1], spacing * layers];
+  const volume = new Uint8Array(width * depth * layers);
+  const raster = (w: number, h: number): Raster => ({ width: w, height: h, data: new Uint8Array(w * h * 4) });
+  const views = {
+    top: raster(width, depth), bottom: raster(width, depth),
+    left: raster(depth, layers), right: raster(depth, layers),
+    front: raster(width, layers), rear: raster(width, layers),
+  };
+  // These six color projections texture the mesh. Only the saved alpha determines geometry.
+  function paint(view: Raster, u: number, v: number, src: number, first: boolean) {
+    const dst = (v * view.width + u) * 4;
+    if (first && view.data[dst + 3]) return;
+    for (let channel = 0; channel < 4; channel++) view.data[dst + channel] = texture.data[src + channel];
+  }
+  let occupied = 0;
+  for (let z = 0; z < layers; z++) {
+    const left = z % columns * width, top = Math.floor(z / columns) * depth;
+    for (let y = 0; y < depth; y++) for (let x = 0; x < width; x++) {
+      const src = ((top + y) * texture.width + left + x) * 4;
+      if (texture.data[src + 3] < 128) continue;
+      volume[(z * depth + y) * width + x] = 1;
+      occupied++;
+      paint(views.top, x, y, src, false);
+      paint(views.bottom, x, depth - 1 - y, src, true);
+      paint(views.left, depth - 1 - y, layers - 1 - z, src, true);
+      paint(views.right, y, layers - 1 - z, src, false);
+      paint(views.front, x, layers - 1 - z, src, false);
+      paint(views.rear, width - 1 - x, layers - 1 - z, src, true);
+    }
+  }
+  if (!occupied) throw new Error('The saved stack contains no occupied samples.');
+  return makeMesh({ width, depth, layers, volume, size, pivot, aligned: views }, views, 'rgb', method);
 }
 
 function makeStack(g: Grid, views: ViewSet): StackData {

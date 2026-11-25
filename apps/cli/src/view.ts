@@ -1,18 +1,16 @@
 import { randomUUID } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
 import { serveViewer } from './preview-server';
-import { readStackPngSize, readStackBundle } from '@stack3/core';
-import { PNG } from 'pngjs';
+import { loadStack } from './stack-input';
 
-export async function viewStack(directory: string, open: boolean) {
-  const [metadata, png] = await Promise.all([
-    readFile(join(directory, 'stack.json'), 'utf8'),
-    readFile(join(directory, 'stack.png')),
-  ]);
-  const manifest: unknown = JSON.parse(metadata);
-  readStackPngSize(png, manifest);
-  readStackBundle(manifest, PNG.sync.read(png));
+export async function viewStack(directory: string, open: boolean, web = false, output?: string) {
+  if (web && output) throw new Error('Choose --web or a .blend output file.');
+  const { metadata, png } = await loadStack(directory);
+
+  if (!web && (open || output)) {
+    const { openBlenderStack } = await import('./blender');
+    await openBlenderStack(directory, output, open);
+    return;
+  }
 
   const token = randomUUID();
   const prefix = '/__stack3/' + token + '/';

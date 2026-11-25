@@ -21,7 +21,8 @@ The command grammar is `stack3 <verb> <input> [options]`. Choose the output with
 | `stack3 inspect <input>` | Report mapped and missing directions, image dimensions, and input warnings. |
 | `stack3 build <input> --output <file.glb>` | Reconstruct a mesh and write a GLB. |
 | `stack3 build <input> --format stack --output <directory>` | Reconstruct a runtime stack and write its slice data and metadata. |
-| `stack3 view <directory>` | Open an exported stack in the local viewer. Add `--no-open` to print the URL without opening a tab. |
+| `stack3 mesh <stack-directory> --output <file.glb>` | Reopen a saved stack and extract a surface from slice alpha (≥128). Choose `--mesh-method marching-cubes` (default), `surface-nets` (averaged crossing positions), or `voxel` (exposed cell faces). Surface color comes from projections of the stored RGB. |
+| `stack3 view <directory>` | Open an exported stack in Blender. Use `--output scene.blend` to keep a named scene, or add `--no-open` to that output for headless export. `--web` opens the web viewer; `--no-open` alone still prints its URL. |
 
 For an atlas, supply its reading order with `--layout`.
 
@@ -45,7 +46,7 @@ For individual images, pass a JSON manifest. Paths are relative to that manifest
 
 ```sh
 stack3 build crate-views.json --format stack --output crate-stack/
-stack3 view crate-stack/
+stack3 view crate-stack/ --output crate.blend
 ```
 
 | Build option | Default | Effect |
@@ -142,3 +143,5 @@ Attach **Add Sprite Stack Wheel** to an atlas-backed child node to opt into whee
 Each update receives elapsed seconds `dt`, the playback clock `time`, held physical key codes, current field values, the previous JSON `state`, the node’s authored `position` and `rotation`, and its direct `children` with IDs, names, and positions. Return absolute playback offsets relative to the authored pose in `translation` (XYZ units) and `rotation` (XYZ degrees), optional `childRotations` keyed by direct child ID (local XYZ degrees), and the JSON `state` for the next update. Scripts run only during live Play in each browser tab, inside a JavaScript VM with execution and memory limits. Pause freezes the preview, and Reset discards runtime state. Use **Viewport → Follow object** to track a scripted node with the camera.
 
 The CLI can attach or edit a component with `script.set` (`nodeId`, `id`, and `patch`), detach it with `script.remove`, and select a camera target with `view.set` (`patch.follow`). See `project schema` for the full action shape.
+
+For Blender preview, install Blender and put its executable on your PATH or set `BLENDER_BIN`. The standard macOS app location is detected automatically. The packed scene retains one textured quad per layer. With no output path the preview scene is written to a temporary directory.
