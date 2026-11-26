@@ -1,0 +1,16 @@
+kind: assembly
+whole: locomotive.atlas.yaml
+tolerancePx: 6
+parts:
+  cab:
+    atlas: cab.atlas.yaml
+    mounts:
+      top: # Ends of the broad roof at the start of its front chamfer.
+        - {part: [15, 394], whole: [20, 564]}
+        - {part: [482, 394], whole: [135, 564]}
+      front: # Outer headlight center. Only its height is fitted.
+        - {part: [378, 104], whole: [171, 64]}
+    checks:
+      - {id: rear-roof-eave-tip, view: left, part: [515, 137], whole: [325, 74]}
+      - {id: front-visible-eave, view: front, edge: [[190, 60], [222, 86]]}
+      - {id: rear-mount-behind-long-hood, view: rear, visible: false}

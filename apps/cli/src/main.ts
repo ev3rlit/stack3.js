@@ -13,6 +13,7 @@ import { buildCacheKey, readBuildCache, writeBuildCache, type BuildOutput } from
 const HELP = `Usage: stack3 <verb> <input> [options]
 
   example <name>         Copy future-tank or traffic-cone into the current directory
+  verify -f <manifest>   Measure atlas views and mounts in one JSON report
   inspect <input>        Check mapped directions and fitted image sizes
   build <input>          Build an asset and save it to --output
   mesh <stack-directory> Extract a surface from saved stack.png + stack.json (--output mesh.glb)
@@ -109,6 +110,11 @@ async function copyExample(name: string, output?: string) {
 }
 
 async function main() {
+  if (process.argv[2] === 'verify') {
+    const { verifyCommand } = await import('./verify-command');
+    await verifyCommand(process.argv.slice(3));
+    return;
+  }
   if (process.argv[2] === 'project') {
     const { projectCommand } = await import('./project-command');
     await projectCommand(process.argv.slice(3));

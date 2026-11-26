@@ -1,0 +1,96 @@
+{
+  "kind": "assembly",
+  "tolerancePx": 6.0,
+  "results": {
+    "cab": {
+      "status": "measured",
+      "transform": {
+        "scale": 0.451839773687209,
+        "offset": {
+          "x": 1.1433510795041557,
+          "y": 848.7161856865017,
+          "z": 117.61960984617801
+        }
+      },
+      "fit": [
+        {
+          "view": "top",
+          "errorPx": 0.0,
+          "predicted": [
+            20.0,
+            564.0
+          ],
+          "whole": [
+            20,
+            564
+          ]
+        },
+        {
+          "view": "top",
+          "errorPx": 0.0,
+          "predicted": [
+            135.0,
+            564.0
+          ],
+          "whole": [
+            135,
+            564
+          ]
+        },
+        {
+          "view": "front",
+          "errorPx": 8.008604600907603,
+          "predicted": [
+            179.0086046009076,
+            64.0
+          ],
+          "whole": [
+            171,
+            64
+          ]
+        }
+      ],
+      "heldOut": [
+        {
+          "id": "rear-roof-eave-tip",
+          "view": "left",
+          "status": "measured",
+          "predicted": [
+            413.8319745398111,
+            72.36255230536511
+          ],
+          "observed": [
+            325.0,
+            74.0
+          ],
+          "errorPx": 88.8470648676382
+        },
+        {
+          "id": "front-visible-eave",
+          "view": "front",
+          "status": "measured",
+          "maxEdgeErrorPx": 8.602325439453125,
+          "edge": [
+            [
+              190,
+              60
+            ],
+            [
+              222,
+              86
+            ]
+          ]
+        },
+        {
+          "id": "rear-mount-behind-long-hood",
+          "view": "rear",
+          "status": "occluded"
+        }
+      ],
+      "overlay": "assembly-1.png"
+    }
+  },
+  "overlays": [
+    "assembly-1.png"
+  ]
+}

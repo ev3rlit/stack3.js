@@ -1,0 +1,7 @@
+kind: atlas
+# World unit = one LEFT pixel. TOP scale from the whole locomotive's end-to-end span.
+views:
+  top:   {image: locomotive.png, crop: [65, 10, 155, 700], mask: white, threshold: 195, origin: [77, 16], scale: 0.545}
+  left:  {image: locomotive.png, crop: [270, 250, 1280, 380], mask: white, threshold: 195, origin: [1263, 354], scale: 1}
+  front: {image: locomotive.png, crop: [1585, 250, 250, 380], mask: white, threshold: 195, origin: [125, 361], scale: 1}
+  rear:  {image: locomotive.png, crop: [1890, 250, 255, 380], mask: white, threshold: 195, origin: [127, 361], scale: 1}

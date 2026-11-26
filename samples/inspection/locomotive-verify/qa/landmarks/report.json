@@ -1,0 +1,89 @@
+{
+  "kind": "atlas",
+  "tolerancePx": 6.0,
+  "results": {
+    "landmarks": {
+      "status": "measured",
+      "landmarks": [
+        {
+          "id": "outer-front-auxiliary-lamp",
+          "status": "measured",
+          "hidden": [
+            "rear"
+          ],
+          "unregistered": [],
+          "sharedAxes": [
+            {
+              "inputs": [
+                "top",
+                "left"
+              ],
+              "measuredIn": "left",
+              "sharedErrorPx": {
+                "y": 17.0
+              }
+            },
+            {
+              "inputs": [
+                "top",
+                "front"
+              ],
+              "measuredIn": "front",
+              "sharedErrorPx": {
+                "x": 5.0
+              }
+            },
+            {
+              "inputs": [
+                "left",
+                "front"
+              ],
+              "measuredIn": "front",
+              "sharedErrorPx": {
+                "z": 4.0
+              }
+            }
+          ],
+          "predictions": [
+            {
+              "inputs": [
+                "top",
+                "front"
+              ],
+              "heldOut": "left",
+              "predicted": [
+                93.0,
+                103.0
+              ],
+              "observed": [
+                110.0,
+                107.0
+              ],
+              "errorPx": 17.46424919657298
+            },
+            {
+              "inputs": [
+                "left",
+                "front"
+              ],
+              "heldOut": "top",
+              "predicted": [
+                366.0,
+                453.0
+              ],
+              "observed": [
+                371.0,
+                470.0
+              ],
+              "errorPx": 17.72004514666935
+            }
+          ],
+          "predictionNote": null
+        }
+      ]
+    }
+  },
+  "overlays": [
+    "landmarks.png"
+  ]
+}

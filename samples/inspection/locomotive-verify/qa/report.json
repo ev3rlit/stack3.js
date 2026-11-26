@@ -1,0 +1,5099 @@
+{
+  "kind": "assembly",
+  "tolerancePx": 6.0,
+  "atlases": {
+    "whole": {
+      "kind": "atlas",
+      "tolerancePx": 1.0,
+      "results": {
+        "projections": {
+          "status": "measured",
+          "views": {
+            "top": {
+              "boundarySamples": 3530,
+              "unsupportedSamples": 63,
+              "runs": [
+                {
+                  "minSeparationPx": null,
+                  "contour": 43,
+                  "start": [
+                    83,
+                    15
+                  ],
+                  "end": [
+                    86,
+                    15
+                  ],
+                  "count": 4,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      83,
+                      15
+                    ],
+                    "missingAxis": "z",
+                    "scanlines": {
+                      "left": {
+                        "axis": "y",
+                        "coordinate": -1.8348623853211008,
+                        "intervals": []
+                      },
+                      "front": {
+                        "axis": "x",
+                        "coordinate": 11.009174311926605,
+                        "intervals": [
+                          [
+                            9.5,
+                            314.5
+                          ],
+                          [
+                            318.5,
+                            339.5
+                          ]
+                        ]
+                      },
+                      "rear": {
+                        "axis": "x",
+                        "coordinate": 11.009174311926605,
+                        "intervals": [
+                          [
+                            8.5,
+                            333.5
+                          ],
+                          [
+                            334.5,
+                            336.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 44,
+                  "start": [
+                    71,
+                    15
+                  ],
+                  "end": [
+                    75,
+                    15
+                  ],
+                  "count": 5,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      71,
+                      15
+                    ],
+                    "missingAxis": "z",
+                    "scanlines": {
+                      "left": {
+                        "axis": "y",
+                        "coordinate": -1.8348623853211008,
+                        "intervals": []
+                      },
+                      "front": {
+                        "axis": "x",
+                        "coordinate": -11.009174311926605,
+                        "intervals": [
+                          [
+                            9.5,
+                            313.5
+                          ],
+                          [
+                            320.5,
+                            336.5
+                          ]
+                        ]
+                      },
+                      "rear": {
+                        "axis": "x",
+                        "coordinate": -11.009174311926605,
+                        "intervals": [
+                          [
+                            8.5,
+                            333.5
+                          ],
+                          [
+                            334.5,
+                            336.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 45,
+                  "start": [
+                    47,
+                    15
+                  ],
+                  "end": [
+                    47,
+                    15
+                  ],
+                  "count": 1,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      47,
+                      15
+                    ],
+                    "missingAxis": "z",
+                    "scanlines": {
+                      "left": {
+                        "axis": "y",
+                        "coordinate": -1.8348623853211008,
+                        "intervals": []
+                      },
+                      "front": {
+                        "axis": "x",
+                        "coordinate": -55.04587155963302,
+                        "intervals": [
+                          [
+                            0.5,
+                            138.5
+                          ],
+                          [
+                            149.5,
+                            204.5
+                          ],
+                          [
+                            213.5,
+                            330.5
+                          ]
+                        ]
+                      },
+                      "rear": {
+                        "axis": "x",
+                        "coordinate": -55.04587155963302,
+                        "intervals": [
+                          [
+                            0.5,
+                            233.5
+                          ],
+                          [
+                            239.5,
+                            330.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 45,
+                  "start": [
+                    102,
+                    15
+                  ],
+                  "end": [
+                    53,
+                    15
+                  ],
+                  "count": 53,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      102,
+                      15
+                    ],
+                    "missingAxis": "z",
+                    "scanlines": {
+                      "left": {
+                        "axis": "y",
+                        "coordinate": -1.8348623853211008,
+                        "intervals": []
+                      },
+                      "front": {
+                        "axis": "x",
+                        "coordinate": 45.871559633027516,
+                        "intervals": [
+                          [
+                            9.5,
+                            139.5
+                          ],
+                          [
+                            140.5,
+                            141.5
+                          ],
+                          [
+                            148.5,
+                            301.5
+                          ],
+                          [
+                            306.5,
+                            329.5
+                          ]
+                        ]
+                      },
+                      "rear": {
+                        "axis": "x",
+                        "coordinate": 45.871559633027516,
+                        "intervals": [
+                          [
+                            8.5,
+                            235.5
+                          ],
+                          [
+                            237.5,
+                            329.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                }
+              ]
+            },
+            "left": {
+              "boundarySamples": 4491,
+              "unsupportedSamples": 45,
+              "runs": [
+                {
+                  "minSeparationPx": null,
+                  "contour": 92,
+                  "start": [
+                    25,
+                    278
+                  ],
+                  "end": [
+                    25,
+                    312
+                  ],
+                  "count": 40,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      25,
+                      278
+                    ],
+                    "missingAxis": "x",
+                    "scanlines": {
+                      "top": {
+                        "axis": "y",
+                        "coordinate": 1238.0,
+                        "intervals": []
+                      },
+                      "front": {
+                        "axis": "z",
+                        "coordinate": 76.0,
+                        "intervals": [
+                          [
+                            -106.5,
+                            105.5
+                          ]
+                        ]
+                      },
+                      "rear": {
+                        "axis": "z",
+                        "coordinate": 76.0,
+                        "intervals": [
+                          [
+                            -106.5,
+                            107.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 92,
+                  "start": [
+                    25,
+                    338
+                  ],
+                  "end": [
+                    25,
+                    341
+                  ],
+                  "count": 5,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      25,
+                      338
+                    ],
+                    "missingAxis": "x",
+                    "scanlines": {
+                      "top": {
+                        "axis": "y",
+                        "coordinate": 1238.0,
+                        "intervals": []
+                      },
+                      "front": {
+                        "axis": "z",
+                        "coordinate": 16.0,
+                        "intervals": [
+                          [
+                            -84.5,
+                            84.5
+                          ]
+                        ]
+                      },
+                      "rear": {
+                        "axis": "z",
+                        "coordinate": 16.0,
+                        "intervals": [
+                          [
+                            -85.5,
+                            85.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                }
+              ]
+            },
+            "front": {
+              "boundarySamples": 1458,
+              "unsupportedSamples": 302,
+              "runs": [
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 4,
+                  "start": [
+                    62,
+                    333
+                  ],
+                  "end": [
+                    62,
+                    333
+                  ],
+                  "count": 1,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      62,
+                      333
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -63.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            4.587155963302752
+                          ],
+                          [
+                            10.091743119266054,
+                            1222.9357798165136
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 28.0,
+                        "intervals": [
+                          [
+                            8.5,
+                            1233.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "rear",
+                        "pixel": [
+                          190.0,
+                          333.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 27,
+                  "start": [
+                    79,
+                    31
+                  ],
+                  "end": [
+                    69,
+                    31
+                  ],
+                  "count": 11,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      79,
+                      31
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -46.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            2.7522935779816513
+                          ],
+                          [
+                            10.091743119266054,
+                            1226.6055045871558
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 330.0,
+                        "intervals": []
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": [
+                      {
+                        "view": "rear",
+                        "pixel": [
+                          173.0,
+                          31.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 2.0,
+                  "contour": 27,
+                  "start": [
+                    58,
+                    50
+                  ],
+                  "end": [
+                    56,
+                    51
+                  ],
+                  "count": 3,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      58,
+                      50
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -67.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            4.587155963302752
+                          ],
+                          [
+                            11.926605504587155,
+                            1217.4311926605503
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 311.0,
+                        "intervals": [
+                          [
+                            132.5,
+                            206.5
+                          ],
+                          [
+                            327.5,
+                            387.5
+                          ],
+                          [
+                            395.5,
+                            516.5
+                          ],
+                          [
+                            521.5,
+                            543.5
+                          ],
+                          [
+                            654.5,
+                            1105.5
+                          ],
+                          [
+                            1107.5,
+                            1117.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "rear",
+                        "pixel": [
+                          194.0,
+                          50.0
+                        ],
+                        "gapPx": 2.2360680103302,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 2.0,
+                  "contour": 27,
+                  "start": [
+                    24,
+                    77
+                  ],
+                  "end": [
+                    26,
+                    150
+                  ],
+                  "count": 86,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      15,
+                      85
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -110.0,
+                        "intervals": []
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 276.0,
+                        "intervals": [
+                          [
+                            35.5,
+                            1130.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": [
+                      {
+                        "view": "rear",
+                        "pixel": [
+                          237.0,
+                          85.0
+                        ],
+                        "gapPx": 9.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 27,
+                  "start": [
+                    28,
+                    153
+                  ],
+                  "end": [
+                    28,
+                    160
+                  ],
+                  "count": 8,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      28,
+                      154
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -97.0,
+                        "intervals": [
+                          [
+                            30.275229357798164,
+                            1155.045871559633
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 207.0,
+                        "intervals": [
+                          [
+                            34.5,
+                            1191.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "rear",
+                        "pixel": [
+                          224.0,
+                          154.0
+                        ],
+                        "gapPx": 2.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 27,
+                  "start": [
+                    176,
+                    362
+                  ],
+                  "end": [
+                    178,
+                    362
+                  ],
+                  "count": 3,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      176,
+                      362
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 51.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            2.7522935779816513
+                          ],
+                          [
+                            10.091743119266054,
+                            1224.7706422018348
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": -1.0,
+                        "intervals": []
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                },
+                {
+                  "minSeparationPx": 2.0,
+                  "contour": 27,
+                  "start": [
+                    233,
+                    283
+                  ],
+                  "end": [
+                    234,
+                    282
+                  ],
+                  "count": 2,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      233,
+                      283
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 108.0,
+                        "intervals": [
+                          [
+                            173.39449541284404,
+                            184.40366972477062
+                          ],
+                          [
+                            186.23853211009174,
+                            210.09174311926603
+                          ],
+                          [
+                            241.28440366972475,
+                            254.12844036697246
+                          ],
+                          [
+                            261.46788990825684,
+                            270.64220183486236
+                          ],
+                          [
+                            279.8165137614679,
+                            283.48623853211006
+                          ],
+                          [
+                            285.3211009174312,
+                            294.49541284403665
+                          ],
+                          [
+                            305.5045871559633,
+                            311.0091743119266
+                          ],
+                          [
+                            314.67889908256876,
+                            327.52293577981646
+                          ],
+                          [
+                            336.697247706422,
+                            345.8715596330275
+                          ],
+                          [
+                            349.5412844036697,
+                            404.58715596330273
+                          ],
+                          [
+                            408.2568807339449,
+                            459.6330275229357
+                          ],
+                          [
+                            470.64220183486236,
+                            483.48623853211006
+                          ],
+                          [
+                            487.15596330275224,
+                            507.33944954128435
+                          ],
+                          [
+                            516.5137614678898,
+                            518.3486238532109
+                          ],
+                          [
+                            520.183486238532,
+                            531.1926605504586
+                          ],
+                          [
+                            542.2018348623852,
+                            547.7064220183486
+                          ],
+                          [
+                            553.2110091743119,
+                            562.3853211009174
+                          ],
+                          [
+                            595.4128440366972,
+                            619.2660550458716
+                          ],
+                          [
+                            628.440366972477,
+                            641.2844036697247
+                          ],
+                          [
+                            661.4678899082568,
+                            665.137614678899
+                          ],
+                          [
+                            692.6605504587155,
+                            703.6697247706421
+                          ],
+                          [
+                            712.8440366972477,
+                            723.8532110091743
+                          ],
+                          [
+                            799.0825688073394,
+                            808.2568807339449
+                          ],
+                          [
+                            879.8165137614678,
+                            885.3211009174312
+                          ],
+                          [
+                            920.183486238532,
+                            951.3761467889908
+                          ],
+                          [
+                            964.2201834862385,
+                            995.4128440366972
+                          ],
+                          [
+                            1000.9174311926605,
+                            1004.5871559633027
+                          ],
+                          [
+                            1019.2660550458714,
+                            1028.440366972477
+                          ],
+                          [
+                            1094.4954128440365,
+                            1098.1651376146788
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 78.0,
+                        "intervals": [
+                          [
+                            7.5,
+                            1215.5
+                          ],
+                          [
+                            1216.5,
+                            1232.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "rear",
+                        "pixel": [
+                          19.0,
+                          283.0
+                        ],
+                        "gapPx": 2.2360680103302,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 27,
+                  "start": [
+                    223,
+                    161
+                  ],
+                  "end": [
+                    223,
+                    152
+                  ],
+                  "count": 10,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      223,
+                      160
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 98.0,
+                        "intervals": [
+                          [
+                            30.275229357798164,
+                            1156.880733944954
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 201.0,
+                        "intervals": [
+                          [
+                            36.5,
+                            1191.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "rear",
+                        "pixel": [
+                          29.0,
+                          160.0
+                        ],
+                        "gapPx": 3.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 2.0,
+                  "contour": 27,
+                  "start": [
+                    224,
+                    150
+                  ],
+                  "end": [
+                    225,
+                    75
+                  ],
+                  "count": 88,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      237,
+                      86
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 112.0,
+                        "intervals": []
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 275.0,
+                        "intervals": [
+                          [
+                            33.5,
+                            1130.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": [
+                      {
+                        "view": "rear",
+                        "pixel": [
+                          15.0,
+                          86.0
+                        ],
+                        "gapPx": 12.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 27,
+                  "start": [
+                    194,
+                    51
+                  ],
+                  "end": [
+                    191,
+                    49
+                  ],
+                  "count": 4,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      192,
+                      50
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 67.0,
+                        "intervals": [
+                          [
+                            0.9174311926605504,
+                            4.587155963302752
+                          ],
+                          [
+                            11.926605504587155,
+                            1219.2660550458716
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 311.0,
+                        "intervals": [
+                          [
+                            132.5,
+                            206.5
+                          ],
+                          [
+                            327.5,
+                            387.5
+                          ],
+                          [
+                            395.5,
+                            516.5
+                          ],
+                          [
+                            521.5,
+                            543.5
+                          ],
+                          [
+                            654.5,
+                            1105.5
+                          ],
+                          [
+                            1107.5,
+                            1117.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "rear",
+                        "pixel": [
+                          60.0,
+                          50.0
+                        ],
+                        "gapPx": 2.8284270763397217,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 27,
+                  "start": [
+                    183,
+                    31
+                  ],
+                  "end": [
+                    172,
+                    31
+                  ],
+                  "count": 12,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      183,
+                      31
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 58.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            6.422018348623853
+                          ],
+                          [
+                            10.091743119266054,
+                            1213.761467889908
+                          ],
+                          [
+                            1215.5963302752293,
+                            1222.9357798165136
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 330.0,
+                        "intervals": []
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": [
+                      {
+                        "view": "rear",
+                        "pixel": [
+                          69.0,
+                          31.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 27,
+                  "start": [
+                    167,
+                    31
+                  ],
+                  "end": [
+                    164,
+                    31
+                  ],
+                  "count": 4,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      167,
+                      31
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 42.0,
+                        "intervals": [
+                          [
+                            -2.7522935779816513,
+                            2.7522935779816513
+                          ],
+                          [
+                            10.091743119266054,
+                            1028.440366972477
+                          ],
+                          [
+                            1030.275229357798,
+                            1228.440366972477
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 330.0,
+                        "intervals": []
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": [
+                      {
+                        "view": "rear",
+                        "pixel": [
+                          85.0,
+                          31.0
+                        ],
+                        "gapPx": 1.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 27,
+                  "start": [
+                    158,
+                    31
+                  ],
+                  "end": [
+                    93,
+                    31
+                  ],
+                  "count": 70,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      158,
+                      31
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 33.0,
+                        "intervals": [
+                          [
+                            -2.7522935779816513,
+                            0.9174311926605504
+                          ],
+                          [
+                            8.256880733944953,
+                            1237.6146788990825
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 330.0,
+                        "intervals": []
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                }
+              ]
+            },
+            "rear": {
+              "boundarySamples": 1782,
+              "unsupportedSamples": 524,
+              "runs": [
+                {
+                  "minSeparationPx": 2.0,
+                  "contour": 31,
+                  "start": [
+                    63,
+                    43
+                  ],
+                  "end": [
+                    65,
+                    42
+                  ],
+                  "count": 3,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      64,
+                      42
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 63.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            4.587155963302752
+                          ],
+                          [
+                            10.091743119266054,
+                            1222.9357798165136
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 319.0,
+                        "intervals": [
+                          [
+                            469.5,
+                            509.5
+                          ],
+                          [
+                            655.5,
+                            761.5
+                          ],
+                          [
+                            862.5,
+                            872.5
+                          ],
+                          [
+                            873.5,
+                            882.5
+                          ],
+                          [
+                            925.5,
+                            941.5
+                          ],
+                          [
+                            944.5,
+                            1110.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          188.0,
+                          42.0
+                        ],
+                        "gapPx": 3.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 32,
+                  "start": [
+                    135,
+                    27
+                  ],
+                  "end": [
+                    136,
+                    28
+                  ],
+                  "count": 16,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      135,
+                      27
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -8.0,
+                        "intervals": [
+                          [
+                            -4.587155963302752,
+                            -0.9174311926605504
+                          ],
+                          [
+                            2.7522935779816513,
+                            1033.9449541284403
+                          ],
+                          [
+                            1035.7798165137615,
+                            1233.9449541284403
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 334.0,
+                        "intervals": []
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 33,
+                  "start": [
+                    111,
+                    27
+                  ],
+                  "end": [
+                    112,
+                    28
+                  ],
+                  "count": 18,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      111,
+                      27
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 16.0,
+                        "intervals": [
+                          [
+                            -4.587155963302752,
+                            -0.9174311926605504
+                          ],
+                          [
+                            10.091743119266054,
+                            1033.9449541284403
+                          ],
+                          [
+                            1035.7798165137615,
+                            1232.1100917431193
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 334.0,
+                        "intervals": []
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 34,
+                  "start": [
+                    78,
+                    31
+                  ],
+                  "end": [
+                    71,
+                    31
+                  ],
+                  "count": 8,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      78,
+                      31
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 49.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            2.7522935779816513
+                          ],
+                          [
+                            10.091743119266054,
+                            1026.6055045871558
+                          ],
+                          [
+                            1028.440366972477,
+                            1226.6055045871558
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 330.0,
+                        "intervals": []
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    67,
+                    34
+                  ],
+                  "end": [
+                    67,
+                    34
+                  ],
+                  "count": 1,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      67,
+                      34
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 60.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            4.587155963302752
+                          ],
+                          [
+                            10.091743119266054,
+                            1222.9357798165136
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 327.0,
+                        "intervals": [
+                          [
+                            664.5,
+                            754.5
+                          ],
+                          [
+                            1003.5,
+                            1010.5
+                          ],
+                          [
+                            1055.5,
+                            1060.5
+                          ],
+                          [
+                            1077.5,
+                            1084.5
+                          ],
+                          [
+                            1101.5,
+                            1105.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          185.0,
+                          34.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    66,
+                    39
+                  ],
+                  "end": [
+                    61,
+                    45
+                  ],
+                  "count": 17,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      59,
+                      38
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 68.0,
+                        "intervals": [
+                          [
+                            0.9174311926605504,
+                            4.587155963302752
+                          ],
+                          [
+                            11.926605504587155,
+                            1219.2660550458716
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 323.0,
+                        "intervals": [
+                          [
+                            658.5,
+                            757.5
+                          ],
+                          [
+                            864.5,
+                            868.5
+                          ],
+                          [
+                            929.5,
+                            941.5
+                          ],
+                          [
+                            1000.5,
+                            1013.5
+                          ],
+                          [
+                            1042.5,
+                            1110.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          193.0,
+                          38.0
+                        ],
+                        "gapPx": 8.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    53,
+                    53
+                  ],
+                  "end": [
+                    42,
+                    61
+                  ],
+                  "count": 16,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      48,
+                      53
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 79.0,
+                        "intervals": [
+                          [
+                            6.422018348623853,
+                            19.266055045871557
+                          ],
+                          [
+                            43.11926605504587,
+                            1206.4220183486239
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 308.0,
+                        "intervals": [
+                          [
+                            118.5,
+                            120.5
+                          ],
+                          [
+                            121.5,
+                            221.5
+                          ],
+                          [
+                            323.5,
+                            388.5
+                          ],
+                          [
+                            393.5,
+                            517.5
+                          ],
+                          [
+                            520.5,
+                            546.5
+                          ],
+                          [
+                            549.5,
+                            556.5
+                          ],
+                          [
+                            654.5,
+                            1104.5
+                          ],
+                          [
+                            1108.5,
+                            1113.5
+                          ],
+                          [
+                            1115.5,
+                            1117.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          204.0,
+                          53.0
+                        ],
+                        "gapPx": 4.4721360206604,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 2.0,
+                  "contour": 34,
+                  "start": [
+                    27,
+                    164
+                  ],
+                  "end": [
+                    25,
+                    165
+                  ],
+                  "count": 3,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      26,
+                      164
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 101.0,
+                        "intervals": [
+                          [
+                            70.64220183486238,
+                            189.90825688073394
+                          ],
+                          [
+                            248.62385321100916,
+                            261.46788990825684
+                          ],
+                          [
+                            323.8532110091743,
+                            336.697247706422
+                          ],
+                          [
+                            399.08256880733944,
+                            410.091743119266
+                          ],
+                          [
+                            479.81651376146783,
+                            488.99082568807336
+                          ],
+                          [
+                            558.7155963302752,
+                            567.8899082568807
+                          ],
+                          [
+                            637.6146788990825,
+                            646.7889908256881
+                          ],
+                          [
+                            701.834862385321,
+                            707.3394495412844
+                          ],
+                          [
+                            720.183486238532,
+                            729.3577981651375
+                          ],
+                          [
+                            800.9174311926605,
+                            811.9266055045871
+                          ],
+                          [
+                            881.651376146789,
+                            892.6605504587155
+                          ],
+                          [
+                            907.3394495412844,
+                            1010.091743119266
+                          ],
+                          [
+                            1024.7706422018348,
+                            1037.6146788990825
+                          ],
+                          [
+                            1100.0,
+                            1111.0091743119265
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 197.0,
+                        "intervals": [
+                          [
+                            36.5,
+                            1191.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          226.0,
+                          164.0
+                        ],
+                        "gapPx": 3.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    20,
+                    167
+                  ],
+                  "end": [
+                    16,
+                    278
+                  ],
+                  "count": 114,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      15,
+                      221
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 112.0,
+                        "intervals": []
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 140.0,
+                        "intervals": [
+                          [
+                            0.5,
+                            4.5
+                          ],
+                          [
+                            5.5,
+                            8.5
+                          ],
+                          [
+                            11.5,
+                            15.5
+                          ],
+                          [
+                            28.5,
+                            32.5
+                          ],
+                          [
+                            34.5,
+                            1195.5
+                          ],
+                          [
+                            1200.5,
+                            1205.5
+                          ],
+                          [
+                            1208.5,
+                            1221.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          237.0,
+                          221.0
+                        ],
+                        "gapPx": 3.1622776985168457,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    19,
+                    286
+                  ],
+                  "end": [
+                    19,
+                    295
+                  ],
+                  "count": 10,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      18,
+                      293
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 109.0,
+                        "intervals": [
+                          [
+                            173.39449541284404,
+                            184.40366972477062
+                          ],
+                          [
+                            186.23853211009174,
+                            210.09174311926603
+                          ],
+                          [
+                            241.28440366972475,
+                            254.12844036697246
+                          ],
+                          [
+                            261.46788990825684,
+                            270.64220183486236
+                          ],
+                          [
+                            279.8165137614679,
+                            283.48623853211006
+                          ],
+                          [
+                            285.3211009174312,
+                            294.49541284403665
+                          ],
+                          [
+                            305.5045871559633,
+                            311.0091743119266
+                          ],
+                          [
+                            314.67889908256876,
+                            327.52293577981646
+                          ],
+                          [
+                            336.697247706422,
+                            345.8715596330275
+                          ],
+                          [
+                            349.5412844036697,
+                            404.58715596330273
+                          ],
+                          [
+                            408.2568807339449,
+                            459.6330275229357
+                          ],
+                          [
+                            470.64220183486236,
+                            483.48623853211006
+                          ],
+                          [
+                            487.15596330275224,
+                            507.33944954128435
+                          ],
+                          [
+                            516.5137614678898,
+                            518.3486238532109
+                          ],
+                          [
+                            520.183486238532,
+                            531.1926605504586
+                          ],
+                          [
+                            542.2018348623852,
+                            547.7064220183486
+                          ],
+                          [
+                            553.2110091743119,
+                            562.3853211009174
+                          ],
+                          [
+                            595.4128440366972,
+                            619.2660550458716
+                          ],
+                          [
+                            628.440366972477,
+                            641.2844036697247
+                          ],
+                          [
+                            661.4678899082568,
+                            665.137614678899
+                          ],
+                          [
+                            692.6605504587155,
+                            703.6697247706421
+                          ],
+                          [
+                            712.8440366972477,
+                            723.8532110091743
+                          ],
+                          [
+                            799.0825688073394,
+                            808.2568807339449
+                          ],
+                          [
+                            879.8165137614678,
+                            885.3211009174312
+                          ],
+                          [
+                            920.183486238532,
+                            951.3761467889908
+                          ],
+                          [
+                            964.2201834862385,
+                            995.4128440366972
+                          ],
+                          [
+                            1000.9174311926605,
+                            1004.5871559633027
+                          ],
+                          [
+                            1019.2660550458714,
+                            1028.440366972477
+                          ],
+                          [
+                            1094.4954128440365,
+                            1098.1651376146788
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 68.0,
+                        "intervals": [
+                          [
+                            1.5,
+                            1245.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          234.0,
+                          293.0
+                        ],
+                        "gapPx": 2.2360680103302,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    20,
+                    297
+                  ],
+                  "end": [
+                    20,
+                    297
+                  ],
+                  "count": 1,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      20,
+                      297
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 107.0,
+                        "intervals": [
+                          [
+                            171.55963302752292,
+                            1107.3394495412842
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 64.0,
+                        "intervals": [
+                          [
+                            2.5,
+                            1245.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          232.0,
+                          297.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    21,
+                    299
+                  ],
+                  "end": [
+                    21,
+                    300
+                  ],
+                  "count": 2,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      21,
+                      300
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 106.0,
+                        "intervals": [
+                          [
+                            171.55963302752292,
+                            1107.3394495412842
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 61.0,
+                        "intervals": [
+                          [
+                            4.5,
+                            1245.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          231.0,
+                          300.0
+                        ],
+                        "gapPx": 2.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    22,
+                    315
+                  ],
+                  "end": [
+                    25,
+                    332
+                  ],
+                  "count": 20,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      21,
+                      320
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 106.0,
+                        "intervals": [
+                          [
+                            171.55963302752292,
+                            1107.3394495412842
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 41.0,
+                        "intervals": [
+                          [
+                            7.5,
+                            1237.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          231.0,
+                          320.0
+                        ],
+                        "gapPx": 3.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 34,
+                  "start": [
+                    75,
+                    362
+                  ],
+                  "end": [
+                    77,
+                    362
+                  ],
+                  "count": 3,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      75,
+                      362
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": 52.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            2.7522935779816513
+                          ],
+                          [
+                            10.091743119266054,
+                            1224.7706422018348
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": -1.0,
+                        "intervals": []
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 34,
+                  "start": [
+                    177,
+                    362
+                  ],
+                  "end": [
+                    180,
+                    362
+                  ],
+                  "count": 4,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      177,
+                      362
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -50.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            2.7522935779816513
+                          ],
+                          [
+                            10.091743119266054,
+                            1224.7706422018348
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": -1.0,
+                        "intervals": []
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          75.0,
+                          362.0
+                        ],
+                        "gapPx": 1.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    192,
+                    360
+                  ],
+                  "end": [
+                    192,
+                    360
+                  ],
+                  "count": 1,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      192,
+                      360
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -65.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            4.587155963302752
+                          ],
+                          [
+                            10.091743119266054,
+                            1221.1009174311926
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 1.0,
+                        "intervals": [
+                          [
+                            98.5,
+                            115.5
+                          ],
+                          [
+                            197.5,
+                            214.5
+                          ],
+                          [
+                            298.5,
+                            315.5
+                          ],
+                          [
+                            819.5,
+                            838.5
+                          ],
+                          [
+                            940.5,
+                            959.5
+                          ],
+                          [
+                            1063.5,
+                            1083.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          60.0,
+                          360.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 2.0,
+                  "contour": 34,
+                  "start": [
+                    193,
+                    348
+                  ],
+                  "end": [
+                    193,
+                    348
+                  ],
+                  "count": 1,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      193,
+                      348
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -66.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            4.587155963302752
+                          ],
+                          [
+                            10.091743119266054,
+                            1219.2660550458716
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 13.0,
+                        "intervals": [
+                          [
+                            32.5,
+                            66.5
+                          ],
+                          [
+                            80.5,
+                            133.5
+                          ],
+                          [
+                            179.5,
+                            232.5
+                          ],
+                          [
+                            280.5,
+                            334.5
+                          ],
+                          [
+                            354.5,
+                            367.5
+                          ],
+                          [
+                            763.5,
+                            775.5
+                          ],
+                          [
+                            778.5,
+                            786.5
+                          ],
+                          [
+                            800.5,
+                            856.5
+                          ],
+                          [
+                            866.5,
+                            916.5
+                          ],
+                          [
+                            921.5,
+                            978.5
+                          ],
+                          [
+                            990.5,
+                            1042.5
+                          ],
+                          [
+                            1044.5,
+                            1101.5
+                          ],
+                          [
+                            1116.5,
+                            1155.5
+                          ],
+                          [
+                            1170.5,
+                            1239.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          59.0,
+                          348.0
+                        ],
+                        "gapPx": 2.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    214,
+                    340
+                  ],
+                  "end": [
+                    214,
+                    340
+                  ],
+                  "count": 1,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      214,
+                      340
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -87.0,
+                        "intervals": [
+                          [
+                            19.266055045871557,
+                            26.605504587155963
+                          ],
+                          [
+                            44.95412844036697,
+                            1197.2477064220182
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 21.0,
+                        "intervals": [
+                          [
+                            30.5,
+                            1234.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          38.0,
+                          340.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    217,
+                    338
+                  ],
+                  "end": [
+                    217,
+                    338
+                  ],
+                  "count": 1,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      217,
+                      338
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -90.0,
+                        "intervals": [
+                          [
+                            22.935779816513758,
+                            30.275229357798164
+                          ],
+                          [
+                            44.95412844036697,
+                            1133.0275229357796
+                          ],
+                          [
+                            1153.2110091743118,
+                            1158.715596330275
+                          ],
+                          [
+                            1175.229357798165,
+                            1178.8990825688072
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 23.0,
+                        "intervals": [
+                          [
+                            30.5,
+                            1235.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          35.0,
+                          338.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    220,
+                    336
+                  ],
+                  "end": [
+                    220,
+                    336
+                  ],
+                  "count": 1,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      220,
+                      336
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -93.0,
+                        "intervals": [
+                          [
+                            26.605504587155963,
+                            1156.880733944954
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 25.0,
+                        "intervals": [
+                          [
+                            17.5,
+                            26.5
+                          ],
+                          [
+                            28.5,
+                            1201.5
+                          ],
+                          [
+                            1204.5,
+                            1205.5
+                          ],
+                          [
+                            1207.5,
+                            1209.5
+                          ],
+                          [
+                            1211.5,
+                            1236.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          32.0,
+                          336.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    222,
+                    335
+                  ],
+                  "end": [
+                    223,
+                    334
+                  ],
+                  "count": 2,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      222,
+                      335
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -95.0,
+                        "intervals": [
+                          [
+                            28.44036697247706,
+                            1156.880733944954
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 26.0,
+                        "intervals": [
+                          [
+                            8.5,
+                            1234.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          30.0,
+                          335.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    225,
+                    333
+                  ],
+                  "end": [
+                    225,
+                    333
+                  ],
+                  "count": 1,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      225,
+                      333
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -98.0,
+                        "intervals": [
+                          [
+                            30.275229357798164,
+                            1155.045871559633
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 28.0,
+                        "intervals": [
+                          [
+                            8.5,
+                            1233.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          27.0,
+                          333.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    228,
+                    332
+                  ],
+                  "end": [
+                    234,
+                    296
+                  ],
+                  "count": 41,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      234,
+                      329
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -107.0,
+                        "intervals": [
+                          [
+                            173.39449541284404,
+                            1041.2844036697247
+                          ],
+                          [
+                            1094.4954128440365,
+                            1100.0
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 32.0,
+                        "intervals": [
+                          [
+                            6.5,
+                            1233.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          18.0,
+                          329.0
+                        ],
+                        "gapPx": 4.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    235,
+                    293
+                  ],
+                  "end": [
+                    235,
+                    293
+                  ],
+                  "count": 1,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      235,
+                      293
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -108.0,
+                        "intervals": [
+                          [
+                            177.0642201834862,
+                            178.89908256880733
+                          ],
+                          [
+                            246.78899082568805,
+                            250.45871559633025
+                          ],
+                          [
+                            288.99082568807336,
+                            292.6605504587156
+                          ],
+                          [
+                            320.1834862385321,
+                            325.6880733944954
+                          ],
+                          [
+                            395.4128440366972,
+                            400.9174311926605
+                          ],
+                          [
+                            476.14678899082566,
+                            481.65137614678895
+                          ],
+                          [
+                            523.8532110091743,
+                            529.3577981651375
+                          ],
+                          [
+                            556.880733944954,
+                            562.3853211009174
+                          ],
+                          [
+                            635.7798165137614,
+                            641.2844036697247
+                          ],
+                          [
+                            694.4954128440367,
+                            705.5045871559632
+                          ],
+                          [
+                            722.0183486238532,
+                            723.8532110091743
+                          ],
+                          [
+                            802.7522935779816,
+                            806.4220183486237
+                          ],
+                          [
+                            881.651376146789,
+                            885.3211009174312
+                          ],
+                          [
+                            949.5412844036697,
+                            956.880733944954
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 68.0,
+                        "intervals": [
+                          [
+                            1.5,
+                            1245.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          17.0,
+                          293.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    237,
+                    279
+                  ],
+                  "end": [
+                    232,
+                    167
+                  ],
+                  "count": 117,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      237,
+                      279
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -110.0,
+                        "intervals": []
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 82.0,
+                        "intervals": [
+                          [
+                            0.5,
+                            1214.5
+                          ],
+                          [
+                            1223.5,
+                            1229.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          15.0,
+                          279.0
+                        ],
+                        "gapPx": 1.4142135381698608,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 2.0,
+                  "contour": 34,
+                  "start": [
+                    229,
+                    165
+                  ],
+                  "end": [
+                    226,
+                    163
+                  ],
+                  "count": 5,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      228,
+                      163
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -101.0,
+                        "intervals": [
+                          [
+                            70.64220183486238,
+                            131.1926605504587
+                          ],
+                          [
+                            134.8623853211009,
+                            188.07339449541283
+                          ],
+                          [
+                            248.62385321100916,
+                            257.79816513761466
+                          ],
+                          [
+                            323.8532110091743,
+                            334.8623853211009
+                          ],
+                          [
+                            397.2477064220183,
+                            406.42201834862385
+                          ],
+                          [
+                            477.9816513761468,
+                            487.15596330275224
+                          ],
+                          [
+                            558.7155963302752,
+                            567.8899082568807
+                          ],
+                          [
+                            637.6146788990825,
+                            644.954128440367
+                          ],
+                          [
+                            698.1651376146789,
+                            705.5045871559632
+                          ],
+                          [
+                            720.183486238532,
+                            729.3577981651375
+                          ],
+                          [
+                            802.7522935779816,
+                            810.091743119266
+                          ],
+                          [
+                            883.4862385321101,
+                            890.8256880733944
+                          ],
+                          [
+                            909.1743119266055,
+                            1008.2568807339449
+                          ],
+                          [
+                            1024.7706422018348,
+                            1039.4495412844035
+                          ],
+                          [
+                            1100.0,
+                            1112.8440366972477
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 198.0,
+                        "intervals": [
+                          [
+                            36.5,
+                            1188.5
+                          ],
+                          [
+                            1189.5,
+                            1191.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          24.0,
+                          163.0
+                        ],
+                        "gapPx": 3.605551242828369,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    212,
+                    62
+                  ],
+                  "end": [
+                    202,
+                    53
+                  ],
+                  "count": 15,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      205,
+                      53
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -78.0,
+                        "intervals": [
+                          [
+                            10.091743119266054,
+                            17.431192660550458
+                          ],
+                          [
+                            44.95412844036697,
+                            1204.5871559633026
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 308.0,
+                        "intervals": [
+                          [
+                            118.5,
+                            120.5
+                          ],
+                          [
+                            121.5,
+                            221.5
+                          ],
+                          [
+                            323.5,
+                            388.5
+                          ],
+                          [
+                            393.5,
+                            517.5
+                          ],
+                          [
+                            520.5,
+                            546.5
+                          ],
+                          [
+                            549.5,
+                            556.5
+                          ],
+                          [
+                            654.5,
+                            1104.5
+                          ],
+                          [
+                            1108.5,
+                            1113.5
+                          ],
+                          [
+                            1115.5,
+                            1117.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          47.0,
+                          53.0
+                        ],
+                        "gapPx": 4.242640495300293,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 2.0,
+                  "contour": 34,
+                  "start": [
+                    190,
+                    41
+                  ],
+                  "end": [
+                    191,
+                    41
+                  ],
+                  "count": 2,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      190,
+                      41
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -63.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            4.587155963302752
+                          ],
+                          [
+                            10.091743119266054,
+                            1222.9357798165136
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 320.0,
+                        "intervals": [
+                          [
+                            656.5,
+                            759.5
+                          ],
+                          [
+                            861.5,
+                            872.5
+                          ],
+                          [
+                            926.5,
+                            942.5
+                          ],
+                          [
+                            943.5,
+                            957.5
+                          ],
+                          [
+                            972.5,
+                            1110.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          62.0,
+                          41.0
+                        ],
+                        "gapPx": 2.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    193,
+                    42
+                  ],
+                  "end": [
+                    187,
+                    37
+                  ],
+                  "count": 13,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      196,
+                      40
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -69.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            4.587155963302752
+                          ],
+                          [
+                            11.926605504587155,
+                            1215.5963302752293
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 321.0,
+                        "intervals": [
+                          [
+                            656.5,
+                            758.5
+                          ],
+                          [
+                            861.5,
+                            872.5
+                          ],
+                          [
+                            926.5,
+                            956.5
+                          ],
+                          [
+                            974.5,
+                            976.5
+                          ],
+                          [
+                            978.5,
+                            980.5
+                          ],
+                          [
+                            982.5,
+                            983.5
+                          ],
+                          [
+                            1000.5,
+                            1015.5
+                          ],
+                          [
+                            1016.5,
+                            1110.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          56.0,
+                          40.0
+                        ],
+                        "gapPx": 5.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": 1.4142135381698608,
+                  "contour": 34,
+                  "start": [
+                    186,
+                    35
+                  ],
+                  "end": [
+                    186,
+                    33
+                  ],
+                  "count": 3,
+                  "minScanlineGapPx": 0.0,
+                  "sample": {
+                    "pixel": [
+                      186,
+                      34
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -59.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            4.587155963302752
+                          ],
+                          [
+                            10.091743119266054,
+                            1222.9357798165136
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 327.0,
+                        "intervals": [
+                          [
+                            664.5,
+                            754.5
+                          ],
+                          [
+                            1003.5,
+                            1010.5
+                          ],
+                          [
+                            1055.5,
+                            1060.5
+                          ],
+                          [
+                            1077.5,
+                            1084.5
+                          ],
+                          [
+                            1101.5,
+                            1105.5
+                          ]
+                        ]
+                      }
+                    },
+                    "gapPx": 0.0,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          66.0,
+                          34.0
+                        ],
+                        "gapPx": 2.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 34,
+                  "start": [
+                    183,
+                    31
+                  ],
+                  "end": [
+                    177,
+                    31
+                  ],
+                  "count": 7,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      183,
+                      31
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -56.0,
+                        "intervals": [
+                          [
+                            -0.9174311926605504,
+                            1213.761467889908
+                          ],
+                          [
+                            1215.5963302752293,
+                            1222.9357798165136
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 330.0,
+                        "intervals": []
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": []
+                  }
+                },
+                {
+                  "minSeparationPx": null,
+                  "contour": 34,
+                  "start": [
+                    161,
+                    31
+                  ],
+                  "end": [
+                    92,
+                    31
+                  ],
+                  "count": 76,
+                  "minScanlineGapPx": null,
+                  "sample": {
+                    "pixel": [
+                      161,
+                      31
+                    ],
+                    "missingAxis": "y",
+                    "scanlines": {
+                      "top": {
+                        "axis": "x",
+                        "coordinate": -34.0,
+                        "intervals": [
+                          [
+                            -2.7522935779816513,
+                            0.9174311926605504
+                          ],
+                          [
+                            10.091743119266054,
+                            1136.6972477064219
+                          ],
+                          [
+                            1140.366972477064,
+                            1228.440366972477
+                          ]
+                        ]
+                      },
+                      "left": {
+                        "axis": "z",
+                        "coordinate": 330.0,
+                        "intervals": []
+                      }
+                    },
+                    "gapPx": null,
+                    "opposingView": [
+                      {
+                        "view": "front",
+                        "pixel": [
+                          91.0,
+                          31.0
+                        ],
+                        "gapPx": 1.0,
+                        "reason": "outside silhouette"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "boundarySamples": 11261,
+          "unsupportedSamples": 934,
+          "unsupportedFraction": 0.08294112423408223,
+          "illustrated": {
+            "view": "rear",
+            "pixel": [
+              237,
+              279
+            ],
+            "missingAxis": "y",
+            "scanlines": {
+              "top": {
+                "axis": "x",
+                "coordinate": -110.0,
+                "intervals": []
+              },
+              "left": {
+                "axis": "z",
+                "coordinate": 82.0,
+                "intervals": [
+                  [
+                    0.5,
+                    1214.5
+                  ],
+                  [
+                    1223.5,
+                    1229.5
+                  ]
+                ]
+              }
+            },
+            "gapPx": null,
+            "opposingView": [
+              {
+                "view": "front",
+                "pixel": [
+                  15.0,
+                  279.0
+                ],
+                "gapPx": 1.4142135381698608,
+                "reason": "outside silhouette"
+              }
+            ]
+          }
+        },
+        "landmarks": {
+          "status": "skipped",
+          "reason": "No annotated landmarks"
+        }
+      }
+    },
+    "parts": {
+      "cab": {
+        "kind": "atlas",
+        "tolerancePx": 6.0,
+        "results": {
+          "projections": {
+            "status": "measured",
+            "views": {
+              "top": {
+                "boundarySamples": 2112,
+                "unsupportedSamples": 429,
+                "runs": [
+                  {
+                    "minSeparationPx": null,
+                    "contour": 13,
+                    "start": [
+                      345,
+                      37
+                    ],
+                    "end": [
+                      344,
+                      38
+                    ],
+                    "count": 39,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        345,
+                        37
+                      ],
+                      "missingAxis": "z",
+                      "scanlines": {
+                        "left": {
+                          "axis": "y",
+                          "coordinate": -10.0,
+                          "intervals": []
+                        },
+                        "front": {
+                          "axis": "x",
+                          "coordinate": 96.0,
+                          "intervals": [
+                            [
+                              -1.5,
+                              462.5
+                            ]
+                          ]
+                        },
+                        "rear": {
+                          "axis": "x",
+                          "coordinate": 96.0,
+                          "intervals": [
+                            [
+                              -1.5,
+                              464.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 14,
+                    "start": [
+                      135,
+                      37
+                    ],
+                    "end": [
+                      134,
+                      38
+                    ],
+                    "count": 39,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        135,
+                        37
+                      ],
+                      "missingAxis": "z",
+                      "scanlines": {
+                        "left": {
+                          "axis": "y",
+                          "coordinate": -10.0,
+                          "intervals": []
+                        },
+                        "front": {
+                          "axis": "x",
+                          "coordinate": -114.0,
+                          "intervals": [
+                            [
+                              -1.5,
+                              388.5
+                            ],
+                            [
+                              406.5,
+                              455.5
+                            ]
+                          ]
+                        },
+                        "rear": {
+                          "axis": "x",
+                          "coordinate": -114.0,
+                          "intervals": [
+                            [
+                              -1.5,
+                              457.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 15,
+                    "start": [
+                      404,
+                      46
+                    ],
+                    "end": [
+                      93,
+                      46
+                    ],
+                    "count": 351,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        404,
+                        46
+                      ],
+                      "missingAxis": "z",
+                      "scanlines": {
+                        "left": {
+                          "axis": "y",
+                          "coordinate": -1.0,
+                          "intervals": []
+                        },
+                        "front": {
+                          "axis": "x",
+                          "coordinate": 155.0,
+                          "intervals": [
+                            [
+                              -1.5,
+                              421.5
+                            ]
+                          ]
+                        },
+                        "rear": {
+                          "axis": "x",
+                          "coordinate": 155.0,
+                          "intervals": [
+                            [
+                              -1.5,
+                              424.5
+                            ],
+                            [
+                              427.5,
+                              442.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  }
+                ]
+              },
+              "left": {
+                "boundarySamples": 2214,
+                "unsupportedSamples": 611,
+                "runs": [
+                  {
+                    "minSeparationPx": null,
+                    "contour": 7,
+                    "start": [
+                      64,
+                      201
+                    ],
+                    "end": [
+                      63,
+                      202
+                    ],
+                    "count": 34,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        64,
+                        201
+                      ],
+                      "missingAxis": "x",
+                      "scanlines": {
+                        "top": {
+                          "axis": "y",
+                          "coordinate": 452.0,
+                          "intervals": []
+                        },
+                        "front": {
+                          "axis": "z",
+                          "coordinate": 299.0,
+                          "intervals": [
+                            [
+                              -219.5,
+                              218.5
+                            ]
+                          ]
+                        },
+                        "rear": {
+                          "axis": "z",
+                          "coordinate": 299.0,
+                          "intervals": [
+                            [
+                              -207.5,
+                              207.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 8,
+                    "start": [
+                      66,
+                      191
+                    ],
+                    "end": [
+                      65,
+                      192
+                    ],
+                    "count": 9,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        66,
+                        191
+                      ],
+                      "missingAxis": "x",
+                      "scanlines": {
+                        "top": {
+                          "axis": "y",
+                          "coordinate": 450.0,
+                          "intervals": []
+                        },
+                        "front": {
+                          "axis": "z",
+                          "coordinate": 309.0,
+                          "intervals": [
+                            [
+                              -218.5,
+                              218.5
+                            ]
+                          ]
+                        },
+                        "rear": {
+                          "axis": "z",
+                          "coordinate": 309.0,
+                          "intervals": [
+                            [
+                              -207.5,
+                              207.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 9,
+                    "start": [
+                      74,
+                      173
+                    ],
+                    "end": [
+                      74,
+                      164
+                    ],
+                    "count": 36,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        74,
+                        173
+                      ],
+                      "missingAxis": "x",
+                      "scanlines": {
+                        "top": {
+                          "axis": "y",
+                          "coordinate": 442.0,
+                          "intervals": []
+                        },
+                        "front": {
+                          "axis": "z",
+                          "coordinate": 327.0,
+                          "intervals": [
+                            [
+                              -219.5,
+                              218.5
+                            ]
+                          ]
+                        },
+                        "rear": {
+                          "axis": "z",
+                          "coordinate": 327.0,
+                          "intervals": [
+                            [
+                              -207.5,
+                              207.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 10,
+                    "start": [
+                      59,
+                      104
+                    ],
+                    "end": [
+                      59,
+                      105
+                    ],
+                    "count": 7,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        59,
+                        104
+                      ],
+                      "missingAxis": "x",
+                      "scanlines": {
+                        "top": {
+                          "axis": "y",
+                          "coordinate": 457.0,
+                          "intervals": []
+                        },
+                        "front": {
+                          "axis": "z",
+                          "coordinate": 396.0,
+                          "intervals": [
+                            [
+                              -183.5,
+                              -130.5
+                            ],
+                            [
+                              -128.5,
+                              -127.5
+                            ],
+                            [
+                              -107.5,
+                              102.5
+                            ],
+                            [
+                              127.5,
+                              183.5
+                            ]
+                          ]
+                        },
+                        "rear": {
+                          "axis": "z",
+                          "coordinate": 396.0,
+                          "intervals": [
+                            [
+                              -184.5,
+                              185.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 12,
+                    "start": [
+                      74,
+                      92
+                    ],
+                    "end": [
+                      74,
+                      90
+                    ],
+                    "count": 3,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        74,
+                        92
+                      ],
+                      "missingAxis": "x",
+                      "scanlines": {
+                        "top": {
+                          "axis": "y",
+                          "coordinate": 442.0,
+                          "intervals": []
+                        },
+                        "front": {
+                          "axis": "z",
+                          "coordinate": 408.0,
+                          "intervals": [
+                            [
+                              -170.5,
+                              169.5
+                            ]
+                          ]
+                        },
+                        "rear": {
+                          "axis": "z",
+                          "coordinate": 408.0,
+                          "intervals": [
+                            [
+                              -172.5,
+                              172.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 15,
+                    "start": [
+                      69,
+                      66
+                    ],
+                    "end": [
+                      70,
+                      66
+                    ],
+                    "count": 17,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        69,
+                        66
+                      ],
+                      "missingAxis": "x",
+                      "scanlines": {
+                        "top": {
+                          "axis": "y",
+                          "coordinate": 447.0,
+                          "intervals": []
+                        },
+                        "front": {
+                          "axis": "z",
+                          "coordinate": 434.0,
+                          "intervals": [
+                            [
+                              -137.5,
+                              -63.5
+                            ],
+                            [
+                              -16.5,
+                              11.5
+                            ],
+                            [
+                              59.5,
+                              138.5
+                            ]
+                          ]
+                        },
+                        "rear": {
+                          "axis": "z",
+                          "coordinate": 434.0,
+                          "intervals": [
+                            [
+                              -150.5,
+                              158.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 16,
+                    "start": [
+                      74,
+                      49
+                    ],
+                    "end": [
+                      74,
+                      68
+                    ],
+                    "count": 24,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        74,
+                        49
+                      ],
+                      "missingAxis": "x",
+                      "scanlines": {
+                        "top": {
+                          "axis": "y",
+                          "coordinate": 442.0,
+                          "intervals": []
+                        },
+                        "front": {
+                          "axis": "z",
+                          "coordinate": 451.0,
+                          "intervals": [
+                            [
+                              -136.5,
+                              136.5
+                            ]
+                          ]
+                        },
+                        "rear": {
+                          "axis": "z",
+                          "coordinate": 451.0,
+                          "intervals": [
+                            [
+                              -146.5,
+                              149.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 16,
+                    "start": [
+                      74,
+                      71
+                    ],
+                    "end": [
+                      74,
+                      119
+                    ],
+                    "count": 72,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        74,
+                        71
+                      ],
+                      "missingAxis": "x",
+                      "scanlines": {
+                        "top": {
+                          "axis": "y",
+                          "coordinate": 442.0,
+                          "intervals": []
+                        },
+                        "front": {
+                          "axis": "z",
+                          "coordinate": 429.0,
+                          "intervals": [
+                            [
+                              -139.5,
+                              -62.5
+                            ],
+                            [
+                              -60.5,
+                              -58.5
+                            ],
+                            [
+                              -24.5,
+                              -23.5
+                            ],
+                            [
+                              -17.5,
+                              10.5
+                            ],
+                            [
+                              11.5,
+                              14.5
+                            ],
+                            [
+                              57.5,
+                              140.5
+                            ]
+                          ]
+                        },
+                        "rear": {
+                          "axis": "z",
+                          "coordinate": 429.0,
+                          "intervals": [
+                            [
+                              -151.5,
+                              157.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 16,
+                    "start": [
+                      74,
+                      156
+                    ],
+                    "end": [
+                      74,
+                      500
+                    ],
+                    "count": 409,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        74,
+                        156
+                      ],
+                      "missingAxis": "x",
+                      "scanlines": {
+                        "top": {
+                          "axis": "y",
+                          "coordinate": 442.0,
+                          "intervals": []
+                        },
+                        "front": {
+                          "axis": "z",
+                          "coordinate": 344.0,
+                          "intervals": [
+                            [
+                              -245.5,
+                              -229.5
+                            ],
+                            [
+                              -219.5,
+                              218.5
+                            ],
+                            [
+                              229.5,
+                              244.5
+                            ]
+                          ]
+                        },
+                        "rear": {
+                          "axis": "z",
+                          "coordinate": 344.0,
+                          "intervals": [
+                            [
+                              -230.5,
+                              -225.5
+                            ],
+                            [
+                              -207.5,
+                              207.5
+                            ],
+                            [
+                              225.5,
+                              230.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  }
+                ]
+              },
+              "front": {
+                "boundarySamples": 2300,
+                "unsupportedSamples": 1169,
+                "runs": [
+                  {
+                    "minSeparationPx": 6.4031243324279785,
+                    "contour": 21,
+                    "start": [
+                      170,
+                      38
+                    ],
+                    "end": [
+                      167,
+                      38
+                    ],
+                    "count": 4,
+                    "minScanlineGapPx": 0.0,
+                    "sample": {
+                      "pixel": [
+                        169,
+                        38
+                      ],
+                      "missingAxis": "y",
+                      "scanlines": {
+                        "top": {
+                          "axis": "x",
+                          "coordinate": -92.0,
+                          "intervals": [
+                            [
+                              -13.5,
+                              441.5
+                            ]
+                          ]
+                        },
+                        "left": {
+                          "axis": "z",
+                          "coordinate": 463.0,
+                          "intervals": [
+                            [
+                              104.5,
+                              144.5
+                            ],
+                            [
+                              309.5,
+                              314.5
+                            ],
+                            [
+                              327.5,
+                              329.5
+                            ],
+                            [
+                              335.5,
+                              391.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": 0.0,
+                      "opposingView": [
+                        {
+                          "view": "rear",
+                          "pixel": [
+                            341.0,
+                            38.0
+                          ],
+                          "gapPx": 7.211102485656738,
+                          "reason": "outside silhouette"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 21,
+                    "start": [
+                      26,
+                      149
+                    ],
+                    "end": [
+                      26,
+                      160
+                    ],
+                    "count": 23,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        26,
+                        149
+                      ],
+                      "missingAxis": "y",
+                      "scanlines": {
+                        "top": {
+                          "axis": "x",
+                          "coordinate": -235.0,
+                          "intervals": []
+                        },
+                        "left": {
+                          "axis": "z",
+                          "coordinate": 352.0,
+                          "intervals": [
+                            [
+                              0.5,
+                              438.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": [
+                        {
+                          "view": "rear",
+                          "pixel": [
+                            484.0,
+                            149.0
+                          ],
+                          "gapPx": 3.1622776985168457,
+                          "reason": "outside silhouette"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "minSeparationPx": 6.324555397033691,
+                    "contour": 21,
+                    "start": [
+                      42,
+                      160
+                    ],
+                    "end": [
+                      479,
+                      160
+                    ],
+                    "count": 1112,
+                    "minScanlineGapPx": 0.0,
+                    "sample": {
+                      "pixel": [
+                        51,
+                        502
+                      ],
+                      "missingAxis": "y",
+                      "scanlines": {
+                        "top": {
+                          "axis": "x",
+                          "coordinate": -210.0,
+                          "intervals": [
+                            [
+                              28.5,
+                              383.5
+                            ]
+                          ]
+                        },
+                        "left": {
+                          "axis": "z",
+                          "coordinate": -1.0,
+                          "intervals": []
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": [
+                        {
+                          "view": "rear",
+                          "pixel": [
+                            459.0,
+                            502.0
+                          ],
+                          "gapPx": 8.5440034866333,
+                          "reason": "outside silhouette"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 21,
+                    "start": [
+                      495,
+                      159
+                    ],
+                    "end": [
+                      495,
+                      149
+                    ],
+                    "count": 24,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        495,
+                        159
+                      ],
+                      "missingAxis": "y",
+                      "scanlines": {
+                        "top": {
+                          "axis": "x",
+                          "coordinate": 234.0,
+                          "intervals": []
+                        },
+                        "left": {
+                          "axis": "z",
+                          "coordinate": 342.0,
+                          "intervals": [
+                            [
+                              0.5,
+                              443.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": [
+                        {
+                          "view": "rear",
+                          "pixel": [
+                            15.0,
+                            159.0
+                          ],
+                          "gapPx": 4.242640495300293,
+                          "reason": "outside silhouette"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 21,
+                    "start": [
+                      264,
+                      15
+                    ],
+                    "end": [
+                      259,
+                      15
+                    ],
+                    "count": 6,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        264,
+                        15
+                      ],
+                      "missingAxis": "y",
+                      "scanlines": {
+                        "top": {
+                          "axis": "x",
+                          "coordinate": 3.0,
+                          "intervals": [
+                            [
+                              -3.5,
+                              441.5
+                            ]
+                          ]
+                        },
+                        "left": {
+                          "axis": "z",
+                          "coordinate": 486.0,
+                          "intervals": []
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  }
+                ]
+              },
+              "rear": {
+                "boundarySamples": 1778,
+                "unsupportedSamples": 478,
+                "runs": [
+                  {
+                    "minSeparationPx": 6.324555397033691,
+                    "contour": 3,
+                    "start": [
+                      141,
+                      41
+                    ],
+                    "end": [
+                      141,
+                      41
+                    ],
+                    "count": 1,
+                    "minScanlineGapPx": 0.0,
+                    "sample": {
+                      "pixel": [
+                        141,
+                        41
+                      ],
+                      "missingAxis": "y",
+                      "scanlines": {
+                        "top": {
+                          "axis": "x",
+                          "coordinate": 108.0,
+                          "intervals": [
+                            [
+                              -14.5,
+                              -10.5
+                            ],
+                            [
+                              -4.5,
+                              440.5
+                            ]
+                          ]
+                        },
+                        "left": {
+                          "axis": "z",
+                          "coordinate": 460.0,
+                          "intervals": [
+                            [
+                              106.5,
+                              144.5
+                            ],
+                            [
+                              307.5,
+                              417.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": 0.0,
+                      "opposingView": [
+                        {
+                          "view": "front",
+                          "pixel": [
+                            369.0,
+                            41.0
+                          ],
+                          "gapPx": 6.324555397033691,
+                          "reason": "outside silhouette"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "minSeparationPx": 6.4031243324279785,
+                    "contour": 3,
+                    "start": [
+                      110,
+                      44
+                    ],
+                    "end": [
+                      93,
+                      72
+                    ],
+                    "count": 39,
+                    "minScanlineGapPx": 0.0,
+                    "sample": {
+                      "pixel": [
+                        92,
+                        60
+                      ],
+                      "missingAxis": "y",
+                      "scanlines": {
+                        "top": {
+                          "axis": "x",
+                          "coordinate": 157.0,
+                          "intervals": [
+                            [
+                              -0.5,
+                              440.5
+                            ]
+                          ]
+                        },
+                        "left": {
+                          "axis": "z",
+                          "coordinate": 441.0,
+                          "intervals": [
+                            [
+                              40.5,
+                              445.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": 0.0,
+                      "opposingView": [
+                        {
+                          "view": "front",
+                          "pixel": [
+                            418.0,
+                            60.0
+                          ],
+                          "gapPx": 18.0,
+                          "reason": "outside silhouette"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 3,
+                    "start": [
+                      15,
+                      152
+                    ],
+                    "end": [
+                      15,
+                      153
+                    ],
+                    "count": 2,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        15,
+                        152
+                      ],
+                      "missingAxis": "y",
+                      "scanlines": {
+                        "top": {
+                          "axis": "x",
+                          "coordinate": 234.0,
+                          "intervals": []
+                        },
+                        "left": {
+                          "axis": "z",
+                          "coordinate": 349.0,
+                          "intervals": [
+                            [
+                              0.5,
+                              440.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 3,
+                    "start": [
+                      50,
+                      502
+                    ],
+                    "end": [
+                      447,
+                      502
+                    ],
+                    "count": 398,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        50,
+                        502
+                      ],
+                      "missingAxis": "y",
+                      "scanlines": {
+                        "top": {
+                          "axis": "x",
+                          "coordinate": 199.0,
+                          "intervals": [
+                            [
+                              17.5,
+                              399.5
+                            ]
+                          ]
+                        },
+                        "left": {
+                          "axis": "z",
+                          "coordinate": -1.0,
+                          "intervals": []
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": []
+                    }
+                  },
+                  {
+                    "minSeparationPx": 6.7082037925720215,
+                    "contour": 3,
+                    "start": [
+                      399,
+                      70
+                    ],
+                    "end": [
+                      391,
+                      47
+                    ],
+                    "count": 26,
+                    "minScanlineGapPx": 0.0,
+                    "sample": {
+                      "pixel": [
+                        399,
+                        66
+                      ],
+                      "missingAxis": "y",
+                      "scanlines": {
+                        "top": {
+                          "axis": "x",
+                          "coordinate": -150.0,
+                          "intervals": [
+                            [
+                              -1.5,
+                              440.5
+                            ]
+                          ]
+                        },
+                        "left": {
+                          "axis": "z",
+                          "coordinate": 435.0,
+                          "intervals": [
+                            [
+                              39.5,
+                              433.5
+                            ],
+                            [
+                              438.5,
+                              442.5
+                            ]
+                          ]
+                        }
+                      },
+                      "gapPx": 0.0,
+                      "opposingView": [
+                        {
+                          "view": "front",
+                          "pixel": [
+                            111.0,
+                            66.0
+                          ],
+                          "gapPx": 10.440306663513184,
+                          "reason": "outside silhouette"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "minSeparationPx": null,
+                    "contour": 3,
+                    "start": [
+                      253,
+                      15
+                    ],
+                    "end": [
+                      244,
+                      15
+                    ],
+                    "count": 12,
+                    "minScanlineGapPx": null,
+                    "sample": {
+                      "pixel": [
+                        253,
+                        15
+                      ],
+                      "missingAxis": "y",
+                      "scanlines": {
+                        "top": {
+                          "axis": "x",
+                          "coordinate": -4.0,
+                          "intervals": [
+                            [
+                              -3.5,
+                              441.5
+                            ]
+                          ]
+                        },
+                        "left": {
+                          "axis": "z",
+                          "coordinate": 486.0,
+                          "intervals": []
+                        }
+                      },
+                      "gapPx": null,
+                      "opposingView": [
+                        {
+                          "view": "front",
+                          "pixel": [
+                            257.0,
+                            15.0
+                          ],
+                          "gapPx": 1.4142135381698608,
+                          "reason": "outside silhouette"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "boundarySamples": 8404,
+            "unsupportedSamples": 2687,
+            "unsupportedFraction": 0.31972870061875297,
+            "illustrated": {
+              "view": "front",
+              "pixel": [
+                51,
+                502
+              ],
+              "missingAxis": "y",
+              "scanlines": {
+                "top": {
+                  "axis": "x",
+                  "coordinate": -210.0,
+                  "intervals": [
+                    [
+                      28.5,
+                      383.5
+                    ]
+                  ]
+                },
+                "left": {
+                  "axis": "z",
+                  "coordinate": -1.0,
+                  "intervals": []
+                }
+              },
+              "gapPx": null,
+              "opposingView": [
+                {
+                  "view": "rear",
+                  "pixel": [
+                    459.0,
+                    502.0
+                  ],
+                  "gapPx": 8.5440034866333,
+                  "reason": "outside silhouette"
+                }
+              ]
+            }
+          },
+          "landmarks": {
+            "status": "measured",
+            "landmarks": [
+              {
+                "id": "outer-front-auxiliary-lamp",
+                "status": "measured",
+                "hidden": [
+                  "rear"
+                ],
+                "unregistered": [],
+                "sharedAxes": [
+                  {
+                    "inputs": [
+                      "top",
+                      "left"
+                    ],
+                    "measuredIn": "left",
+                    "sharedErrorPx": {
+                      "y": 17.0
+                    }
+                  },
+                  {
+                    "inputs": [
+                      "top",
+                      "front"
+                    ],
+                    "measuredIn": "front",
+                    "sharedErrorPx": {
+                      "x": 5.0
+                    }
+                  },
+                  {
+                    "inputs": [
+                      "left",
+                      "front"
+                    ],
+                    "measuredIn": "front",
+                    "sharedErrorPx": {
+                      "z": 4.0
+                    }
+                  }
+                ],
+                "predictions": [
+                  {
+                    "inputs": [
+                      "top",
+                      "front"
+                    ],
+                    "heldOut": "left",
+                    "predicted": [
+                      93.0,
+                      103.0
+                    ],
+                    "observed": [
+                      110.0,
+                      107.0
+                    ],
+                    "errorPx": 17.46424919657298
+                  },
+                  {
+                    "inputs": [
+                      "left",
+                      "front"
+                    ],
+                    "heldOut": "top",
+                    "predicted": [
+                      366.0,
+                      453.0
+                    ],
+                    "observed": [
+                      371.0,
+                      470.0
+                    ],
+                    "errorPx": 17.72004514666935
+                  }
+                ],
+                "predictionNote": null
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "results": {
+    "cab": {
+      "status": "measured",
+      "transform": {
+        "scale": 0.451839773687209,
+        "offset": {
+          "x": 1.1433510795041557,
+          "y": 848.7161856865017,
+          "z": 117.61960984617801
+        }
+      },
+      "fit": [
+        {
+          "view": "top",
+          "errorPx": 0.0,
+          "predicted": [
+            20.0,
+            564.0
+          ],
+          "whole": [
+            20,
+            564
+          ]
+        },
+        {
+          "view": "top",
+          "errorPx": 0.0,
+          "predicted": [
+            135.0,
+            564.0
+          ],
+          "whole": [
+            135,
+            564
+          ]
+        },
+        {
+          "view": "front",
+          "errorPx": 8.008604600907603,
+          "predicted": [
+            179.0086046009076,
+            64.0
+          ],
+          "whole": [
+            171,
+            64
+          ]
+        }
+      ],
+      "heldOut": [
+        {
+          "id": "rear-roof-eave-tip",
+          "view": "left",
+          "status": "measured",
+          "predicted": [
+            413.8319745398111,
+            72.36255230536511
+          ],
+          "observed": [
+            325.0,
+            74.0
+          ],
+          "errorPx": 88.8470648676382
+        },
+        {
+          "id": "front-visible-eave",
+          "view": "front",
+          "status": "measured",
+          "maxEdgeErrorPx": 8.602325439453125,
+          "edge": [
+            [
+              190,
+              60
+            ],
+            [
+              222,
+              86
+            ]
+          ]
+        },
+        {
+          "id": "rear-mount-behind-long-hood",
+          "view": "rear",
+          "status": "occluded"
+        }
+      ]
+    }
+  }
+}

@@ -23,7 +23,7 @@ const manifest = {
   description: 'Build 3D meshes and sprite stacks from orthographic atlases.',
   repository: { type: 'git', url: 'git+https://github.com/ev3rlit/stack3.js.git' },
   engines: { node: '>=22.12' }, bin: { stack3: './bin/stack3.mjs' }, dependencies,
-  files: ['bin', 'blender', 'meshing', 'examples', 'viewer/dist', 'THIRD-PARTY-LICENSES.md'],
+  files: ['bin', 'blender', 'meshing', 'verification', 'examples', 'viewer/dist', 'THIRD-PARTY-LICENSES.md'],
 };
 const cli = join(output, 'bin', 'stack3.mjs');
 const [cliBuild] = await Promise.all([
@@ -41,6 +41,7 @@ const [cliBuild] = await Promise.all([
     },
   }),
   writeFile(join(output, 'package.json'), JSON.stringify(manifest, null, 2) + '\n'),
+  cp(join(root, 'apps/cli/verification'), join(output, 'verification'), { recursive: true, filter: path => !path.endsWith('__pycache__') }),
   cp(join(root, 'apps/cli/meshing'), join(output, 'meshing'), { recursive: true, filter: path => !path.endsWith('__pycache__') }),
   copyFile(join(root, 'apps/cli/blender/import_stack.py'), join(output, 'blender/import_stack.py')),
   copyFile(join(root, 'LICENSE'), join(output, 'LICENSE')),

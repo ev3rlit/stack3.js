@@ -1,0 +1,12 @@
+kind: atlas
+tolerancePx: 6
+# Raw generated sheet; local pixel coordinates are relative to each crop.
+# Origin = centerline, rear roof station, bottom sill. Nominal common scale.
+views:
+  top:   {image: cab.png, crop: [45, 105, 500, 515], mask: white, threshold: 195, origin: [249, 47], scale: 1}
+  left:  {image: cab.png, crop: [575, 100, 535, 520], mask: white, threshold: 195, origin: [516, 500], scale: 1}
+  front: {image: cab.png, crop: [1145, 100, 520, 520], mask: white, threshold: 195, origin: [261, 501], scale: 1}
+  rear:  {image: cab.png, crop: [1670, 100, 500, 520], mask: white, threshold: 195, origin: [249, 501], scale: 1}
+landmarks:
+  - id: outer-front-auxiliary-lamp
+    points: {top: [371, 470], front: [378, 104], left: [110, 107], rear: null}
