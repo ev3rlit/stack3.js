@@ -1,0 +1,54 @@
+# yaml-language-server: $schema=../apps/cli/schema/pipeline.schema.json
+version: 1
+values:
+  atlas: ../samples/props/concrete-barrier-4view.png
+  output: ../dist/hard-surface
+  bevelWidth: 0.005
+  lodBudget: 320
+nodes:
+  - id: source
+    type: reconstruct-stack
+    path: '{{ .Values.atlas }}'
+    layout: top,left,front,rear
+    resolution: 48
+    layers: 32
+  - id: preview
+    type: extract-mesh
+    input: source
+    method: surface-nets
+  - id: finished
+    type: extract-mesh
+    input: source
+    method: hermite-dc
+    finish:
+      fitTolerance: 0.012
+      primitives: true
+      bevelWidth: '{{ .Values.bevelWidth }}'
+      bevelSegments: 2
+      dissolveAngle: 0.5
+      aoRadius: 0.1
+  - id: lod
+    type: extract-mesh
+    input: source
+    method: hermite-dc
+    finish:
+      fitTolerance: 0.012
+      primitives: true
+      bevelWidth: '{{ .Values.bevelWidth }}'
+      dissolveAngle: 0.5
+      triangleBudget: '{{ .Values.lodBudget }}'
+      aoRadius: 0.1
+  - id: carrera
+    type: extract-mesh
+    input: source
+    method: signed-distance-dc
+  - { id: preview-glb, type: write-glb, input: preview, path: '{{ .Values.output }}/preview.glb' }
+  - { id: finished-glb, type: write-glb, input: finished, path: '{{ .Values.output }}/finished.glb', lit: true }
+  - { id: lod-glb, type: write-glb, input: lod, path: '{{ .Values.output }}/lod.glb', lit: true }
+  - { id: carrera-glb, type: write-glb, input: carrera, path: '{{ .Values.output }}/carrera.glb' }
+  - id: instances-glb
+    type: write-glb
+    input: lod
+    path: '{{ .Values.output }}/instances.glb'
+    lit: true
+    instances: [[0, 0, 0], [3, 0, 0], [6, 0, 0]]

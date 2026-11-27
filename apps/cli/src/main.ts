@@ -2,20 +2,23 @@ import { constants, existsSync } from 'node:fs';
 import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, extname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
-import { PNG } from 'pngjs';
-import { partMesh, partMethods } from './part-mesh';
+import { readInput } from './atlas-input';
+import { readStackMesh, partMethods, isCoreMeshMethod, isStackMeshMethod } from './part-mesh';
 import { loadStack } from './stack-input';
-import { buildFromPreparedViews, checkGridMemory } from './grid-build';
-import { DEFAULT_LAYERS, DIRECTIONS, encodeGlb, encodeStack, meshFromStack, inspectViews, parseLayout, prepareViews, reconstructionDimensions, readPngSize, respaceStack,
-  splitAtlas, type Direction, type Raster, type Settings, type ViewSet } from '@stack3/core';
+import { buildFromPreparedViews } from './grid-build';
+import { DEFAULT_LAYERS, encodeGlb, encodeStack, inspectViews, prepareViews, reconstructionDimensions, respaceStack,
+  type Settings, type ViewSet } from '@stack3/core';
 import { buildCacheKey, readBuildCache, writeBuildCache, type BuildOutput } from './build-cache';
 
 const HELP = `Usage: stack3 <verb> <input> [options]
 
+  help [topic]           Show command help (pipeline, mesh, or capabilities)
+  capabilities [--json]  List mesh methods, runtime requirements, schemas and example recipes
   example <name>         Copy future-tank or traffic-cone into the current directory
   verify -f <manifest>   Measure atlas views and mounts in one JSON report
   inspect <input>        Check mapped directions and fitted image sizes
   build <input>          Build an asset and save it to --output
+  pipeline --help        Render or run YAML, or export its JSON Schema
   mesh <stack-directory> Extract a surface from saved stack.png + stack.json (--output mesh.glb)
                         --mesh-method marching-cubes (default), surface-nets, voxel
                         or ${partMethods.join(', ')}
@@ -25,7 +28,9 @@ const HELP = `Usage: stack3 <verb> <input> [options]
                         revolve: axis + origin, optional segments (8-512, default 64)
                         path-sweep: path; optional up and profile {outer,holes?} (defaults to first stack section)
                         section-network: sections [{source:"independent",origin,u,v,outer,holes?}], optional tolerance
-                        extended-mc, hermite-dc, mc33, greedy, monotone: no guide
+                        hermite-dc: optional field (.npy SDF) or dexel (.npz crossings and normals)
+                        signed-distance-dc: optional field, outerIterations and innerIterations
+                        extended-mc, mc33, greedy, monotone: no guide
                         New methods use uv or STACK3_PYTHON. See the stack3 skill for guide examples.
   view <directory>       Open a stack bundle in Blender (use --web for the browser viewer)
                         --output scene.blend saves a named scene; add --no-open for headless export
@@ -52,31 +57,6 @@ Build options
   --pivot ground|center  Origin position (default ground)
   --threshold <0–255>    Background threshold for opaque PNGs (default 238)
 `;
-
-async function png(path: string): Promise<Raster> {
-  const bytes = await readFile(path);
-  readPngSize(bytes);
-  const image = PNG.sync.read(bytes);
-  return { width: image.width, height: image.height, data: image.data };
-}
-
-async function readInput(path: string, layout: string | undefined, threshold: number): Promise<ViewSet> {
-  if (extname(path).toLowerCase() === '.png') {
-    if (!layout) throw new Error('A PNG atlas needs an explicit --layout.');
-    return splitAtlas(await png(path), parseLayout(layout), threshold);
-  }
-  if (extname(path).toLowerCase() !== '.json') throw new Error('Choose a PNG atlas or a JSON view manifest.');
-  if (layout) throw new Error('View manifests define their directions in the views field.');
-  const manifest: unknown = JSON.parse(await readFile(path, 'utf8'));
-  const views = manifest && typeof manifest === 'object' && 'views' in manifest ? manifest.views : null;
-  if (!views || typeof views !== 'object' || Array.isArray(views)) throw new Error('The manifest needs a views object.');
-  const entries = Object.entries(views);
-  parseLayout(entries.map(([name]) => name).join(','));
-  return Object.fromEntries(await Promise.all(entries.map(async ([name, file]) => {
-    if (!DIRECTIONS.includes(name as Direction) || typeof file !== 'string' || !file) throw new Error(`Invalid view entry: ${name}`);
-    return [name, await png(resolve(dirname(path), file))];
-  })));
-}
 
 function outputFormat(output: string, format?: string, target?: string): 'glb' | 'stack' {
   if (format !== undefined && format !== 'glb' && format !== 'stack') {
@@ -110,17 +90,36 @@ async function copyExample(name: string, output?: string) {
 }
 
 async function main() {
-  if (process.argv[2] === 'verify') {
-    const { verifyCommand } = await import('./verify-command');
-    await verifyCommand(process.argv.slice(3));
+  const args = process.argv.slice(2);
+  if (args[0] === 'help') {
+    if (args.length === 1) { console.log(HELP); return; }
+    if (args.length !== 2 || !['pipeline', 'mesh', 'capabilities'].includes(args[1])) {
+      throw new Error('Use stack3 help [pipeline|mesh|capabilities].');
+    }
+    args.splice(0, 2, args[1], '--help');
+  }
+  if (args[0] === 'capabilities') {
+    const { capabilitiesCommand } = await import('./capabilities');
+    capabilitiesCommand(args.slice(1));
     return;
   }
-  if (process.argv[2] === 'project') {
+  if (args[0] === 'pipeline') {
+    const { pipelineCommand } = await import('./pipeline');
+    await pipelineCommand(args.slice(1));
+    return;
+  }
+  if (args[0] === 'verify') {
+    const { verifyCommand } = await import('./verify-command');
+    await verifyCommand(args.slice(1));
+    return;
+  }
+  if (args[0] === 'project') {
     const { projectCommand } = await import('./project-command');
-    await projectCommand(process.argv.slice(3));
+    await projectCommand(args.slice(1));
     return;
   }
   const { positionals, values } = parseArgs({
+    args,
     allowPositionals: true,
     options: {
       help: { type: 'boolean', short: 'h' }, version: { type: 'boolean', short: 'v' }, layout: { type: 'string' },
@@ -152,16 +151,14 @@ async function main() {
       throw new Error('Use stack3 mesh <stack-directory> --output <file.glb>. Geometry settings come from the saved stack.');
     }
     const method = values['mesh-method'] ?? 'marching-cubes';
-    const legacy = method === 'marching-cubes' || method === 'surface-nets' || method === 'voxel';
-    if (!legacy && !partMethods.some(name => name === method)) {
+    if (!isStackMeshMethod(method)) {
       throw new Error(`Stack mesh methods: marching-cubes, surface-nets, voxel, ${partMethods.join(', ')}.`);
     }
-    if (legacy && values.guide !== undefined) throw new Error(`${input}: ${method} does not accept --guide.`);
+    if (isCoreMeshMethod(method) && values.guide !== undefined) throw new Error(`${input}: ${method} does not accept --guide.`);
     const { stack } = await loadStack(resolve(input));
-    checkGridMemory(stack.width, stack.depth, stack.layers, 'mesh');
     let bytes: Uint8Array;
     try {
-      bytes = encodeGlb(legacy ? meshFromStack(stack, method) : await partMesh(stack, method, values.guide));
+      bytes = encodeGlb(await readStackMesh(stack, method, values.guide));
     } catch (error) {
       throw new Error(`${input} (${method}): ${(error as Error).message}`);
     }

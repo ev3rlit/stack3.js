@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../schema/pipeline.schema.json
+version: 1
+values:
+  atlas: ./concrete-barrier-4view.png
+  output: ./out/preview.glb
+nodes:
+  - id: source
+    type: reconstruct-stack
+    path: '{{ .Values.atlas }}'
+    layout: top,left,front,rear
+    resolution: 48
+    layers: 32
+  - { id: surface, type: extract-mesh, input: source, method: surface-nets }
+  - { id: export, type: write-glb, input: surface, path: '{{ .Values.output }}' }

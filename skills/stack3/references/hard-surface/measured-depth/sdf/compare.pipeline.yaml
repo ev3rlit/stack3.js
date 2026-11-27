@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../schema/pipeline.schema.json
+version: 1
+values:
+  stack: ./inputs/stack
+  guide: ./sdf.guide.json
+  output: ./out
+nodes:
+  - { id: source, type: load-stack, path: '{{ .Values.stack }}' }
+  - { id: hermite, type: extract-mesh, input: source, method: hermite-dc, guide: '{{ .Values.guide }}' }
+  - { id: hermite-glb, type: write-glb, input: hermite, path: '{{ .Values.output }}/hermite.glb', lit: true }
+  - { id: carrera, type: extract-mesh, input: source, method: signed-distance-dc, guide: '{{ .Values.guide }}' }
+  - { id: carrera-glb, type: write-glb, input: carrera, path: '{{ .Values.output }}/carrera.glb', lit: true }

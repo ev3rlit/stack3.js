@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=../schema/pipeline.schema.json
+version: 1
+includes: [exports.yaml]
+values:
+  stack: ./inputs/stack
+  output: ./out
+  bevelWidth: 0.006
+  lodBudget: 100
+nodes:
+  - { id: source, type: load-stack, path: '{{ .Values.stack }}' }
+  - id: detail
+    type: extract-mesh
+    input: source
+    method: hermite-dc
+    finish:
+      fitTolerance: 0.008
+      primitives: true
+      bevelWidth: '{{ .Values.bevelWidth }}'
+      bevelSegments: 2
+      dissolveAngle: 0.5
+      aoRadius: 0.15
+  - id: lod
+    type: extract-mesh
+    input: source
+    method: hermite-dc
+    finish:
+      fitTolerance: 0.008
+      primitives: true
+      bevelWidth: '{{ .Values.bevelWidth }}'
+      bevelSegments: 2
+      dissolveAngle: 0.5
+      triangleBudget: '{{ .Values.lodBudget }}'
+      aoRadius: 0.15

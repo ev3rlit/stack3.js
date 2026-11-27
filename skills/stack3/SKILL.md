@@ -1,6 +1,6 @@
 ---
 name: stack3
-description: Turn a subject description or reference image into a four-view image atlas, a saved sprite stack, and a 3D surface mesh. Use for part atlases, stack3 reconstruction, Blender review and finishing, and Editor or Playground workflows.
+description: Turn a subject or reference image into a four-view atlas, a saved sprite stack, and a 3D mesh. Use for stack3 CLI discovery, YAML pipelines and schemas, hard-surface fitting and LODs, measured SDF or Triple-Dexel geometry, Blender review, and Editor or Playground workflows.
 ---
 
 # stack3 Sprite Stacks
@@ -23,6 +23,35 @@ Use early Blender work for a concrete upstream dependency, such as checking scal
 Use visual-hull carving from Daniel White’s [Sprite Stacking workflow](https://github.com/danielwh2/sprite-stacking) to write `stack.png` and `stack.json`. For a mesh, reopen the saved bundle (including any edited slices) and extract its surface. Keep the atlas, bundle and mesh paths together per part so the result can be traced back to its images. Stop at the requested stage for atlas-only or sprite-only work.
 
 Use **Blender** by default to view and verify the stack or mesh, assemble named parts at their mounts, and do retopology, materials, lighting and other post-processing. For an editable Blender delivery, pack textures, save a new `.blend`, and reopen it for review. Use Editor/Playground for web-specific controls, physics or CPU/WebGL comparisons.
+
+## Discover and run hard-surface pipelines
+
+Read the installed CLI's capabilities before writing a recipe. Its JSON lists supported method names, guide fields, pipeline nodes, backends and bundled sample paths.
+
+```sh
+stack3 help pipeline
+stack3 capabilities --json
+stack3 pipeline schema > pipeline.schema.json
+stack3 pipeline schema fragment > pipeline-fragment.schema.json
+```
+
+From the repository checkout, use `npm run cli --` in place of `stack3`. Discovery, schema export, and YAML rendering run in Node. Check each mesh extraction and finishing backend in the capabilities response before running the graph.
+
+Use the [grouped hard-surface recipes](references/hard-surface/README.md) for RGB atlas reconstruction, saved-stack finishing and LOD, measured SDF, and Triple-Dexel. The folder includes runnable inputs and both editor schemas. Copy it to a writable directory before running a recipe. Use the root schema for the pipeline and the fragment schema for files listed under `includes`. Render the recipe to review its resolved method, guide, options, and output paths. Run the resolved YAML to create the GLBs.
+
+| Technique | Entry point and evidence |
+| --- | --- |
+| Voxel reconstruction | `reconstruct-stack` uses atlas silhouettes for occupancy. `load-stack` imports existing layers and any edited cavities. Both run in Node. |
+| SDF and normal estimation | `hermite-dc` estimates crossings and normals from occupancy or aligned `guide.field` SDF samples. `signed-distance-dc` runs Carrera DC with estimated or supplied distances. Both use Python. |
+| Dual Contouring and QEF | `hermite-dc` fits mesh vertices to surface crossing planes. `guide.dexel` supplies registered Triple-Dexel crossing positions and outward normals. Leave ambiguous cells to a method such as `mc33` after inspecting what the recovered volume contains. |
+| Geometric feature segmentation and plane fitting | `finish.fitTolerance` groups adjacent faces by normal direction and fits planes with SVD in physical coordinates. |
+| Primitive fitting and boundary stitching | `finish.primitives: true` with `fitTolerance` also tries sphere and cylinder fits. Shared boundary vertices are solved together across fitted patches. Both fitting passes use Python. |
+| Procedural bevel | `finish.bevelWidth` and `bevelSegments` use Blender edge bevel on eligible creases. |
+| Planar dissolve, QEM, and LOD | `finish.dissolveAngle` and `triangleBudget` invoke Blender. Put each triangle budget on a separate extraction branch to export each LOD. |
+| Material reconstruction | Extraction projects the saved stack RGB. Hard-surface Python extraction builds crease-aware area-weighted normals. `finish.aoRadius` uses Blender rays to bake vertex AO. |
+| Runtime packaging | `write-glb` exports in Node. Use `lit` for a lit material, `instances` for GPU instance translations, and `extract-mesh.cache` to reuse processed geometry. |
+
+Inspect the run diagnostics and the exported geometry. A requested stage can retain the preceding mesh when its fitted or edited result fails checks. For a benchmark, keep the input stack and optional measured guide together, use the same grid and camera for each method, and measure apertures, thin spans, and actual triangle counts after export.
 
 ## Choose the atlas boundaries first
 
@@ -132,7 +161,7 @@ For a surface delivery, import `asset.glb` into Blender, verify its geometry and
 
 Keep the saved stack as the common geometry input. Choose a method based on what the part must preserve, even when different parts belong to the same assembly.
 
-Run `stack3 mesh PART_STACK --mesh-method METHOD --output PART.glb`. Add `--guide PART.json` for the fields below. If a saved bundle exists, reuse it directly. The three original methods run in Node. The twelve additional methods use [uv](https://docs.astral.sh/uv/) to cache a Python 3.11–3.13 environment on first use. For an already provisioned or offline environment, set `STACK3_PYTHON` to its interpreter and install `numpy==2.2.6 scipy==1.15.3 scikit-image==0.25.2 shapely==2.1.2`.
+Run `stack3 mesh PART_STACK --mesh-method METHOD --output PART.glb`. Add `--guide PART.json` for the fields below. If a saved bundle exists, reuse it directly. The three base methods run in Node. The part-specific methods use [uv](https://docs.astral.sh/uv/) to cache a Python 3.11–3.13 environment on first use. For an already provisioned or offline environment, set `STACK3_PYTHON` to its interpreter and install `numpy==2.2.6 scipy==1.15.3 scikit-image==0.25.2 shapely==2.1.2`. Add `gpytoolbox==0.3.8` for `signed-distance-dc`.
 
 | Part or goal | CLI method | Guide and inspection |
 | --- | --- | --- |
@@ -141,7 +170,8 @@ Run `stack3 mesh PART_STACK --mesh-method METHOD --output PART.glb`. Add `--guid
 | One continuous thickness interval per column | `heightfield` | Optional `{"axis":"z"}` selects thickness direction. Read the reported count of filled multi-interval columns. |
 | Rounded shell | `smooth-loft` | Optional `{"axis":"y"}`. Shape-preserving cubic interpolation between matched rings. Check input and intermediate sections. |
 | Axisymmetric body | `revolve` | Requires `axis` and `origin`. Optional integer `segments` (8–512, default 64). Check symmetry, poles and the inner meridian. |
-| Housing with creases | `extended-mc`, `hermite-dc` | No guide. Inspect estimated features on smooth stair steps. DC can reject a cell with conflicting sheets. |
+| Housing with creases | `extended-mc`, `hermite-dc` | Use estimated crossing information, or supply `field` or `dexel` to `hermite-dc`. Inspect crease placement and cells with conflicting sheets. |
+| Registered signed distances | `signed-distance-dc` | Optional `field`, `outerIterations` and `innerIterations`. Compare with `hermite-dc` using the same aligned SDF. |
 | Through-hole or ambiguous saddle | `mc33` | No guide. Lewiner MC33 at 0.5 on the padded binary samples. Recheck the entire passage. |
 | Creating, splitting or merging loops | `branch-loft` | Optional `{"axis":"z"}`. Read overlap events. Regions must overlap in adjacent sections to belong to the same branch. |
 | Swept handle or pipe | `path-sweep` | Requires `path`. The first stack section supplies the outer and hole loops. Optional `up` and `profile` (`outer`, optional `holes`) override the initial frame and profile. Use an open path, check curvature and the lumen. |

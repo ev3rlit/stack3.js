@@ -6,7 +6,8 @@
   "dependencies": {
     "@stack3/core": "0.1.0",
     "pngjs": "^7.0.0",
-    "tsx": "^4.20.0"
+    "tsx": "^4.20.0",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
     "@types/pngjs": "^6.0.0"

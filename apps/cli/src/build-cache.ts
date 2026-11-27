@@ -3,7 +3,7 @@ import { mkdir, readdir, readFile, rename, stat, unlink, writeFile } from 'node:
 import { homedir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { deserialize, serialize } from 'node:v8';
-import { DIRECTIONS, type Settings, type ViewSet } from '@stack3/core';
+import { DIRECTIONS, type MeshData, type Settings, type ViewSet } from '@stack3/core';
 
 const version = 'render-data-4';
 const directory = process.env.STACK3_CACHE_DIR
@@ -12,6 +12,14 @@ const directory = process.env.STACK3_CACHE_DIR
 
 export type BuildOutput = { format: 'glb'; bytes: Uint8Array }
   | { format: 'stack'; png: Uint8Array; manifest: string };
+
+type CacheEntry = BuildOutput | { format: 'surface'; mesh: MeshData };
+
+async function readCache(key: string): Promise<CacheEntry | undefined> {
+  try {
+    return deserialize(await readFile(join(directory, key + '.cache')));
+  } catch { /* A missing or unreadable entry is a cache miss. */ }
+}
 
 export function buildCacheKey(views: ViewSet, format: BuildOutput['format'], settings: Settings, spacing: number) {
   const hash = createHash('sha256');
@@ -26,15 +34,18 @@ export function buildCacheKey(views: ViewSet, format: BuildOutput['format'], set
 }
 
 export async function readBuildCache(key: string, format: BuildOutput['format']): Promise<BuildOutput | undefined> {
-  try {
-    const data = deserialize(await readFile(join(directory, key + '.cache'))) as BuildOutput;
-    if (data.format !== format) return;
-    if (data.format === 'glb' ? data.bytes instanceof Uint8Array
-      : data.png instanceof Uint8Array && typeof data.manifest === 'string') return data;
-  } catch { /* A missing or unreadable entry is a cache miss. */ }
+  const data = await readCache(key);
+  if (data?.format !== format) return;
+  if (data.format === 'glb' ? data.bytes instanceof Uint8Array
+    : data.png instanceof Uint8Array && typeof data.manifest === 'string') return data;
 }
 
-export async function writeBuildCache(key: string, output: BuildOutput) {
+export async function readSurfaceCache(key: string) {
+  const data = await readCache(key);
+  if (data?.format === 'surface' && data.mesh?.positions instanceof Float32Array && data.mesh.indices instanceof Uint32Array) return data.mesh;
+}
+
+export async function writeBuildCache(key: string, output: CacheEntry) {
   const temporary = join(directory, randomUUID() + '.tmp');
   try {
     await mkdir(directory, { recursive: true });

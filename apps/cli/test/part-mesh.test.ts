@@ -9,7 +9,7 @@ import { PNG } from 'pngjs';
 
 const cli = fileURLToPath(new URL('../bin/stack3.mjs', import.meta.url));
 
-test('part guides, packed alpha and all twelve extractors through the CLI', t => {
+test('part guides, packed alpha and offline extractors through the CLI', t => {
   const dir = mkdtempSync(join(tmpdir(), 'stack3-guides-'));
   t.after(() => rmSync(dir, { recursive: true, force: true }));
   const meta = { version: 1, atlas: 'stack.png', width: 8, depth: 8, layers: 8, columns: 3,
@@ -40,7 +40,7 @@ test('part guides, packed alpha and all twelve extractors through the CLI', t =>
     revolve: { axis: 'z', origin: [-1,0,0] }, 'extended-mc': undefined, 'hermite-dc': undefined,
     mc33: undefined, 'branch-loft': undefined, 'path-sweep': { path: [[-1,0,-.5],[-1,0,1],[-.5,0,2.4]],
       profile: { outer: [[-1,-1],[1,-1],[1,1],[-1,1]] } }, 'section-network': { sections: [section,other] },
-    greedy: undefined, monotone: undefined,
+    greedy: undefined, monotone: undefined, 'signed-distance-dc': { outerIterations: 1, innerIterations: 3 },
   };
   const help = spawnSync(process.execPath, [cli, 'mesh', '--help'], { encoding: 'utf8' }).stdout;
   for (const [method, guide] of Object.entries(guides)) {
@@ -52,7 +52,38 @@ test('part guides, packed alpha and all twelve extractors through the CLI', t =>
     assert.deepEqual(gltf.nodes[0].extras, { size: meta.size, pivot: meta.pivot });
     assert.ok(gltf.accessors[3].count > 0);
     assert.equal(gltf.images[0].mimeType, 'image/png');
+    if (method === 'signed-distance-dc') {
+      const repeated = run(method, guide);
+      assert.equal(repeated.status, 0, repeated.stderr);
+      assert.deepEqual(readFileSync(join(dir, method+'.glb')), bytes);
+    }
   }
+  const dexelSource = `
+import numpy as np
+import sys
+data = dict(version=np.array(1), grid=np.array([8,8,8]), origin=np.array([-5,-4,-1]), step=np.array([1,1,.5]))
+lower, upper = [1.1,1.2,1.3], [6.8,6.9,6.75]
+for axis, name in enumerate('xyz'):
+    r = np.arange(8)
+    hits = ((r[:,None]>=1)&(r[:,None]<=6)&(r[None,:]>=1)&(r[None,:]<=6)).ravel()
+    data[name+'_offsets'] = np.r_[0,np.cumsum(hits)*2].astype(np.uint32)
+    data[name+'_depth'] = np.tile(np.array([lower[axis],upper[axis]])*data['step'][axis],int(hits.sum()))
+    data[name+'_normals'] = np.tile(np.array([-np.eye(3)[axis],np.eye(3)[axis]]),(int(hits.sum()),1))
+np.savez_compressed(sys.argv[1],**data)
+`;
+  const python = process.env.STACK3_PYTHON;
+  const generate = spawnSync(python || 'uv', [...(python ? [] : ['run', '--no-project', '--with', 'numpy==2.2.6', 'python']),
+    '-c', dexelSource, join(dir, 'box.npz')], { encoding: 'utf8' });
+  assert.equal(generate.status, 0, generate.stderr);
+  const fitted = run('hermite-dc', { dexel: 'box.npz' });
+  assert.equal(fitted.status, 0, fitted.stderr);
+  assert.match(fitted.stderr, /triple-dexel: used 216 measured crossings/);
+  const measured = readFileSync(join(dir, 'hermite-dc.glb'));
+  const measuredGlb = JSON.parse(measured.toString('utf8', 20, 20+measured.readUInt32LE(12)));
+  for (const [field, expected] of [['min', [-3.9, -.35, -2.9]], ['max', [1.8, 2.375, 2.8]]] as const) {
+    expected.forEach((coordinate, i) => assert.ok(Math.abs(measuredGlb.accessors[0][field][i]-coordinate) < 1e-5));
+  }
+  assert.match(run('hermite-dc', { dexel: 'box.npz', field: 'other.npy' }).stderr, /choose either/);
   for (const [method,guide,error] of [
     ['revolve', undefined, /axis and origin/], ['path-sweep', {}, /path requires/],
     ['heightfield', { axis: 'w' }, /axis must/],

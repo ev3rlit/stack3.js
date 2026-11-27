@@ -12,6 +12,8 @@ Invoke `$stack3` with a subject or photo to generate atlas images, build sprite 
 
 See the [Usage prompts](../../README.md#usage) for atlas generation, Playground testing, and export. Read [SKILL.md](SKILL.md) for the full agent workflow.
 
+Use `stack3 capabilities --json` to discover the installed CLI's supported features, backends, and sample paths. The [hard-surface reference folder](references/hard-surface/README.md) bundles runnable YAML recipes and JSON Schemas.
+
 The original [Sprite Stacking skill](https://github.com/danielwh2/sprite-stacking) is the starting reference for the four-view carving workflow.
 
 [Agent skill requirements](../../docs/skill/README.md)

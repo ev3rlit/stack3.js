@@ -53,11 +53,27 @@ function asBytes(data: Float32Array | Uint32Array) {
   return new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
 }
 
-export function encodeGlb(mesh: MeshData) {
+export type GlbOptions = { lit?: boolean; instances?: [number, number, number][] };
+
+export function encodeGlb(mesh: MeshData, { lit, instances }: GlbOptions = {}) {
   const sources = [asBytes(mesh.positions), asBytes(mesh.normals), asBytes(mesh.uvs), asBytes(mesh.indices), encodePng(mesh.texture)];
+  const attributes: Record<string, number> = { POSITION: 0, NORMAL: 1, TEXCOORD_0: 2 };
+  const count = mesh.positions.length / 3;
+  const optionalAccessors: { bufferView: number; componentType: number; count: number; type: string }[] = [];
+  if (mesh.colors) {
+    attributes.COLOR_0 = 4;
+    optionalAccessors.push({ bufferView: sources.length, componentType: 5126, count, type: 'VEC4' });
+    sources.push(asBytes(mesh.colors));
+  }
+  const instanceExtension = 'EXT_mesh_gpu_instancing';
+  const translation = instances?.length ? 4 + optionalAccessors.length : undefined;
+  if (instances?.length) {
+    optionalAccessors.push({ bufferView: sources.length, componentType: 5126, count: instances.length, type: 'VEC3' });
+    sources.push(asBytes(Float32Array.from(instances.flat())));
+  }
   let offset = 0;
   const bufferViews = sources.map((source, index) => {
-    const target = index < 3 ? 34962 : index === 3 ? 34963 : undefined;
+    const target = index === 3 ? 34963 : index === 4 ? undefined : 34962;
     const entry = { buffer: 0, byteOffset: offset, byteLength: source.length, target };
     offset += align(source.length);
     return entry;
@@ -67,13 +83,16 @@ export function encodeGlb(mesh: MeshData) {
     min[i % 3] = Math.min(min[i % 3], mesh.positions[i]);
     max[i % 3] = Math.max(max[i % 3], mesh.positions[i]);
   }
-  const count = mesh.positions.length / 3;
+  const extensions = [...(lit ? [] : ['KHR_materials_unlit']), ...(translation === undefined ? [] : [instanceExtension])];
   const json = padded(encoder.encode(JSON.stringify({
     asset: { version: '2.0', generator: 'stack3.js' },
-    extensionsUsed: ['KHR_materials_unlit'],
-    scene: 0, scenes: [{ nodes: [0] }], nodes: [{ mesh: 0, extras: { size: mesh.size, pivot: mesh.pivot } }],
-    meshes: [{ primitives: [{ attributes: { POSITION: 0, NORMAL: 1, TEXCOORD_0: 2 }, indices: 3, material: 0 }] }],
-    materials: [{ extensions: { KHR_materials_unlit: {} }, pbrMetallicRoughness: { baseColorTexture: { index: 0 } } }],
+    extensionsUsed: extensions.length ? extensions : undefined,
+    extensionsRequired: translation === undefined ? undefined : [instanceExtension],
+    scene: 0, scenes: [{ nodes: [0] }], nodes: [{ mesh: 0, extras: { size: mesh.size, pivot: mesh.pivot },
+      extensions: translation === undefined ? undefined : { [instanceExtension]: { attributes: { TRANSLATION: translation } } } }],
+    meshes: [{ primitives: [{ attributes, indices: 3, material: 0 }] }],
+    materials: [{ extensions: lit ? undefined : { KHR_materials_unlit: {} },
+      pbrMetallicRoughness: { baseColorTexture: { index: 0 }, ...(lit ? { metallicFactor: 0, roughnessFactor: 0.65 } : {}) } }],
     textures: [{ source: 0, sampler: 0 }], samplers: [{ magFilter: mesh.nearestTexture ? 9728 : 9729, minFilter: mesh.nearestTexture ? 9728 : 9729, wrapS: 33071, wrapT: 33071 }],
     images: [{ mimeType: 'image/png', bufferView: 4 }],
     accessors: [
@@ -81,6 +100,7 @@ export function encodeGlb(mesh: MeshData) {
       { bufferView: 1, componentType: 5126, count, type: 'VEC3' },
       { bufferView: 2, componentType: 5126, count, type: 'VEC2' },
       { bufferView: 3, componentType: 5125, count: mesh.indices.length, type: 'SCALAR' },
+      ...optionalAccessors,
     ],
     bufferViews, buffers: [{ byteLength: offset }],
   })), 32);

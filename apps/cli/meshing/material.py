@@ -8,7 +8,7 @@ from geometry import cyclic, unit
 from scipy.ndimage import distance_transform_edt
 
 
-def split_creases(verts, faces, normals):
+def split_creases(faces, normals):
     """Each connected fan below 55 degrees shares a shading normal."""
     from scipy.sparse import coo_matrix
     from scipy.sparse.csgraph import connected_components
@@ -28,10 +28,10 @@ def split_creases(verts, faces, normals):
     graph = coo_matrix((np.ones(len(rows)), (rows, cols)), shape=(faces.size, faces.size))
     _, fan = connected_components(graph, directed=False)
     _, first = np.unique(fan, return_index=True)
-    return verts[faces.ravel()[first]], fan.reshape(-1, 3)
+    return faces.ravel()[first], fan.reshape(-1, 3)
 
 
-def write_mesh(folder, mesh, rgba, step, origin, blocks=False, sharp=False):
+def write_mesh(folder, mesh, rgba, step, origin, blocks=False, sharp=False, occlusion=None):
     verts, faces = mesh
     faces = np.asarray(faces, dtype=np.int32)
     local = (verts * step + origin).astype(np.float32).astype(float)
@@ -40,7 +40,10 @@ def write_mesh(folder, mesh, rgba, step, origin, blocks=False, sharp=False):
     if not np.isfinite(local).all() or not len(faces) or (np.linalg.norm(normals, axis=1) == 0).any():
         raise ValueError("invalid surface: empty, nonfinite or degenerate triangles")
     if sharp:
-        verts, faces = split_creases(verts, faces, normals)
+        source, faces = split_creases(faces, normals)
+        verts = verts[source]
+        if occlusion is not None:
+            occlusion = occlusion[source]
         local = verts * step + origin
     smooth = np.zeros_like(local)
     for i in range(3):
@@ -106,4 +109,7 @@ def write_mesh(folder, mesh, rgba, step, origin, blocks=False, sharp=False):
     uv.astype("<f4").tofile(folder / "uvs")
     ids.astype("<u4").tofile(folder / "indices")
     texture.tofile(folder / "texture")
-    (folder / "output.json").write_text(json.dumps({"width": width, "height": height}))
+    if occlusion is not None:
+        rgb = np.repeat(occlusion[corners[:, 0], None], 3, axis=1)
+        np.column_stack((rgb, np.ones(len(rgb)))).astype("<f4").tofile(folder / "colors")
+    (folder / "output.json").write_text(json.dumps({"width": width, "height": height, "colors": occlusion is not None}))

@@ -11,6 +11,8 @@ from pathlib import Path
 import numpy as np
 from blocks import block_mesh
 from branches import branch_loft
+from dexel import load_dexel
+from field_data import load_field
 from guided import revolve, sweep
 from implicit import feature_mesh, mc33
 from material import write_mesh
@@ -18,7 +20,7 @@ from network import section_network
 from sections import heightfield, loft
 
 
-def run(method, folder):
+def run(method, folder, distance_extractor=None):
     meta = json.loads((folder / "input.json").read_text())
     w, d, l, c = [meta[k] for k in ("width", "depth", "layers", "columns")]
     tiles = np.fromfile(folder / "stack.rgba", np.uint8).reshape(-1, d, c, w, 4)
@@ -38,6 +40,8 @@ def run(method, folder):
         "revolve": ["axis", "origin", "segments"],
         "path-sweep": ["path", "up", "profile"],
         "section-network": ["sections", "tolerance"],
+        "hermite-dc": ["field", "dexel"],
+        "signed-distance-dc": ["field", "outerIterations", "innerIterations"],
     }
     if not isinstance(g, dict) or set(g) - set(options.get(method, [])):
         raise ValueError(f"expected guide object with fields {options.get(method, [])} for {method}")
@@ -60,27 +64,40 @@ def run(method, folder):
     elif method == "section-network":
         mesh = section_network(mask, step, origin, g)
     elif method in ("extended-mc", "hermite-dc"):
-        mesh = feature_mesh(mask, step, method == "hermite-dc")
+        if "field" in g and "dexel" in g:
+            raise ValueError("choose either a signed distance field or triple-dexel samples")
+        field = load_field(np.pad(mask, 1), g["field"], meta.get("guideDirectory")) if "field" in g else None
+        measured = load_dexel(mask, step, origin, g["dexel"], meta.get("guideDirectory")) if "dexel" in g else None
+        mesh = feature_mesh(mask, step, method == "hermite-dc", field, measured)
     elif method == "mc33":
         mesh = mc33(mask)
+    elif method == "signed-distance-dc" and distance_extractor:
+        mesh = distance_extractor(mask, step, g, meta.get("guideDirectory"))
     elif method in ("greedy", "monotone"):
         mesh = block_mesh(mask, method == "monotone")
     else:
         raise ValueError(f"unknown method {method}")
     print(f"{method}: saved alpha/RGB; user guide fields {sorted(g)}")
+    finish = meta.get("finish") or {}
+    occlusion = None
+    if finish:
+        from finishing import finish_surface
+
+        mesh, occlusion = finish_surface(mesh, step, origin, finish, folder, meta["blender"])
     write_mesh(
         folder,
         mesh,
         rgba,
         step,
         origin,
-        method in ("greedy", "monotone"),
-        method in ("extended-mc", "hermite-dc"),
+        method in ("greedy", "monotone") and not finish,
+        bool(finish) or method in ("extended-mc", "hermite-dc", "signed-distance-dc"),
+        occlusion,
     )
 
 
 if __name__ == "__main__":
     try:
         run(sys.argv[1], Path(sys.argv[2]))
-    except (ValueError, TypeError, KeyError) as exc:
+    except (OSError, ValueError, TypeError, KeyError) as exc:
         sys.exit(str(exc))

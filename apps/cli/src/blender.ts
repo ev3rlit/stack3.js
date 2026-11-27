@@ -6,9 +6,13 @@ import { basename, dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 
-export async function openBlenderStack(directory: string, output: string | undefined, open: boolean) {
+export function blenderExecutable() {
   const macApp = '/Applications/Blender.app/Contents/MacOS/Blender';
-  const blender = process.env.BLENDER_BIN || (process.platform === 'darwin' && existsSync(macApp) ? macApp : 'blender');
+  return process.env.BLENDER_BIN || (process.platform === 'darwin' && existsSync(macApp) ? macApp : 'blender');
+}
+
+export async function openBlenderStack(directory: string, output: string | undefined, open: boolean) {
+  const blender = blenderExecutable();
   const script = fileURLToPath(new URL('../blender/import_stack.py', import.meta.url));
   const destination = output && resolve(output);
   if (destination && extname(destination).toLowerCase() !== '.blend') throw new Error('Use a .blend output file.');

@@ -25,6 +25,7 @@ export type MeshData = {
   normals: Float32Array;
   indices: Uint32Array;
   uvs: Float32Array;
+  colors?: Float32Array;
   texture: Raster;
   size: Vec3;
   pivot: Vec3;

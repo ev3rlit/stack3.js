@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../schema/pipeline-fragment.schema.json
+nodes:
+  - { id: detail-glb, type: write-glb, input: detail, path: '{{ .Values.output }}/detail.glb', lit: true }
+  - { id: lod-glb, type: write-glb, input: lod, path: '{{ .Values.output }}/lod.glb', lit: true }
+  - id: row-glb
+    type: write-glb
+    input: lod
+    path: '{{ .Values.output }}/row.glb'
+    lit: true
+    instances: [[0, 0, 0], [1.5, 0, 0], [3, 0, 0]]

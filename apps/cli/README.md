@@ -17,11 +17,16 @@ The command grammar is `stack3 <verb> <input> [options]`. Choose the output with
 
 | Command | Purpose |
 | --- | --- |
+| `stack3 help [pipeline\|mesh\|capabilities]` | Show usage and supported commands. |
+| `stack3 capabilities --json` | Inspect methods, guide fields, backends, pipeline nodes, schemas and bundled samples. |
 | `stack3 example <name>` | Copy the bundled `future-tank` project or `traffic-cone` atlas. Use `--output` to choose a destination. |
 | `stack3 inspect <input>` | Report mapped and missing directions, image dimensions, and input warnings. |
 | `stack3 build <input> --output <file.glb>` | Reconstruct a mesh and write a GLB. |
 | `stack3 build <input> --format stack --output <directory>` | Reconstruct a runtime stack and write its slice data and metadata. |
-| `stack3 mesh <stack-directory> --output <file.glb>` | Reopen a saved stack and extract a surface from slice alpha (≥128). Use the default `marching-cubes`, another baseline (`surface-nets` or `voxel`), or a part-specific extractor. Run `stack3 mesh --help` for method names and `--guide <part.json>` inputs. The 12 additional extractors use uv or a configured `STACK3_PYTHON`. See the [stack3 method and guide reference](https://github.com/ev3rlit/stack3.js/blob/main/skills/stack3/SKILL.md#choose-the-surface-method-per-part). Surface color comes from projections of the stored RGB. |
+| `stack3 mesh <stack-directory> --output <file.glb>` | Reopen a saved stack and extract a surface from slice alpha (≥128). Use the default `marching-cubes`, another baseline (`surface-nets` or `voxel`), or a part-specific extractor. Run `stack3 mesh --help` for method names and `--guide <part.json>` inputs. Part-specific extractors use uv or a configured `STACK3_PYTHON`. See the [stack3 method and guide reference](https://github.com/ev3rlit/stack3.js/blob/main/skills/stack3/SKILL.md#choose-the-surface-method-per-part). Surface color comes from projections of the stored RGB. |
+| `stack3 pipeline render <pipeline.yaml>` | Resolve includes and values into a validated, executable graph. |
+| `stack3 pipeline run <pipeline.yaml>` | Execute the graph and write its GLB outputs. |
+| `stack3 pipeline schema [recipe\|fragment]` | Print a standalone JSON Schema. Defaults to the root recipe schema. |
 | `stack3 view <directory>` | Open an exported stack in Blender. Use `--output scene.blend` to keep a named scene, or add `--no-open` to that output for headless export. `--web` opens the web viewer; `--no-open` alone still prints its URL. |
 
 For an atlas, supply its reading order with `--layout`.
@@ -73,6 +78,122 @@ Repeated builds reuse the local cache for matching input, format, and settings. 
 `view` and `project open` use the browser viewer bundled with the installed CLI. The preview server listens on loopback. Press Ctrl+C to close it.
 
 [CLI requirements and completion check](https://github.com/ev3rlit/stack3.js/blob/main/docs/cli/README.md)
+
+## YAML pipelines
+
+Get supported backends and sample paths with `stack3 capabilities --json`. The bundled groups cover RGB atlas preview, mesh finishing with LOD and instancing, measured SDF, and Triple-Dexel. Copy a group to a writable workspace before creating outputs there.
+
+Use the [pipeline JSON Schema](schema/pipeline.schema.json) for root and rendered recipes and the [fragment JSON Schema](schema/pipeline-fragment.schema.json) for files listed under `includes`. Both ship in the CLI package under `schema/`.
+
+```sh
+stack3 pipeline schema > pipeline.schema.json
+stack3 pipeline schema fragment > pipeline-fragment.schema.json
+```
+
+With YAML Language Server, place this comment on the first line of the recipe and adjust the path to the schema.
+
+```yaml
+# yaml-language-server: $schema=./schema/pipeline.schema.json
+```
+
+The schema describes fields, types, ranges, node-specific options and supported value references. `pipeline render` also checks resolved values, node dependencies and output path collisions. Keys in a `-f` values file depend on the recipe, so the generic schema leaves its values mapping open.
+
+Nodes refer to other nodes by ID. Put them all under `nodes` in one pipeline, or use `includes` for reusable fragments. Here `cab.pipeline.yaml` uses a saved stack for both preview and export.
+
+```yaml
+version: 1
+includes: [surfaces.yaml]
+values:
+  stack: ./cab-stack
+  output: ./dist
+  precision: hermite-dc
+nodes:
+  - id: source
+    type: load-stack
+    path: '{{ .Values.stack }}'
+```
+
+`surfaces.yaml` contributes these nodes. `hermite-dc` uses the same Python environment as `stack3 mesh`.
+
+```yaml
+nodes:
+  - { id: fast, type: extract-mesh, input: source, method: surface-nets }
+  - { id: precise, type: extract-mesh, input: source, method: '{{ .Values.precision }}' }
+  - { id: preview, type: write-glb, input: fast, path: '{{ .Values.output }}/preview.glb' }
+  - { id: export, type: write-glb, input: precise, path: '{{ .Values.output }}/cab.glb' }
+```
+
+An optional `release.values.yaml` can set `output: ./release`. Multiple `-f` files override earlier values in order. Included defaults are applied before the including file's defaults. A quoted whole-field reference preserves the value's YAML type, so `layers: '{{ .Values.layers }}'` can resolve to an integer. References can also appear inside paths.
+
+```sh
+stack3 pipeline render cab.pipeline.yaml -f release.values.yaml > cab.resolved.yaml
+stack3 pipeline run cab.resolved.yaml
+```
+
+Include paths are relative to the file declaring them. Node paths are relative to the root pipeline and become absolute in the rendered YAML, which can be run from another directory. `render` resolves and validates the graph without opening asset inputs or writing GLBs. `run` shares each node's result across its consumers. If a later node fails, outputs already written are kept.
+
+To start from an atlas, use `type: reconstruct-stack` for `source`, set `path` to the PNG and `layout` to `top,left,front,rear`, or set `path` to a JSON view manifest. Optional fields are `layers`, `resolution`, `height`, `pivot`, `threshold`, and `profile`. Use `load-stack` to preserve edits to a saved stack. An `extract-mesh` node accepts the existing stack mesh methods and can take a `guide` path for part-specific methods.
+
+### Hard-surface finishing
+
+Add `finish` to an extraction node to fit and optimize a closed surface. Fitting groups connected faces by normal direction, then fits supported planes and optionally spheres or cylinders. Shared vertices are solved together along patch boundaries. Vertices outside those groups follow the extractor. Finishing checks winding, edge incidence, components and Euler characteristic before returning new geometry. A failed topology-changing operation logs the reason and retains the preceding mesh.
+
+From a source checkout, run the [concrete barrier recipe](../../examples/hard-surface.pipeline.yaml) to generate a Surface Nets preview, a finished Hermite DC model, a lower-budget GLB, a Carrera comparison and a row of GPU instances.
+
+```sh
+npm run cli -- pipeline run examples/hard-surface.pipeline.yaml
+```
+
+```yaml
+version: 1
+values:
+  stack: ./housing-stack
+  bevel: 0.006
+nodes:
+  - { id: source, type: load-stack, path: '{{ .Values.stack }}' }
+  - id: housing
+    type: extract-mesh
+    input: source
+    method: hermite-dc
+    cache: true
+    finish:
+      fitTolerance: 0.008
+      primitives: true
+      bevelWidth: '{{ .Values.bevel }}'
+      bevelSegments: 2
+      dissolveAngle: 0.5
+      triangleBudget: 500
+      aoRadius: 0.15
+  - { id: model, type: write-glb, input: housing, path: ./out/housing.glb, lit: true }
+  - { id: row, type: write-glb, input: housing, path: ./out/row.glb, lit: true, instances: [[0, 0, 0], [1.5, 0, 0]] }
+  - { id: carrera, type: extract-mesh, input: source, method: signed-distance-dc }
+  - { id: comparison, type: write-glb, input: carrera, path: ./out/signed-distance.glb }
+```
+
+- `fitTolerance`, `bevelWidth` and `aoRadius` use scene units. Blender runs headless for bevel, planar dissolve, quadric simplification and AO. Use `BLENDER_BIN` to choose an executable. Each LOD is a GLB from a branch with its own `triangleBudget` target. Re-import or measure thin features at each target budget.
+- Texture projection uses the saved RGB and runs after topology changes. Creases split the area-weighted vertex normals. AO is written as vertex color (`COLOR_0`). `lit: true` selects a diffuse PBR material. `instances` writes `EXT_mesh_gpu_instancing` with per-instance translations in glTF XYZ coordinates.
+- `cache: true` reuses processed geometry across runs using the stack, settings, guide and external field contents. Omit it when comparing different Blender or Python builds. Multiple outputs consuming one node share its in-memory result.
+
+### Compare the two Dual Contouring methods
+
+`hermite-dc` uses boundary crossings and estimated normals. `signed-distance-dc` uses Carrera et al.'s maintained [Gpytoolbox implementation](https://gpytoolbox.org/0.3.8/dual_contouring_of_signed_distance_data/). uv resolves Gpytoolbox 0.3.8 for that method. When using `STACK3_PYTHON`, install Gpytoolbox 0.3.8 in the selected environment.
+
+```sh
+stack3 mesh housing-stack/ --mesh-method hermite-dc --output hermite.glb
+stack3 mesh housing-stack/ --mesh-method signed-distance-dc --output carrera.glb
+```
+
+For a matched-input comparison, pass `--guide field.json` to both methods. A guide like `{"field":"housing.npy"}` reads a finite floating-point array in XYZ order with shape `(width + 2, depth + 2, layers + 2)`. Samples sit at cell centers with one empty layer of padding. Distances are in scene units, negative inside, and their signs must match the saved stack. Without an external field, `signed-distance-dc` estimates distances from occupancy using physical axis spacing. Its guide accepts `outerIterations` and `innerIterations` from 1 to 100. The CLI defaults are 3 and 12 and use Gpytoolbox's automatically selected near-surface samples for repeatable local comparisons.
+
+#### Registered triple-dexel input
+
+An optional `{"dexel":"triple-dexel.npz"}` guide gives `hermite-dc` crossing locations and outward normals directly. The saved stack supplies the sampled occupancy and RGB. Use an NPZ with scalar `version: 1`, XYZ `grid`, `origin` and `step`, and these arrays for each axis `x`, `y` and `z`:
+
+- `<axis>_offsets` indexes each ray in the packed arrays. The transverse coordinates are in XYZ order with the ray axis omitted, flattened in C order. Transverse rays pass through the other axes' cell centers.
+- `<axis>_depth` contains strictly increasing enter/exit pairs on each ray. Rays point in the positive axis direction. Depth is measured from the stack grid's lower plane in scene units.
+- `<axis>_normals` contains one outward XYZ unit vector per crossing.
+
+All axes must classify the saved cell centers identically. A sign-changing grid edge must contain one crossing. The CLI reports additional crossings on edges without a sampled sign change. Use a finer grid to resolve thin features that fall entirely inside an edge. Supply either `dexel` or `field` in the guide.
 
 ## Scene projects
 

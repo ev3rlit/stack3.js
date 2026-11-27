@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../schema/pipeline.schema.json
+version: 1
+values:
+  stack: ./inputs/stack
+  guide: ./dexel.guide.json
+  output: ./out
+nodes:
+  - { id: source, type: load-stack, path: '{{ .Values.stack }}' }
+  - { id: occupancy, type: extract-mesh, input: source, method: mc33 }
+  - { id: occupancy-glb, type: write-glb, input: occupancy, path: '{{ .Values.output }}/occupancy.glb', lit: true }
+  - { id: measured, type: extract-mesh, input: source, method: hermite-dc, guide: '{{ .Values.guide }}' }
+  - { id: measured-glb, type: write-glb, input: measured, path: '{{ .Values.output }}/triple-dexel.glb', lit: true }

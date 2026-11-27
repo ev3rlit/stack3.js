@@ -1,0 +1,22 @@
+{
+  "units": "millimeters",
+  "sceneUnitsPerMillimeter": 0.016666666666666666,
+  "grid": [112, 92, 108],
+  "origin": [-33.1, -27.1, -2.1],
+  "extent": [66.2, 54.2, 64.3],
+  "base": { "width": 60, "depth": 50, "height": 40, "upperChamfer": 0.8 },
+  "bosses": [
+    { "name": "tapered-post", "kind": "round", "axis": "z", "center": [-20, -13], "range": [40, 56], "radii": [7.2, 5] },
+    { "name": "cylindrical-post", "kind": "round", "axis": "z", "center": [13, -13], "range": [40, 60], "radii": [7.5, 7.5] },
+    { "name": "hexagonal-post", "kind": "polygon", "axis": "z", "center": [0, 0], "sides": 6, "radius": 8.5, "angle": 30, "range": [40, 54] },
+    { "name": "triangular-post", "kind": "polygon", "axis": "z", "center": [-17, 12], "sides": 3, "radius": 8.1, "angle": -90, "range": [40, 55] },
+    { "name": "cube", "kind": "polygon", "axis": "z", "center": [19, 13], "sides": 4, "radius": 10.606601717798213, "angle": 45, "range": [40, 55] }
+  ],
+  "cuts": [
+    { "name": "upper-left-through-bore", "kind": "round", "axis": "y", "center": [-20, 29], "range": [-27, 27], "radii": [7.5, 7.5], "through": true },
+    { "name": "lower-left-triangular-pocket", "kind": "polygon", "axis": "y", "center": [-17, 9], "sides": 3, "radius": 11.547005383792515, "angle": 90, "range": [15, 27] },
+    { "name": "central-hexagonal-pocket", "kind": "polygon", "axis": "y", "center": [0.7, 20], "sides": 6, "radius": 10, "angle": 0, "range": [11, 27] },
+    { "name": "upper-right-square-pocket", "kind": "polygon", "axis": "y", "center": [19, 29], "sides": 4, "radius": 10.606601717798213, "angle": 45, "range": [10, 27] },
+    { "name": "lower-right-tapered-pocket", "kind": "round", "axis": "y", "center": [21, 12], "range": [13, 27], "radii": [6.9, 7.6] }
+  ]
+}

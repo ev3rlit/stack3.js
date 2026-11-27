@@ -21,7 +21,7 @@ def mc33(mask):
     return p - 0.5, f
 
 
-def feature_mesh(mask, step, dual):
+def feature_mesh(mask, step, dual, signed_distance=None, measured=None):
     field = np.pad(mask, 1)
     if dual:
         # A body diagonal can give two disjoint vertex links although every
@@ -37,30 +37,40 @@ def feature_mesh(mask, step, dual):
                 raise ValueError(f"multiple sheets in dual cell {cell}; use mc33")
     crosses = {}
     cells = defaultdict(list)
-    grads = np.stack(np.gradient(gaussian_filter(field.astype(float), 0.8), *step), axis=-1)
+    if measured is None:
+        values = signed_distance if signed_distance is not None else -gaussian_filter(field.astype(float), 0.8)
+        grads = np.stack(np.gradient(values, *step), axis=-1)
     for axis in range(3):
         u, v, _ = cyclic(axis)
         exposed = np.diff(field.astype(np.int8), axis=axis)
         # An uninterrupted coplanar 2x2 patch supports a flat sample-plane normal.
         # Isolated steps use the gradient of a filtered occupancy field instead.
-        flat = np.zeros_like(exposed, bool)
-        view = exposed.transpose(cyclic(axis))
-        quads = (
-            (view[:-1, :-1] != 0)
-            & (view[:-1, :-1] == view[1:, :-1])
-            & (view[:-1, :-1] == view[:-1, 1:])
-            & (view[:-1, :-1] == view[1:, 1:])
-        )
-        for i, j in product(range(2), repeat=2):
-            flat.transpose(cyclic(axis))[i : i + quads.shape[0], j : j + quads.shape[1]] |= quads
+        if measured is None and signed_distance is None:
+            flat = np.zeros_like(exposed, bool)
+            view = exposed.transpose(cyclic(axis))
+            quads = (
+                (view[:-1, :-1] != 0)
+                & (view[:-1, :-1] == view[1:, :-1])
+                & (view[:-1, :-1] == view[:-1, 1:])
+                & (view[:-1, :-1] == view[1:, 1:])
+            )
+            for i, j in product(range(2), repeat=2):
+                flat.transpose(cyclic(axis))[i : i + quads.shape[0], j : j + quads.shape[1]] |= quads
         for p in np.argwhere(exposed):
             key = (*p, axis)
-            q = p.copy()
-            q[axis] += 1
-            n = -unit(grads[tuple(p)] + grads[tuple(q)])
-            if flat[tuple(p)] or np.linalg.norm(n) < 0.5:
-                n = -np.eye(3)[axis] * exposed[tuple(p)]
-            crosses[key] = ((p + q) * 0.5, n)
+            if measured is not None:
+                crosses[key] = measured[key]
+            else:
+                q = p.copy()
+                q[axis] += 1
+                t = 0.5
+                if signed_distance is not None:
+                    start, end = values[tuple(p)], values[tuple(q)]
+                    t = start / (start - end)
+                n = unit((1 - t) * grads[tuple(p)] + t * grads[tuple(q)])
+                if (signed_distance is None and flat[tuple(p)]) or np.linalg.norm(n) < 0.5:
+                    n = -np.eye(3)[axis] * exposed[tuple(p)]
+                crosses[key] = (p + t * (q - p), n)
             for du, dv in product(range(2), repeat=2):
                 cell = p.copy()
                 cell[u] -= du
