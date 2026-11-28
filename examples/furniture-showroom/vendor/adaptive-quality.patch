@@ -1,0 +1,176 @@
+diff --git a/renderer/shaders/live.wgsl b/renderer/shaders/live.wgsl
+index 4b5010e..a40268b 100644
+--- a/renderer/shaders/live.wgsl
++++ b/renderer/shaders/live.wgsl
+@@ -18,7 +18,7 @@ struct LiveParams {
+     size: vec4<u32>,   // width, height, frame, reset history (1)
+     misc: vec4<f32>,   // exposure scale, max history, vignette intensity, bloom on (1) / off (0)
+     misc2: vec4<f32>,  // denoise strength, sample clamp (display units at the current exposure), -, samples this frame
+-    mode: vec4<u32>,   // view mode (0 lit, 1 base color, 2 world normal, 3 lit no denoise, 4 raw sample, 5 history), -, the scene's lighting is changing (live/mod.rs `live_lighting`), -
++    mode: vec4<u32>,   // view mode (0 lit, 1 base color, 2 world normal, 3 lit no denoise, 4 raw sample, 5 history), -, the scene's lighting is changing (live/mod.rs `live_lighting`), stationary HDR refinement
+     post: vec4<f32>,   // chromatic aberration (UE scene fringe), film grain, bloom threshold (<= 0 off), -
+     ae: vec4<f32>,     // auto exposure: low / high fraction, histogram log2 min / max
+     ae2: vec4<f32>,    // compensation (2^bias; manual: the exposure), min / max average luminance, mode (1 = auto)
+@@ -1490,6 +1490,13 @@ fn upscale(@builtin(global_invocation_id) gid: vec3<u32>) {
+         vsum += bw;
+     }
+     verdict = select(vec4<f32>(0.0, 0.0, 0.0, 1.0), verdict / vsum, vsum > 1e-4);
++    // Interior viewer: for a stationary, unedited scene, retain the linear HDR mean rather than
++    // repeatedly clipping soft-shadow samples to the noisy current neighbourhood. Motion/edit paths
++    // keep upstream rejection. Exposure/tonemapping still run AFTER this mean, avoiding sRGB bias.
++    let refining = L.mode.w != 0u && L.mode.z == 0u && !camera_moves()
++        && sample_vel[u32(bc.y * iw + bc.x)].w == 0.0;
++    if (refining) { verdict = vec4<f32>(0.0); }
++    let still_samples = select(UP_SAMPLES, 256.0, refining);
+     let vel = judged_at(u32(bc.y * iw + bc.x)).vel;
+     var hist = vec4<f32>(0.0);
+     if (L.size.w == 0u) {
+@@ -1513,7 +1520,7 @@ fn upscale(@builtin(global_invocation_id) gid: vec3<u32>) {
+     if (kept > 0.0) {
+         var hc = max(hist.rgb + verdict.xyz, vec3<f32>(0.0));
+         hc = mix(hc, clamp(hc, xlo, xhi), moving * (1.0 - lock));
+-        let most = min(mix(UP_SAMPLES, UP_MOVING, moving), mix(UP_SAMPLES, UP_REACTIVE, clamp(sample_vel[u32(bc.y * iw + bc.x)].w, 0.0, 1.0)));
++        let most = min(mix(still_samples, UP_MOVING, moving), mix(still_samples, UP_REACTIVE, clamp(sample_vel[u32(bc.y * iw + bc.x)].w, 0.0, 1.0)));
+         count = min(kept + conf, most);
+         let a = clamp(conf / max(count, 1e-4), 0.0, 1.0);
+         outc = mix(hc, cur, a);
+diff --git a/renderer/src/live/frame.rs b/renderer/src/live/frame.rs
+index bd1d3a6..3bdc6b3 100644
+--- a/renderer/src/live/frame.rs
++++ b/renderer/src/live/frame.rs
+@@ -502,7 +502,7 @@ impl LiveCore {
+             // UpdateMotionBlurTimeScale) blurs over +- amount / 2 x the motion x (1 / target FPS) / frame time, the
+             // actual frame time without a target. 0 while nothing moves (the pass then costs nothing).
+             misc2: [1.0, SAMPLE_CEILING, if !blur { 0.0 } else if self.blur.1 > 0.0 { self.blur.0 / (self.blur.1 * self.frame_dt.clamp(1.0 / 240.0, 0.25)) } else { self.blur.0 }, spp.max(1) as f32],
+-            mode: [self.view_mode, 0, self.live_lighting() as u32, 0],
++            mode: [self.view_mode, 0, self.live_lighting() as u32, self.stationary_refinement as u32],
+             post: self.post,
+             ae: self.sc.exposure_settings.ae,
+             ae2: self.sc.exposure_settings.ae2,
+diff --git a/renderer/src/live/mod.rs b/renderer/src/live/mod.rs
+index 3d6518f..f772a26 100644
+--- a/renderer/src/live/mod.rs
++++ b/renderer/src/live/mod.rs
+@@ -256,6 +256,8 @@ pub struct LiveCore {
+     prev_cam: Camera,
+     pub frame: u32,
+     pub history_len: f32,
++    /// Opt-in stationary HDR averaging for the interior browser viewer.
++    pub stationary_refinement: bool,
+     reset: bool,
+     /// Bloom stage radii / tints (`bloom_stages`).
+     bloom: ([f32; 6], [f32; 6]),
+@@ -547,7 +549,7 @@ impl LiveCore {
+         // brings it, `gpu::loop_guard_of`.)
+         let guard_read = (gpu::loop_guard_of(!g.hwrt).is_some() && targets.kernel.guard.is_some())
+             .then(|| (g.device.create_buffer(&wgpu::BufferDescriptor { label: Some("loop guard read"), size: 4, usage: wgpu::BufferUsages::MAP_READ | wgpu::BufferUsages::COPY_DST, mapped_at_creation: false }), Arc::new(AtomicU32::new(0))));
+-        let mut core = LiveCore { particle_spawns: Default::default(), grid_sources: Default::default(), g, passes, targets, sc, presets: presets.to_path_buf(), assets: assets.to_path_buf(), w, h, seq: 0, aspect: w as f32 / h as f32, cam, prev_cam: cam, frame: 0, history_len: 0.0, reset: true, bloom: ([0.0; 6], [0.0; 6]), vignette: 0.0, post: [0.0; 4], blur: (0.0, 0.0), inflight: Default::default(), gpu_ms: 0.0, gpu_frame: 0, gpu_trace_ms: 0.0, edit_ms: 0.0, instanced_ms: 0.0, edit_split: EditSplit::default(), rebuild_ms: 0.0, fallback: None, fallbacks: 0, bounces: 4, rays: true, view_mode: std::env::var("THREERT_VIEW_MODE").ok().and_then(|v| v.parse().ok()).unwrap_or(0), fixed_dt: None, motion_blur_off: false, triangles, scene_name, time: 0.0, frame_dt: 1.0 / 60.0, last_frame: Instant::now(), post_key: String::new(), render_scale: 1.0, dynamic_res: false, min_scale: MIN_SCALE, display_scale: 1.0, over_budget: (0, 0), born: Instant::now(), governed: Instant::now(), profile, timer, raster, cache, kernel_bg, prev_span: None, reposed: false, emitters_moved: false, cold_frames: 0, pose_span: None, pose_reposed: false, inst_moving: vec![], inst_moved: false, prev_isz: (0, 0), light_tiles: None, lit_changed: 0, spark_lights: false, shown_spp: 1, cpu_skin_ms: 0.0, cpu_upload_ms: 0.0, gpu_blas_ms: 0.0, cpu_wait_ms: 0.0, sky_cover: 0.0, guard_trips: guard_read.as_ref().map(|_| 0), guard_read };
++        let mut core = LiveCore { particle_spawns: Default::default(), grid_sources: Default::default(), g, passes, targets, sc, presets: presets.to_path_buf(), assets: assets.to_path_buf(), w, h, seq: 0, aspect: w as f32 / h as f32, cam, prev_cam: cam, frame: 0, history_len: 0.0, stationary_refinement: false, reset: true, bloom: ([0.0; 6], [0.0; 6]), vignette: 0.0, post: [0.0; 4], blur: (0.0, 0.0), inflight: Default::default(), gpu_ms: 0.0, gpu_frame: 0, gpu_trace_ms: 0.0, edit_ms: 0.0, instanced_ms: 0.0, edit_split: EditSplit::default(), rebuild_ms: 0.0, fallback: None, fallbacks: 0, bounces: 4, rays: true, view_mode: std::env::var("THREERT_VIEW_MODE").ok().and_then(|v| v.parse().ok()).unwrap_or(0), fixed_dt: None, motion_blur_off: false, triangles, scene_name, time: 0.0, frame_dt: 1.0 / 60.0, last_frame: Instant::now(), post_key: String::new(), render_scale: 1.0, dynamic_res: false, min_scale: MIN_SCALE, display_scale: 1.0, over_budget: (0, 0), born: Instant::now(), governed: Instant::now(), profile, timer, raster, cache, kernel_bg, prev_span: None, reposed: false, emitters_moved: false, cold_frames: 0, pose_span: None, pose_reposed: false, inst_moving: vec![], inst_moved: false, prev_isz: (0, 0), light_tiles: None, lit_changed: 0, spark_lights: false, shown_spp: 1, cpu_skin_ms: 0.0, cpu_upload_ms: 0.0, gpu_blas_ms: 0.0, cpu_wait_ms: 0.0, sky_cover: 0.0, guard_trips: guard_read.as_ref().map(|_| 0), guard_read };
+         core.spark_lights = core.sc.tables.emitter_tris.iter().any(|e| e.nominal);
+         core.sky_cover = core.sc.tables.cloud_cover;
+         core.apply_post(&pp);
+@@ -686,6 +688,19 @@ impl LiveCore {
+         }
+     }
+ 
++    /// Interior viewer extension: preserve the cache on camera/quality changes, invalidate it on scene edits.
++    pub fn radiance_cache_active(&self) -> bool { self.cache.is_some() }
++
++    pub fn invalidate_radiance_cache(&mut self) {
++        if let Some(c) = &self.cache {
++            let mut e = self.g.device.create_command_encoder(&Default::default());
++            c.bufs.clear(&mut e);
++            self.g.queue.submit([e.finish()]);
++        }
++        self.reset = true;
++        self.cold_frames = 0;
++    }
++
+     pub fn reset_history(&mut self) {
+         self.reset = true;
+     }
+diff --git a/renderer/web/src/lib.rs b/renderer/web/src/lib.rs
+index 8be0834..f27c4e4 100644
+--- a/renderer/web/src/lib.rs
++++ b/renderer/web/src/lib.rs
+@@ -48,6 +48,8 @@ struct View {
+     /// The camera the scene had when the view last followed it.
+     scene_cam: Camera,
+     fps: u32,
++    spp: u32,
++    pending: std::sync::Arc<std::sync::atomic::AtomicBool>,
+     /// Lockstep (a scripted test): a frame's own time is the `dt` it is given, whatever the page's clock says.
+     lockstep: bool,
+     /// The first frame: when its recording began (the page's clock, ms) and, once the GPU has finished it, how long
+@@ -441,7 +443,7 @@ pub async fn start(canvas: web_sys::HtmlCanvasElement, width: u32, height: u32,
+     });
+     let on = |k: &str| info[k].as_array().is_some_and(|a| !a.is_empty());
+     let scene_cam = core.scene_camera();
+-    VIEW.set(Some(View { core, surface, blit, blit_bg, clock: 0.0, has_frame: info["frame"].as_bool().unwrap_or(false), has_on: on("on"), scene_cam, fps: fps.max(1), lockstep: false, first: (0.0, Default::default()) }));
++    VIEW.set(Some(View { core, surface, blit, blit_bg, clock: 0.0, has_frame: info["frame"].as_bool().unwrap_or(false), has_on: on("on"), scene_cam, fps: fps.max(1), spp: 1, pending: std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false)), lockstep: false, first: (0.0, Default::default()) }));
+     Ok(out.to_string())
+ }
+ 
+@@ -465,6 +467,33 @@ fn commit_view(v: &mut View) -> Result<bool, JsValue> {
+     Ok(rebuilt)
+ }
+ 
++/// Interior viewer extension: change tracing quality in place, preserving geometry and radiance caches.
++#[wasm_bindgen(js_name = setQuality)]
++pub fn set_quality(scale: f32, spp: u32) -> Result<(), JsValue> {
++    if !scale.is_finite() || !(0.5..=1.0).contains(&scale) || !(1..=8).contains(&spp) {
++        return Err(failed("quality requires scale 0.5..1 and spp 1..8"));
++    }
++    view(|v| {
++        let refine = scale == 1.0 && spp > 1;
++        // Discard low-resolution screen history once, while retaining world radiance/BVH caches.
++        if refine && !v.core.stationary_refinement { v.core.reset_history(); }
++        v.core.stationary_refinement = refine;
++        v.core.set_scale(scale); v.spp = spp; Ok(())
++    })
++}
++
++/// Avoid queuing expensive refinement frames ahead of interactive input.
++#[wasm_bindgen(js_name = frameReady)]
++pub fn frame_ready() -> Result<bool, JsValue> {
++    view(|v| Ok(!v.pending.load(std::sync::atomic::Ordering::Relaxed)))
++}
++
++/// Scene edits invalidate cached illumination; camera movement does not.
++#[wasm_bindgen(js_name = invalidateLighting)]
++pub fn invalidate_lighting() -> Result<(), JsValue> {
++    view(|v| { v.core.invalidate_radiance_cache(); Ok(()) })
++}
++
+ /// Lockstep on or off (a scripted test's clock: every frame takes the `dt` it is given, as the native runner's
+ /// `lockstep` command).
+ #[wasm_bindgen(js_name = setLockstep)]
+@@ -517,7 +546,7 @@ pub fn frame_end(dt: f32) -> Result<String, JsValue> {
+         };
+         let target = tex.texture.create_view(&Default::default());
+         let (blit, bg) = (&v.blit, &v.blit_bg);
+-        v.core.render(1, |e, _| {
++        v.core.render(v.spp, |e, _| {
+             let mut rp = e.begin_render_pass(&wgpu::RenderPassDescriptor {
+                 label: Some("blit"),
+                 color_attachments: &[Some(wgpu::RenderPassColorAttachment { view: &target, depth_slice: None, resolve_target: None, ops: wgpu::Operations { load: wgpu::LoadOp::Clear(wgpu::Color::BLACK), store: wgpu::StoreOp::Store } })],
+@@ -531,6 +560,9 @@ pub fn frame_end(dt: f32) -> Result<String, JsValue> {
+             rp.draw(0..3, 0..1);
+         });
+         v.core.g.queue.present(tex);
++        v.pending.store(true, std::sync::atomic::Ordering::Relaxed);
++        let pending = v.pending.clone();
++        v.core.g.queue.on_submitted_work_done(move || pending.store(false, std::sync::atomic::Ordering::Relaxed));
+         let p3 = now();
+         if v.first.0 == 0.0 {
+             v.first.0 = p2;
+@@ -554,6 +586,9 @@ pub fn frame_end(dt: f32) -> Result<String, JsValue> {
+             "trace_ms": v.core.gpu_trace_ms,
+             "scale": v.core.render_scale,
+             "frame": v.core.frame,
++            "spp": v.spp,
++            "history": v.core.history_len,
++            "radiance_cache": v.core.radiance_cache_active(),
+             "fallback": fallback,
+             "guard_trips": v.core.guard_trips,
+         })
