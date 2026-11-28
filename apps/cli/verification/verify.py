@@ -4,11 +4,13 @@
 # ///
 """Verification entry point shared by the workspace CLI and the packaged executable."""
 import argparse
+from hashlib import sha256
 import json
 from pathlib import Path
 import sys
 
 import yaml
+from acceptance import acceptance
 from assembly import assemble
 from landmarks import landmarks
 from panels import atlas, read_manifest, scalar, unregistered
@@ -59,13 +61,18 @@ def run(args):
         if out and image is not None:
             out.mkdir(parents=True, exist_ok=True)
             filename = name + ".png"
-            image.save(out / filename)
+            path = out / filename
+            image.save(path)
             result["overlay"] = filename
+            if name == "atlas-guides":
+                result["overlaySha256"] = sha256(path.read_bytes()).hexdigest()
             overlays.append(filename)
 
     if kind == "atlas":
         data, panels = atlas(path, config)
         report = measure_atlas(data, panels, save_overlay, check=args.check)
+        if not args.check:
+            report["acceptance"] = acceptance(data, panels, report["results"], report["tolerancePx"], save_overlay)
     else:
         parts = config["parts"]
         if not isinstance(parts, dict) or not parts or (args.part and args.part not in parts):

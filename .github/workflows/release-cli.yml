@@ -43,6 +43,8 @@ jobs:
           stack3="$prefix/bin/stack3"
           test "$("$stack3" --version)" = "${GITHUB_REF_NAME#cli-v}"
           cmp "$GITHUB_WORKSPACE/skills/stack3/COMMAND.md" "$prefix/lib/node_modules/stack3js/COMMAND.md"
+          STACK3_TEST_CLI="$stack3" "$GITHUB_WORKSPACE/node_modules/.bin/tsx" --test \
+            "$GITHUB_WORKSPACE/apps/cli/test/verify.test.ts"
           "$stack3" example future-tank
           "$stack3" project get future-tank.stack3.json
           "$stack3" example traffic-cone

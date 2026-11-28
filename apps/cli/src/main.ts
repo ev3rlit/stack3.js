@@ -8,6 +8,7 @@ import { loadStack } from './stack-input';
 import { buildFromPreparedViews } from './grid-build';
 import { DEFAULT_LAYERS, encodeGlb, encodeStack, inspectViews, prepareViews, reconstructionDimensions, respaceStack,
   type Settings, type ViewSet } from '@stack3/core';
+import { requireVerifiedViews } from './verification-gate';
 import { buildCacheKey, readBuildCache, writeBuildCache, type BuildOutput } from './build-cache';
 
 const HELP = `Usage: stack3 <verb> <input> [options]
@@ -51,6 +52,7 @@ Build options
   --layers <integer|native>  Vertical samples (default ${DEFAULT_LAYERS})
   --spacing <number>     Sprite stack spacing multiplier (default 1)
   --profile <name>       silhouette, round, or round-base
+  --verification <file>  Require a matching atlas PASS report before building
   --no-cache             Bypass the local build cache
   --resolution <integer|native>  Longer horizontal axis samples (default 96)
   --height <number>      Asset height in scene units (default 1)
@@ -123,7 +125,7 @@ async function main() {
     allowPositionals: true,
     options: {
       help: { type: 'boolean', short: 'h' }, version: { type: 'boolean', short: 'v' }, layout: { type: 'string' },
-      format: { type: 'string' }, target: { type: 'string' },
+      format: { type: 'string' }, target: { type: 'string' }, verification: { type: 'string' },
       output: { type: 'string', short: 'o' }, layers: { type: 'string' }, resolution: { type: 'string' },
       height: { type: 'string' }, pivot: { type: 'string' }, threshold: { type: 'string' },
       'texture-projection': { type: 'string' },
@@ -138,6 +140,7 @@ async function main() {
   }
   if (values.help || positionals.length === 0) { console.log(HELP); return; }
   const [verb, input] = positionals;
+  if (values.verification !== undefined && verb !== 'build') throw new Error('--verification requires stack3 build.');
   if (values.guide !== undefined && verb !== 'mesh') throw new Error('--guide requires stack3 mesh.');
   if (verb === 'example' && positionals.length === 2) {
     await copyExample(input, values.output);
@@ -201,7 +204,11 @@ async function main() {
   if ((meshMethod || values['contour-hub']) && format !== 'glb') throw new Error('Mesh methods require GLB output.');
   if (values['contour-hub'] && meshMethod !== 'contour') throw new Error('--contour-hub requires --mesh-method contour.');
   if (meshMethod === 'contour' && profile && profile !== 'silhouette') throw new Error('Contour extrusion uses the FRONT silhouette.');
-  const views = prepareViews(await readInput(input, values.layout, threshold), threshold);
+  const sourceHashes = values.verification === undefined ? undefined : new Map<string, string>();
+  const views = prepareViews(await readInput(input, values.layout, threshold, sourceHashes), threshold);
+  if (values.verification !== undefined && sourceHashes) {
+    await requireVerifiedViews(values.verification, views, sourceHashes);
+  }
   const { nativeSamples } = inspectViews(views);
   const settings: Settings = {
     textureProjection, meshMethod, contourHub: values['contour-hub'],

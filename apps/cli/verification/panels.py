@@ -1,4 +1,6 @@
 """Orthographic registration in pixel-center coordinates, without resampling source pixels."""
+from hashlib import sha256
+from io import BytesIO
 from pathlib import Path
 import math
 
@@ -37,9 +39,10 @@ class Panel:
         self.axes, self.signs = AXES[view], SIGNS[view]
         path = folder / config["image"]
         if path not in images:
-            with Image.open(path) as source:
-                images[path] = source.convert("RGBA")
-        img = images[path]
+            raw = path.read_bytes()
+            with Image.open(BytesIO(raw)) as source:
+                images[path] = (source.convert("RGBA"), sha256(raw).hexdigest())
+        img, self.source_hash = images[path]
         if "crop" in config:
             x, y, w, h = config["crop"]
             if any(type(n) is not int for n in (x, y, w, h)) or min(x, y) < 0 or min(w, h) < 1 or x+w > img.width or y+h > img.height:
@@ -59,6 +62,13 @@ class Panel:
             raise ValueError(f"{view}: mask must be alpha or white")
         if not self.mask.any():
             raise ValueError(f"{view}: empty foreground")
+        ys, xs = np.nonzero(self.mask)
+        bounds = (slice(ys.min(), ys.max()+1), slice(xs.min(), xs.max()+1))
+        visible = pixels[bounds].copy()
+        visible[~self.mask[bounds]] = 0
+        h, w = visible.shape[:2]
+        self.fingerprint = dict(sourceSha256=self.source_hash,
+                                viewSha256=sha256(f"{w}x{h}:".encode() + visible.tobytes()).hexdigest())
         self.image = Image.new("RGB", img.size, "white")
         self.image.paste(img, mask=img.getchannel("A"))
         self.origin = point(config["origin"], f"{view}.origin") if "origin" in config else None

@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
 import { PNG } from 'pngjs';
 
-const cli = fileURLToPath(new URL('../bin/stack3.mjs', import.meta.url));
+const cli = process.env.STACK3_TEST_CLI ?? fileURLToPath(new URL('../bin/stack3.mjs', import.meta.url));
 
 test('registered atlas and assembly distinguish three independent faults at known coordinates', t => {
   const dir = mkdtempSync(join(tmpdir(), 'stack3-verify-'));
@@ -29,7 +29,12 @@ test('registered atlas and assembly distinguish three independent faults at know
   const save = (name: string, obj: unknown) => writeFileSync(join(dir,name+'.yaml'), JSON.stringify(obj));
   const atlas = {kind:'atlas', tolerancePx:0,
     views:Object.fromEntries(views.map((v,i) => [v,{image:v+'.png', origin:origins[i], scale:1}])),
-    landmarks:[{id:'wingtip',points:{top:[18,5],front:[18,16],left:[18,16],rear:null}}]};
+    landmarks:[{id:'wingtip',points:{top:[18,5],front:[18,16],left:[18,16],rear:null}}],
+    axisPairs: Object.fromEntries(views.map((v,i) => [v,[{
+      points: [[[5,5],[18,16],[5,16],[18,16]][i], [[5,5],[18,16],[5,16],[18,16]][i]],
+      evidence: 'Known axis-aligned solid edges in the synthetic source'
+    }]]))
+  };
   save('atlas', atlas);
   function run(resource: string, manifest: string, ...args: string[]) {
     const r = spawnSync(process.execPath,[cli,'verify',...(resource ? [resource] : []),'-f',manifest+'.yaml',...args],{cwd:dir,encoding:'utf8'});
@@ -37,7 +42,49 @@ test('registered atlas and assembly distinguish three independent faults at know
     return JSON.parse(r.stdout);
   }
   const normal = run('','atlas','--output-dir','qa');
-  assert.equal('status' in normal,false);
+  assert.equal(normal.acceptance.verdict,'PASS');
+  assert.ok(normal.overlays.includes('atlas-guides.png'));
+  writeFileSync(join(dir,'views.json'),JSON.stringify({views:Object.fromEntries(views.map(v=>[v,v+'.png']))}));
+  const build = (report = 'qa/report.json', output = 'stack') => spawnSync(process.execPath,
+    [cli,'build','views.json','--verification',report,'--format','stack','--output',output,
+      '--layers','8','--resolution','16','--no-cache'],{cwd:dir,encoding:'utf8'});
+  function rejectsBuild(report: string, message: RegExp) {
+    const result = build(report, 'rejected-stack');
+    assert.equal(result.status, 1, result.stderr);
+    assert.match(result.stderr, message);
+    assert.equal(existsSync(join(dir, 'rejected-stack')), false);
+  }
+  const accepted = build();
+  assert.equal(accepted.status, 0, accepted.stderr);
+  assert.ok(existsSync(join(dir, 'stack/stack.png')));
+  const extraView = structuredClone(normal);
+  extraView.acceptance.inputs.bottom = extraView.acceptance.inputs.top;
+  writeFileSync(join(dir,'qa/extra-view.json'),JSON.stringify(extraView));
+  rejectsBuild('qa/extra-view.json', /set of atlas views/);
+  const sheet = new PNG({width:n*4,height:n});
+  images.forEach((image,i) => PNG.bitblt(image,sheet,0,0,n,n,i*n,0));
+  writeFileSync(join(dir,'atlas.png'),PNG.sync.write(sheet));
+  save('sheet',{...atlas,views:Object.fromEntries(views.map((view,i)=>[
+    view,{image:'atlas.png',crop:[i*n,0,n,n],origin:origins[i],scale:1}
+  ]))});
+  assert.equal(run('','sheet','--output-dir','sheet-qa').acceptance.verdict,'PASS');
+  const guardedBuild = spawnSync(process.execPath,[cli,'build','atlas.png','--layout',views.join(','),
+    '--verification','sheet-qa/report.json','--format','stack','--output','sheet-stack',
+    '--layers','8','--resolution','16','--no-cache'],{cwd:dir,encoding:'utf8'});
+  assert.equal(guardedBuild.status,0,guardedBuild.stderr);
+
+  writeFileSync(join(dir,'sheet-qa/atlas-guides.png'),'stale');
+  rejectsBuild('sheet-qa/report.json', /guide is missing or stale/);
+  rmSync(join(dir,'sheet-qa/atlas-guides.png'));
+  rejectsBuild('sheet-qa/report.json', /guide is missing or stale/);
+  atlas.axisPairs.front[0].points[1] = [6,16];
+  save('atlas',atlas);
+  const tilted = run('','atlas','--output-dir','tilted');
+  assert.equal(tilted.acceptance.verdict,'FAIL');
+  assert.equal(tilted.acceptance.checks.cameras.views.front[0].errorPx,1);
+  rejectsBuild('tilted/report.json', /requires a PASS report/);
+  atlas.axisPairs.front[0].points[1] = [5,16];
+  save('atlas',atlas);
   assert.equal(normal.results.projections.views.front.unsupportedSamples,0);
   assert.deepEqual(normal.results.landmarks.landmarks[0].hidden,['rear']);
   assert.deepEqual(JSON.parse(readFileSync(join(dir,'qa/report.json'),'utf8')),normal);
@@ -48,6 +95,7 @@ test('registered atlas and assembly distinguish three independent faults at know
   const old = 4*(16*n+18)+3, shifted = 4*(10*n+18)+3;
   front.data[old] = 0; front.data[shifted] = 255;
   savePanels();
+  rejectsBuild('qa/report.json', /current FRONT input and mask/);
   const broken = run('atlas','atlas','--check','projections').results.projections;
   assert.ok(broken.views.front.unsupportedSamples > 0);
   const tip = broken.views.front.runs.map((r: {sample: unknown})=>r.sample).find((s: {pixel: number[]})=>String(s.pixel)==='18,10');
@@ -94,6 +142,7 @@ test('registered atlas and assembly distinguish three independent faults at know
   delete atlas.views.top.origin;
   save('unregistered',{views:atlas.views});
   const missing = run('','unregistered');
+  assert.equal(missing.acceptance.verdict,'UNCONFIRMED');
   assert.equal(missing.results.projections.status,'registration-needed');
   assert.equal(missing.results.landmarks.status,'skipped');
 });

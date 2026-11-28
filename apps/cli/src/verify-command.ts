@@ -5,6 +5,7 @@ import { parseArgs } from 'node:util';
 const help = `stack3 verify -f <manifest.yaml> [--output-dir <dir>]
   Print one JSON measurement report to stdout.
   Atlas: projections and landmarks. Assembly: whole and part atlases plus mount measurements.
+  A full atlas run reports an acceptance verdict. Use --output-dir to prepare a report for build --verification.
   --output-dir <dir>  Also save report.json and annotated PNG overlays
   -f, --file          Image and child manifest paths are relative to their YAML file.`;
 
