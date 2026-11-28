@@ -1,0 +1,82 @@
+{
+  "blender": "5.2.4 LTS",
+  "sha256": "c64f211e644db93b5feb46c39ef90fe50dcd6d8d5f4186a35adeac514bb38895",
+  "triangleBudget": 2400,
+  "passes": true,
+  "errors": [],
+  "triangles": 2356,
+  "boundaryEdges": 0,
+  "nonmanifoldEdges": 0,
+  "inconsistentEdges": 0,
+  "zeroArea": 0,
+  "pockets": {
+    "upper-left-through-bore": {
+      "throughExpected": true,
+      "throughAtCenter": true,
+      "expectedDepthMm": null,
+      "depthMm": null,
+      "mouthIou": 0.9995,
+      "mouthBoundingBoxIou": 0.9995
+    },
+    "lower-left-triangular-pocket": {
+      "throughExpected": false,
+      "throughAtCenter": false,
+      "expectedDepthMm": 10.0,
+      "depthMm": 9.9999,
+      "mouthIou": 0.9986,
+      "mouthBoundingBoxIou": 0.8719
+    },
+    "central-hexagonal-pocket": {
+      "throughExpected": false,
+      "throughAtCenter": false,
+      "expectedDepthMm": 14.0,
+      "depthMm": 13.9999,
+      "mouthIou": 0.9994,
+      "mouthBoundingBoxIou": 0.9888
+    },
+    "upper-right-square-pocket": {
+      "throughExpected": false,
+      "throughAtCenter": false,
+      "expectedDepthMm": 15.0,
+      "depthMm": 15.0,
+      "mouthIou": 1.0,
+      "mouthBoundingBoxIou": 0.8791
+    },
+    "lower-right-tapered-pocket": {
+      "throughExpected": false,
+      "throughAtCenter": false,
+      "expectedDepthMm": 12.0,
+      "depthMm": 11.9998,
+      "mouthIou": 0.9834,
+      "mouthBoundingBoxIou": 0.9834
+    }
+  },
+  "bosses": {
+    "tapered-post": {
+      "heightMm": 15.9996,
+      "expectedHeightMm": 16,
+      "footprintIou": 0.9982
+    },
+    "cylindrical-post": {
+      "heightMm": 19.998,
+      "expectedHeightMm": 20,
+      "footprintIou": 0.9898
+    },
+    "hexagonal-post": {
+      "heightMm": 13.9998,
+      "expectedHeightMm": 14,
+      "footprintIou": 0.9666
+    },
+    "triangular-post": {
+      "heightMm": 14.9997,
+      "expectedHeightMm": 15,
+      "footprintIou": 0.9989
+    },
+    "cube": {
+      "heightMm": 15.0,
+      "expectedHeightMm": 15,
+      "footprintIou": 1.0
+    }
+  },
+  "raisedComponents": 5
+}

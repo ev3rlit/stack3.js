@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=../schema/pipeline.schema.json
+version: 1
+values:
+  stack: ../measured-depth/triple-dexel/inputs/stack
+  dexel: ../measured-depth/triple-dexel/dexel.guide.json
+  output: ./out/regularized.glb
+nodes:
+  - { id: source, type: load-stack, path: '{{ .Values.stack }}' }
+  - id: fitted
+    type: extract-mesh
+    method: hermite-dc
+    input: source
+    guide: '{{ .Values.dexel }}'
+    finish:
+      regularization:
+        tolerance: 0.01
+        features:
+          - id: front
+            type: plane
+            normal: [0, 1, 0]
+            bounds: [[-0.46, 0.410, 0.02], [0.46, 0.422, 0.64]]
+          - id: side
+            type: plane
+            normal: [1, 0, 0]
+            bounds: [[0.494, -0.38, 0.02], [0.505, 0.38, 0.64]]
+          - id: bore
+            type: cylinder
+            center: [0.3333333, 0, 0.4833333]
+            axis: [0, 1, 0]
+            radius: 0.125
+            bounds: [[0.19, -0.38, 0.34], [0.475, 0.38, 0.63]]
+          - id: bore-rim
+            type: circle
+            center: [0.3333333, 0.4166667, 0.4833333]
+            axis: [0, 1, 0]
+            radius: 0.125
+          - id: square-rim
+            type: polygon
+            corners:
+              - [-0.4416667, 0.4166667, 0.3583333]
+              - [-0.1916667, 0.4166667, 0.3583333]
+              - [-0.1916667, 0.4166667, 0.6083333]
+              - [-0.4416667, 0.4166667, 0.6083333]
+        relations:
+          - { type: perpendicular, features: [front, side] }
+  - { id: export, type: write-glb, input: fitted, path: '{{ .Values.output }}', lit: true }

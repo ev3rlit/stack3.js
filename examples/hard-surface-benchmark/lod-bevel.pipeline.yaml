@@ -1,0 +1,258 @@
+# yaml-language-server: $schema=../../apps/cli/schema/pipeline.schema.json
+version: 1
+values:
+  stack: ./inputs/stack
+  guide: ./inputs/dexel.guide.json
+  output: ./out/lod.glb
+  preTriangleBudget: 1900
+  triangleBudget: 2400
+  bevelWidth: 0.0025
+nodes:
+  - id: source
+    type: load-stack
+    path: "{{ .Values.stack }}"
+  - id: regularized
+    type: extract-mesh
+    input: source
+    method: hermite-dc
+    guide: "{{ .Values.guide }}"
+    finish:
+      regularization:
+        tolerance: 0.006
+        features:
+          - id: front
+            type: plane
+            normal:
+              - 0
+              - 1
+              - 0
+            bounds:
+              - - -0.46
+                - 0.41
+                - 0.02
+              - - 0.46
+                - 0.422
+                - 0.64
+          - id: side
+            type: plane
+            normal:
+              - 1
+              - 0
+              - 0
+            bounds:
+              - - 0.494
+                - -0.38
+                - 0.02
+              - - 0.505
+                - 0.38
+                - 0.64
+          - id: upper-left-through-bore-rim
+            type: circle
+            center:
+              - 0.3333333333
+              - 0.4166666667
+              - 0.4833333333
+            axis:
+              - 0
+              - 1
+              - 0
+            radius: 0.125
+          - id: lower-left-triangular-pocket-rim
+            type: polygon
+            corners:
+              - - 0.2833333333
+                - 0.4166666667
+                - 0.3424500897
+              - - 0.45
+                - 0.4166666667
+                - 0.0537749551
+              - - 0.1166666667
+                - 0.4166666667
+                - 0.0537749551
+          - id: central-hexagonal-pocket-rim
+            type: polygon
+            corners:
+              - - -0.1783333333
+                - 0.4166666667
+                - 0.3333333333
+              - - -0.095
+                - 0.4166666667
+                - 0.4776709006
+              - - 0.0716666667
+                - 0.4166666667
+                - 0.4776709006
+              - - 0.155
+                - 0.4166666667
+                - 0.3333333333
+              - - 0.0716666667
+                - 0.4166666667
+                - 0.188995766
+              - - -0.095
+                - 0.4166666667
+                - 0.188995766
+          - id: upper-right-square-pocket-rim
+            type: polygon
+            corners:
+              - - -0.4416666667
+                - 0.4166666667
+                - 0.6083333333
+              - - -0.1916666667
+                - 0.4166666667
+                - 0.6083333333
+              - - -0.1916666667
+                - 0.4166666667
+                - 0.3583333333
+              - - -0.4416666667
+                - 0.4166666667
+                - 0.3583333333
+          - id: lower-right-tapered-pocket-rim
+            type: circle
+            center:
+              - -0.35
+              - 0.4166666667
+              - 0.2
+            axis:
+              - 0
+              - 1
+              - 0
+            radius: 0.125
+          - id: tapered-post-rim
+            type: circle
+            center:
+              - 0.3333333333
+              - -0.2166666667
+              - 0.9333333333
+            axis:
+              - 0
+              - 0
+              - 1
+            radius: 0.08333333333333333
+          - id: cylindrical-post-rim
+            type: circle
+            center:
+              - -0.2166666667
+              - -0.2166666667
+              - 1
+            axis:
+              - 0
+              - 0
+              - 1
+            radius: 0.125
+          - id: hexagonal-post-rim
+            type: polygon
+            corners:
+              - - -0.1226869322
+                - 0.0708333333
+                - 0.9
+              - - -0
+                - 0.1416666667
+                - 0.9
+              - - 0.1226869322
+                - 0.0708333333
+                - 0.9
+              - - 0.1226869322
+                - -0.0708333333
+                - 0.9
+              - - 0
+                - -0.1416666667
+                - 0.9
+              - - -0.1226869322
+                - -0.0708333333
+                - 0.9
+          - id: triangular-post-rim
+            type: polygon
+            corners:
+              - - 0.2833333333
+                - 0.065
+                - 0.9166666667
+              - - 0.1664199038
+                - 0.2675
+                - 0.9166666667
+              - - 0.4002467628
+                - 0.2675
+                - 0.9166666667
+          - id: cube-rim
+            type: polygon
+            corners:
+              - - -0.4416666667
+                - 0.3416666667
+                - 0.9166666667
+              - - -0.1916666667
+                - 0.3416666667
+                - 0.9166666667
+              - - -0.1916666667
+                - 0.0916666667
+                - 0.9166666667
+              - - -0.4416666667
+                - 0.0916666667
+                - 0.9166666667
+          - id: bore-wall
+            type: cylinder
+            center:
+              - 0.3333333333
+              - 0
+              - 0.4833333333
+            axis:
+              - 0
+              - 1
+              - 0
+            radius: 0.125
+            bounds:
+              - - 0.2
+                - -0.3833333333
+                - 0.35
+              - - 0.4666666667
+                - 0.3833333333
+                - 0.6166666667
+          - id: post-wall
+            type: cylinder
+            center:
+              - -0.2166666667
+              - -0.2166666667
+              - 0.8333333333
+            axis:
+              - 0
+              - 0
+              - 1
+            radius: 0.125
+            bounds:
+              - - -0.35
+                - -0.35
+                - 0.7
+              - - -0.0833333333
+                - -0.0833333333
+                - 0.9833333333
+        relations:
+          - type: perpendicular
+            features:
+              - front
+              - side
+      triangleBudget: "{{ .Values.triangleBudget }}"
+      bevelWidth: "{{ .Values.bevelWidth }}"
+      bevelSegments: 2
+      lodBevel:
+        preTriangleBudget: "{{ .Values.preTriangleBudget }}"
+        rims:
+          - id: through-bore
+            axis: y
+            center:
+              - 0.3333333333333333
+              - 0.4166666666666667
+              - 0.48333333333333334
+            radius: 0.125
+            radialTolerance: 0.009
+            axialTolerance: 0.007
+          - id: cylindrical-post
+            axis: z
+            center:
+              - -0.21666666666666667
+              - -0.21666666666666667
+              - 1
+            radius: 0.125
+            radialTolerance: 0.009
+            axialTolerance: 0.007
+  - id: export
+    type: write-glb
+    input: regularized
+    path: "{{ .Values.output }}"
+    lit: true

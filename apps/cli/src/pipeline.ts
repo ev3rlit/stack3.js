@@ -8,7 +8,8 @@ import { readInput } from './atlas-input';
 import { readSurfaceCache, writeBuildCache } from './build-cache';
 import { printPipelineSchema } from './capabilities';
 import { buildFromPreparedViews } from './grid-build';
-import { isCoreMeshMethod, isStackMeshMethod, readStackMesh, type MeshMethod, type SurfaceFinish } from './part-mesh';
+import { isCoreMeshMethod, isStackMeshMethod, readStackMesh, type LodBevel, type MeshMethod, type RegularizationFeature,
+  type SurfaceFinish, type SurfaceRegularization } from './part-mesh';
 import { loadStack } from './stack-input';
 
 type Mapping = Record<string, unknown>;
@@ -90,11 +91,99 @@ function optionalBoolean(value: unknown, name: string): boolean | undefined {
   throw new Error(`${name} must be a boolean.`);
 }
 
+function xyzPoint(value: unknown, label: string): [number, number, number] {
+  if (!Array.isArray(value) || value.length !== 3 || value.some(v => typeof v !== 'number' || !Number.isFinite(v))) {
+    throw new Error(`${label} must be three finite XYZ numbers.`);
+  }
+  return [value[0], value[1], value[2]];
+}
+
+function parseRegularization(value: unknown, name: string): SurfaceRegularization {
+  const options = mapping(value, name, ['tolerance', 'features', 'relations']);
+  const { tolerance } = options;
+  if (typeof tolerance !== 'number' || !Number.isFinite(tolerance) || tolerance <= 0) throw new Error(`${name}.tolerance must be positive.`);
+  if (!Array.isArray(options.features) || !options.features.length) throw new Error(`${name}.features must be a nonempty list.`);
+  const features = options.features.map((value, index): RegularizationFeature => {
+    const label = `${name}.features[${index}]`;
+    const entry = mapping(value, label);
+    const id = requiredText(entry.id, `${label}.id`);
+    const fields = (...keys: string[]) => mapping(entry, label, ['id', 'type', ...keys]);
+    const direction = (key: string) => {
+      const result = xyzPoint(entry[key], `${label}.${key}`);
+      if (!Math.hypot(...result)) throw new Error(`${label}.${key} must be nonzero.`);
+      return result;
+    };
+    const bounds = (): [[number, number, number], [number, number, number]] => {
+      if (!Array.isArray(entry.bounds) || entry.bounds.length !== 2) throw new Error(`${label}.bounds must contain minimum and maximum XYZ points.`);
+      const minimum = xyzPoint(entry.bounds[0], `${label}.bounds[0]`), maximum = xyzPoint(entry.bounds[1], `${label}.bounds[1]`);
+      if (minimum.some((v, i) => v > maximum[i])) throw new Error(`${label}.bounds minimum must not exceed maximum.`);
+      return [minimum, maximum];
+    };
+    if (entry.type === 'plane') {
+      fields('normal', 'bounds');
+      return { id, type: entry.type, normal: direction('normal'), bounds: bounds() };
+    }
+    if (entry.type === 'circle' || entry.type === 'cylinder') {
+      fields('center', 'axis', 'radius', ...(entry.type === 'cylinder' ? ['bounds'] : []));
+      const { radius } = entry;
+      if (typeof radius !== 'number' || !Number.isFinite(radius) || radius <= 0) throw new Error(`${label}.radius must be positive.`);
+      const seed = { id, center: xyzPoint(entry.center, `${label}.center`), axis: direction('axis'), radius };
+      return entry.type === 'circle' ? { ...seed, type: 'circle' } : { ...seed, type: 'cylinder', bounds: bounds() };
+    }
+    if (entry.type === 'polygon') {
+      fields('corners');
+      if (!Array.isArray(entry.corners) || entry.corners.length < 3) throw new Error(`${label}.corners needs at least three ordered XYZ points.`);
+      return { id, type: 'polygon', corners: entry.corners.map((v, i) => xyzPoint(v, `${label}.corners[${i}]`)) };
+    }
+    throw new Error(`${label}.type must be plane, circle, cylinder or polygon.`);
+  });
+  const featureTypes = new Map(features.map(({ id, type }) => [id, type]));
+  if (featureTypes.size !== features.length) throw new Error(`${name}.features has a duplicate id.`);
+  const rawRelations = options.relations === undefined ? [] : options.relations;
+  if (!Array.isArray(rawRelations)) throw new Error(`${name}.relations must be a list.`);
+  const relations = rawRelations.map((value, i): SurfaceRegularization['relations'][number] => {
+    const label = `${name}.relations[${i}]`;
+    const relation = mapping(value, label, ['type', 'features']);
+    const { type, features: pair } = relation;
+    if (type !== 'parallel' && type !== 'perpendicular' && type !== 'coplanar') throw new Error(`${label}.type must be parallel, perpendicular or coplanar.`);
+    if (!Array.isArray(pair) || pair.length !== 2 || pair[0] === pair[1] || pair.some(id => featureTypes.get(id) !== 'plane')) {
+      throw new Error(`${label}.features must name two different plane features.`);
+    }
+    return { type, features: [pair[0], pair[1]] };
+  });
+  return { tolerance, features, relations };
+}
+
+function parseLodBevel(value: unknown, name: string, finalBudget: number): LodBevel {
+  const options = mapping(value, name, ['preTriangleBudget', 'rims']);
+  const { preTriangleBudget } = options;
+  if (typeof preTriangleBudget !== 'number' || !Number.isSafeInteger(preTriangleBudget) ||
+      preTriangleBudget < 4 || preTriangleBudget >= finalBudget) {
+    throw new Error(`${name}.preTriangleBudget must be an integer of at least 4 and lower than finish.triangleBudget.`);
+  }
+  if (!Array.isArray(options.rims) || !options.rims.length) throw new Error(`${name}.rims must be a nonempty list.`);
+  const rims = options.rims.map((value, i): LodBevel['rims'][number] => {
+    const label = `${name}.rims[${i}]`;
+    const rim = mapping(value, label, ['id', 'axis', 'center', 'radius', 'radialTolerance', 'axialTolerance']);
+    const { axis } = rim;
+    if (axis !== 'x' && axis !== 'y' && axis !== 'z') throw new Error(`${label}.axis must be x, y or z.`);
+    const positive = (key: string) => {
+      const n = rim[key];
+      if (typeof n !== 'number' || !Number.isFinite(n) || n <= 0) throw new Error(`${label}.${key} must be positive.`);
+      return n;
+    };
+    return { id: requiredText(rim.id, `${label}.id`), axis, center: xyzPoint(rim.center, `${label}.center`),
+      radius: positive('radius'), radialTolerance: positive('radialTolerance'), axialTolerance: positive('axialTolerance') };
+  });
+  if (new Set(rims.map(rim => rim.id)).size !== rims.length) throw new Error(`${name}.rims has a duplicate id.`);
+  return { preTriangleBudget, rims };
+}
+
 function parseFinish(value: unknown, id: string): SurfaceFinish | undefined {
   if (value === undefined) return;
   const limits = { fitTolerance: [0, Infinity], bevelWidth: [0, Infinity], bevelSegments: [0, 16],
     dissolveAngle: [0, 45], triangleBudget: [3, Infinity], aoRadius: [0, Infinity] } as const;
-  const config = mapping(value, `${id}.finish`, [...Object.keys(limits), 'primitives']);
+  const config = mapping(value, `${id}.finish`, [...Object.keys(limits), 'primitives', 'regularization', 'lodBevel']);
   const output: SurfaceFinish = {};
   for (const [key, [min, max]] of Object.entries(limits) as [keyof typeof limits, readonly [number, number]][]) {
     const number = config[key];
@@ -109,6 +198,13 @@ function parseFinish(value: unknown, id: string): SurfaceFinish | undefined {
   if (primitives !== undefined) output.primitives = primitives;
   if (primitives && !output.fitTolerance) throw new Error(`${id}.finish.primitives requires fitTolerance.`);
   if (output.bevelSegments && !output.bevelWidth) throw new Error(`${id}.finish.bevelSegments requires bevelWidth.`);
+  if (config.regularization !== undefined) output.regularization = parseRegularization(config.regularization, `${id}.finish.regularization`);
+  if (config.lodBevel !== undefined) {
+    if (output.triangleBudget === undefined || output.bevelWidth === undefined) {
+      throw new Error(`${id}.finish.lodBevel requires triangleBudget and bevelWidth.`);
+    }
+    output.lodBevel = parseLodBevel(config.lodBevel, `${id}.finish.lodBevel`, output.triangleBudget);
+  }
   return Object.keys(output).length ? output : undefined;
 }
 

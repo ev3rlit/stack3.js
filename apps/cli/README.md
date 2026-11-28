@@ -174,6 +174,29 @@ nodes:
 - Texture projection uses the saved RGB and runs after topology changes. Creases split the area-weighted vertex normals. AO is written as vertex color (`COLOR_0`). `lit: true` selects a diffuse PBR material. `instances` writes `EXT_mesh_gpu_instancing` with per-instance translations in glTF XYZ coordinates.
 - `cache: true` reuses processed geometry across runs using the stack, settings, guide and external field contents. Omit it when comparing different Blender or Python builds. Multiple outputs consuming one node share its in-memory result.
 
+### Guided geometry regularization
+
+Use `finish.regularization` to select measured features before optional bevel and QEM. The [regularization recipe](../../skills/stack3/references/hard-surface/finishing/regularize.pipeline.yaml) fits two planes, a bore wall and rim, and a polygonal pocket rim. It also optimizes a perpendicular relation. Regularization alone runs with the existing Python meshing environment.
+
+Coordinates are pivot-relative stack XYZ scene units. The `tolerance` controls sample selection and fitting. Each `features` entry has a unique `id` and one of these types.
+
+| Type | Fields | Operation |
+| --- | --- | --- |
+| `plane` | `bounds`, `normal` | Select a patch by its bounding box and normal hint, then fit an SVD plane. |
+| `circle` | `center`, `axis`, `radius` | Select a rim from a center and radius hint. Fit its center and radius in the plane perpendicular to the supplied axis. |
+| `cylinder` | `center`, `axis`, `radius`, `bounds` | Fit a center and radius for a bounded cylindrical wall with a fixed axis. |
+| `polygon` | `corners` | Supply ordered XYZ corner hints. Fit supporting lines on the contour's plane and check that adjacent lines meet near the supplied corners. |
+
+`bounds` contains minimum and maximum XYZ points. Optional `relations` entries use `type: parallel`, `perpendicular`, or `coplanar` and `features: [idA, idB]` to jointly refine two or more fitted planes. Relations are soft constraints backed by the sampled surface. A joint fit is rejected if its sample residual exceeds `tolerance`. Shared vertices are solved together. Moves longer than twice `tolerance` and moves incident to unsafe faces are discarded. Inspect the fitted and skipped feature IDs, solver diagnostics and actual mesh measurements after the run.
+
+### Selective rim bevel for LODs
+
+Set `finish.lodBevel` to run QEM before beveling selected circular rims. Supply `finish.triangleBudget` for the final cap and a smaller `lodBevel.preTriangleBudget` to leave room for bevel faces. `finish.bevelWidth` is required and `finish.bevelSegments` defaults to two.
+
+Each `rims` entry supplies an `id`, `axis` (`x`, `y`, or `z`), `center`, `radius`, `radialTolerance`, and `axialTolerance`. Coordinates are pivot-relative stack XYZ scene units. The axis is perpendicular to the rim plane. The remaining center coordinates locate the circle. Both endpoints of a selected crease must lie within the tolerances. Rims run in recipe order. The pipeline fails if a rim has no matching creases, an operation breaks closed topology, or the result exceeds the final budget.
+
+The [hard-surface benchmark](../../examples/hard-surface-benchmark/README.md) shows a verified configuration with Triple-Dexel, a 1,900-triangle pre-budget, and two selected rims within a 2,400-triangle final budget.
+
 ### Compare the two Dual Contouring methods
 
 `hermite-dc` uses boundary crossings and estimated normals. `signed-distance-dc` uses Carrera et al.'s maintained [Gpytoolbox implementation](https://gpytoolbox.org/0.3.8/dual_contouring_of_signed_distance_data/). uv resolves Gpytoolbox 0.3.8 for that method. When using `STACK3_PYTHON`, install Gpytoolbox 0.3.8 in the selected environment.

@@ -54,8 +54,12 @@ const stages = [
     description: 'Fit supported spherical and cylindrical patches.' },
   { name: 'Feature Boundary Stitching', options: ['fitTolerance'], backend: 'python',
     description: 'Solve shared boundary vertices together while fitting patches.' },
+  { name: 'Guided Geometry Regularization', options: ['regularization.tolerance', 'regularization.features', 'regularization.relations'], backend: 'python',
+    description: 'Fit selected planes, rim circles, fixed-axis cylinders and polygons. Jointly optimize explicit plane relations.' },
   { name: 'Procedural Bevel', options: ['bevelWidth', 'bevelSegments'], backend: 'blender',
     description: 'Bevel eligible edges in headless Blender.' },
+  { name: 'Selective Rim Bevel after QEM', options: ['lodBevel.preTriangleBudget', 'lodBevel.rims', 'triangleBudget', 'bevelWidth', 'bevelSegments'], backend: 'blender',
+    description: 'Reserve triangles with QEM, bevel specified circular rims, and verify the final budget and closed topology.' },
   { name: 'Mesh Optimization and LOD', options: ['dissolveAngle', 'triangleBudget'], backend: 'blender',
     description: 'Apply planar dissolve and QEM with topology checks. Use separate branches for LODs.' },
   { name: 'Multi-view Texture Projection', options: ['extract-mesh'], backend: 'node or python',
@@ -71,6 +75,8 @@ const stages = [
 const samples = [
   { id: 'atlas-preview', path: 'atlas/preview.pipeline.yaml', backends: ['node'] },
   { id: 'finish-lod', path: 'finishing/finish-lod.pipeline.yaml', backends: ['node', 'python', 'blender'] },
+  { id: 'guided-regularization', path: 'finishing/regularize.pipeline.yaml', backends: ['node', 'python'] },
+  { id: 'benchmark-beveled-lod', path: 'case-studies/benchmark/lod-bevel.pipeline.yaml', backends: ['node', 'python', 'blender'] },
   { id: 'triple-dexel', path: 'measured-depth/triple-dexel/compare.pipeline.yaml', backends: ['node', 'python'] },
   { id: 'signed-distance', path: 'measured-depth/sdf/compare.pipeline.yaml', backends: ['node', 'python', 'gpytoolbox'] },
 ] as const;

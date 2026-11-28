@@ -21,9 +21,13 @@ def bevel(bm, options):
     dissolve(bm, 0.001)
     edges = [edge for edge in bm.edges if edge.is_manifold and edge.calc_face_angle(0) > math.radians(40)]
     if edges:
-        bmesh.ops.bevel(bm, geom=edges, offset=options["bevelWidth"], segments=options.get("bevelSegments", 2),
-                       affect="EDGES", profile=0.5, clamp_overlap=True, loop_slide=True)
+        bevel_edges(bm, edges, options)
     print(f"bevel: {len(edges)} candidate creases")
+
+
+def bevel_edges(bm, edges, options):
+    return bmesh.ops.bevel(bm, geom=edges, offset=options["bevelWidth"], segments=options.get("bevelSegments", 2),
+                          affect="EDGES", profile=0.5, clamp_overlap=True, loop_slide=True)
 
 
 def mesh_arrays(mesh):
@@ -100,6 +104,50 @@ def simplify(mesh, budget):
     return bpy.data.meshes.new_from_object(evaluated)
 
 
+def bevel_rim(mesh, rim, options, signature):
+    axis = "xyz".index(rim["axis"])
+    u, v = (i for i in range(3) if i != axis)
+    center = rim["center"]
+
+    def near_rim(vertex):
+        point = vertex.co
+        distance = math.hypot(point[u] - center[u], point[v] - center[v])
+        return (abs(distance - rim["radius"]) < rim["radialTolerance"]
+                and abs(point[axis] - center[axis]) < rim["axialTolerance"])
+
+    def operation(bm):
+        edges = [edge for edge in bm.edges
+                 if edge.is_manifold and edge.calc_face_angle(0) > math.radians(26)
+                 and all(near_rim(vertex) for vertex in edge.verts)]
+        if not edges:
+            raise ValueError(f'LOD bevel rim {rim["id"]}: no matching crease edges')
+        faces = bevel_edges(bm, edges, options)["faces"]
+        if not faces:
+            raise ValueError(f'LOD bevel rim {rim["id"]}: bevel created no faces')
+        print(f'LOD bevel rim {rim["id"]}: {len(edges)} edges, {len(faces)} bevel faces', flush=True)
+
+    candidate = edit_mesh(mesh, operation)
+    if topology(candidate) != signature:
+        raise ValueError(f'LOD bevel rim {rim["id"]}: bevel changed the closed topology')
+    return candidate
+
+
+def lod_bevel(mesh, options, signature):
+    if "dissolveAngle" in options:
+        mesh = keep_closed(mesh, edit_mesh(mesh, lambda bm: dissolve(bm, options["dissolveAngle"])), signature, "planar dissolve")
+    plan = options["lodBevel"]
+    mesh = simplify(mesh, plan["preTriangleBudget"])
+    if topology(mesh) != signature or len(mesh.loop_triangles) > plan["preTriangleBudget"]:
+        raise ValueError("LOD bevel: pre-bevel QEM did not meet its triangle budget with closed topology")
+    print(f"LOD bevel: pre-QEM {len(mesh.loop_triangles)} triangles", flush=True)
+    for rim in plan["rims"]:
+        mesh = bevel_rim(mesh, rim, options, signature)
+    triangles, budget = len(mesh.loop_triangles), options["triangleBudget"]
+    if triangles > budget:
+        raise ValueError(f"LOD bevel: {triangles} triangles exceed finish.triangleBudget {budget}; lower preTriangleBudget to leave room for bevels")
+    return mesh
+
+
 def ambient_occlusion(mesh, vertices, triangles, radius):
     bvh = BVHTree.FromPolygons(vertices.tolist(), triangles.tolist(), all_triangles=True)
     epsilon = max(float(np.ptp(vertices, axis=0).max()) * 1e-6, 1e-8)
@@ -135,12 +183,15 @@ def main(folder):
     signature = topology(mesh)
     if signature is None:
         raise ValueError("input is not a closed, nondegenerate Blender surface")
-    if "bevelWidth" in options:
-        mesh = keep_closed(mesh, edit_mesh(mesh, lambda bm: bevel(bm, options)), signature, "bevel")
-    if "dissolveAngle" in options:
-        mesh = keep_closed(mesh, edit_mesh(mesh, lambda bm: dissolve(bm, options["dissolveAngle"])), signature, "planar dissolve")
-    if "triangleBudget" in options:
-        mesh = keep_closed(mesh, simplify(mesh, options["triangleBudget"]), signature, "QEM")
+    if "lodBevel" in options:
+        mesh = lod_bevel(mesh, options, signature)
+    else:
+        if "bevelWidth" in options:
+            mesh = keep_closed(mesh, edit_mesh(mesh, lambda bm: bevel(bm, options)), signature, "bevel")
+        if "dissolveAngle" in options:
+            mesh = keep_closed(mesh, edit_mesh(mesh, lambda bm: dissolve(bm, options["dissolveAngle"])), signature, "planar dissolve")
+        if "triangleBudget" in options:
+            mesh = keep_closed(mesh, simplify(mesh, options["triangleBudget"]), signature, "QEM")
     vertices, faces = mesh_arrays(mesh)
     output = {"vertices": vertices, "faces": faces}
     if "aoRadius" in options:

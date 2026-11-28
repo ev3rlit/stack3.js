@@ -27,6 +27,66 @@
     "bool": { "anyOf": [{ "type": "boolean" }, { "$ref": "#/$defs/scalarReference" }] },
     "number": { "anyOf": [{ "type": "number" }, { "$ref": "#/$defs/scalarReference" }] },
     "positive": { "anyOf": [{ "type": "number", "exclusiveMinimum": 0 }, { "$ref": "#/$defs/scalarReference" }] },
+    "xyz": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "$ref": "#/$defs/number" } },
+    "bounds": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "$ref": "#/$defs/xyz" } },
+    "triangleBudget": { "anyOf": [{ "type": "integer", "minimum": 4, "maximum": 9007199254740991 }, { "$ref": "#/$defs/scalarReference" }] },
+    "lodBevel": {
+      "type": "object", "additionalProperties": false, "required": ["preTriangleBudget", "rims"],
+      "description": "Run QEM before beveling selected circular rims. The export must fit finish.triangleBudget.",
+      "properties": {
+        "preTriangleBudget": { "$ref": "#/$defs/triangleBudget" },
+        "rims": { "type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "axis", "center", "radius", "radialTolerance", "axialTolerance"],
+          "properties": {
+            "id": { "$ref": "#/$defs/text" },
+            "axis": { "enum": ["x", "y", "z"] },
+            "center": { "$ref": "#/$defs/xyz" },
+            "radius": { "$ref": "#/$defs/positive" },
+            "radialTolerance": { "$ref": "#/$defs/positive" },
+            "axialTolerance": { "$ref": "#/$defs/positive" }
+          }
+        } }
+      }
+    },
+    "regularization": {
+      "type": "object", "additionalProperties": false, "required": ["tolerance", "features"],
+      "properties": {
+        "tolerance": { "$ref": "#/$defs/positive", "description": "Surface selection and fitting tolerance in stack scene units." },
+        "features": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false, "required": ["id", "type"],
+            "properties": {
+              "id": { "$ref": "#/$defs/text" },
+              "type": { "enum": ["plane", "circle", "cylinder", "polygon"] },
+              "normal": { "$ref": "#/$defs/xyz" },
+              "bounds": { "$ref": "#/$defs/bounds" },
+              "center": { "$ref": "#/$defs/xyz" },
+              "axis": { "$ref": "#/$defs/xyz" },
+              "radius": { "$ref": "#/$defs/positive" },
+              "corners": { "type": "array", "minItems": 3, "items": { "$ref": "#/$defs/xyz" } }
+            },
+            "allOf": [
+              { "if": { "properties": { "type": { "const": "plane" } } }, "then": { "required": ["normal", "bounds"], "propertyNames": { "enum": ["id", "type", "normal", "bounds"] } } },
+              { "if": { "properties": { "type": { "const": "circle" } } }, "then": { "required": ["center", "axis", "radius"], "propertyNames": { "enum": ["id", "type", "center", "axis", "radius"] } } },
+              { "if": { "properties": { "type": { "const": "cylinder" } } }, "then": { "required": ["center", "axis", "radius", "bounds"], "propertyNames": { "enum": ["id", "type", "center", "axis", "radius", "bounds"] } } },
+              { "if": { "properties": { "type": { "const": "polygon" } } }, "then": { "required": ["corners"], "propertyNames": { "enum": ["id", "type", "corners"] } } }
+            ]
+          }
+        },
+        "relations": {
+          "type": "array", "items": {
+            "type": "object", "additionalProperties": false, "required": ["type", "features"],
+            "properties": {
+              "type": { "enum": ["parallel", "perpendicular", "coplanar"] },
+              "features": { "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": { "$ref": "#/$defs/text" } }
+            }
+          },
+          "description": "Optional soft relations between two fitted plane features."
+        }
+      }
+    },
     "method": {
       "enum": [
         "marching-cubes", "surface-nets", "voxel", "section-loft", "heightfield", "smooth-loft", "revolve",
@@ -40,13 +100,15 @@
       "properties": {
         "fitTolerance": { "$ref": "#/$defs/positive", "description": "Maximum planar fitting residual in scene units." },
         "primitives": { "$ref": "#/$defs/bool", "description": "Fit supported sphere and cylinder regions." },
+        "regularization": { "$ref": "#/$defs/regularization" },
         "bevelWidth": { "$ref": "#/$defs/positive", "description": "Bevel offset in scene units." },
         "bevelSegments": { "anyOf": [{ "type": "integer", "minimum": 1, "maximum": 16 }, { "$ref": "#/$defs/scalarReference" }] },
         "dissolveAngle": { "anyOf": [{ "type": "number", "exclusiveMinimum": 0, "maximum": 45 }, { "$ref": "#/$defs/scalarReference" }] },
-        "triangleBudget": { "anyOf": [{ "type": "integer", "minimum": 4, "maximum": 9007199254740991 }, { "$ref": "#/$defs/scalarReference" }] },
+        "triangleBudget": { "$ref": "#/$defs/triangleBudget" },
+        "lodBevel": { "$ref": "#/$defs/lodBevel" },
         "aoRadius": { "$ref": "#/$defs/positive", "description": "Vertex ambient occlusion ray distance in scene units." }
       },
-      "dependentRequired": { "bevelSegments": ["bevelWidth"] },
+      "dependentRequired": { "bevelSegments": ["bevelWidth"], "lodBevel": ["bevelWidth", "triangleBudget"] },
       "if": { "required": ["primitives"], "properties": { "primitives": { "const": true } } },
       "then": { "required": ["fitTolerance"] }
     },

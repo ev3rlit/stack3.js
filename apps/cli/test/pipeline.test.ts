@@ -97,3 +97,31 @@ test('pipeline rejects invalid dependencies before writing any output', t => {
     assert.equal(existsSync(join(dir, 'release')), false);
   }
 });
+
+test('pipeline validates the QEM budget and selective bevel rims before extraction', t => {
+  const dir = mkdtempSync(join(tmpdir(), 'stack3-lod-bevel-'));
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const recipe = join(dir, 'pipeline.yaml');
+  const rim = { id: 'bore', axis: 'y', center: [0, 0.4, 0.5], radius: 0.125, radialTolerance: 0.009, axialTolerance: 0.007 };
+  const lodBevel = { preTriangleBudget: 1900, rims: [rim] };
+  const finish = { triangleBudget: 2400, bevelWidth: 0.0025, lodBevel };
+  const cases = [
+    [{ ...finish, triangleBudget: 1900 }, /preTriangleBudget.*lower than finish\.triangleBudget/],
+    [{ triangleBudget: 2400, lodBevel }, /lodBevel requires triangleBudget and bevelWidth/],
+    [{ bevelWidth: 0.0025, lodBevel }, /lodBevel requires triangleBudget and bevelWidth/],
+    [{ ...finish, lodBevel: { ...lodBevel, rims: [{ ...rim, axis: 'vertical' }] } }, /axis must be x, y or z/],
+    [{ ...finish, lodBevel: { ...lodBevel, rims: [rim, rim] } }, /rims has a duplicate id/],
+  ] as const;
+  for (const [invalid, message] of cases) {
+    const nodes = [
+      { id: 'source', type: 'load-stack', path: 'missing' },
+      { id: 'mesh', type: 'extract-mesh', input: 'source', method: 'hermite-dc', finish: invalid },
+      { id: 'export', type: 'write-glb', input: 'mesh', path: 'out/model.glb' },
+    ];
+    writeFileSync(recipe, stringify({ version: 1, nodes }, { aliasDuplicateObjects: false }));
+    const result = spawnSync(process.execPath, [cli, 'pipeline', 'run', recipe], { cwd: dir, encoding: 'utf8' });
+    assert.equal(result.status, 1, result.stderr);
+    assert.match(result.stderr, message);
+    assert.equal(existsSync(join(dir, 'out')), false);
+  }
+});

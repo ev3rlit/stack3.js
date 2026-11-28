@@ -14,11 +14,31 @@ export const partMethods = [
 ] as const;
 
 export type MeshMethod = StackMeshMethod | typeof partMethods[number];
+type Point = [number, number, number];
+type Bounds = [Point, Point];
+export type RegularizationFeature = { id: string } & (
+  | { type: 'plane'; normal: Point; bounds: Bounds }
+  | { type: 'circle'; center: Point; axis: Point; radius: number }
+  | { type: 'cylinder'; center: Point; axis: Point; radius: number; bounds: Bounds }
+  | { type: 'polygon'; corners: Point[] }
+);
+export type SurfaceRegularization = {
+  tolerance: number;
+  features: RegularizationFeature[];
+  relations: { type: 'parallel' | 'perpendicular' | 'coplanar'; features: [string, string] }[];
+};
+export type LodBevel = {
+  preTriangleBudget: number;
+  rims: { id: string; axis: 'x' | 'y' | 'z'; center: Point; radius: number;
+    radialTolerance: number; axialTolerance: number }[];
+};
 export type SurfaceFinish = {
   fitTolerance?: number;
   primitives?: boolean;
+  regularization?: SurfaceRegularization;
   bevelWidth?: number;
   bevelSegments?: number;
+  lodBevel?: LodBevel;
   dissolveAngle?: number;
   triangleBudget?: number;
   aoRadius?: number;

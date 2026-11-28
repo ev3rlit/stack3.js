@@ -131,6 +131,10 @@ def finish_surface(mesh, step, origin, options, folder, blender):
     original = topology(world, faces)
     if "fitTolerance" in options:
         world = fit_features(world, faces, options["fitTolerance"], options.get("primitives", False))
+    if "regularization" in options:
+        from regularization import regularize
+
+        world = regularize(world, faces, options["regularization"])
     occlusion = None
     if any(name in options for name in ("bevelWidth", "dissolveAngle", "triangleBudget", "aoRadius")):
         data = folder / "geometry.npz"

@@ -1,0 +1,15 @@
+kind: atlas
+tolerancePx: 1
+# Nominal common scale, measured centerline, back edge and ground.
+views:
+  top: {image: benchmark-4view.png, crop: [0, 0, 543, 724], mask: white, threshold: 195, origin: [272.5, 197], scale: 1}
+  left: {image: benchmark-4view.png, crop: [543, 0, 543, 724], mask: white, threshold: 195, origin: [467, 588], scale: 1}
+  front: {image: benchmark-4view.png, crop: [1086, 0, 543, 724], mask: white, threshold: 195, origin: [267, 588], scale: 1}
+  rear: {image: benchmark-4view.png, crop: [1629, 0, 543, 724], mask: white, threshold: 195, origin: [274, 588], scale: 1}
+landmarks:
+  - id: tall-cylinder-top-center
+    points:
+      top: [387, 285]
+      left: [378, 150]
+      front: [338, 150]
+      rear: [208, 150]
