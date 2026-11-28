@@ -41,3 +41,15 @@ export async function openBlenderStack(directory: string, output: string | undef
     if (!keepPreview) await rm(scratch, { recursive: true, force: true });
   }
 }
+
+export async function captureDexel(stack: string, source: string, output: string) {
+  const script = fileURLToPath(new URL('../meshing/capture_dexel.py', import.meta.url));
+  const { stdout } = await promisify(execFile)(blenderExecutable(), [
+    '-b', '--factory-startup', '--python-exit-code', '1', '-P', script, '--', stack, source, output,
+  ]).catch((error: NodeJS.ErrnoException & { stdout?: string; stderr?: string }) => {
+    throw new Error(error.code === 'ENOENT' ? 'Set BLENDER_BIN to the Blender executable for depth capture.'
+      : [error.stderr?.trim(), error.stdout?.trim()].filter(Boolean).join('\n') || error.message);
+  });
+  console.log(stdout.trim());
+  console.log(output);
+}

@@ -37,6 +37,8 @@ const meshInfo: Record<MeshMethod, { description: string; guideFields: string[] 
   'section-network': { description: 'Reconstruct using independently measured sections.', guideFields: ['sections', 'tolerance'] },
   greedy: { description: 'Merge adjoining voxel faces into rectangles.', guideFields: [] },
   monotone: { description: 'Triangulate merged voxel surface regions.', guideFields: [] },
+  organic: { description: 'Smooth a physical distance field, contour it and optionally smooth or adaptively remesh the surface.',
+    guideFields: ['field', 'dexel', 'sigma', 'extractor', 'interpolation', 'smoothingIterations', 'targetEdgeLength', 'adaptive', 'reproject', 'dexelOccupancy', 'depthRegions'] },
   'signed-distance-dc': { description: 'Carrera Dual Contouring of Signed Distance Data.', guideFields: ['field', 'outerIterations', 'innerIterations'] },
 };
 
@@ -46,6 +48,8 @@ const stages = [
     description: 'Carve occupancy from calibrated silhouettes or reopen saved RGBA slices.' },
   { name: 'SDF and Normal Estimation', options: ['hermite-dc', 'signed-distance-dc'], backend: 'python',
     description: 'Estimate normals or distances from occupancy, or use aligned SDF samples in guide.field.' },
+  { name: 'Triple-Dexel Capture and Depth Fusion', options: ['capture-dexel', 'dexelOccupancy', 'depthRegions'],
+    backend: 'blender and python', description: 'Capture a registered closed source or accept measured XYZ intervals. Rebuild measured occupancy globally or blend into specified local regions of a prior field.' },
   { name: 'Triple-Dexel Hermite Data', options: ['guide.dexel', 'hermite-dc'], backend: 'python',
     description: 'Use axis-aligned crossing positions and outward normals from a registered NPZ.' },
   { name: 'Feature Segmentation and Plane Fitting', options: ['fitTolerance'], backend: 'python',
@@ -60,6 +64,10 @@ const stages = [
     description: 'Bevel eligible edges in headless Blender.' },
   { name: 'Selective Rim Bevel after QEM', options: ['lodBevel.preTriangleBudget', 'lodBevel.rims', 'triangleBudget', 'bevelWidth', 'bevelSegments'], backend: 'blender',
     description: 'Reserve triangles with QEM, bevel specified circular rims, and verify the final budget and closed topology.' },
+  { name: 'Organic Surface', options: ['organic', 'sigma', 'extractor', 'smoothingIterations', 'targetEdgeLength'], backend: 'python',
+    description: 'Filter signed distances, then contour, Taubin-smooth and adaptively remesh in scene units.' },
+  { name: 'Quad Retopology', options: ['quadTarget'], backend: 'blender',
+    description: 'Run QuadriFlow before LOD and triangulate for GLB export.' },
   { name: 'Mesh Optimization and LOD', options: ['dissolveAngle', 'triangleBudget'], backend: 'blender',
     description: 'Apply planar dissolve and QEM with topology checks. Use separate branches for LODs.' },
   { name: 'Multi-view Texture Projection', options: ['extract-mesh'], backend: 'node or python',
@@ -102,6 +110,7 @@ function catalog() {
     },
     meshMethods: stackMethods.map(id => ({
       id, backend: isCoreMeshMethod(id) ? 'node' : 'python', supportsFinish: !isCoreMeshMethod(id), ...meshInfo[id],
+      ...(id === 'organic' && { dependencies: ['pymeshlab (mesh postprocessing)'] }),
       ...(id === 'signed-distance-dc' && { dependencies: ['gpytoolbox'] }),
     })),
     stages,

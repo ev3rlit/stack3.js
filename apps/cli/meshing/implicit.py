@@ -21,7 +21,7 @@ def mc33(mask):
     return p - 0.5, f
 
 
-def feature_mesh(mask, step, dual, signed_distance=None, measured=None):
+def feature_mesh(mask, step, dual, signed_distance=None, measured=None, *, surface_nets=False, regularized=False):
     field = np.pad(mask, 1)
     if dual:
         # A body diagonal can give two disjoint vertex links although every
@@ -37,7 +37,7 @@ def feature_mesh(mask, step, dual, signed_distance=None, measured=None):
                 raise ValueError(f"multiple sheets in dual cell {cell}; use mc33")
     crosses = {}
     cells = defaultdict(list)
-    if measured is None:
+    if measured is None or signed_distance is not None:
         values = signed_distance if signed_distance is not None else -gaussian_filter(field.astype(float), 0.8)
         grads = np.stack(np.gradient(values, *step), axis=-1)
     for axis in range(3):
@@ -58,7 +58,7 @@ def feature_mesh(mask, step, dual, signed_distance=None, measured=None):
                 flat.transpose(cyclic(axis))[i : i + quads.shape[0], j : j + quads.shape[1]] |= quads
         for p in np.argwhere(exposed):
             key = (*p, axis)
-            if measured is not None:
+            if measured is not None and (signed_distance is None or key in measured):
                 crosses[key] = measured[key]
             else:
                 q = p.copy()
@@ -80,15 +80,18 @@ def feature_mesh(mask, step, dual, signed_distance=None, measured=None):
     def solution(cell, keys):
         p, n = map(np.array, zip(*(crosses[k] for k in keys)))
         mean = p.mean(axis=0)
+        if surface_nets:
+            return mean, False
         # Solve in physical coordinates, centered at the mass point. SVD drops
         # unsupported directions; parallel planes then retain the mass point.
         rhs = np.einsum("ij,ij->i", n, (p - mean) * step)
         delta, _, rank, _ = np.linalg.lstsq(n, rhs, rcond=0.12)
         sharp = rank >= 2 and (n @ n.T).min() < 0.6
-        if dual and not sharp:
+        if dual and (regularized or not sharp):
             # On nearly parallel constraints the tangential intersection is poorly
             # determined. Penalize drift from the centroid in those smooth cells.
-            delta = np.linalg.solve(n.T @ n + 0.1 * len(n) * np.eye(3), n.T @ rhs)
+            weight = 0.5 if regularized else 0.1
+            delta = np.linalg.solve(n.T @ n + weight * len(n) * np.eye(3), n.T @ rhs)
         point = mean + delta / step
         lower = np.asarray(cell)
         if np.any(point < lower - 1e-7) or np.any(point > lower + 1 + 1e-7):

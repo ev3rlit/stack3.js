@@ -91,6 +91,20 @@ def keep_closed(previous, candidate, signature, name):
     return previous
 
 
+def quad_retopology(mesh, target, signature):
+    obj = bpy.data.objects.new("stack3-quad-retopology", mesh)
+    bpy.context.scene.collection.objects.link(obj)
+    with bpy.context.temp_override(object=obj, active_object=obj, selected_objects=[obj], selected_editable_objects=[obj]):
+        result = bpy.ops.object.quadriflow_remesh(mode="FACES", target_faces=target, seed=0, use_mesh_symmetry=False)
+    quads = obj.data
+    if result != {"FINISHED"} or not len(quads.polygons) or any(p.loop_total != 4 for p in quads.polygons):
+        raise ValueError("QuadriFlow did not produce a quad mesh")
+    if topology(quads) != signature:
+        raise ValueError("QuadriFlow changed the closed surface topology")
+    print(f"QuadriFlow: {len(quads.polygons)} quads before triangulation")
+    return quads
+
+
 def simplify(mesh, budget):
     mesh.calc_loop_triangles()
     if len(mesh.loop_triangles) <= budget:
@@ -183,6 +197,8 @@ def main(folder):
     signature = topology(mesh)
     if signature is None:
         raise ValueError("input is not a closed, nondegenerate Blender surface")
+    if "quadTarget" in options:
+        mesh = quad_retopology(mesh, options["quadTarget"], signature)
     if "lodBevel" in options:
         mesh = lod_bevel(mesh, options, signature)
     else:

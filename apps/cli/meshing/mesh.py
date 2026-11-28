@@ -41,6 +41,7 @@ def run(method, folder, distance_extractor=None):
         "path-sweep": ["path", "up", "profile"],
         "section-network": ["sections", "tolerance"],
         "hermite-dc": ["field", "dexel"],
+        "organic": ["field", "dexel", "sigma", "extractor", "interpolation", "smoothingIterations", "targetEdgeLength", "adaptive", "reproject", "dexelOccupancy", "depthRegions"],
         "signed-distance-dc": ["field", "outerIterations", "innerIterations"],
     }
     if not isinstance(g, dict) or set(g) - set(options.get(method, [])):
@@ -69,6 +70,10 @@ def run(method, folder, distance_extractor=None):
         field = load_field(np.pad(mask, 1), g["field"], meta.get("guideDirectory")) if "field" in g else None
         measured = load_dexel(mask, step, origin, g["dexel"], meta.get("guideDirectory")) if "dexel" in g else None
         mesh = feature_mesh(mask, step, method == "hermite-dc", field, measured)
+    elif method == "organic":
+        from organic import organic_mesh
+
+        mesh = organic_mesh(mask, step, origin, g, meta.get("guideDirectory"))
     elif method == "mc33":
         mesh = mc33(mask)
     elif method == "signed-distance-dc" and distance_extractor:
@@ -84,6 +89,8 @@ def run(method, folder, distance_extractor=None):
         from finishing import finish_surface
 
         mesh, occlusion = finish_surface(mesh, step, origin, finish, folder, meta["blender"])
+    if method == "organic" and "triangleBudget" in finish and len(mesh[1]) > finish["triangleBudget"]:
+        raise ValueError("organic mesh exceeds the requested triangle budget after topology checks")
     write_mesh(
         folder,
         mesh,
@@ -91,7 +98,7 @@ def run(method, folder, distance_extractor=None):
         step,
         origin,
         method in ("greedy", "monotone") and not finish,
-        bool(finish) or method in ("extended-mc", "hermite-dc", "signed-distance-dc"),
+        method != "organic" and (bool(finish) or method in ("extended-mc", "hermite-dc", "signed-distance-dc")),
         occlusion,
     )
 

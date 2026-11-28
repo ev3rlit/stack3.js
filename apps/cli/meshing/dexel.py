@@ -6,6 +6,11 @@ import numpy as np
 
 
 def load_dexel(mask, step, origin, name, directory):
+    _, crossings = read_registered_dexel(mask, step, origin, name, directory)
+    return crossings
+
+
+def read_registered_dexel(mask, step, origin, name, directory, *, measured_occupancy=False):
     if not isinstance(name, str) or not name or not directory:
         raise ValueError("dexel must be a .npz path relative to the guide")
     path = Path(directory) / name
@@ -13,6 +18,8 @@ def load_dexel(mask, step, origin, name, directory):
         raise ValueError("dexel must be a .npz path")
     crossings = {}
     ignored = 0
+    measured = None
+    multi_interval = 0
     with np.load(path, allow_pickle=False) as data:
         if (data["version"].ndim != 0 or data["version"].item() != 1 or
                 not np.array_equal(data["grid"], mask.shape) or
@@ -37,18 +44,23 @@ def load_dexel(mask, step, origin, name, directory):
                 raise ValueError(f"dexel {axis_name}: normals must be unit vectors")
             centers = (np.arange(mask.shape[axis]) + 0.5) * step[axis]
             columns = np.moveaxis(mask, axis, -1).reshape(count, -1)
+            measured_columns = np.zeros(columns.shape, bool) if measured_occupancy else None
             for ray, (start, end) in enumerate(zip(offsets[:-1], offsets[1:])):
                 t = depth[start:end]
                 n = normals[start:end]
                 if (len(t) % 2 or np.any(t[:-1] >= t[1:]) or
                         np.any(n[::2, axis] >= 0) or np.any(n[1::2, axis] <= 0)):
                     raise ValueError(f"dexel {axis_name} ray {ray}: expected ordered, outward-facing enter/exit pairs")
-                if not np.array_equal(np.searchsorted(t, centers, side="right") % 2, columns[ray]):
+                sampled = np.searchsorted(t, centers, side="right") % 2 != 0
+                if measured_occupancy:
+                    measured_columns[ray] = sampled
+                elif not np.array_equal(sampled, columns[ray]):
                     raise ValueError(f"dexel {axis_name} ray {ray}: occupancy differs from the saved stack")
                 if not len(t):
                     continue
                 # Padded sample i sits at (i - 0.5) * step. A DC edge spans i..i+1.
-                pad = np.pad(columns[ray], 1)
+                multi_interval += int(len(t) > 2)
+                pad = np.pad(sampled, 1)
                 changes = np.flatnonzero(pad[:-1] != pad[1:])
                 indexed = np.searchsorted(centers, t, side="left")
                 u, v = np.unravel_index(ray, shape)
@@ -63,5 +75,15 @@ def load_dexel(mask, step, origin, name, directory):
                     position[axis] = t[event] / step[axis] + 0.5
                     crossings[(*p, axis)] = (position, n[event])
                 ignored += len(t) - len(changes)
+            if measured_occupancy:
+                axis_mask = np.moveaxis(measured_columns.reshape(*shape, mask.shape[axis]), -1, axis)
+                if measured is not None and not np.array_equal(measured, axis_mask):
+                    raise ValueError(f"dexel {axis_name}: measured axes disagree on cell-center occupancy")
+                measured = axis_mask
+    if measured_occupancy:
+        if not crossings:
+            raise ValueError("registered dexel has no resolved surface; check the grid and capture")
+        changed = np.count_nonzero(measured != mask)
+        print(f"triple-dexel: {changed} cell centers differ from the stack; {multi_interval} multi-interval rays")
     print(f"triple-dexel: used {len(crossings)} measured crossings; {ignored} crossings on edges without a sampled sign change")
-    return crossings
+    return (measured if measured_occupancy else mask), crossings

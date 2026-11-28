@@ -17,6 +17,8 @@ const HELP = `Usage: stack3 <verb> <input> [options]
   capabilities [--json]  List mesh methods, runtime requirements, schemas and example recipes
   example <name>         Copy future-tank or traffic-cone into the current directory
   verify -f <manifest>   Measure atlas views and mounts in one JSON report
+  capture-dexel <stack> --source aligned.glb --output depth.npz
+                        Capture ordered XYZ depth and normal intervals in the saved grid using Blender
   inspect <input>        Check mapped directions and fitted image sizes
   build <input>          Build an asset and save it to --output
   pipeline --help        Render or run YAML, or export its JSON Schema
@@ -31,6 +33,7 @@ const HELP = `Usage: stack3 <verb> <input> [options]
                         section-network: sections [{source:"independent",origin,u,v,outer,holes?}], optional tolerance
                         hermite-dc: optional field (.npy SDF) or dexel (.npz crossings and normals)
                         signed-distance-dc: optional field, outerIterations and innerIterations
+                        organic: optional field or dexel, sigma, extractor, interpolation, smoothingIterations, targetEdgeLength, adaptive, reproject, dexelOccupancy, depthRegions
                         extended-mc, mc33, greedy, monotone: no guide
                         New methods use uv or STACK3_PYTHON. See the stack3 skill for guide examples.
   view <directory>       Open a stack bundle in Blender (use --web for the browser viewer)
@@ -95,7 +98,7 @@ async function main() {
   const args = process.argv.slice(2);
   if (args[0] === 'help') {
     if (args.length === 1) { console.log(HELP); return; }
-    if (args.length !== 2 || !['pipeline', 'mesh', 'capabilities'].includes(args[1])) {
+    if (args.length !== 2 || !['pipeline', 'mesh', 'capabilities', 'capture-dexel'].includes(args[1])) {
       throw new Error('Use stack3 help [pipeline|mesh|capabilities].');
     }
     args.splice(0, 2, args[1], '--help');
@@ -108,6 +111,18 @@ async function main() {
   if (args[0] === 'pipeline') {
     const { pipelineCommand } = await import('./pipeline');
     await pipelineCommand(args.slice(1));
+    return;
+  }
+  if (args[0] === 'capture-dexel') {
+    const { positionals, values } = parseArgs({ args: args.slice(1), allowPositionals: true, options: {
+      source: { type: 'string' }, output: { type: 'string' }, help: { type: 'boolean', short: 'h' },
+    } });
+    const usage = 'stack3 capture-dexel <stack> --source aligned.glb --output depth.npz';
+    if (values.help) { console.log(usage); return; }
+    if (positionals.length !== 1 || !values.source || !values.output ||
+        extname(values.source).toLowerCase() !== '.glb' || extname(values.output).toLowerCase() !== '.npz') throw new Error(usage);
+    const { captureDexel } = await import('./blender');
+    await captureDexel(resolve(positionals[0]), resolve(values.source), resolve(values.output));
     return;
   }
   if (args[0] === 'verify') {

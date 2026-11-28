@@ -91,7 +91,7 @@
       "enum": [
         "marching-cubes", "surface-nets", "voxel", "section-loft", "heightfield", "smooth-loft", "revolve",
         "extended-mc", "hermite-dc", "mc33", "branch-loft", "path-sweep", "section-network", "greedy", "monotone",
-        "signed-distance-dc"
+        "signed-distance-dc", "organic"
       ]
     },
     "finish": {
@@ -104,6 +104,7 @@
         "bevelWidth": { "$ref": "#/$defs/positive", "description": "Bevel offset in scene units." },
         "bevelSegments": { "anyOf": [{ "type": "integer", "minimum": 1, "maximum": 16 }, { "$ref": "#/$defs/scalarReference" }] },
         "dissolveAngle": { "anyOf": [{ "type": "number", "exclusiveMinimum": 0, "maximum": 45 }, { "$ref": "#/$defs/scalarReference" }] },
+        "quadTarget": { "anyOf": [{ "type": "integer", "minimum": 1, "maximum": 2147483647 }, { "$ref": "#/$defs/scalarReference" }] },
         "triangleBudget": { "$ref": "#/$defs/triangleBudget" },
         "lodBevel": { "$ref": "#/$defs/lodBevel" },
         "aoRadius": { "$ref": "#/$defs/positive", "description": "Vertex ambient occlusion ray distance in scene units." }

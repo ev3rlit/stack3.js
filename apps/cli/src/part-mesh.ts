@@ -10,7 +10,7 @@ import { blenderExecutable } from './blender';
 
 export const partMethods = [
   'section-loft', 'heightfield', 'smooth-loft', 'revolve', 'extended-mc', 'hermite-dc',
-  'mc33', 'branch-loft', 'path-sweep', 'section-network', 'greedy', 'monotone', 'signed-distance-dc',
+  'mc33', 'branch-loft', 'path-sweep', 'section-network', 'greedy', 'monotone', 'signed-distance-dc', 'organic',
 ] as const;
 
 export type MeshMethod = StackMeshMethod | typeof partMethods[number];
@@ -40,6 +40,7 @@ export type SurfaceFinish = {
   bevelSegments?: number;
   lodBevel?: LodBevel;
   dissolveAngle?: number;
+  quadTarget?: number;
   triangleBudget?: number;
   aoRadius?: number;
 };
@@ -72,7 +73,10 @@ export async function partMesh(stack: StackData, method: string, guidePath?: str
     const scriptName = method === 'signed-distance-dc' ? 'signed_distance.py' : 'mesh.py';
     const script = fileURLToPath(new URL('../meshing/' + scriptName, import.meta.url));
     const python = process.env.STACK3_PYTHON;
-    const args = python ? [script] : ['run', '--no-project', '--script', script];
+    const meshLab = method === 'organic' && guide !== null && typeof guide === 'object' &&
+      (('smoothingIterations' in guide && !!guide.smoothingIterations) || 'targetEdgeLength' in guide);
+    const extras = meshLab ? ['--with', 'pymeshlab==2025.7'] : [];
+    const args = python ? [script] : ['run', '--no-project', ...extras, '--script', script];
     try {
       const { stdout } = await promisify(execFile)(python || 'uv', [...args, method, temporary],
         { env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' } });

@@ -136,7 +136,7 @@ def finish_surface(mesh, step, origin, options, folder, blender):
 
         world = regularize(world, faces, options["regularization"])
     occlusion = None
-    if any(name in options for name in ("bevelWidth", "dissolveAngle", "triangleBudget", "aoRadius")):
+    if any(name in options for name in ("bevelWidth", "dissolveAngle", "triangleBudget", "aoRadius", "quadTarget")):
         data = folder / "geometry.npz"
         np.savez(data, vertices=world, faces=faces)
         script = Path(__file__).with_name("finish_blender.py")

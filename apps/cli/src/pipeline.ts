@@ -182,13 +182,13 @@ function parseLodBevel(value: unknown, name: string, finalBudget: number): LodBe
 function parseFinish(value: unknown, id: string): SurfaceFinish | undefined {
   if (value === undefined) return;
   const limits = { fitTolerance: [0, Infinity], bevelWidth: [0, Infinity], bevelSegments: [0, 16],
-    dissolveAngle: [0, 45], triangleBudget: [3, Infinity], aoRadius: [0, Infinity] } as const;
+    dissolveAngle: [0, 45], quadTarget: [0, 2147483647], triangleBudget: [3, Infinity], aoRadius: [0, Infinity] } as const;
   const config = mapping(value, `${id}.finish`, [...Object.keys(limits), 'primitives', 'regularization', 'lodBevel']);
   const output: SurfaceFinish = {};
   for (const [key, [min, max]] of Object.entries(limits) as [keyof typeof limits, readonly [number, number]][]) {
     const number = config[key];
     if (number === undefined) continue;
-    const integer = key === 'bevelSegments' || key === 'triangleBudget';
+    const integer = key === 'bevelSegments' || key === 'triangleBudget' || key === 'quadTarget';
     if (typeof number !== 'number' || !Number.isFinite(number) || number <= min || number > max || integer && !Number.isSafeInteger(number)) {
       throw new Error(`${id}.finish.${key} must be ${integer ? 'an integer' : 'a number'} greater than ${min}${max !== Infinity ? ` and at most ${max}` : ''}.`);
     }
@@ -363,7 +363,7 @@ async function surfaceCacheKey(node: Extract<Node, { type: 'extract-mesh' }>, st
   if (node.guide) {
     const guide = await readFile(node.guide);
     hash.update(guide);
-    if (node.method === 'signed-distance-dc' || node.method === 'hermite-dc') {
+    if (node.method === 'signed-distance-dc' || node.method === 'hermite-dc' || node.method === 'organic') {
       const { field, dexel } = JSON.parse(guide.toString('utf8'));
       for (const source of [field, dexel]) {
         if (typeof source === 'string') hash.update(await readFile(resolve(dirname(node.guide), source)));
