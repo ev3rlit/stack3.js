@@ -1,0 +1,36 @@
+{
+  "single": {
+    "front": {
+      "iou": 0.9520545495726394,
+      "crest_split_rows": 0,
+      "source_crest_split_rows": 7,
+      "foot_region_iou": 0.7480639396346307
+    },
+    "left": {
+      "iou": 0.9529925406738845
+    },
+    "rear": {
+      "iou": 0.9519767768293921
+    },
+    "top": {
+      "iou": 0.9721587441272905
+    }
+  },
+  "parts": {
+    "front": {
+      "iou": 0.9711609221749044,
+      "crest_split_rows": 6,
+      "source_crest_split_rows": 7,
+      "foot_region_iou": 0.8959525209859381
+    },
+    "left": {
+      "iou": 0.9739284542172629
+    },
+    "rear": {
+      "iou": 0.9717419830802629
+    },
+    "top": {
+      "iou": 0.9610376044568245
+    }
+  }
+}

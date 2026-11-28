@@ -1,0 +1,9 @@
+version: 1
+nodes:
+  - { id: stack, type: load-stack, path: superellipse3 }
+  - id: surface
+    type: extract-mesh
+    input: stack
+    method: organic
+    guide: ./F3.json
+  - { id: export, type: write-glb, input: surface, path: ./F3.glb, lit: true }

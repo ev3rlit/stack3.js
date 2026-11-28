@@ -1,0 +1,47 @@
+{
+  "surface-nets": {
+    "triangles": 7908,
+    "atlas_silhouette_iou": {
+      "front": 0.96558,
+      "rear": 0.96517,
+      "left": 0.97057,
+      "top": 0.98536
+    },
+    "mesh_checks": {
+      "islands": 1,
+      "boundary_edges": 0,
+      "degenerate_faces": 0,
+      "inside_out_islands": 0,
+      "uv_overlap_pct": 3.85
+    },
+    "ground_z": 0.0028
+  },
+  "hermite-dc": {
+    "triangles": 7908,
+    "atlas_silhouette_iou": {
+      "front": 0.96873,
+      "rear": 0.96861,
+      "left": 0.97306,
+      "top": 0.98549
+    },
+    "mesh_checks": {
+      "islands": 1,
+      "boundary_edges": 0,
+      "degenerate_faces": 0,
+      "inside_out_islands": 0,
+      "uv_overlap_pct": 5.04
+    },
+    "ground_z": 0.0024
+  },
+  "turntable": {
+    "frames": 120,
+    "fps": 24,
+    "unique_rendered_frames": 120,
+    "pair_silhouette_iou_mean": 0.9884322733407165,
+    "pair_silhouette_iou_min": 0.9866587511468509
+  },
+  "stack_sha256": {
+    "stack.json": "da51a29c4ae1196228f76796e3d000d5c01baf970e901bb553da69e3a031d681",
+    "stack.png": "b180dd358d44599c9c1edb3ae35fc56377d0a17861bbca2686a5a3d30ae2e01f"
+  }
+}

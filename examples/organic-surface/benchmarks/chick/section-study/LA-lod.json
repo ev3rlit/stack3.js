@@ -1,0 +1,10 @@
+{
+  "interpolation": "cubic",
+  "smoothingIterations": 6,
+  "sigma": 0,
+  "extractor": "marching-cubes",
+  "field": "contour/field.npy",
+  "targetEdgeLength": 0.038,
+  "adaptive": true,
+  "reproject": true
+}

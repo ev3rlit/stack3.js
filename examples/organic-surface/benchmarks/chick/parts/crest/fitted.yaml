@@ -1,0 +1,10 @@
+version: 1
+nodes:
+  - { id: stack, type: load-stack, path: ./fitted }
+  - id: surface
+    type: extract-mesh
+    input: stack
+    method: organic
+    guide: ./fitted.json
+    finish: { triangleBudget: 220 }
+  - { id: export, type: write-glb, input: surface, path: ./fitted.glb, lit: true }

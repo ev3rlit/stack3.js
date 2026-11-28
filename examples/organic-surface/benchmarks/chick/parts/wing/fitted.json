@@ -1,0 +1,7 @@
+{
+  "extractor": "marching-cubes",
+  "sigma": 0,
+  "interpolation": "cubic",
+  "smoothingIterations": 2,
+  "field": "fitted/field.npy"
+}

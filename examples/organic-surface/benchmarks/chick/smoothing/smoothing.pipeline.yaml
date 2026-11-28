@@ -1,0 +1,28 @@
+version: 1
+nodes:
+  - { id: source, type: load-stack, path: ../stack }
+  - id: sigma125
+    type: extract-mesh
+    input: source
+    method: organic
+    guide: ./sigma125.json
+  - { id: write-sigma125, type: write-glb, input: sigma125, path: ./sigma125.glb, lit: true }
+  - id: sigma155
+    type: extract-mesh
+    input: source
+    method: organic
+    guide: ./sigma155.json
+  - { id: write-sigma155, type: write-glb, input: sigma155, path: ./sigma155.glb, lit: true }
+  - id: taubin
+    type: extract-mesh
+    input: source
+    method: organic
+    guide: ./taubin.json
+  - { id: write-taubin, type: write-glb, input: taubin, path: ./taubin.glb, lit: true }
+  - id: finished
+    type: extract-mesh
+    input: source
+    method: organic
+    guide: ./finished.json
+    finish: { triangleBudget: 1600 }
+  - { id: write-finished, type: write-glb, input: finished, path: ./finished.glb, lit: true }

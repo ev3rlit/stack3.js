@@ -1,0 +1,10 @@
+version: 1
+nodes:
+  - { id: stack, type: load-stack, path: contour }
+  - id: surface
+    type: extract-mesh
+    input: stack
+    method: organic
+    guide: ./L-lod.json
+    finish: { triangleBudget: 1600 }
+  - { id: export, type: write-glb, input: surface, path: ./L-lod.glb, lit: true }

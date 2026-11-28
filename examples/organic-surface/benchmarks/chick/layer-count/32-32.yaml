@@ -1,0 +1,10 @@
+version: 1
+nodes:
+  - { id: input, type: load-stack, path: ./padded-32-32 }
+  - id: organic
+    type: extract-mesh
+    input: input
+    method: organic
+    guide: ./32-32.json
+    finish: { triangleBudget: 1600 }
+  - { id: export, type: write-glb, input: organic, path: ./32-32.glb, lit: true }

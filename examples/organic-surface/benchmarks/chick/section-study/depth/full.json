@@ -1,0 +1,8 @@
+{
+  "dexel": "synthetic.npz",
+  "dexelOccupancy": "measured",
+  "sigma": 0,
+  "extractor": "marching-cubes",
+  "interpolation": "cubic",
+  "smoothingIterations": 0
+}

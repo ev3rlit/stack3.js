@@ -1,0 +1,6 @@
+{
+  "extractor": "marching-cubes",
+  "interpolation": "cubic",
+  "sigma": 0.88,
+  "smoothingIterations": 4
+}

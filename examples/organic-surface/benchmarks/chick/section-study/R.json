@@ -1,0 +1,6 @@
+{
+  "interpolation": "cubic",
+  "smoothingIterations": 6,
+  "sigma": 2.126339207306364,
+  "extractor": "regularized-dc"
+}

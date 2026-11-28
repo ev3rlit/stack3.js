@@ -1,0 +1,20 @@
+{
+  "wings": {
+    "reference_hits": 473,
+    "common_hits": 473,
+    "mean_abs_depth_error": {
+      "baseline": 0.01765734788983367,
+      "roundtrip": 0.017695783560674232,
+      "fused": 0.001791789214152362
+    }
+  },
+  "head": {
+    "reference_hits": 96,
+    "common_hits": 96,
+    "mean_abs_depth_error": {
+      "baseline": 0.014241449534893036,
+      "roundtrip": 0.014098831452429295,
+      "fused": 0.000719208891193072
+    }
+  }
+}

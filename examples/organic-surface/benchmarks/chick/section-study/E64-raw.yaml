@@ -1,0 +1,9 @@
+version: 1
+nodes:
+  - { id: stack, type: load-stack, path: grid64 }
+  - id: surface
+    type: extract-mesh
+    input: stack
+    method: organic
+    guide: ./E64-raw.json
+  - { id: export, type: write-glb, input: surface, path: ./E64-raw.glb, lit: true }

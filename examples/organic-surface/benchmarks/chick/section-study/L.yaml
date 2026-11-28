@@ -1,0 +1,9 @@
+version: 1
+nodes:
+  - { id: stack, type: load-stack, path: contour }
+  - id: surface
+    type: extract-mesh
+    input: stack
+    method: organic
+    guide: ./L.json
+  - { id: export, type: write-glb, input: surface, path: ./L.glb, lit: true }

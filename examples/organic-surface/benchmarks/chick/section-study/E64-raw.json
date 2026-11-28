@@ -1,0 +1,7 @@
+{
+  "interpolation": "cubic",
+  "smoothingIterations": 0,
+  "sigma": 0,
+  "extractor": "marching-cubes",
+  "field": "grid64/field.npy"
+}

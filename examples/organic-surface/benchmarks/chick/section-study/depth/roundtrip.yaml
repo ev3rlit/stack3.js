@@ -1,0 +1,10 @@
+version: 1
+nodes:
+  - { id: color, type: load-stack, path: ../contour }
+  - id: measured
+    type: extract-mesh
+    input: color
+    method: organic
+    guide: ./roundtrip.json
+    finish: { triangleBudget: 1600 }
+  - { id: export, type: write-glb, input: measured, path: ./roundtrip.glb, lit: true }

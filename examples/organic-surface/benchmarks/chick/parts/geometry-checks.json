@@ -1,0 +1,71 @@
+{
+  "Beak": {
+    "triangles": 164,
+    "boundary": 0,
+    "nonmanifold": 0,
+    "flipped": 0,
+    "degenerate": 0,
+    "floor": 0.5005000233650208,
+    "volume": 0.0018187991184807184,
+    "body_intersection_pairs": 43
+  },
+  "Body": {
+    "triangles": 480,
+    "boundary": 0,
+    "nonmanifold": 0,
+    "flipped": 0,
+    "degenerate": 0,
+    "floor": 0.09847599267959595,
+    "volume": 0.2166485873443787
+  },
+  "Crest": {
+    "triangles": 220,
+    "boundary": 0,
+    "nonmanifold": 0,
+    "flipped": 0,
+    "degenerate": 0,
+    "floor": 0.8390000462532043,
+    "volume": 0.0021763461597745833,
+    "body_intersection_pairs": 53
+  },
+  "Leg.L": {
+    "triangles": 240,
+    "boundary": 0,
+    "nonmanifold": 0,
+    "flipped": 0,
+    "degenerate": 0,
+    "floor": 0.0,
+    "volume": 0.002518413741705052,
+    "body_intersection_pairs": 30
+  },
+  "Leg.R": {
+    "triangles": 240,
+    "boundary": 0,
+    "nonmanifold": 0,
+    "flipped": 0,
+    "degenerate": 0,
+    "floor": 0.0,
+    "volume": 0.002518413741705052,
+    "body_intersection_pairs": 25
+  },
+  "Wing.L": {
+    "triangles": 128,
+    "boundary": 0,
+    "nonmanifold": 0,
+    "flipped": 0,
+    "degenerate": 0,
+    "floor": 0.27300000190734863,
+    "volume": 0.005955469895143555,
+    "body_intersection_pairs": 53
+  },
+  "Wing.R": {
+    "triangles": 128,
+    "boundary": 0,
+    "nonmanifold": 0,
+    "flipped": 0,
+    "degenerate": 0,
+    "floor": 0.27300000190734863,
+    "volume": 0.0059554698951435545,
+    "body_intersection_pairs": 51
+  }
+}

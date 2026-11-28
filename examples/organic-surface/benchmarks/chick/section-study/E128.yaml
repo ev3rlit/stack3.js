@@ -1,0 +1,9 @@
+version: 1
+nodes:
+  - { id: stack, type: load-stack, path: grid128 }
+  - id: surface
+    type: extract-mesh
+    input: stack
+    method: organic
+    guide: ./E128.json
+  - { id: export, type: write-glb, input: surface, path: ./E128.glb, lit: true }

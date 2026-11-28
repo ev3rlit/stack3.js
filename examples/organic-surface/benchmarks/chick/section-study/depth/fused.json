@@ -1,0 +1,47 @@
+{
+  "dexel": "synthetic.npz",
+  "dexelOccupancy": "measured",
+  "sigma": 0,
+  "extractor": "marching-cubes",
+  "interpolation": "cubic",
+  "smoothingIterations": 6,
+  "field": "../contour/field.npy",
+  "depthRegions": [
+    {
+      "center": [
+        -0.33,
+        0.015,
+        0.42
+      ],
+      "radii": [
+        0.23,
+        0.28,
+        0.22
+      ]
+    },
+    {
+      "center": [
+        0.33,
+        0.015,
+        0.42
+      ],
+      "radii": [
+        0.23,
+        0.28,
+        0.22
+      ]
+    },
+    {
+      "center": [
+        0.055,
+        0.21,
+        0.75
+      ],
+      "radii": [
+        0.18,
+        0.24,
+        0.15
+      ]
+    }
+  ]
+}

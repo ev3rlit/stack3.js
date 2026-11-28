@@ -1,0 +1,73 @@
+{
+  "objects": {
+    "Beak": {
+      "triangles": 164,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "volume": 0.0018187991184807184,
+      "body_contact_pairs": 43
+    },
+    "Body": {
+      "triangles": 480,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "volume": 0.2166485873443787
+    },
+    "Crest": {
+      "triangles": 220,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "volume": 0.0021763461597745833,
+      "body_contact_pairs": 53
+    },
+    "Eye.L": {
+      "triangles": 80,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "volume": 0.00018689139394869182,
+      "body_contact_pairs": 48
+    },
+    "Eye.R": {
+      "triangles": 80,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "volume": 0.00018689140262327316,
+      "body_contact_pairs": 51
+    },
+    "Leg.L": {
+      "triangles": 240,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "volume": 0.002518413741705052,
+      "body_contact_pairs": 30
+    },
+    "Leg.R": {
+      "triangles": 240,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "volume": 0.002518413741705052,
+      "body_contact_pairs": 25
+    },
+    "Wing.L": {
+      "triangles": 128,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "volume": 0.005955469895143555,
+      "body_contact_pairs": 53
+    },
+    "Wing.R": {
+      "triangles": 128,
+      "boundary": 0,
+      "nonmanifold": 0,
+      "volume": 0.0059554698951435545,
+      "body_contact_pairs": 51
+    }
+  },
+  "embedded_images": [
+    "beak-baked",
+    "body-baked",
+    "crest-baked",
+    "leg-baked",
+    "wing-baked"
+  ]
+}

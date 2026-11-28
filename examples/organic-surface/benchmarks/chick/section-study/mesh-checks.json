@@ -1,0 +1,170 @@
+{
+  "voxel": {
+    "triangles": 13376,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.24068727639825804
+  },
+  "A": {
+    "triangles": 1598,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.23317686238249602
+  },
+  "B": {
+    "triangles": 12624,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.23368694410097837
+  },
+  "C": {
+    "triangles": 12620,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.23311523657365243
+  },
+  "D": {
+    "triangles": 12624,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.2326100261344511
+  },
+  "R": {
+    "triangles": 12624,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.23340000036709105
+  },
+  "E64": {
+    "triangles": 16312,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.23322992839358947
+  },
+  "E128": {
+    "triangles": 65176,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.23341617287387142
+  },
+  "F": {
+    "triangles": 17232,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.24650708977933472
+  },
+  "G": {
+    "triangles": 17244,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.24663497332254583
+  },
+  "H": {
+    "triangles": 3050,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.2453593729873001
+  },
+  "Hproj": {
+    "triangles": 3050,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.24560872511770968
+  },
+  "F-lod": {
+    "triangles": 1600,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.24579225121960152
+  },
+  "G-lod": {
+    "triangles": 1600,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.2460129957619612
+  },
+  "Hproj-lod": {
+    "triangles": 1598,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.24530885702464825
+  },
+  "L": {
+    "triangles": 16288,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.2332066988251842
+  },
+  "L-lod": {
+    "triangles": 1600,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.23268708850167877
+  },
+  "LR-lod": {
+    "triangles": 1598,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.23202998420674506
+  },
+  "C-lod": {
+    "triangles": 1598,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.23263840689908993
+  },
+  "F3": {
+    "triangles": 18012,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.27407046141962815
+  },
+  "LA-lod": {
+    "triangles": 1598,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.23202998420674506
+  }
+}

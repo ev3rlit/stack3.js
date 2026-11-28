@@ -1,0 +1,9 @@
+version: 1
+nodes:
+  - { id: stack, type: load-stack, path: loft }
+  - id: surface
+    type: extract-mesh
+    input: stack
+    method: organic
+    guide: ./Hproj.json
+  - { id: export, type: write-glb, input: surface, path: ./Hproj.glb, lit: true }

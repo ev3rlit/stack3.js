@@ -1,0 +1,392 @@
+{
+  "A": {
+    "triangles": 1598,
+    "atlas_silhouette_iou": {
+      "front": 0.95457,
+      "rear": 0.9544,
+      "left": 0.95555,
+      "top": 0.97908
+    },
+    "front_lower_16pct_iou": 0.7524698406394281,
+    "signed_volume": 0.23317687213420868,
+    "triangle_quality_p10": 0.550214478977767,
+    "torso_radial_residual_rms": 0.0029199998862197794,
+    "mean_iou": 0.9609000000000001,
+    "ground_z": 0.004542109090834856
+  },
+  "B": {
+    "triangles": 12624,
+    "atlas_silhouette_iou": {
+      "front": 0.95561,
+      "rear": 0.95549,
+      "left": 0.95635,
+      "top": 0.97961
+    },
+    "front_lower_16pct_iou": 0.7570739469889104,
+    "signed_volume": 0.23368696868419647,
+    "triangle_quality_p10": 0.5209420208477676,
+    "torso_radial_residual_rms": 0.0028652818786162573,
+    "mean_iou": 0.961765,
+    "ground_z": 0.00406027352437377
+  },
+  "R": {
+    "triangles": 12624,
+    "atlas_silhouette_iou": {
+      "front": 0.95488,
+      "rear": 0.95475,
+      "left": 0.95561,
+      "top": 0.97919
+    },
+    "front_lower_16pct_iou": 0.7539670695916032,
+    "signed_volume": 0.23339998722076416,
+    "triangle_quality_p10": 0.5209187507933005,
+    "torso_radial_residual_rms": 0.002842126390917154,
+    "mean_iou": 0.9611075,
+    "ground_z": 0.004351966083049774
+  },
+  "C": {
+    "triangles": 12620,
+    "atlas_silhouette_iou": {
+      "front": 0.95366,
+      "rear": 0.95373,
+      "left": 0.95458,
+      "top": 0.97861
+    },
+    "front_lower_16pct_iou": 0.748744218431392,
+    "signed_volume": 0.23311524093151093,
+    "triangle_quality_p10": 0.6886812439071537,
+    "torso_radial_residual_rms": 0.0028234597913520537,
+    "mean_iou": 0.960145,
+    "ground_z": 0.004907348193228245
+  },
+  "D": {
+    "triangles": 12624,
+    "atlas_silhouette_iou": {
+      "front": 0.95217,
+      "rear": 0.95226,
+      "left": 0.95344,
+      "top": 0.9779
+    },
+    "front_lower_16pct_iou": 0.7439085032322228,
+    "signed_volume": 0.23261003196239471,
+    "triangle_quality_p10": 0.5215773479183394,
+    "torso_radial_residual_rms": 0.002782717664012574,
+    "mean_iou": 0.9589425,
+    "ground_z": 0.005022092256695032
+  },
+  "C-lod": {
+    "triangles": 1598,
+    "atlas_silhouette_iou": {
+      "front": 0.95226,
+      "rear": 0.95247,
+      "left": 0.95337,
+      "top": 0.97868
+    },
+    "front_lower_16pct_iou": 0.744139849026619,
+    "signed_volume": 0.2326384037733078,
+    "triangle_quality_p10": 0.5957431872663826,
+    "torso_radial_residual_rms": 0.002873457393607328,
+    "mean_iou": 0.959195,
+    "ground_z": 0.005325369071215391
+  },
+  "E64": {
+    "triangles": 16312,
+    "atlas_silhouette_iou": {
+      "front": 0.95412,
+      "rear": 0.95428,
+      "left": 0.95518,
+      "top": 0.97872
+    },
+    "front_lower_16pct_iou": 0.7495774927925241,
+    "signed_volume": 0.23322993516921997,
+    "triangle_quality_p10": 0.7476176495710435,
+    "torso_radial_residual_rms": 0.0028147165353167277,
+    "mean_iou": 0.960575,
+    "ground_z": 0.004088058136403561
+  },
+  "E128": {
+    "triangles": 65176,
+    "atlas_silhouette_iou": {
+      "front": 0.955,
+      "rear": 0.95535,
+      "left": 0.9561,
+      "top": 0.97925
+    },
+    "front_lower_16pct_iou": 0.7549761146496815,
+    "signed_volume": 0.23341619968414307,
+    "triangle_quality_p10": 0.7480677937590773,
+    "torso_radial_residual_rms": 0.0028519109311624714,
+    "mean_iou": 0.961425,
+    "ground_z": 0.004308766685426235
+  },
+  "F": {
+    "triangles": 17232,
+    "atlas_silhouette_iou": {
+      "front": 0.95835,
+      "rear": 0.95759,
+      "left": 0.9676,
+      "top": 0.86974
+    },
+    "front_lower_16pct_iou": 0.7495774927925241,
+    "signed_volume": 0.24650709331035614,
+    "triangle_quality_p10": 0.7468045534051376,
+    "torso_radial_residual_rms": 0.005613316807119306,
+    "mean_iou": 0.93832,
+    "ground_z": 0.0040879808366298676
+  },
+  "G": {
+    "triangles": 17244,
+    "atlas_silhouette_iou": {
+      "front": 0.95461,
+      "rear": 0.95423,
+      "left": 0.96517,
+      "top": 0.86422
+    },
+    "front_lower_16pct_iou": 0.7495774927925241,
+    "signed_volume": 0.24663496017456055,
+    "triangle_quality_p10": 0.749233008125493,
+    "torso_radial_residual_rms": 0.005386338616369214,
+    "mean_iou": 0.9345575,
+    "ground_z": 0.0040879808366298676
+  },
+  "H": {
+    "triangles": 3050,
+    "atlas_silhouette_iou": {
+      "front": 0.95119,
+      "rear": 0.95085,
+      "left": 0.96253,
+      "top": 0.86977
+    },
+    "front_lower_16pct_iou": 0.7283585036028033,
+    "signed_volume": 0.2453593760728836,
+    "triangle_quality_p10": 0.924353875366388,
+    "torso_radial_residual_rms": 0.004921842626140948,
+    "mean_iou": 0.933585,
+    "ground_z": 0.0042059896513819695
+  },
+  "Hproj": {
+    "triangles": 3050,
+    "atlas_silhouette_iou": {
+      "front": 0.95179,
+      "rear": 0.95148,
+      "left": 0.96308,
+      "top": 0.86705
+    },
+    "front_lower_16pct_iou": 0.7332641667901784,
+    "signed_volume": 0.24560873210430145,
+    "triangle_quality_p10": 0.9238564568884309,
+    "torso_radial_residual_rms": 0.0050676224752449735,
+    "mean_iou": 0.93335,
+    "ground_z": 0.004473183769732714
+  },
+  "F-lod": {
+    "triangles": 1600,
+    "atlas_silhouette_iou": {
+      "front": 0.95769,
+      "rear": 0.957,
+      "left": 0.96713,
+      "top": 0.87062
+    },
+    "front_lower_16pct_iou": 0.7490807910165954,
+    "signed_volume": 0.24579225480556488,
+    "triangle_quality_p10": 0.5795089319951864,
+    "torso_radial_residual_rms": 0.005634861976500564,
+    "mean_iou": 0.93811,
+    "ground_z": 0.004157569725066423
+  },
+  "G-lod": {
+    "triangles": 1600,
+    "atlas_silhouette_iou": {
+      "front": 0.95434,
+      "rear": 0.95388,
+      "left": 0.96513,
+      "top": 0.86486
+    },
+    "front_lower_16pct_iou": 0.7496768420005966,
+    "signed_volume": 0.24601300060749054,
+    "triangle_quality_p10": 0.5716386216200808,
+    "torso_radial_residual_rms": 0.005455701087999047,
+    "mean_iou": 0.9345525000000001,
+    "ground_z": 0.004157569259405136
+  },
+  "Hproj-lod": {
+    "triangles": 1598,
+    "atlas_silhouette_iou": {
+      "front": 0.95214,
+      "rear": 0.95205,
+      "left": 0.96247,
+      "top": 0.86737
+    },
+    "front_lower_16pct_iou": 0.7329581914210967,
+    "signed_volume": 0.24530887603759766,
+    "triangle_quality_p10": 0.6713151884794906,
+    "torso_radial_residual_rms": 0.0050955239979089744,
+    "mean_iou": 0.9335074999999999,
+    "ground_z": 0.0038291113451123238
+  },
+  "L": {
+    "triangles": 16288,
+    "atlas_silhouette_iou": {
+      "front": 0.95248,
+      "rear": 0.95243,
+      "left": 0.95326,
+      "top": 0.97298
+    },
+    "front_lower_16pct_iou": 0.7495774927925241,
+    "signed_volume": 0.23320674896240234,
+    "triangle_quality_p10": 0.7516617125402649,
+    "torso_radial_residual_rms": 0.002598811074309822,
+    "mean_iou": 0.9577875,
+    "ground_z": 0.004088058136403561
+  },
+  "L-lod": {
+    "triangles": 1600,
+    "atlas_silhouette_iou": {
+      "front": 0.95205,
+      "rear": 0.95198,
+      "left": 0.95299,
+      "top": 0.97216
+    },
+    "front_lower_16pct_iou": 0.7480639396346307,
+    "signed_volume": 0.2326870709657669,
+    "triangle_quality_p10": 0.5996325144629676,
+    "torso_radial_residual_rms": 0.002670613510331669,
+    "mean_iou": 0.9572950000000001,
+    "ground_z": 0.004157612100243568
+  },
+  "LR-lod": {
+    "triangles": 1598,
+    "atlas_silhouette_iou": {
+      "front": 0.94873,
+      "rear": 0.94859,
+      "left": 0.95079,
+      "top": 0.97225
+    },
+    "front_lower_16pct_iou": 0.7305244461986284,
+    "signed_volume": 0.2320299744606018,
+    "triangle_quality_p10": 0.6260248271456922,
+    "torso_radial_residual_rms": 0.002589010027353843,
+    "mean_iou": 0.95509,
+    "ground_z": 0.004108181688934565
+  },
+  "F3": {
+    "triangles": 18012,
+    "atlas_silhouette_iou": {
+      "front": 0.95831,
+      "rear": 0.95755,
+      "left": 0.9675,
+      "top": 0.77041
+    },
+    "front_lower_16pct_iou": 0.7495774927925241,
+    "signed_volume": 0.27407047152519226,
+    "triangle_quality_p10": 0.7883949802056602,
+    "torso_radial_residual_rms": 0.006103183311387943,
+    "mean_iou": 0.9134424999999999,
+    "ground_z": 0.0040879808366298676
+  },
+  "LA-lod": {
+    "triangles": 1598,
+    "atlas_silhouette_iou": {
+      "front": 0.94873,
+      "rear": 0.94859,
+      "left": 0.95079,
+      "top": 0.97225
+    },
+    "front_lower_16pct_iou": 0.7305244461986284,
+    "signed_volume": 0.2320299744606018,
+    "triangle_quality_p10": 0.6260248271456922,
+    "torso_radial_residual_rms": 0.002589010027353843,
+    "mean_iou": 0.95509,
+    "ground_z": 0.004108181688934565
+  },
+  "B-raw": {
+    "triangles": 12624,
+    "atlas_silhouette_iou": {
+      "front": 0.95593,
+      "rear": 0.95582,
+      "left": 0.95704,
+      "top": 0.97953
+    },
+    "front_lower_16pct_iou": 0.759600079586152,
+    "signed_volume": 0.23358146846294403,
+    "triangle_quality_p10": 0.5293059282285723,
+    "torso_radial_residual_rms": 0.0028768775635405553,
+    "mean_iou": 0.96208,
+    "ground_z": 0.0039387964643538
+  },
+  "C-raw": {
+    "triangles": 12620,
+    "atlas_silhouette_iou": {
+      "front": 0.95373,
+      "rear": 0.95375,
+      "left": 0.95508,
+      "top": 0.97846
+    },
+    "front_lower_16pct_iou": 0.7462471418630082,
+    "signed_volume": 0.23297196626663208,
+    "triangle_quality_p10": 0.2173370790102718,
+    "torso_radial_residual_rms": 0.0028301247070389715,
+    "mean_iou": 0.9602550000000001,
+    "ground_z": 0.004586338996887207
+  },
+  "D-raw": {
+    "triangles": 12624,
+    "atlas_silhouette_iou": {
+      "front": 0.95192,
+      "rear": 0.95195,
+      "left": 0.95368,
+      "top": 0.97724
+    },
+    "front_lower_16pct_iou": 0.7423978499975116,
+    "signed_volume": 0.23245078325271606,
+    "triangle_quality_p10": 0.5332986244481098,
+    "torso_radial_residual_rms": 0.0027822924802480354,
+    "mean_iou": 0.9586975,
+    "ground_z": 0.0048552751541137695
+  },
+  "R-raw": {
+    "triangles": 12624,
+    "atlas_silhouette_iou": {
+      "front": 0.95476,
+      "rear": 0.95502,
+      "left": 0.95618,
+      "top": 0.97904
+    },
+    "front_lower_16pct_iou": 0.7541538155407422,
+    "signed_volume": 0.23328042030334473,
+    "triangle_quality_p10": 0.5307831279410855,
+    "torso_radial_residual_rms": 0.00284923003821685,
+    "mean_iou": 0.96125,
+    "ground_z": 0.004183441866189241
+  },
+  "E64-raw": {
+    "triangles": 16312,
+    "atlas_silhouette_iou": {
+      "front": 0.95418,
+      "rear": 0.95421,
+      "left": 0.95542,
+      "top": 0.97866
+    },
+    "front_lower_16pct_iou": 0.7511190689346464,
+    "signed_volume": 0.2331290990114212,
+    "triangle_quality_p10": 0.20292895717605497,
+    "torso_radial_residual_rms": 0.002809921574175843,
+    "mean_iou": 0.9606175,
+    "ground_z": 0.004480011761188507
+  },
+  "E128-raw": {
+    "triangles": 65176,
+    "atlas_silhouette_iou": {
+      "front": 0.95503,
+      "rear": 0.95539,
+      "left": 0.95606,
+      "top": 0.97925
+    },
+    "front_lower_16pct_iou": 0.7552371000646863,
+    "signed_volume": 0.23338647186756134,
+    "triangle_quality_p10": 0.20601453242884632,
+    "torso_radial_residual_rms": 0.0028475632151422916,
+    "mean_iou": 0.9614325,
+    "ground_z": 0.004355859011411667
+  }
+}

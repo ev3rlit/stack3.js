@@ -1,0 +1,7 @@
+version: 1
+nodes:
+  - { id: chick, type: load-stack, path: ./stack }
+  - { id: nets, type: extract-mesh, input: chick, method: organic, guide: ./surface-nets.json }
+  - { id: dc, type: extract-mesh, input: chick, method: organic, guide: ./hermite-dc.json }
+  - { id: write-nets, type: write-glb, input: nets, path: ./surface-nets.glb, lit: true }
+  - { id: write-dc, type: write-glb, input: dc, path: ./hermite-dc.glb, lit: true }

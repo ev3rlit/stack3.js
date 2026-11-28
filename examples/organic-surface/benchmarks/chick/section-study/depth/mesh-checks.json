@@ -1,0 +1,42 @@
+{
+  "../L-lod": {
+    "triangles": 1600,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.23268708850167877
+  },
+  "synthetic-reference": {
+    "triangles": 16288,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.23052340575011038
+  },
+  "fused": {
+    "triangles": 1600,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.2299262490262291
+  },
+  "full": {
+    "triangles": 1600,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.2296577589263924
+  },
+  "roundtrip": {
+    "triangles": 1600,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume": 0.2326829503162738
+  }
+}

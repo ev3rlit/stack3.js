@@ -1,0 +1,9 @@
+{
+  "interpolation": "cubic",
+  "smoothingIterations": 6,
+  "sigma": 0,
+  "extractor": "marching-cubes",
+  "field": "loft/field.npy",
+  "targetEdgeLength": 0.038,
+  "adaptive": false
+}

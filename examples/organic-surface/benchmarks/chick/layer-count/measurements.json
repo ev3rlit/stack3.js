@@ -1,0 +1,54 @@
+{
+  "32-32": {
+    "triangles": 1600,
+    "atlas_silhouette_iou": {
+      "front": 0.94904,
+      "rear": 0.94831,
+      "left": 0.9571,
+      "top": 0.98024
+    },
+    "front_lower_16pct_iou": 0.7275759260195058,
+    "torso_radial_residual_rms": 0.0030389331512537384,
+    "mean_iou": 0.9586725,
+    "ground_z": 0.004916725680232048
+  },
+  "32-64": {
+    "triangles": 1598,
+    "atlas_silhouette_iou": {
+      "front": 0.95457,
+      "rear": 0.9544,
+      "left": 0.95555,
+      "top": 0.97908
+    },
+    "front_lower_16pct_iou": 0.7524698406394281,
+    "torso_radial_residual_rms": 0.0029199998862197794,
+    "mean_iou": 0.9609000000000001,
+    "ground_z": 0.004542109090834856
+  },
+  "32-128": {
+    "triangles": 1600,
+    "atlas_silhouette_iou": {
+      "front": 0.95371,
+      "rear": 0.95385,
+      "left": 0.95779,
+      "top": 0.97809
+    },
+    "front_lower_16pct_iou": 0.7505299283335015,
+    "torso_radial_residual_rms": 0.0028200826034097543,
+    "mean_iou": 0.9608599999999999,
+    "ground_z": 0.0031067084055393934
+  },
+  "64-64": {
+    "triangles": 1600,
+    "atlas_silhouette_iou": {
+      "front": 0.94988,
+      "rear": 0.95007,
+      "left": 0.9572,
+      "top": 0.97737
+    },
+    "front_lower_16pct_iou": 0.7555120285269449,
+    "torso_radial_residual_rms": 0.0028481164691743287,
+    "mean_iou": 0.95863,
+    "ground_z": 0.004780849441885948
+  }
+}
