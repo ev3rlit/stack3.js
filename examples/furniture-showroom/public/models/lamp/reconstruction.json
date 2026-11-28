@@ -1,0 +1,42 @@
+[
+  {
+    "part": "Bulb",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      37,
+      37
+    ],
+    "triangles": 2308
+  },
+  {
+    "part": "Open domed shade",
+    "method": "Measured SDF / MC33",
+    "grid": [
+      114,
+      54,
+      114
+    ],
+    "triangles": 14734
+  },
+  {
+    "part": "Bent steel stem",
+    "method": "Measured SDF / MC33",
+    "grid": [
+      104,
+      359,
+      9
+    ],
+    "triangles": 7926
+  },
+  {
+    "part": "Weighted foot",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      37
+    ],
+    "triangles": 738
+  }
+]

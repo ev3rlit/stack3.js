@@ -1,0 +1,122 @@
+[
+  {
+    "part": "Open bay mullion",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Inset back_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      36,
+      37,
+      9
+    ],
+    "triangles": 40
+  },
+  {
+    "part": "Inset back",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      34,
+      37,
+      9
+    ],
+    "triangles": 28
+  },
+  {
+    "part": "Offset shelf_3",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      22
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Offset shelf_2",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      22
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Offset shelf_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      22
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Offset shelf",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      22
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Cap_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      12
+    ],
+    "triangles": 16
+  },
+  {
+    "part": "Cap",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      12
+    ],
+    "triangles": 16
+  },
+  {
+    "part": "Oak upright_2",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      11
+    ],
+    "triangles": 46
+  },
+  {
+    "part": "Oak upright_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      11
+    ],
+    "triangles": 46
+  },
+  {
+    "part": "Oak upright",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      11
+    ],
+    "triangles": 46
+  }
+]

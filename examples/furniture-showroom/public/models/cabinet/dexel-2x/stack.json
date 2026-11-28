@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "atlas": "stack.png",
+  "width": 128,
+  "depth": 42,
+  "layers": 128,
+  "columns": 32,
+  "spacing": 0.006218750088941306,
+  "size": [
+    1.2000000476837158,
+    0.40050000771880145,
+    0.7960000113844872
+  ],
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "layerOrder": "bottom-to-top",
+  "layout": "row-major",
+  "axes": "xy-ground-z-up-y-forward"
+}

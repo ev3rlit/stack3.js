@@ -1,0 +1,92 @@
+[
+  {
+    "part": "Mounting plate_3",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      31
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Floating tread_3",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      16
+    ],
+    "triangles": 838
+  },
+  {
+    "part": "Mounting plate_2",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      31
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Floating tread_2",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      16
+    ],
+    "triangles": 838
+  },
+  {
+    "part": "Mounting plate_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      31
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Floating tread_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      16
+    ],
+    "triangles": 838
+  },
+  {
+    "part": "Mounting plate",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      31
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Floating tread",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      16
+    ],
+    "triangles": 838
+  },
+  {
+    "part": "Central stringer",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 446
+  }
+]

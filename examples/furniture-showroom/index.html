@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:," />
+    <meta name="theme-color" content="#f6f3eb" />
+    <title>Furniture Showroom · Stack3.js</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <header>
+      <span class="brand"><i aria-hidden="true"></i>Stack3.js</span
+      ><span>Furniture Benchmark Collection <b>Vol. 01</b></span>
+    </header>
+    <main>
+      <section class="viewer" aria-label="3D 가구 비교">
+        <div class="heading">
+          <h1>Furniture Showroom</h1>
+          <button id="reset">시점 초기화</button>
+        </div>
+        <div class="stage">
+          <canvas
+            id="viewport"
+            tabindex="0"
+            aria-label="3D 모델. 드래그로 회전, 스크롤로 확대. 방향키로 회전할 수 있습니다."
+          ></canvas>
+          <div id="status" role="status">가구를 불러오는 중…</div>
+        </div>
+        <div class="settings">
+          <fieldset>
+            <legend>렌더러</legend>
+            <button data-renderer="three">Three.js</button><button data-renderer="rt">ThreeRT</button>
+          </fieldset>
+          <fieldset>
+            <legend>형상</legend>
+            <button data-source="reference">Three.js 원본</button><button data-source="stack3">Stack3</button>
+          </fieldset>
+          <fieldset id="dexel-scale" hidden>
+            <legend>Triple-Dexel 해상도</legend>
+            <button data-scale="1">1×</button><button data-scale="2">2×</button><button data-scale="4">4×</button>
+          </fieldset>
+        </div>
+        <div class="readout"><span id="feature"></span><span id="measure"></span></div>
+        <div id="resources"></div>
+      </section>
+      <aside>
+        <h2>Collection</h2>
+        <nav aria-label="가구 선택" id="catalog"></nav>
+      </aside>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

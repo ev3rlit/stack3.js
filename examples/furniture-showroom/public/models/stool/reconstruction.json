@@ -1,0 +1,42 @@
+[
+  {
+    "part": "Splayed leg_2",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 406
+  },
+  {
+    "part": "Splayed leg_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 406
+  },
+  {
+    "part": "Splayed leg",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 406
+  },
+  {
+    "part": "Round seat",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      37
+    ],
+    "triangles": 593
+  }
+]

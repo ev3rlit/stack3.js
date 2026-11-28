@@ -1,0 +1,292 @@
+[
+  {
+    "part": "Push handle_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      9,
+      37
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Push handle",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      9,
+      37
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Tray end_5",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      9,
+      37
+    ],
+    "triangles": 16
+  },
+  {
+    "part": "Tray end_4",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      9,
+      37
+    ],
+    "triangles": 16
+  },
+  {
+    "part": "Tray lip_5",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      9
+    ],
+    "triangles": 24
+  },
+  {
+    "part": "Tray lip_4",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      9
+    ],
+    "triangles": 24
+  },
+  {
+    "part": "Tray base_2",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      25
+    ],
+    "triangles": 48
+  },
+  {
+    "part": "Tray end_3",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      9,
+      37
+    ],
+    "triangles": 16
+  },
+  {
+    "part": "Tray end_2",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      9,
+      37
+    ],
+    "triangles": 16
+  },
+  {
+    "part": "Tray lip_3",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      9
+    ],
+    "triangles": 24
+  },
+  {
+    "part": "Tray lip_2",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      9
+    ],
+    "triangles": 24
+  },
+  {
+    "part": "Tray base_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      25
+    ],
+    "triangles": 48
+  },
+  {
+    "part": "Tray end_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      12,
+      37
+    ],
+    "triangles": 34
+  },
+  {
+    "part": "Tray end",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      12,
+      37
+    ],
+    "triangles": 34
+  },
+  {
+    "part": "Tray lip_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      9
+    ],
+    "triangles": 48
+  },
+  {
+    "part": "Tray lip",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      9
+    ],
+    "triangles": 48
+  },
+  {
+    "part": "Tray base",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      25
+    ],
+    "triangles": 48
+  },
+  {
+    "part": "Square post_3",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 16
+  },
+  {
+    "part": "Fork_3",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      13,
+      37,
+      13
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Caster axle_3",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      20,
+      37
+    ],
+    "triangles": 446
+  },
+  {
+    "part": "Square post_2",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 16
+  },
+  {
+    "part": "Fork_2",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      13,
+      37,
+      13
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Caster axle_2",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      20,
+      37
+    ],
+    "triangles": 446
+  },
+  {
+    "part": "Square post_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 16
+  },
+  {
+    "part": "Fork_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      13,
+      37,
+      13
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Caster axle_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      20,
+      37
+    ],
+    "triangles": 446
+  },
+  {
+    "part": "Square post",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 16
+  },
+  {
+    "part": "Fork",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      13,
+      37,
+      13
+    ],
+    "triangles": 12
+  },
+  {
+    "part": "Caster axle",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      20,
+      37
+    ],
+    "triangles": 446
+  }
+]

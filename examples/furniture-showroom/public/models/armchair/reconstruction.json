@@ -1,0 +1,112 @@
+[
+  {
+    "part": "Sloped back",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      32,
+      11
+    ],
+    "triangles": 900
+  },
+  {
+    "part": "Seat cushion",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      11,
+      34
+    ],
+    "triangles": 900
+  },
+  {
+    "part": "Seat frame",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      33
+    ],
+    "triangles": 1114
+  },
+  {
+    "part": "Floating arm_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      9,
+      37
+    ],
+    "triangles": 1054
+  },
+  {
+    "part": "Back stile_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 932
+  },
+  {
+    "part": "Front leg_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 900
+  },
+  {
+    "part": "Rear diagonal_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 900
+  },
+  {
+    "part": "Floating arm",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      9,
+      37
+    ],
+    "triangles": 1054
+  },
+  {
+    "part": "Back stile",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 932
+  },
+  {
+    "part": "Front leg",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 900
+  },
+  {
+    "part": "Rear diagonal",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      37,
+      9
+    ],
+    "triangles": 900
+  }
+]

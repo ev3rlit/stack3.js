@@ -1,0 +1,5 @@
+version: 1
+nodes:
+  - {id: source, type: load-stack, path: .}
+  - {id: mesh, type: extract-mesh, input: source, method: hermite-dc, guide: guide.json}
+  - {id: export, type: write-glb, input: mesh, path: dexel.glb, lit: true}

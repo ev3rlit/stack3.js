@@ -1,0 +1,92 @@
+[
+  {
+    "part": "End apron_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      9,
+      37
+    ],
+    "triangles": 1054
+  },
+  {
+    "part": "End apron",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      9,
+      9,
+      37
+    ],
+    "triangles": 1054
+  },
+  {
+    "part": "Long apron_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      9
+    ],
+    "triangles": 1232
+  },
+  {
+    "part": "Long apron",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      9
+    ],
+    "triangles": 1232
+  },
+  {
+    "part": "Rounded leg_3",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      11,
+      37,
+      11
+    ],
+    "triangles": 900
+  },
+  {
+    "part": "Rounded leg_2",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      11,
+      37,
+      11
+    ],
+    "triangles": 900
+  },
+  {
+    "part": "Rounded leg_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      11,
+      37,
+      11
+    ],
+    "triangles": 900
+  },
+  {
+    "part": "Rounded leg",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      11,
+      37,
+      11
+    ],
+    "triangles": 900
+  },
+  {
+    "part": "Soft-edged top",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      37,
+      9,
+      22
+    ],
+    "triangles": 1336
+  }
+]

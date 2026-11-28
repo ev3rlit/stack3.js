@@ -1,0 +1,62 @@
+[
+  {
+    "part": "Rolled end",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      30,
+      66,
+      99
+    ],
+    "triangles": 13486
+  },
+  {
+    "part": "Back cushion_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      99,
+      51,
+      32
+    ],
+    "triangles": 10794
+  },
+  {
+    "part": "Upholstered seat_1",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      99,
+      42,
+      81
+    ],
+    "triangles": 17294
+  },
+  {
+    "part": "Back cushion",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      99,
+      51,
+      32
+    ],
+    "triangles": 10794
+  },
+  {
+    "part": "Upholstered seat",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      78,
+      34,
+      99
+    ],
+    "triangles": 15904
+  },
+  {
+    "part": "Shadow plinth",
+    "method": "Triple-Dexel / Hermite DC",
+    "grid": [
+      99,
+      9,
+      41
+    ],
+    "triangles": 4746
+  }
+]

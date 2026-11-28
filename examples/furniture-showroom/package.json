@@ -1,0 +1,23 @@
+{
+  "name": "stack3-furniture-showroom",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build --base ./",
+    "preview": "vite preview --host 127.0.0.1",
+    "build:assets": "tsx scripts/build-assets.mjs && uv run scripts/build-furniture-parts.py && npm run build:cabinet-dexel",
+    "build:furniture-parts": "uv run scripts/build-furniture-parts.py && uv run scripts/measure.py",
+    "build:cabinet-dexel": "uv run scripts/build-cabinet-dexel.py && uv run scripts/measure.py"
+  },
+  "dependencies": {
+    "@threert/scene": "0.1.1",
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "1.2.1",
+    "@stack3/core": "file:../../packages/core",
+    "tsx": "4.20.6",
+    "vite": "7.3.1"
+  }
+}

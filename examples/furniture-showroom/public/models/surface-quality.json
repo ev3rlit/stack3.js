@@ -1,0 +1,82 @@
+{
+  "stool": {
+    "stack3": {
+      "silhouetteIoU": 0.69482,
+      "depthP95Mm": 78.797
+    },
+    "measured": {
+      "silhouetteIoU": 0.9934,
+      "depthP95Mm": 0.58
+    }
+  },
+  "table": {
+    "stack3": {
+      "silhouetteIoU": 0.96901,
+      "depthP95Mm": 133.005
+    },
+    "measured": {
+      "silhouetteIoU": 0.9976,
+      "depthP95Mm": 1.012
+    }
+  },
+  "bookshelf": {
+    "stack3": {
+      "silhouetteIoU": 0.94327,
+      "depthP95Mm": 427.636
+    },
+    "measured": {
+      "silhouetteIoU": 1.0,
+      "depthP95Mm": 0.0
+    }
+  },
+  "armchair": {
+    "stack3": {
+      "silhouetteIoU": 0.8812,
+      "depthP95Mm": 208.898
+    },
+    "measured": {
+      "silhouetteIoU": 0.99618,
+      "depthP95Mm": 0.993
+    }
+  },
+  "lamp": {
+    "stack3": {
+      "silhouetteIoU": 0.78102,
+      "depthP95Mm": 152.433
+    },
+    "measured": {
+      "silhouetteIoU": 0.9918,
+      "depthP95Mm": 0.564
+    }
+  },
+  "sofa": {
+    "stack3": {
+      "silhouetteIoU": 0.93408,
+      "depthP95Mm": 333.574
+    },
+    "measured": {
+      "silhouetteIoU": 0.99946,
+      "depthP95Mm": 0.52
+    }
+  },
+  "trolley": {
+    "stack3": {
+      "silhouetteIoU": 0.91174,
+      "depthP95Mm": 222.093
+    },
+    "measured": {
+      "silhouetteIoU": 0.99969,
+      "depthP95Mm": 0.0
+    }
+  },
+  "staircase": {
+    "stack3": {
+      "silhouetteIoU": 0.94983,
+      "depthP95Mm": 19.382
+    },
+    "measured": {
+      "silhouetteIoU": 0.98416,
+      "depthP95Mm": 1.475
+    }
+  }
+}
