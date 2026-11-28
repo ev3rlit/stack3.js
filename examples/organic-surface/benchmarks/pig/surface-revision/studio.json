@@ -1,0 +1,39 @@
+{
+  "Torso": {
+    "components": 1,
+    "unclosed_edges": 0,
+    "bad_winding": 0,
+    "zero_area": 0,
+    "signed_volume": 0.17510290227380773,
+    "local_floor_z": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "lower_leg_sections": {
+      "0.0263": 4,
+      "0.0633": 4
+    }
+  },
+  "Snout": {
+    "components": 1,
+    "unclosed_edges": 0,
+    "bad_winding": 0,
+    "zero_area": 0,
+    "signed_volume": 0.0045508166349761845
+  },
+  "sockets": [
+    {
+      "depth": 0.03692615032196045,
+      "rim_turn_p50_deg": 18.683886259650954
+    },
+    {
+      "depth": 0.037066519260406494,
+      "rim_turn_p50_deg": 18.77441161048468
+    }
+  ],
+  "body_part_objects": [
+    "Torso"
+  ]
+}

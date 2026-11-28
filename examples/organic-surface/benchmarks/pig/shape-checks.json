@@ -1,0 +1,35 @@
+{
+  "mesh_count": 8,
+  "animation": "Piglet_EarFold",
+  "duration_seconds": 3.5,
+  "ears": {
+    "Ear.L": {
+      "self_collision_frames": [],
+      "detached_frames": [],
+      "tip_inside_head_frames": [],
+      "max_weight_error": 2.9802322387695312e-08,
+      "tip_vertex": 219,
+      "folded_tip_clearance_to_head": 0.11052905023097992,
+      "tip_drop": 0.39497482776641846,
+      "loop_closure_error": 0.0
+    },
+    "Ear.R": {
+      "self_collision_frames": [],
+      "detached_frames": [],
+      "tip_inside_head_frames": [],
+      "max_weight_error": 2.9802322387695312e-08,
+      "tip_vertex": 219,
+      "folded_tip_clearance_to_head": 0.1200280636548996,
+      "tip_drop": 0.38910162448883057,
+      "loop_closure_error": 0.0
+    }
+  },
+  "mounts": {
+    "Curled tail": 55,
+    "Eye.L": 51,
+    "Eye.R": 51,
+    "Snout": 148,
+    "Head-Torso": 175
+  },
+  "triangles": 8638
+}
