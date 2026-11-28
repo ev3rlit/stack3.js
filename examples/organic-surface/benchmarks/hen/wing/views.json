@@ -1,0 +1,8 @@
+{
+  "views": {
+    "top": "top.png",
+    "left": "left.png",
+    "front": "front.png",
+    "rear": "rear.png"
+  }
+}

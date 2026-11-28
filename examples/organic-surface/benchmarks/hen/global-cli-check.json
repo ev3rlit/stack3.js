@@ -1,0 +1,16 @@
+{
+  "previous_global": "0.6.4",
+  "installed": "0.6.6-local.organic.1",
+  "node": "v22.16.0",
+  "binary": "~/.nvm/versions/node/v22.16.0/bin/stack3",
+  "source": "working checkout, local npm tarball",
+  "recipe": "examples/organic-surface/surface.pipeline.yaml",
+  "fresh_geometry_cache": true,
+  "working_directory": "temporary directory outside checkout",
+  "triangles": 1200,
+  "embedded_images": 1,
+  "output_sha256": "54471870d6053c6fdc4c68eacd8bc84a054de9129af6854f05a4b3ff358e732d",
+  "matches_prior_example": true,
+  "registered_depth_smoke": true,
+  "package_sha256": "7a3cff36a7d2161f34c49dfa8f4b7ea6e6f07091114612532865beeb7216ba6a"
+}

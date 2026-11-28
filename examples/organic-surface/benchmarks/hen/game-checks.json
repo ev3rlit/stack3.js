@@ -1,0 +1,98 @@
+{
+  "parts": {
+    "Beak": {
+      "triangles": 124,
+      "volume": 0.0011420228267965214,
+      "floor": 0.4939999580383301,
+      "unclosed": 0,
+      "bad_winding": 0,
+      "degenerate": 0
+    },
+    "Body": {
+      "triangles": 386,
+      "volume": 0.16162910659044089,
+      "floor": 0.09099999070167542,
+      "unclosed": 0,
+      "bad_winding": 0,
+      "degenerate": 0
+    },
+    "Comb": {
+      "triangles": 234,
+      "volume": 0.011163279765614377,
+      "floor": 0.7084872126579285,
+      "unclosed": 0,
+      "bad_winding": 0,
+      "degenerate": 0
+    },
+    "Eye.L": {
+      "triangles": 64,
+      "volume": 0.00012084432968738892,
+      "floor": 0.5659937858581543,
+      "unclosed": 0,
+      "bad_winding": 0,
+      "degenerate": 0
+    },
+    "Eye.R": {
+      "triangles": 64,
+      "volume": 0.00012084438070868787,
+      "floor": 0.5660897493362427,
+      "unclosed": 0,
+      "bad_winding": 0,
+      "degenerate": 0
+    },
+    "Foot.L": {
+      "triangles": 164,
+      "volume": 0.0023296768948977134,
+      "floor": 0.0,
+      "unclosed": 0,
+      "bad_winding": 0,
+      "degenerate": 0
+    },
+    "Foot.R": {
+      "triangles": 164,
+      "volume": 0.002329676894897713,
+      "floor": 0.0,
+      "unclosed": 0,
+      "bad_winding": 0,
+      "degenerate": 0
+    },
+    "Wattle": {
+      "triangles": 124,
+      "volume": 0.0012103085751298869,
+      "floor": 0.40450000762939453,
+      "unclosed": 0,
+      "bad_winding": 0,
+      "degenerate": 0
+    },
+    "Wing.L": {
+      "triangles": 136,
+      "volume": 0.006980492332530224,
+      "floor": 0.23399999737739563,
+      "unclosed": 0,
+      "bad_winding": 0,
+      "degenerate": 0
+    },
+    "Wing.R": {
+      "triangles": 136,
+      "volume": 0.006980492332530225,
+      "floor": 0.23399999737739563,
+      "unclosed": 0,
+      "bad_winding": 0,
+      "degenerate": 0
+    }
+  },
+  "contacts": {
+    "Beak": 32,
+    "Comb": 60,
+    "Eye.L": 39,
+    "Eye.R": 38,
+    "Foot.L": 21,
+    "Foot.R": 23,
+    "Wattle": 38,
+    "Wing.L": 58,
+    "Wing.R": 59,
+    "Wattle-Beak": 46
+  },
+  "packed_textures": 6,
+  "triangles": 1596
+}

@@ -1,0 +1,38 @@
+{
+  "hen.glb": {
+    "front_iou": 0.9223355734006162,
+    "left_iou": 0.9207308970099668,
+    "top_iou": 0.8704127305999307,
+    "rear_iou": 0.9238482532420771,
+    "Comb": {
+      "fitted_contour_iou": 0.7884810145161527,
+      "atlas_tips": 2,
+      "mesh_tips": 2
+    },
+    "Wattle": {
+      "fitted_contour_iou": 0.9875652111770171,
+      "atlas_tips": 2,
+      "mesh_tips": 2,
+      "assembled_depth_height": 0.8797054171035442,
+      "left_fitted_contour_iou": 0.8888790024278324
+    }
+  },
+  "hen-game.glb": {
+    "front_iou": 0.9215849704019614,
+    "left_iou": 0.9204774500487256,
+    "top_iou": 0.8765048422757139,
+    "rear_iou": 0.9233926045543124,
+    "Comb": {
+      "fitted_contour_iou": 0.7814795806144146,
+      "atlas_tips": 2,
+      "mesh_tips": 2
+    },
+    "Wattle": {
+      "fitted_contour_iou": 0.9703291139240506,
+      "atlas_tips": 2,
+      "mesh_tips": 2,
+      "assembled_depth_height": 0.8965981397722627,
+      "left_fitted_contour_iou": 0.880627076678341
+    }
+  }
+}
