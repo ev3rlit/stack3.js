@@ -1,5 +1,6 @@
+import { execFileSync } from 'node:child_process';
 import { chmod, cp, copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
-import { join, resolve } from 'node:path';
+import { join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { build as bundle } from 'esbuild';
@@ -14,6 +15,8 @@ if (!values.output) throw new Error('Supply --output <new directory>.');
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const output = resolve(values.output);
+const skill = join(root, 'skills/stack3');
+const sourceCli = join(root, 'apps/cli/bin/stack3.mjs');
 await mkdir(output);
 await Promise.all(['bin', 'blender', 'examples'].map(directory => mkdir(join(output, directory))));
 const lock = JSON.parse(await readFile(join(root, 'package-lock.json'), 'utf8'));
@@ -23,7 +26,7 @@ const manifest = {
   description: 'Build 3D meshes and sprite stacks from orthographic atlases.',
   repository: { type: 'git', url: 'git+https://github.com/ev3rlit/stack3.js.git' },
   engines: { node: '>=22.12' }, bin: { stack3: './bin/stack3.mjs' }, dependencies,
-  files: ['bin', 'blender', 'meshing', 'verification', 'schema', 'examples', 'references', 'viewer/dist', 'THIRD-PARTY-LICENSES.md'],
+  files: ['bin', 'blender', 'meshing', 'verification', 'schema', 'examples', 'references', 'viewer/dist', 'COMMAND.md', 'THIRD-PARTY-LICENSES.md'],
 };
 const cli = join(output, 'bin', 'stack3.mjs');
 const [cliBuild] = await Promise.all([
@@ -44,13 +47,14 @@ const [cliBuild] = await Promise.all([
   cp(join(root, 'apps/cli/verification'), join(output, 'verification'), { recursive: true, filter: path => !path.endsWith('__pycache__') }),
   cp(join(root, 'apps/cli/meshing'), join(output, 'meshing'), { recursive: true, filter: path => !path.endsWith('__pycache__') }),
   cp(join(root, 'apps/cli/schema'), join(output, 'schema'), { recursive: true }),
-  cp(join(root, 'skills/stack3/references/hard-surface'), join(output, 'references/hard-surface'), { recursive: true }),
+  cp(join(skill, 'references/hard-surface'), join(output, 'references/hard-surface'), { recursive: true }),
   copyFile(join(root, 'apps/cli/blender/import_stack.py'), join(output, 'blender/import_stack.py')),
   copyFile(join(root, 'LICENSE'), join(output, 'LICENSE')),
   copyFile(join(root, 'apps/cli/README.md'), join(output, 'README.md')),
   copyFile(join(root, 'samples/future-tank/future-tank.stack3.json'), join(output, 'examples/future-tank.stack3.json')),
   copyFile(join(root, 'samples/props/traffic-cone-4view.png'), join(output, 'examples/traffic-cone-4view.png')),
 ]);
+
 const bundledPackages = new Set();
 for (const input of Object.keys(cliBuild.metafile.inputs)) {
   const packagePath = input.match(/^(.*node_modules\/(?:@[^/]+\/)?[^/]+)\//)?.[1];
@@ -64,4 +68,25 @@ const licenses = await Promise.all([...bundledPackages].sort().map(async package
 await Promise.all([
   chmod(cli, 0o755),
   writeFile(join(output, 'THIRD-PARTY-LICENSES.md'), `# CLI third-party licenses\n\n${licenses.join('\n\n')}\n`),
+]);
+
+const commandSections = [
+  ['CLI help', ['--help']],
+  ['Verification', ['verify', '--help']],
+  ['YAML pipelines', ['pipeline', '--help']],
+  ['Pipeline capabilities', ['capabilities']],
+  ['Scene projects', ['project', '--help']],
+];
+const commandReference = [
+  '# stack3 command reference',
+  'Generated from the CLI when packaging. Recipe paths are relative to this document.',
+  ...commandSections.map(([heading, args]) => {
+    const commandOutput = execFileSync(process.execPath, [sourceCli, ...args], { cwd: root, encoding: 'utf8' })
+      .trimEnd().replaceAll(join(skill, 'references/hard-surface') + sep, 'references/hard-surface/');
+    return `## ${heading}\n\n\`\`\`text\n${commandOutput}\n\`\`\``;
+  }),
+].join('\n\n') + '\n';
+await Promise.all([
+  writeFile(join(skill, 'COMMAND.md'), commandReference),
+  writeFile(join(output, 'COMMAND.md'), commandReference),
 ]);

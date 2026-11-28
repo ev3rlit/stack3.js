@@ -38,6 +38,7 @@ jobs:
           cd "$RUNNER_TEMP/stack3-smoke"
           stack3="$prefix/bin/stack3"
           test "$("$stack3" --version)" = "${GITHUB_REF_NAME#cli-v}"
+          cmp "$GITHUB_WORKSPACE/skills/stack3/COMMAND.md" "$prefix/lib/node_modules/stack3js/COMMAND.md"
           "$stack3" example future-tank
           "$stack3" project get future-tank.stack3.json
           "$stack3" example traffic-cone
@@ -78,8 +79,36 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           sha256sum --check stack3-cli.tgz.sha256
-          gh release create "$GITHUB_REF_NAME" stack3-cli.tgz stack3-cli.tgz.sha256 \
+          tar -xOf stack3-cli.tgz package/COMMAND.md > COMMAND.md
+          gh release create "$GITHUB_REF_NAME" stack3-cli.tgz stack3-cli.tgz.sha256 COMMAND.md \
             --repo "$GITHUB_REPOSITORY" --verify-tag --generate-notes --latest
+
+  sync-skill-commands:
+    name: Update the skill command reference
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: stack3-skill-commands
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - name: Sync the latest release's command reference
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          latest="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)"
+          if [[ "$latest" != "$GITHUB_REF_NAME" ]]; then exit 0; fi
+          gh release download "$latest" --repo "$GITHUB_REPOSITORY" --pattern COMMAND.md --output "$RUNNER_TEMP/COMMAND.md"
+          cp "$RUNNER_TEMP/COMMAND.md" skills/stack3/COMMAND.md
+          git add -- skills/stack3/COMMAND.md
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -m "Update stack3 command reference for $latest"
+          git push origin "HEAD:refs/heads/$DEFAULT_BRANCH"
 
   publish-npm:
     name: Publish to npm

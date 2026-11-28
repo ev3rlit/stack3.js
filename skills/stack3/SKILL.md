@@ -24,6 +24,14 @@ Use visual-hull carving from Daniel White’s [Sprite Stacking workflow](https:/
 
 Use **Blender** by default to view and verify the stack or mesh, assemble named parts at their mounts, and do retopology, materials, lighting and other post-processing. For an editable Blender delivery, pack textures, save a new `.blend`, and reopen it for review. Use Editor/Playground for web-specific controls, physics or CPU/WebGL comparisons.
 
+## Discover CLI commands
+
+```sh
+stack3 --help
+```
+
+Read the generated [COMMAND.md](COMMAND.md) for command usage, pipeline techniques, and bundled recipes.
+
 ## Discover and run hard-surface pipelines
 
 Read the installed CLI's capabilities before writing a recipe. Its JSON lists supported method names, guide fields, pipeline nodes, backends and bundled sample paths.
