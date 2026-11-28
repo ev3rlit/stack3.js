@@ -11,12 +11,14 @@ Usage: stack3 <verb> <input> [options]
   capabilities [--json]  List mesh methods, runtime requirements, schemas and example recipes
   example <name>         Copy future-tank or traffic-cone into the current directory
   verify -f <manifest>   Measure atlas views and mounts in one JSON report
+  capture-dexel <stack> --source aligned.glb --output depth.npz
+                        Capture ordered XYZ depth and normal intervals in the saved grid using Blender
   inspect <input>        Check mapped directions and fitted image sizes
   build <input>          Build an asset and save it to --output
   pipeline --help        Render or run YAML, or export its JSON Schema
   mesh <stack-directory> Extract a surface from saved stack.png + stack.json (--output mesh.glb)
                         --mesh-method marching-cubes (default), surface-nets, voxel
-                        or section-loft, heightfield, smooth-loft, revolve, extended-mc, hermite-dc, mc33, branch-loft, path-sweep, section-network, greedy, monotone, signed-distance-dc
+                        or section-loft, heightfield, smooth-loft, revolve, extended-mc, hermite-dc, mc33, branch-loft, path-sweep, section-network, greedy, monotone, signed-distance-dc, organic
                         --guide <part.json> uses pivot-relative stack XYZ scene units.
                         section-loft, smooth-loft, branch-loft, heightfield: optional axis (x/y/z, default z)
                         section-loft, smooth-loft: optional stations [{slice,outer?,holes?}]
@@ -25,6 +27,7 @@ Usage: stack3 <verb> <input> [options]
                         section-network: sections [{source:"independent",origin,u,v,outer,holes?}], optional tolerance
                         hermite-dc: optional field (.npy SDF) or dexel (.npz crossings and normals)
                         signed-distance-dc: optional field, outerIterations and innerIterations
+                        organic: optional field or dexel, sigma, extractor, interpolation, smoothingIterations, targetEdgeLength, adaptive, reproject, dexelOccupancy, depthRegions
                         extended-mc, mc33, greedy, monotone: no guide
                         New methods use uv or STACK3_PYTHON. See the stack3 skill for guide examples.
   view <directory>       Open a stack bundle in Blender (use --web for the browser viewer)
@@ -86,11 +89,12 @@ Usage: stack3 capabilities [--json]
 List pipeline nodes, mesh methods, backends, schemas and runnable samples.
 
 Pipeline nodes: load-stack, reconstruct-stack, extract-mesh, write-glb
-Mesh methods: marching-cubes, surface-nets, voxel, section-loft, heightfield, smooth-loft, revolve, extended-mc, hermite-dc, mc33, branch-loft, path-sweep, section-network, greedy, monotone, signed-distance-dc
+Mesh methods: marching-cubes, surface-nets, voxel, section-loft, heightfield, smooth-loft, revolve, extended-mc, hermite-dc, mc33, branch-loft, path-sweep, section-network, greedy, monotone, signed-distance-dc, organic
 
 Geometry and export stages
   Voxel Reconstruction (node)   reconstruct-stack, load-stack
   SDF and Normal Estimation (python)   hermite-dc, signed-distance-dc
+  Triple-Dexel Capture and Depth Fusion (blender and python)   capture-dexel, dexelOccupancy, depthRegions
   Triple-Dexel Hermite Data (python)   guide.dexel, hermite-dc
   Feature Segmentation and Plane Fitting (python)   fitTolerance
   Primitive Fitting (python)   fitTolerance, primitives
@@ -98,6 +102,8 @@ Geometry and export stages
   Guided Geometry Regularization (python)   regularization.tolerance, regularization.features, regularization.relations
   Procedural Bevel (blender)   bevelWidth, bevelSegments
   Selective Rim Bevel after QEM (blender)   lodBevel.preTriangleBudget, lodBevel.rims, triangleBudget, bevelWidth, bevelSegments
+  Organic Surface (python)   organic, sigma, extractor, smoothingIterations, targetEdgeLength
+  Quad Retopology (blender)   quadTarget
   Mesh Optimization and LOD (blender)   dissolveAngle, triangleBudget
   Multi-view Texture Projection (node or python)   extract-mesh
   Weighted Normals (python)   extract-mesh, finish

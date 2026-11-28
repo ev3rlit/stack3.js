@@ -1,6 +1,6 @@
 ---
 name: stack3
-description: Turn a subject or reference image into a four-view atlas, a saved sprite stack, and a 3D mesh. Use for stack3 CLI discovery, YAML pipelines and schemas, hard-surface fitting and LODs, measured SDF or Triple-Dexel geometry, Blender review, and Editor or Playground workflows.
+description: Turn a subject or reference image into a four-view atlas, a saved sprite stack, and a 3D mesh. Use for stack3 CLI discovery, YAML pipelines and schemas, hard-surface fitting, organic character surfaces and LODs, measured SDF or Triple-Dexel geometry, Blender review, and Editor or Playground workflows.
 ---
 
 # stack3 Sprite Stacks
@@ -31,6 +31,10 @@ stack3 --help
 ```
 
 Read the generated [COMMAND.md](COMMAND.md) for command usage, pipeline techniques, and bundled recipes.
+
+## Organic characters and rounded surfaces
+
+Read [Organic surfaces](references/organic-surfaces.md) when reconstructing soft bodies, continuous limb junctions, curled or folding parts, or rounded recesses. It covers the `organic` extractor, optional measured depth, section fitting, and the existing chick and pig benchmarks.
 
 ## Discover and run hard-surface pipelines
 
@@ -176,6 +180,7 @@ Run `stack3 mesh PART_STACK --mesh-method METHOD --output PART.glb`. Add `--guid
 | Part or goal | CLI method | Guide and inspection |
 | --- | --- | --- |
 | General baseline | `marching-cubes` (default), `surface-nets`, `voxel` | No guide. Check thin tips, smooth shells and exact cell bounds respectively. |
+| Organic body or soft appendage | `organic` | Compare extractors on one registered field. See [Organic surfaces](references/organic-surfaces.md) for guide parameters, depth fusion and LOD checks. |
 | Thin plate with matching sections | `section-loft` | Optional `{"axis":"x"}`. Linearly join aligned loops. Check root, middle and end. |
 | One continuous thickness interval per column | `heightfield` | Optional `{"axis":"z"}` selects thickness direction. Read the reported count of filled multi-interval columns. |
 | Rounded shell | `smooth-loft` | Optional `{"axis":"y"}`. Shape-preserving cubic interpolation between matched rings. Check input and intermediate sections. |
