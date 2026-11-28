@@ -19,6 +19,10 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - name: Set up uv for Python-backed CLI tests
+        uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          python-version: '3.12'
       - run: npm ci
       - run: npm run check && npm test
       - name: Build the installable package
