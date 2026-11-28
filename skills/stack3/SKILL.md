@@ -7,7 +7,7 @@ description: Turn a subject or reference image into a four-view atlas, a saved s
 
 ## Start from the input
 
-**Subject or reference image → image-generated atlas PNG → saved RGBA sprite stack → 3D surface mesh → Blender review and finishing.** Use this order for single objects and assemblies. Choose the part boundaries in 2D before creating any geometry.
+**Subject or reference image → image-generated atlas PNG → drawn verification guides and atlas verdict → saved RGBA sprite stack → 3D surface mesh → Blender review and finishing.** Use this order for single objects and assemblies. Choose the part boundaries in 2D before creating any geometry.
 
 | Input for this task | First action |
 | --- | --- |
@@ -79,24 +79,28 @@ For assemblies, use **one four-view atlas per distinct part → one sprite stack
 
 Use this prompt once per chosen atlas. Substitute `[ASSET]` with the whole subject or the detached part and its identifying features. For a part, state which neighboring pieces to omit and which side meets the assembly. Attach any source art as an identity and style reference. If the user specifies a style, add it explicitly. With source art, match its existing style. With neither, let the subject drive the look. Request pixel art only when the user wants it.
 
-Fill in the LEFT landmark lines with observable parts from this asset. For a handcart, the handles project toward screen-left and the two hubs on one axle coincide. For a lamp with an arm extending right in FRONT, look along the arm in LEFT; a post in front of it occludes it wherever they overlap. Omit an inapplicable cue for a symmetric object such as a plain barrel.
-
 ```text
-Create one wide PNG production atlas of [ASSET] as four orthographic views of one fixed object. Use the attached references for identity and appearance when supplied. Keep the same pose, parts, proportions, asymmetries, materials, colors, markings, and surface detail in every panel. Preserve the reference's rendering style, gradients, and edge treatment.
+Create one wide PNG atlas of [ASSET] with four technical orthographic views in a single horizontal row: TOP, LEFT, FRONT, REAR. Show one fixed object with identical geometry, pose, proportions, and asymmetries in all four views. Use any attached images as references for the object's shape, colors, materials, markings, surface details, and rendering style. Set the camera directions independently of the reference images.
 
-Arrange exactly four panels in one horizontal row, in this order: TOP, LEFT, FRONT, REAR. Use transparent or uniform light backgrounds and generous blank gutters between silhouettes. Leave the full object and its footprint uncropped in every panel. Keep one common scale in pixels per unit. Omit labels, frames, grids, props, and cast shadows.
+Use strict orthographic projection. Aim each camera exactly along the specified object axis, with zero angular deviation and zero roll relative to that view. Keep these camera directions fixed even when a feature is hidden.
 
-TOP — True orthographic plan. Put the camera directly over the object with its optical axis vertical and pointed straight down, perpendicular to the ground plane. Use a 90° depression angle with zero roll. The object's front points toward the bottom of the image. Place the silhouette using the full footprint, including any base or horizontal ledges that extend beyond the top surfaces. Landmarks on the same vertical line project to the same image point, regardless of height. Vertical edges have zero projected length, and vertical wall faces appear edge-on. Show the upper-facing and sloped surfaces visible on this axis. Exclude any tilted overhead, isometric, three-quarter, or perspective framing.
+Apply these projection rules to every view:
+- Points that differ only in depth along the viewing axis project to the same image position. Where they overlap, the nearest visible surface occludes the farther surfaces.
+- Every flat face parallel to the viewing direction projects edge-on with zero visible area. This applies to exterior faces and to faces inside openings and recesses.
+- Show a surface only where it is visible along the specified viewing axis. Preserve the projected shape and area of actual slopes, bevels, and curved surfaces.
+- Use no perspective convergence, three-quarter angles, or camera tilt to expose additional surfaces.
 
-LEFT — True orthographic left elevation. Place the camera directly to the object's left, looking horizontally across its width, with zero yaw offset, pitch, and roll relative to that side view. The front points screen-left, the rear screen-right, and vertical edges remain vertical. Show the full length and height.
+TOP — Look straight down the vertical axis. The object's front points toward the bottom of the panel. Points directly above one another align. Vertical planar faces appear edge-on.
 
-Project the entire width onto this plane. Two landmarks at the same front-to-rear position and height project to the same point even if they are on opposite sides. The nearer surface hides the farther one wherever they overlap. Flat front and rear faces perpendicular to the length appear edge-on. A horizontal top face has zero projected area. Show sloped and curved surfaces visible from this axis.
+LEFT — Look horizontally along the width axis from the object's left. The front points screen-left. Use the full front-to-rear length. Horizontal planar faces and flat faces perpendicular to the length axis appear edge-on.
 
-Place [FRONT LANDMARK] toward screen-left and [REAR LANDMARK] toward screen-right. Seen along the width axis, [WIDTH-ALIGNED FEATURE] appears [EXPECTED END PROFILE OR OCCLUSION].
+FRONT — Look horizontally along the length axis from directly in front. Use the full width. Horizontal planar faces and flat faces perpendicular to the width axis appear edge-on.
 
-FRONT — Horizontal orthographic elevation looking directly at the front. REAR — Horizontal orthographic elevation looking directly at the rear. Use level cameras and the same ground line across these three panels.
+REAR — Look horizontally along the length axis from directly behind. Use the same projection rules as FRONT. Show the geometry and asymmetries visible from behind.
 
-Match TOP length to LEFT length and TOP width to FRONT and REAR width. Match LEFT, FRONT, and REAR heights. Keep the same identifiable part geometry and placement across all views.
+Use one pixels-per-unit scale across all four views and a common ground line across the three elevations. Match TOP length to LEFT length, TOP width to FRONT and REAR width, and height across all three elevations. Leave generous gutters and clear margins. Keep every view uncropped on a transparent or uniform light background. Omit labels, frames, props, and cast shadows.
+
+Before finalizing, check each panel independently. If a face parallel to the viewing direction appears as a strip with visible area, correct that panel's camera so the face projects edge-on. Keep the object's geometry fixed.
 ```
 
 ## Replace a tilted TOP
@@ -129,7 +133,15 @@ Inspect the replacement at native resolution against the stated landmark and dim
 
 - Preserve the source style, colors, gradients, shading, and antialiased detail. Keep the input PNGs untouched. Use pixel-art generation, palette reduction, dithering, or nearest-neighbor preview only when requested. Preview sampling and a baked pixel-art style are separate choices.
 - Accept an explicitly mapped atlas or separate PNGs. Use `top,left,front,rear`, optionally with both `right,bottom`. Set the front down in TOP and left in LEFT. Keep the same object, pose, scale, ground line in elevation views, and clear silhouette separation. Transparent backgrounds are preferable for light subjects.
-- For a registered four-view atlas, run `stack3 verify -f part.atlas.yaml --output-dir qa/part` before building. Supply the original panel crops, pixel origins and one scale per panel; add independently marked landmarks when visible. For an assembly, pass its manifest to the same command to include both whole/part atlas measurements and mount residuals in one JSON report. Review unsupported contour runs, held-out residuals and skipped or unregistered views in report.json alongside the PNG overlays.
+1. **Draw the guides on the actual atlas.** For every generated or supplied four-view atlas, including atlas-only delivery, use an image-processing tool to draw and save `atlas-review.png` from the final clean PNG at its original pixel size. For separate views, assemble a review sheet without resampling. Keep the clean images intact. Label the panels and draw these guides using measured pixel positions:
+   - Draw silhouette-bound and dimension lines in each panel. Label the two endpoints and pixel differences for TOP length vs. LEFT length, TOP width vs. FRONT and REAR width, and height across the three elevations.
+   - Draw the observed ground line in LEFT, FRONT, and REAR. Draw lines or paired guide ticks at corresponding visible landmarks. Use the same color for each correspondence. Keep each mark at its observed position so offsets remain visible.
+   - In LEFT, FRONT, and REAR, mark the endpoints and visible intermediate points of edges expected to be straight and horizontal or vertical in that view, such as a base, rim, or upright edge when the object's geometry supports it. Draw an axis-aligned reference line through the first endpoint and an observed segment between the measured endpoints. Label the endpoint offset (absolute y difference for a horizontal edge, absolute x difference for a vertical edge) and the largest sampled perpendicular offset from the reference line, in pixels. Use the declared `tolerancePx` (default 1 pixel) for both offsets. Mark an edge `FAIL` if either exceeds tolerance. Use only edges that can be located reliably; if no eligible edge can be checked in an elevation, mark its straight-edge check `UNCONFIRMED`. Preserve actual slopes, bevels, and curves. Keep the original panel pixels in place.
+   - Mark both visible edges of a suspect strip on any face that should project edge-on. When independently supported axis-aligned landmarks are visible, mark both projected points and draw their residual. Label ambiguous cues `UNCONFIRMED` on the review sheet.
+2. **Open the saved guide sheet and inspect it.** Confirm that the required lines are visible on the exact atlas being delivered, and inspect the four camera orientations and the marked alignment. A text checklist or an image-generation instruction alone does not fulfill the drawing and inspection step. If a panel is replaced, draw and inspect the guides again on the updated atlas.
+3. **Run the numeric checks.** Create `part.atlas.yaml` with the original panel images or crop rectangles, crop-local origins, scale evidence, and independently observed landmarks. Use `axisPairs` only for independently supported points separated along the viewing axis, with the supporting geometry recorded in each pair's `evidence`. Run `stack3 verify -f part.atlas.yaml --output-dir qa/part`. Review `acceptance.verdict` in `report.json` and the verifier's `atlas-guides.png`, `projections.png`, and `landmarks.png` when present. Preserve the verifier's files as written. If numeric checks are unavailable, still draw, open, and return `atlas-review.png` and record the missing checks.
+4. **Apply the result before building or handing off.** A verified atlas requires the inspected `atlas-review.png`, passing elevation straight-edge checks from step 1, and a matching verifier `PASS`. If any elevation straight-edge check fails or remains unconfirmed, keep the atlas unverified even when the CLI reports `PASS`. Correct the affected view and repeat the guide and numeric checks before building. Link the clean atlas and the review sheet for every atlas delivery, plus the report and verifier guide when available. Label a remaining `FAIL` or `UNCONFIRMED` as an unverified draft and list the unresolved checks. For a build, use `stack3 build ... --verification qa/part/report.json`. If auto-splitting or masking differs from the measured views, use the same separate panel PNGs in both manifests. For an assembly, verify each part and use the assembly manifest for mount checks.
+
 - Open and inspect TOP at native resolution before building. Require a vertical orthographic view along the height axis. Compare roof and base landmarks and footprint proportions with the other views. A visible vertical fascia, strip of front or side wall attributable to object height, or a roof-to-base shift indicates tilt. Horizontal ledges or sloped surfaces can legitimately appear in TOP.
 - Use the replacement prompt for a missing or tilted TOP. For ambiguous views or a user-designated source model, use [Orthographic source preparation](references/orthographic-views.md). CLI dimension warnings can identify scale inconsistencies. They cannot establish camera orientation.
 - Inspect LEFT at native resolution for a visible front face, a visible flat top, or separation between landmarks that should coincide across the width. Compare their longitudinal positions with TOP and their heights with FRONT and REAR. For a symmetric silhouette, record which orientation cues can actually be confirmed.
@@ -163,7 +175,7 @@ Prefer an installed `stack3` CLI that supports these verbs. Verify capabilities 
 
 ```sh
 stack3 inspect asset-4view.png --layout top,left,front,rear
-stack3 build asset-4view.png --layout top,left,front,rear --format stack --output asset-stack/
+stack3 build asset-4view.png --layout top,left,front,rear --verification qa/part/report.json --format stack --output asset-stack/
 stack3 mesh asset-stack/ --output asset.glb
 ```
 
@@ -223,7 +235,7 @@ Record the stack, method, guide, stderr diagnostics and target camera per part. 
 
 ## Explicit contour extrusion
 
-Use this alternate atlas-to-mesh route when contour extrusion is requested. The default surface workflow for thin parts still uses the saved stack. For a flat sign, fin or rotor, use `stack3 build atlas.png --layout top,left,front,rear --mesh-method contour --output part.glb`. FRONT defines the outline, including disconnected islands and holes; LEFT determines overall depth. Select **Contour extrusion** in the viewer's mesh settings or the project inspector. Project nodes use `format: "glb"` and `meshMethod: "contour"`.
+Use this alternate atlas-to-mesh route when contour extrusion is requested. The default surface workflow for thin parts still uses the saved stack. For a flat sign, fin or rotor, use `stack3 build atlas.png --layout top,left,front,rear --verification qa/part/report.json --mesh-method contour --output part.glb`. FRONT defines the outline, including disconnected islands and holes; LEFT determines overall depth. Select **Contour extrusion** in the viewer's mesh settings or the project inspector. Project nodes use `format: "glb"` and `meshMethod: "contour"`.
 
 For a rotor with a solid center and a visibly projecting axle, add `--contour-hub` or set `contourHub: true`. TOP gives the blade thickness and LEFT gives the collar diameter. `--resolution` controls the number of segments around the hub. Inspect both end faces, the side wall and the axle after assembly.
 
