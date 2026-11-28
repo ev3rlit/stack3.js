@@ -4,6 +4,8 @@ The first workflow is to turn an aligned multi-view image set into either an int
 
 For the implemented pipeline, follow the roof of a Petite Town house from its four-view PNG through reconstruction, export and browser assembly. [Atlas-to-runtime walkthrough](atlas-to-runtime.md)
 
+For measured reconstruction behavior and reproducible experiments, see the [research index](research/README.md).
+
 ## Feature Areas
 
 | Area | Responsibility |
