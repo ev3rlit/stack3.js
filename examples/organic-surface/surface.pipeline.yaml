@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=../../apps/cli/schema/pipeline.schema.json
+version: 1
+values:
+  atlas: ../../samples/experiments/penguin/penguin-body-4view.png
+  output: ./out/body.glb
+  budget: 1200
+nodes:
+  - id: source
+    type: reconstruct-stack
+    path: '{{ .Values.atlas }}'
+    layout: top,left,front,rear
+    profile: round
+    height: 1
+    resolution: 32
+    layers: 32
+  - id: surface
+    type: extract-mesh
+    input: source
+    method: organic
+    guide: ./surface.guide.json
+    finish:
+      triangleBudget: '{{ .Values.budget }}'
+    cache: true
+  - id: export
+    type: write-glb
+    input: surface
+    path: '{{ .Values.output }}'
+    lit: true

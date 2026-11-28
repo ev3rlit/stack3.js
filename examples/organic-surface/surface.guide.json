@@ -1,0 +1,7 @@
+{
+  "extractor": "hermite-dc",
+  "sigma": 0.8,
+  "interpolation": "cubic",
+  "smoothingIterations": 2,
+  "targetEdgeLength": 0.05
+}
